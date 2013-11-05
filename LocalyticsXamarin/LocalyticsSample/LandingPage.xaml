@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LocalyticsSample.LandingPage"
+	Padding="10,10,10,10" Title="Localytics Xamarin.Forms Sample">
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="8">
+                 <Label x:Name="info0" Text=""/>
+                 <Label x:Name="info1" Text=""/>
+                 <Label x:Name="info2" Text=""/>
+                 <Label x:Name="info3" Text=""/>
+                 <Label x:Name="info4" Text=""/>
+                 <Label x:Name="info5" Text=""/>
+                 <Label x:Name="info6" Text=""/>
+                 <Label x:Name="info7" Text=""/>
+                 <Label x:Name="info8" Text=""/>
+                 <Label x:Name="info9" Text=""/>
+                 <Label x:Name="info10" Text=""/>
+                 <Label x:Name="info11" Text=""/>
+
+                 <Button Text="Refresh" IsEnabled="true" Clicked="OnRefresh"  BorderWidth="2" BorderColor="Black"/>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Button Text="Open Session" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnOpenSession" BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="Close Session" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnCloseSession"  BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="Upload" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnUpload"  BorderWidth="2" BorderColor="Black"/>
+                 </StackLayout>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Entry x:Name="eventText" Text="Test XamarinForm Event" HorizontalOptions="FillAndExpand"/>
+                     <Button Text="Tag Event" IsEnabled="true" Clicked="OnTagEvent" BorderWidth="2" BorderColor="Black" />
+                 </StackLayout>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Entry x:Name="screenText" Text="Test XamarinForm Screen" HorizontalOptions="FillAndExpand"/>
+                     <Button Text="Tag Screen" IsEnabled="true" Clicked="OnTagScreen"  BorderWidth="2" BorderColor="Black"/>
+                 </StackLayout>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Entry x:Name="cdValue" Text="Test CustomDimension" HorizontalOptions="FillAndExpand"/>
+                     <Entry x:Name="cdNumber" Text="0" Keyboard="Numeric"/>
+                     <Button Text="Get" IsEnabled="true" Clicked="OnGetCD"  BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="Set CustomDimensions" IsEnabled="true" Clicked="OnSetCD"  BorderWidth="2" BorderColor="Black"/>
+                 </StackLayout>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Entry x:Name="profileAttribute" Text="TestAttribute" Placeholder="Attribute" HorizontalOptions="FillAndExpand"/>
+                     <Entry x:Name="profileValue" Text="TestValue" Placeholder="Value" HorizontalOptions="FillAndExpand"/>
+                     <Button Text="Set Profile" IsEnabled="true" Clicked="OnSetProfile"  BorderWidth="2" BorderColor="Black"/>
+                 </StackLayout>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Entry x:Name="identifier" Text="test_xamarin_identifier" Placeholder="Identifier" HorizontalOptions="FillAndExpand"/>
+                     <Entry x:Name="identifierValue" Text="test_value" Placeholder="Value" />
+                     <Button Text="Get" IsEnabled="true" Clicked="OnGetIdentifier"  BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="Set Identifier" IsEnabled="true" Clicked="OnSetIdentifier"  BorderWidth="2" BorderColor="Black"/>
+                 </StackLayout>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,24 @@
+version: 3.0.0
+id: localytics-sdk
+name: Localytics SDK
+publisher: Localytics
+publisher-url: http://www.localytics.com/
+summary: The leading analytics and marketing platform for mobile and web apps.
+details: component/Details.md
+license: component/License.md
+getting-started: GettingStarted.md
+monodocs: docs/en/
+no_build: true
+libraries:
+  ios-unified:
+    - LocalyticsXamarin/LocalyticsXamarin.iOS/bin/Release/LocalyticsXamarin.iOS.dll
+  ios:
+    - LocalyticsXamarin/LocalyticsXamarin.iOS-Classic/bin/Release/LocalyticsXamarin.iOS-Classic.dll
+  android:
+    - LocalyticsXamarin/LocalyticsXamarin.Android/bin/Release/LocalyticsXamarin.Android.dll
+samples:
+  - name: "Samples for iOS, Android & Forms"
+    path: LocalyticsXamarin/LocalyticsXamarin.sln
+icons:
+  - component/icon_128.png
+  - component/icon_512.png
