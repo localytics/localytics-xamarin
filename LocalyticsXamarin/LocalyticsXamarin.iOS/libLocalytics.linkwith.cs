@@ -6,4 +6,4 @@ using ObjCRuntime;
 	"-lsqlite3 -lz",
 	SmartLink = true,
 	ForceLoad = true,
-	Frameworks="SystemConfiguration AdSupport")]
+	Frameworks="SystemConfiguration AdSupport CoreLocation")]
