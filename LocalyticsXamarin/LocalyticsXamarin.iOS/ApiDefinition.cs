@@ -87,7 +87,7 @@ namespace LocalyticsXamarin.iOS
 
 		// @property (readonly, copy, nonatomic) NSDictionary<NSString *,NSString *> * _Nullable attributes;
 		[NullAllowed, Export("attributes", ArgumentSemantic.Copy)]
-		NSDictionary<NSString, NSString> Attributes { get; }
+		NSDictionary Attributes { get; }
 	}
 
 
@@ -162,7 +162,7 @@ namespace LocalyticsXamarin.iOS
 
 		// @property (readonly, copy, nonatomic) NSDictionary<NSString *,NSString *> * _Nullable attributes;
 		[NullAllowed, Export("attributes", ArgumentSemantic.Copy)]
-		NSDictionary<NSString, NSString> Attributes { get; }
+		NSDictionary Attributes { get; }
 
 		// @property (readonly, copy, nonatomic) CLRegion * _Nonnull region;
 		[Export("region", ArgumentSemantic.Copy)]
@@ -293,72 +293,72 @@ namespace LocalyticsXamarin.iOS
 		// +(void)tagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes;
 		[Static]
 		[Export ("tagEvent:attributes:")]
-		void TagEvent (string eventName, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagEvent (string eventName, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes customerValueIncrease:(NSNumber * _Nullable)customerValueIncrease;
 		[Static]
 		[Export("tagEvent:attributes:customerValueIncrease:")]
-		void TagEvent(string eventName, [NullAllowed] NSDictionary<NSString, NSString> attributes, [NullAllowed] NSNumber customerValueIncrease);
+		void TagEvent(string eventName, [NullAllowed] NSDictionary attributes, [NullAllowed] NSNumber customerValueIncrease);
 
 		// +(void)tagPurchased:(NSString * _Nullable)itemName itemId:(NSString * _Nullable)itemId itemType:(NSString * _Nullable)itemType itemPrice:(NSNumber * _Nullable)itemPrice attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagPurchased:itemId:itemType:itemPrice:attributes:")]
-		void TagPurchased([NullAllowed] string itemName, [NullAllowed] string itemId, [NullAllowed] string itemType, [NullAllowed] NSNumber itemPrice, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagPurchased([NullAllowed] string itemName, [NullAllowed] string itemId, [NullAllowed] string itemType, [NullAllowed] NSNumber itemPrice, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagAddedToCart:(NSString * _Nullable)itemName itemId:(NSString * _Nullable)itemId itemType:(NSString * _Nullable)itemType itemPrice:(NSNumber * _Nullable)itemPrice attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagAddedToCart:itemId:itemType:itemPrice:attributes:")]
-		void TagAddedToCart([NullAllowed] string itemName, [NullAllowed] string itemId, [NullAllowed] string itemType, [NullAllowed] NSNumber itemPrice, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagAddedToCart([NullAllowed] string itemName, [NullAllowed] string itemId, [NullAllowed] string itemType, [NullAllowed] NSNumber itemPrice, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagStartedCheckout:(NSNumber * _Nullable)totalPrice itemCount:(NSNumber * _Nullable)itemCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagStartedCheckout:itemCount:attributes:")]
-		void TagStartedCheckout([NullAllowed] NSNumber totalPrice, [NullAllowed] NSNumber itemCount, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagStartedCheckout([NullAllowed] NSNumber totalPrice, [NullAllowed] NSNumber itemCount, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagCompletedCheckout:(NSNumber * _Nullable)totalPrice itemCount:(NSNumber * _Nullable)itemCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagCompletedCheckout:itemCount:attributes:")]
-		void TagCompletedCheckout([NullAllowed] NSNumber totalPrice, [NullAllowed] NSNumber itemCount, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagCompletedCheckout([NullAllowed] NSNumber totalPrice, [NullAllowed] NSNumber itemCount, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagContentViewed:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagContentViewed:contentId:contentType:attributes:")]
-		void TagContentViewed([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagContentViewed([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagSearched:(NSString * _Nullable)queryText contentType:(NSString * _Nullable)contentType resultCount:(NSNumber * _Nullable)resultCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagSearched:contentType:resultCount:attributes:")]
-		void TagSearched([NullAllowed] string queryText, [NullAllowed] string contentType, [NullAllowed] NSNumber resultCount, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagSearched([NullAllowed] string queryText, [NullAllowed] string contentType, [NullAllowed] NSNumber resultCount, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagShared:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagShared:contentId:contentType:methodName:attributes:")]
-		void TagShared([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] string methodName, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagShared([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagContentRated:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType rating:(NSNumber * _Nullable)rating attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagContentRated:contentId:contentType:rating:attributes:")]
-		void TagContentRated([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] NSNumber rating, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagContentRated([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] NSNumber rating, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagCustomerRegistered:(LLCustomer * _Nullable)customer methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagCustomerRegistered:methodName:attributes:")]
-		void TagCustomerRegistered([NullAllowed] LLCustomer customer, [NullAllowed] string methodName, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagCustomerRegistered([NullAllowed] LLCustomer customer, [NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagCustomerLoggedIn:(LLCustomer * _Nullable)customer methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagCustomerLoggedIn:methodName:attributes:")]
-		void TagCustomerLoggedIn([NullAllowed] LLCustomer customer, [NullAllowed] string methodName, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagCustomerLoggedIn([NullAllowed] LLCustomer customer, [NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagCustomerLoggedOut:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagCustomerLoggedOut:")]
-		void TagCustomerLoggedOut([NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagCustomerLoggedOut([NullAllowed] NSDictionary attributes);
 
 		// +(void)tagInvited:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
 		[Static]
 		[Export("tagInvited:attributes:")]
-		void TagInvited([NullAllowed] string methodName, [NullAllowed] NSDictionary<NSString, NSString> attributes);
+		void TagInvited([NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagScreen:(NSString *)screenName;
 		[Static]
@@ -701,7 +701,7 @@ namespace LocalyticsXamarin.iOS
 
 		// @optional -(void)localyticsDidTagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes customerValueIncrease:(NSNumber * _Nullable)customerValueIncrease;
 		[Export("localyticsDidTagEvent:attributes:customerValueIncrease:")]
-		void LocalyticsDidTagEvent(string eventName, [NullAllowed] NSDictionary<NSString, NSString> attributes, [NullAllowed] NSNumber customerValueIncrease);
+		void LocalyticsDidTagEvent(string eventName, [NullAllowed] NSDictionary attributes, [NullAllowed] NSNumber customerValueIncrease);
 
 		// @optional -(void)localyticsSessionWillClose;
 		[Export ("localyticsSessionWillClose")]
