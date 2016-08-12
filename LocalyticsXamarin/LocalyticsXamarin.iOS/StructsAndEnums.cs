@@ -16,4 +16,12 @@ namespace LocalyticsXamarin.iOS
 		Application,
 		Organization
 	}
+
+	[Native]
+	public enum LLRegionEvent : long
+	{
+		nter,
+		xit
+	}
 }
+

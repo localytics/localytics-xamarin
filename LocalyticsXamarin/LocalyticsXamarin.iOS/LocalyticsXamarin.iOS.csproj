@@ -54,8 +54,8 @@
     <ObjcBindingNativeLibrary Include="libLocalytics.a" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\iOSa_3.5.1.version" />
     <BundleResource Include="Resources\LICENSE" />
     <BundleResource Include="Resources\Localytics.h" />
+    <BundleResource Include="Resources\iOSa_4.0.1.version" />
   </ItemGroup>
 </Project>
