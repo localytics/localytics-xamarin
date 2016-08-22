@@ -506,10 +506,10 @@ namespace LocalyticsXamarin.iOS
 		[Export ("setPushToken:")]
 		void SetPushToken (NSData pushToken);
 
-		// +(void)handlePushNotificationOpened:(NSDictionary *)notificationInfo;
+		// +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo;
 		[Static]
-		[Export ("handlePushNotificationOpened:")]
-		void HandlePushNotificationOpened (NSDictionary notificationInfo);
+		[Export("handleNotification:")]
+		void HandleNotification(NSDictionary notificationInfo);
 
 		// +(BOOL)handleTestModeURL:(NSURL *)url;
 		[Static]
