@@ -6,11 +6,11 @@ using Android.App;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle ("LocalyticsMessagingSample.Android")]
-[assembly: AssemblyDescription ("Localytics Messaging Sampe for Xamarin.Android")]
+[assembly: AssemblyDescription ("Localytics Messaging Sample for Xamarin.Android")]
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Localytics")]
-[assembly: AssemblyProduct ("Localytics Messaging Sampe for Xamarin.Android")]
-[assembly: AssemblyCopyright ("© 2008-2015 Localytics℠")]
+[assembly: AssemblyProduct ("Localytics Messaging Sample for Xamarin.Android")]
+[assembly: AssemblyCopyright ("© 2008-2016 Localytics℠")]
 [assembly: AssemblyTrademark ("Localytics℠")]
 [assembly: AssemblyCulture ("")]
 
