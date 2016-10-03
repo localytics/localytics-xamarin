@@ -32,14 +32,14 @@ namespace LocalyticsSample
 
 		void RefreshInfo() {
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string value0 = "AnalyticsHost: " + DependencyService.Get<ILocalyticsXamarinForms>().AnalyticsHost;
+				string value0 = "AnalyticsHost: not supported";
 				string value1 = "AppKey: " + DependencyService.Get<ILocalyticsXamarinForms>().AppKey;
 				string value2 = "CustomerId: " + DependencyService.Get<ILocalyticsXamarinForms>().CustomerId;
 				string value3 = "InstallId: " + DependencyService.Get<ILocalyticsXamarinForms>().InstallId;
 				string value4 = "LibraryVersion: " + DependencyService.Get<ILocalyticsXamarinForms>().LibraryVersion;
-				string value5 = "MessagingHost: " + DependencyService.Get<ILocalyticsXamarinForms>().MessagingHost;
-				string value6 = "ProfilesHost: " + DependencyService.Get<ILocalyticsXamarinForms>().ProfilesHost;
-				string value7 = "SessionTimeout: " + DependencyService.Get<ILocalyticsXamarinForms>().SessionTimeoutInterval;
+				string value5 = "MessagingHost: not supported";
+				string value6 = "ProfilesHost: not supported";
+				string value7 = "SessionTimeout: not supported";
 				string value8 = "OptedOut: " + DependencyService.Get<ILocalyticsXamarinForms>().OptedOut;
 				string value9 = "TestModeEnabled: " + DependencyService.Get<ILocalyticsXamarinForms>().TestModeEnabled;
 				string value10= "Push Token/RegID: " + DependencyService.Get<ILocalyticsXamarinForms>().PushToken;

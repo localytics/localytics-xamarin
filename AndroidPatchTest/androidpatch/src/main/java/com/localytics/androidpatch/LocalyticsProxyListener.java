@@ -3,19 +3,23 @@ package com.localytics.androidpatch;
 import com.localytics.android.Localytics;
 
 public class LocalyticsProxyListener {
-    private LocalyticsListener localyticsListener = new LocalyticsListener();
+    private LocalyticsListener mLocalyticsListener = new LocalyticsListener();
 
     public LocalyticsProxyListener() {
-        Localytics.addAnalyticsListener(localyticsListener);
-        Localytics.addMessagingListener(localyticsListener);
+        Localytics.setAnalyticsListener(mLocalyticsListener);
+        Localytics.setMessagingListener(mLocalyticsListener);
+        Localytics.setLocationListener(mLocalyticsListener);
     }
 
-    public void addAnalyticsProxyListener(IAnalyticsProxyListener listener) {
-        localyticsListener.addAnalyticsProxyListener(listener);
+    public void setAnalyticsProxyListener(IAnalyticsProxyListener listener) {
+        mLocalyticsListener.setAnalyticsProxyListener(listener);
     }
 
-    public void addMessagingProxyListener(IMessagingProxyListener listener) {
-        localyticsListener.addMessagingProxyListener(listener);
+    public void setMessagingProxyListener(IMessagingProxyListener listener) {
+        mLocalyticsListener.setMessagingProxyListener(listener);
+    }
 
+    public void setLocationProxyListener(ILocationProxyListener listener) {
+        mLocalyticsListener.setLocationProxyListener(listener);
     }
 }

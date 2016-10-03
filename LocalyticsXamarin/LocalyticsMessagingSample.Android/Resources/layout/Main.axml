@@ -9,13 +9,23 @@
         android:layout_height="wrap_content"
         android:text="TagEvent" />
     <Button
-        android:text="Refresh"
+        android:text="Show Registration ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/refreshButton" />
+        android:id="@+id/showRegistrationId" />
     <TextView
         android:text="--"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pushText" />
+    <Button
+        android:id="@+id/openInbox"
+        android:text="Open Inbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/startPlaces"
+        android:text="Start Places"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
