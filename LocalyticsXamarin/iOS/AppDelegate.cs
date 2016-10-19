@@ -20,15 +20,15 @@ namespace LocalyticsSample.iOS
 			analyticsListener = new LocalyticsAnalyticsListener_iOS ();
 			messagingListener = new LocalyticsMessagingListener_iOS ();
 
-			Localytics.AddAnalyticsDelegate (analyticsListener);
-			Localytics.AddMessagingDelegate (messagingListener);
+			Localytics.SetAnalyticsDelegate (analyticsListener);
+			Localytics.SetMessagingDelegate (messagingListener);
 
 			#if DEBUG
 			Localytics.SetLoggingEnabled(true);
 			#endif
 
 			// Localytics Auto Integrate
-			Localytics.AutoIntegrate ("xxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", options != null? options : new NSDictionary());
+			Localytics.AutoIntegrate ("YOUR_LOCALYTICS_APP_KEY", options != null? options : new NSDictionary());
 
 			// Register for remote notifications
 			if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {

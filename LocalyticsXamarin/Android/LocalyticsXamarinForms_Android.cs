@@ -19,7 +19,6 @@ namespace LocalyticsXamarin.Forms
 
 		public void onAppStart ()
 		{
-			Localytics.SetOption("session_timeout", 10);
 		}
 
 		public void SmokeTest() {

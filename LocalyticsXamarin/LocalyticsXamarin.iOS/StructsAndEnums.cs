@@ -20,8 +20,8 @@ namespace LocalyticsXamarin.iOS
 	[Native]
 	public enum LLRegionEvent : long
 	{
-		nter,
-		xit
+		Enter,
+		Exit
 	}
 }
 

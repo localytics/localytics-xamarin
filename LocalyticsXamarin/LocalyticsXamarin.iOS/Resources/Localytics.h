@@ -22,7 +22,9 @@
 #import <Localytics/LLInboxViewController.h>
 #import <Localytics/LLInboxDetailViewController.h>
 
-#define LOCALYTICS_LIBRARY_VERSION      @"4.0.1"
+#define LOCALYTICS_LIBRARY_VERSION      @"4.1.0"
+
+@class UNMutableNotificationContent;
 
 @protocol LLMessagingDelegate;
 @protocol LLAnalyticsDelegate;
@@ -503,6 +505,19 @@
  */
 + (void)handleNotification:(nonnull NSDictionary *)notificationInfo;
 
+/** Use to record performance data for notifications when using UNUserNotificationCenterDelegate
+ @param userInfo The UNNotificationResponse's userInfo retrieved by calling response.notification.request.content.userInfo
+ */
++ (void)didReceiveNotificationResponseWithUserInfo:(nonnull NSDictionary *)userInfo;
+
+/** Used to notify the Localytics SDK that notification settings have changed
+ */
++ (void)didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings;
+
+/** Used to notify the Localytics SDK that user notification authorization has changed
+ */
++ (void)didRequestUserNotificationAuthorizationWithOptions:(NSUInteger)options granted:(BOOL)granted;
+
 #pragma mark - In-App Message
 /** ---------------------------------------------------------------------------------------
  * @name In-App Message
@@ -758,6 +773,7 @@
 - (void)localyticsDidDismissInAppMessage;
 - (BOOL)localyticsShouldDisplayPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
 - (nonnull UILocalNotification *)localyticsWillDisplayNotification:(nonnull UILocalNotification *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+- (nonnull UNMutableNotificationContent *)localyticsWillDisplayNotificationContent:(nonnull UNMutableNotificationContent *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
 
 @end
 

@@ -3,6 +3,7 @@ using CoreLocation;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
+using UserNotifications;
 
 namespace LocalyticsXamarin.iOS
 {
@@ -511,6 +512,21 @@ namespace LocalyticsXamarin.iOS
 		[Export("handleNotification:")]
 		void HandleNotification(NSDictionary notificationInfo);
 
+		// +(void)didReceiveNotificationResponseWithUserInfo:(nonnull NSDictionary *)userInfo;
+		[Static]
+		[Export("didReceiveNotificationResponseWithUserInfo:")]
+		void DidReceiveNotificationResponseWithUserInfo(NSDictionary userInfo);
+
+		// +(void)didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings;
+		[Static]
+		[Export("didRegisterUserNotificationSettings:")]
+		void DidRegisterUserNotificationSettings(UIUserNotificationSettings notificationSettings);
+
+		// +(void)didRequestUserNotificationAuthorizationWithOptions:(NSUInteger)options granted:(BOOL)granted;
+		[Static]
+		[Export("didRequestUserNotificationAuthorizationWithOptions:granted:")]
+		void DidRequestUserNotificationAuthorizationWithOptions(nuint options, bool granted);
+
 		// +(BOOL)handleTestModeURL:(NSURL *)url;
 		[Static]
 		[Export ("handleTestModeURL:")]
@@ -736,6 +752,10 @@ namespace LocalyticsXamarin.iOS
 		// @optional -(UILocalNotification * _Nonnull)localyticsWillDisplayNotification:(UILocalNotification * _Nonnull)notification forPlacesCampaign:(LLPlacesCampaign * _Nonnull)campaign;
 		[Export("localyticsWillDisplayNotification:forPlacesCampaign:")]
 		UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign);
+
+		// @optional -(UNMutableNotificationContent *)localyticsWillDisplayNotificationContent:(nonnull UNMutableNotificationContent *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+		[Export("localyticsWillDisplayNotificationContent:forPlacesCampaign:")]
+		UNMutableNotificationContent LocalyticsWillDisplayNotificationContent(UNMutableNotificationContent notification, LLPlacesCampaign campaign);
 	}
 
 	// @protocol LLLocationDelegate <NSObject>
