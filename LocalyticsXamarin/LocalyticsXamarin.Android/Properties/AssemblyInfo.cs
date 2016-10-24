@@ -9,7 +9,7 @@ using Android.App;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Localytics")]
 [assembly: AssemblyProduct ("Localytics℠ for Xamarin.Android")]
-[assembly: AssemblyCopyright ("© 2008-2015 Localytics℠")]
+[assembly: AssemblyCopyright ("© 2008-2016 Localytics℠")]
 [assembly: AssemblyTrademark ("Localytics℠")]
 [assembly: AssemblyCulture ("")]
 
@@ -17,7 +17,7 @@ using Android.App;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion ("3.5.0.*")]
+[assembly: AssemblyVersion ("3.8.2.*")]
 
 // The following attributes are used to specify the signing key for the assembly,
 // if desired. See the Mono documentation for more information about signing.

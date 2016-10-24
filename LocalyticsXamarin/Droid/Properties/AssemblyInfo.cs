@@ -10,7 +10,7 @@ using Android.App;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Localytics")]
 [assembly: AssemblyProduct ("")]
-[assembly: AssemblyCopyright ("© 2008-2015 Localytics℠")]
+[assembly: AssemblyCopyright ("© 2008-2016 Localytics℠")]
 [assembly: AssemblyTrademark ("Localytics℠")]
 [assembly: AssemblyCulture ("")]
 

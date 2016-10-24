@@ -17,7 +17,7 @@ using Foundation;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Localytics")]
 [assembly: AssemblyProduct ("Localytics℠ for Xamarin.iOS")]
-[assembly: AssemblyCopyright ("© 2008-2015 Localytics℠")]
+[assembly: AssemblyCopyright ("© 2008-2016 Localytics℠")]
 [assembly: AssemblyTrademark ("Localytics℠")]
 [assembly: AssemblyCulture ("")]
 
