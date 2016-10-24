@@ -1,23 +1,276 @@
 ﻿using System;
 using CoreLocation;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
+using UserNotifications;
 
 namespace LocalyticsXamarin.iOS
 {
+	partial interface Constants
+	{
+		// extern double LocalyticsVersionNumber;
+		[Field("LocalyticsVersionNumber", "__Internal")]
+		double LocalyticsVersionNumber { get; }
+
+		// extern const unsigned char [] LocalyticsVersionString;
+		[Field("LocalyticsVersionString", "__Internal")]
+		byte[] LocalyticsVersionString { get; }
+	}
+
+	// @interface LLCustomerBuilder : NSObject
+	[BaseType(typeof(NSObject))]
+	interface LLCustomerBuilder
+	{
+		// @property (nonatomic, strong) NSString * _Nullable customerId;
+		[NullAllowed, Export("customerId", ArgumentSemantic.Strong)]
+		string CustomerId { get; set; }
+
+		// @property (nonatomic, strong) NSString * _Nullable firstName;
+		[NullAllowed, Export("firstName", ArgumentSemantic.Strong)]
+		string FirstName { get; set; }
+
+		// @property (nonatomic, strong) NSString * _Nullable lastName;
+		[NullAllowed, Export("lastName", ArgumentSemantic.Strong)]
+		string LastName { get; set; }
+
+		// @property (nonatomic, strong) NSString * _Nullable fullName;
+		[NullAllowed, Export("fullName", ArgumentSemantic.Strong)]
+		string FullName { get; set; }
+
+		// @property (nonatomic, strong) NSString * _Nullable emailAddress;
+		[NullAllowed, Export("emailAddress", ArgumentSemantic.Strong)]
+		string EmailAddress { get; set; }
+	}
+
+	// @interface LLCustomer : NSObject
+	[BaseType(typeof(NSObject))]
+	interface LLCustomer
+	{
+		// @property (readonly, nonatomic, strong) NSString * _Nullable customerId;
+		[NullAllowed, Export("customerId", ArgumentSemantic.Strong)]
+		string CustomerId { get; }
+
+		// @property (readonly, nonatomic, strong) NSString * _Nullable firstName;
+		[NullAllowed, Export("firstName", ArgumentSemantic.Strong)]
+		string FirstName { get; }
+
+		// @property (readonly, nonatomic, strong) NSString * _Nullable lastName;
+		[NullAllowed, Export("lastName", ArgumentSemantic.Strong)]
+		string LastName { get; }
+
+		// @property (readonly, nonatomic, strong) NSString * _Nullable fullName;
+		[NullAllowed, Export("fullName", ArgumentSemantic.Strong)]
+		string FullName { get; }
+
+		// @property (readonly, nonatomic, strong) NSString * _Nullable emailAddress;
+		[NullAllowed, Export("emailAddress", ArgumentSemantic.Strong)]
+		string EmailAddress { get; }
+
+		// +(instancetype _Nullable)customerWithBlock:(void (^ _Nonnull)(LLCustomerBuilder * _Nonnull))block;
+		[Static]
+		[Export("customerWithBlock:")]
+		[return: NullAllowed]
+		LLCustomer CustomerWithBlock(Action<LLCustomerBuilder> block);
+	}
+
+	// @interface LLCampaignBase : NSObject
+	[BaseType(typeof(NSObject))]
+	interface LLCampaignBase
+	{
+		// @property (readonly, assign, nonatomic) NSInteger campaignId;
+		[Export("campaignId")]
+		nint CampaignId { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull name;
+		[Export("name")]
+		string Name { get; }
+
+		// @property (readonly, copy, nonatomic) NSDictionary<NSString *,NSString *> * _Nullable attributes;
+		[NullAllowed, Export("attributes", ArgumentSemantic.Copy)]
+		NSDictionary Attributes { get; }
+	}
+
+
+	// @interface LLWebViewCampaign : LLCampaignBase
+	[BaseType(typeof(LLCampaignBase))]
+	interface LLWebViewCampaign
+	{
+	}
+
+	// @interface LLInboxCampaign : LLWebViewCampaign
+	[BaseType(typeof(LLWebViewCampaign))]
+	interface LLInboxCampaign
+	{
+		// @property (getter = isRead, assign, nonatomic) BOOL read;
+		[Export("read")]
+		bool Read { [Bind("isRead")] get; set; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nullable titleText;
+		[NullAllowed, Export("titleText")]
+		string TitleText { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nullable summaryText;
+		[NullAllowed, Export("summaryText")]
+		string SummaryText { get; }
+
+		// @property (readonly, copy, nonatomic) NSURL * _Nullable thumbnailUrl;
+		[NullAllowed, Export("thumbnailUrl", ArgumentSemantic.Copy)]
+		NSUrl ThumbnailUrl { get; }
+
+		// @property (readonly, assign, nonatomic) BOOL hasCreative;
+		[Export("hasCreative")]
+		bool HasCreative { get; }
+
+		// @property (readonly, assign, nonatomic) NSInteger sortOrder;
+		[Export("sortOrder")]
+		nint SortOrder { get; }
+
+		// @property (readonly, assign, nonatomic) NSTimeInterval receivedDate;
+		[Export("receivedDate")]
+		double ReceivedDate { get; }
+	}
+
+
+	// @interface LLPlacesCampaign : LLCampaignBase
+	[BaseType(typeof(LLCampaignBase))]
+	interface LLPlacesCampaign
+	{
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull message;
+		[Export("message")]
+		string Message { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nullable soundFilename;
+		[NullAllowed, Export("soundFilename")]
+		string SoundFilename { get; }
+
+		// @property (readonly, copy, nonatomic) LLRegion * _Nonnull region;
+		[Export("region", ArgumentSemantic.Copy)]
+		LLRegion Region { get; }
+
+		// @property (readonly, assign, nonatomic) LLRegionEvent event;
+		[Export("event", ArgumentSemantic.Assign)]
+		LLRegionEvent Event { get; }
+	}
+
+	// @interface LLRegion : NSObject
+	[BaseType(typeof(NSObject))]
+	interface LLRegion
+	{
+		// @property (readonly, copy, nonatomic) NSString * _Nullable name;
+		[NullAllowed, Export("name")]
+		string Name { get; }
+
+		// @property (readonly, copy, nonatomic) NSDictionary<NSString *,NSString *> * _Nullable attributes;
+		[NullAllowed, Export("attributes", ArgumentSemantic.Copy)]
+		NSDictionary Attributes { get; }
+
+		// @property (readonly, copy, nonatomic) CLRegion * _Nonnull region;
+		[Export("region", ArgumentSemantic.Copy)]
+		CLRegion Region { get; }
+	}
+
+	// @interface LLGeofence : LLRegion
+	[BaseType(typeof(LLRegion))]
+	interface LLGeofence
+	{
+		// @property (readonly, copy, nonatomic) CLCircularRegion * _Nonnull region;
+		[Export("region", ArgumentSemantic.Copy)]
+		CLCircularRegion Region { get; }
+	}
+
+	public interface ILLInboxCampaignsRefreshingDelegate { }
+
+	// @protocol LLInboxCampaignsRefreshingDelegate <NSObject>
+	[Protocol, Model]
+	[BaseType(typeof(NSObject))]
+	interface LLInboxCampaignsRefreshingDelegate
+	{
+		// @optional -(void)localyticsDidBeginRefreshingInboxCampaigns;
+		[Export("localyticsDidBeginRefreshingInboxCampaigns")]
+		void LocalyticsDidBeginRefreshingInboxCampaigns();
+
+		// @optional -(void)localyticsDidFinishRefreshingInboxCampaigns;
+		[Export("localyticsDidFinishRefreshingInboxCampaigns")]
+		void LocalyticsDidFinishRefreshingInboxCampaigns();
+	}
+
+	// @interface LLInboxViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, LLInboxCampaignsRefreshingDelegate>
+	[BaseType(typeof(UIViewController))]
+	interface LLInboxViewController : IUITableViewDelegate, IUITableViewDataSource, ILLInboxCampaignsRefreshingDelegate
+	{
+		// @property (nonatomic, strong) UITableView * _Nonnull tableView;
+		[Export("tableView", ArgumentSemantic.Strong)]
+		UITableView TableView { get; set; }
+
+		// @property (nonatomic, strong) UIView * _Nonnull emptyCampaignsView;
+		[Export("emptyCampaignsView", ArgumentSemantic.Strong)]
+		UIView EmptyCampaignsView { get; set; }
+
+		// @property (assign, nonatomic) BOOL showsActivityIndicatorView;
+		[Export("showsActivityIndicatorView")]
+		bool ShowsActivityIndicatorView { get; set; }
+
+		// @property (assign, nonatomic) BOOL downloadsThumbnails;
+		[Export("downloadsThumbnails")]
+		bool DownloadsThumbnails { get; set; }
+
+		// @property (nonatomic, strong) UIFont * _Nonnull textLabelFont;
+		[Export("textLabelFont", ArgumentSemantic.Strong)]
+		UIFont TextLabelFont { get; set; }
+
+		// @property (nonatomic, strong) UIColor * _Nonnull textLabelColor;
+		[Export("textLabelColor", ArgumentSemantic.Strong)]
+		UIColor TextLabelColor { get; set; }
+
+		// @property (nonatomic, strong) UIFont * _Nonnull detailTextLabelFont;
+		[Export("detailTextLabelFont", ArgumentSemantic.Strong)]
+		UIFont DetailTextLabelFont { get; set; }
+
+		// @property (nonatomic, strong) UIColor * _Nonnull detailTextLabelColor;
+		[Export("detailTextLabelColor", ArgumentSemantic.Strong)]
+		UIColor DetailTextLabelColor { get; set; }
+
+		// @property (nonatomic, strong) UIFont * _Nonnull timeTextLabelFont;
+		[Export("timeTextLabelFont", ArgumentSemantic.Strong)]
+		UIFont TimeTextLabelFont { get; set; }
+
+		// @property (nonatomic, strong) UIColor * _Nonnull timeTextLabelColor;
+		[Export("timeTextLabelColor", ArgumentSemantic.Strong)]
+		UIColor TimeTextLabelColor { get; set; }
+
+		// @property (nonatomic, strong) UIColor * _Nonnull unreadIndicatorColor;
+		[Export("unreadIndicatorColor", ArgumentSemantic.Strong)]
+		UIColor UnreadIndicatorColor { get; set; }
+
+		// @property (nonatomic, strong) UIColor * _Nonnull cellBackgroundColor;
+		[Export("cellBackgroundColor", ArgumentSemantic.Strong)]
+		UIColor CellBackgroundColor { get; set; }
+
+		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
+		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
+		UIView CreativeLoadErrorView { get; set; }
+
+		// -(LLInboxCampaign * _Nullable)campaignForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+		[Export("campaignForRowAtIndexPath:")]
+		[return: NullAllowed]
+		LLInboxCampaign CampaignForRowAtIndexPath(NSIndexPath indexPath);
+	}
+
 	// @interface Localytics : NSObject
 	[BaseType (typeof(NSObject))]
 	interface Localytics
 	{
-		// +(void)autoIntegrate:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions;
+		// +(void)autoIntegrate:(NSString * _Nonnull)appKey launchOptions:(NSDictionary * _Nullable)launchOptions;
 		[Static]
-		[Export ("autoIntegrate:launchOptions:")]
-		void AutoIntegrate (string appKey, NSDictionary launchOptions);
+		[Export("autoIntegrate:launchOptions:")]
+		void AutoIntegrate(string appKey, [NullAllowed] NSDictionary launchOptions);
 
-		// +(void)integrate:(NSString *)appKey;
+		// +(void)integrate:(NSString * _Nonnull)appKey;
 		[Static]
-		[Export ("integrate:")]
-		void Integrate (string appKey);
+		[Export("integrate:")]
+		void Integrate(string appKey);
+
 
 		// +(void)openSession;
 		[Static]
@@ -34,20 +287,80 @@ namespace LocalyticsXamarin.iOS
 		[Export ("upload")]
 		void Upload ();
 
-		// +(void)tagEvent:(NSString *)eventName;
+		// +(void)tagEvent:(NSString * _Nonnull)eventName;
 		[Static]
-		[Export ("tagEvent:")]
-		void TagEvent (string eventName);
+		[Export("tagEvent:")]
+		void TagEvent(string eventName);
 
 		// +(void)tagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes;
 		[Static]
 		[Export ("tagEvent:attributes:")]
-		void TagEvent (string eventName, NSDictionary attributes);
+		void TagEvent (string eventName, [NullAllowed] NSDictionary attributes);
 
-		// +(void)tagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes customerValueIncrease:(NSNumber *)customerValueIncrease;
+		// +(void)tagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes customerValueIncrease:(NSNumber * _Nullable)customerValueIncrease;
 		[Static]
-		[Export ("tagEvent:attributes:customerValueIncrease:")]
-		void TagEvent (string eventName, NSDictionary attributes, NSNumber customerValueIncrease);
+		[Export("tagEvent:attributes:customerValueIncrease:")]
+		void TagEvent(string eventName, [NullAllowed] NSDictionary attributes, [NullAllowed] NSNumber customerValueIncrease);
+
+		// +(void)tagPurchased:(NSString * _Nullable)itemName itemId:(NSString * _Nullable)itemId itemType:(NSString * _Nullable)itemType itemPrice:(NSNumber * _Nullable)itemPrice attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagPurchased:itemId:itemType:itemPrice:attributes:")]
+		void TagPurchased([NullAllowed] string itemName, [NullAllowed] string itemId, [NullAllowed] string itemType, [NullAllowed] NSNumber itemPrice, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagAddedToCart:(NSString * _Nullable)itemName itemId:(NSString * _Nullable)itemId itemType:(NSString * _Nullable)itemType itemPrice:(NSNumber * _Nullable)itemPrice attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagAddedToCart:itemId:itemType:itemPrice:attributes:")]
+		void TagAddedToCart([NullAllowed] string itemName, [NullAllowed] string itemId, [NullAllowed] string itemType, [NullAllowed] NSNumber itemPrice, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagStartedCheckout:(NSNumber * _Nullable)totalPrice itemCount:(NSNumber * _Nullable)itemCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagStartedCheckout:itemCount:attributes:")]
+		void TagStartedCheckout([NullAllowed] NSNumber totalPrice, [NullAllowed] NSNumber itemCount, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagCompletedCheckout:(NSNumber * _Nullable)totalPrice itemCount:(NSNumber * _Nullable)itemCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagCompletedCheckout:itemCount:attributes:")]
+		void TagCompletedCheckout([NullAllowed] NSNumber totalPrice, [NullAllowed] NSNumber itemCount, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagContentViewed:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagContentViewed:contentId:contentType:attributes:")]
+		void TagContentViewed([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagSearched:(NSString * _Nullable)queryText contentType:(NSString * _Nullable)contentType resultCount:(NSNumber * _Nullable)resultCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagSearched:contentType:resultCount:attributes:")]
+		void TagSearched([NullAllowed] string queryText, [NullAllowed] string contentType, [NullAllowed] NSNumber resultCount, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagShared:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagShared:contentId:contentType:methodName:attributes:")]
+		void TagShared([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagContentRated:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType rating:(NSNumber * _Nullable)rating attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagContentRated:contentId:contentType:rating:attributes:")]
+		void TagContentRated([NullAllowed] string contentName, [NullAllowed] string contentId, [NullAllowed] string contentType, [NullAllowed] NSNumber rating, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagCustomerRegistered:(LLCustomer * _Nullable)customer methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagCustomerRegistered:methodName:attributes:")]
+		void TagCustomerRegistered([NullAllowed] LLCustomer customer, [NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagCustomerLoggedIn:(LLCustomer * _Nullable)customer methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagCustomerLoggedIn:methodName:attributes:")]
+		void TagCustomerLoggedIn([NullAllowed] LLCustomer customer, [NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
+
+		// +(void)tagCustomerLoggedOut:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagCustomerLoggedOut:")]
+		void TagCustomerLoggedOut([NullAllowed] NSDictionary attributes);
+
+		// +(void)tagInvited:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
+		[Static]
+		[Export("tagInvited:attributes:")]
+		void TagInvited([NullAllowed] string methodName, [NullAllowed] NSDictionary attributes);
 
 		// +(void)tagScreen:(NSString *)screenName;
 		[Static]
@@ -58,7 +371,7 @@ namespace LocalyticsXamarin.iOS
 		// Rename to avoid ambiguity
 		[Static]
 		[Export ("setValue:forCustomDimension:")]
-		void SetCustomDimension (string value, nuint dimension);
+		void SetCustomDimension ([NullAllowed]string value, nuint dimension);
 
 		// +(NSString *)valueForCustomDimension:(NSUInteger)dimension;
 		// Rename to avoid ambiguity
@@ -70,7 +383,7 @@ namespace LocalyticsXamarin.iOS
 		// Rename to avoid ambiguity
 		[Static]
 		[Export ("setValue:forIdentifier:")]
-		void SetIdentifier (string value, string identifier);
+		void SetIdentifier ([NullAllowed]string value, string identifier);
 
 		// +(NSString *)valueForIdentifier:(NSString *)identifier;
 		// Rename to avoid ambiguity
@@ -195,10 +508,25 @@ namespace LocalyticsXamarin.iOS
 		[Export ("setPushToken:")]
 		void SetPushToken (NSData pushToken);
 
-		// +(void)handlePushNotificationOpened:(NSDictionary *)notificationInfo;
+		// +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo;
 		[Static]
-		[Export ("handlePushNotificationOpened:")]
-		void HandlePushNotificationOpened (NSDictionary notificationInfo);
+		[Export("handleNotification:")]
+		void HandleNotification(NSDictionary notificationInfo);
+
+		// +(void)didReceiveNotificationResponseWithUserInfo:(NSDictionary * _Nonnull)userInfo;
+		[Static]
+		[Export("didReceiveNotificationResponseWithUserInfo:")]
+		void DidReceiveNotificationResponseWithUserInfo(NSDictionary userInfo);
+
+		// +(void)didRegisterUserNotificationSettings:(UIUserNotificationSettings * _Nonnull)notificationSettings;
+		[Static]
+		[Export("didRegisterUserNotificationSettings:")]
+		void DidRegisterUserNotificationSettings(UIUserNotificationSettings notificationSettings);
+
+		// +(void)didRequestUserNotificationAuthorizationWithOptions:(NSUInteger)options granted:(BOOL)granted;
+		[Static]
+		[Export("didRequestUserNotificationAuthorizationWithOptions:granted:")]
+		void DidRequestUserNotificationAuthorizationWithOptions(nuint options, bool granted);
 
 		// +(BOOL)handleTestModeURL:(NSURL *)url;
 		[Static]
@@ -208,12 +536,12 @@ namespace LocalyticsXamarin.iOS
 		// +(void)setInAppMessageDismissButtonImage:(UIImage *)image;
 		[Static]
 		[Export ("setInAppMessageDismissButtonImage:")]
-		void SetInAppMessageDismissButtonImage (UIImage image);
+		void SetInAppMessageDismissButtonImage ([NullAllowed] UIImage image);
 
 		// +(void)setInAppMessageDismissButtonImageWithName:(NSString *)imageName;
 		[Static]
 		[Export ("setInAppMessageDismissButtonImageWithName:")]
-		void SetInAppMessageDismissButtonImageWithName (string imageName);
+		void SetInAppMessageDismissButtonImageWithName ([NullAllowed] string imageName);
 
 		// +(LLInAppMessageDismissButtonLocation)inAppMessageDismissButtonLocation;
 		// +(void)setInAppMessageDismissButtonLocation:(LLInAppMessageDismissButtonLocation)location;
@@ -236,6 +564,59 @@ namespace LocalyticsXamarin.iOS
 		[Static]
 		[Export ("dismissCurrentInAppMessage")]
 		void DismissCurrentInAppMessage ();
+
+		// +(NSArray<LLInboxCampaign *> * _Nonnull)inboxCampaigns;
+		[Static]
+		[Export("inboxCampaigns")]
+		//[Verify(MethodToProperty)]
+		LLInboxCampaign[] InboxCampaigns { get; }
+
+		// +(void)refreshInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
+		[Static]
+		[Export("refreshInboxCampaigns:")]
+		void RefreshInboxCampaigns(Action<NSArray<NSObject>> completionBlock);
+		//void RefreshInboxCampaigns(Action<NSArray<LLInboxCampaign>> completionBlock); // to check
+
+		// +(void)setInboxCampaignId:(NSInteger)campaignId asRead:(BOOL)read;
+		[Static]
+		[Export("setInboxCampaignId:asRead:")]
+		void SetInboxCampaignId(nint campaignId, bool read);
+
+		// +(NSInteger)inboxCampaignsUnreadCount;
+		[Static]
+		[Export("inboxCampaignsUnreadCount")]
+		//[Verify(MethodToProperty)]
+		nint InboxCampaignsUnreadCount { get; }
+
+		// +(LLInboxDetailViewController * _Nonnull)inboxDetailViewControllerForCampaign:(LLInboxCampaign * _Nonnull)campaign;
+		[Static]
+		[Export("inboxDetailViewControllerForCampaign:")]
+		LLInboxDetailViewController InboxDetailViewControllerForCampaign(LLInboxCampaign campaign);
+
+		// +(void)setLocationMonitoringEnabled:(BOOL)enabled;
+		[Static]
+		[Export("setLocationMonitoringEnabled:")]
+		void SetLocationMonitoringEnabled(bool enabled);
+
+		// +(NSArray<LLRegion *> * _Nonnull)geofencesToMonitor:(CLLocationCoordinate2D)currentCoordinate;
+		[Static]
+		[Export("geofencesToMonitor:")]
+		LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate);
+
+		// +(void)triggerRegion:(CLRegion * _Nonnull)region withEvent:(LLRegionEvent)event;
+		[Static]
+		[Export("triggerRegion:withEvent:")]
+		void TriggerRegion(CLRegion region, LLRegionEvent @event);
+
+		// +(void)triggerRegions:(NSArray<CLRegion *> * _Nonnull)regions withEvent:(LLRegionEvent)event;
+		[Static]
+		[Export("triggerRegions:withEvent:")]
+		void TriggerRegions(CLRegion[] regions, LLRegionEvent @event);
+
+		// +(void)setOptions:(NSDictionary<NSString *,NSObject *> * _Nullable)options;
+		[Static]
+		[Export("setOptions:")]
+		void SetOptions([NullAllowed] NSDictionary<NSString, NSObject> options);
 
 		// +(BOOL)isLoggingEnabled;
 		[Static]
@@ -281,92 +662,45 @@ namespace LocalyticsXamarin.iOS
 		[Export ("setTestModeEnabled:")]
 		void SetTestModeEnabled (bool enabled);
 
-		// +(NSTimeInterval)sessionTimeoutInterval;
-		// +(void)setSessionTimeoutInterval:(NSTimeInterval)timeoutInterval;
-		[Static]
-		[Export ("sessionTimeoutInterval")]
-		//[Verify (MethodToProperty)]
-		double SessionTimeoutInterval { get; set; }
-
 		// +(NSString *)installId;
 		[Static]
-		[Export ("installId")]
-		string InstallId ();
+		[Export("installId")]
+		string InstallId();
 
 		// +(NSString *)libraryVersion;
 		[Static]
-		[Export ("libraryVersion")]
-		string LibraryVersion ();
+		[Export("libraryVersion")]
+		string LibraryVersion();
 
 		// +(NSString *)appKey;
 		[Static]
-		[Export ("appKey")]
-		string AppKey ();
+		[Export("appKey")]
+		string AppKey();
 
-		// +(NSString *)analyticsHost;
+		// +(void)setMessagingDelegate:(id<LLMessagingDelegate> _Nullable)delegate;
 		[Static]
-		[Export ("analyticsHost")]
-		string AnalyticsHost ();
-
-		// +(void)setAnalyticsHost:(NSString *)analyticsHost;
-		[Static]
-		[Export ("setAnalyticsHost:")]
-		void SetAnalyticsHost (string analyticsHost);
-
-		// +(NSString *)messagingHost;
-		[Static]
-		[Export ("messagingHost")]
-		string MessagingHost ();
-
-		// +(void)setMessagingHost:(NSString *)messagingHost;
-		[Static]
-		[Export ("setMessagingHost:")]
-		void SetMessagingHost (string messagingHost);
-
-		// +(NSString *)profilesHost;
-		[Static]
-		[Export ("profilesHost")]
-		string ProfilesHost ();
-
-		// +(void)setProfilesHost:(NSString *)profilesHost;
-		[Static]
-		[Export ("setProfilesHost:")]
-		void SetProfilesHost (string profilesHost);
-
-		// +(void)addMessagingDelegate:(id<LLMessagingDelegate>)delegate;
-		[Static]
-		[Export ("addMessagingDelegate:")]
-		void AddMessagingDelegate (LLMessagingDelegate @delegate);
-
-		// +(void)removeMessagingDelegate:(id<LLMessagingDelegate>)delegate;
-		[Static]
-		[Export ("removeMessagingDelegate:")]
-		void RemoveMessagingDelegate (LLMessagingDelegate @delegate);
+		[Export("setMessagingDelegate:")]
+		void SetMessagingDelegate([NullAllowed] LLMessagingDelegate @delegate);
 
 		// +(BOOL)isInAppAdIdParameterEnabled;
 		[Static]
-		[Export ("isInAppAdIdParameterEnabled")]
-		bool IsInAppAdIdParameterEnabled ();
+		[Export("isInAppAdIdParameterEnabled")]
+		bool IsInAppAdIdParameterEnabled { get; }
 
 		// +(void)setInAppAdIdParameterEnabled:(BOOL)enabled;
 		[Static]
-		[Export ("setInAppAdIdParameterEnabled:")]
-		void SetInAppAdIdParameterEnabled (bool enabled);
+		[Export("setInAppAdIdParameterEnabled:")]
+		void SetInAppAdIdParameterEnabled(bool enabled);
 
-		// +(void)addAnalyticsDelegate:(id<LLAnalyticsDelegate>)delegate;
+		// +(void)setAnalyticsDelegate:(id<LLAnalyticsDelegate> _Nullable)delegate;
 		[Static]
-		[Export ("addAnalyticsDelegate:")]
-		void AddAnalyticsDelegate (LLAnalyticsDelegate @delegate);
+		[Export("setAnalyticsDelegate:")]
+		void SetAnalyticsDelegate([NullAllowed] LLAnalyticsDelegate @delegate);
 
-		// +(void)removeAnalyticsDelegate:(id<LLAnalyticsDelegate>)delegate;
+		// +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate;
 		[Static]
-		[Export ("removeAnalyticsDelegate:")]
-		void RemoveAnalyticsDelegate (LLAnalyticsDelegate @delegate);
-
-		// +(BOOL)handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void (^)(NSDictionary *))reply;
-		[Static]
-		[Export ("handleWatchKitExtensionRequest:reply:")]
-		bool HandleWatchKitExtensionRequest (NSDictionary userInfo, Action<NSDictionary> reply);
+		[Export("setLocationDelegate:")]
+		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
 	}
 
 	// @protocol LLAnalyticsDelegate <NSObject>
@@ -382,9 +716,9 @@ namespace LocalyticsXamarin.iOS
 		[Export ("localyticsSessionDidOpen:isUpgrade:isResume:")]
 		void LocalyticsSessionDidOpen (bool isFirst, bool isUpgrade, bool isResume);
 
-		// @optional -(void)localyticsDidTagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes customerValueIncrease:(NSNumber *)customerValueIncrease;
-		[Export ("localyticsDidTagEvent:attributes:customerValueIncrease:")]
-		void LocalyticsDidTagEvent (string eventName, NSDictionary attributes, NSNumber customerValueIncrease);
+		// @optional -(void)localyticsDidTagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes customerValueIncrease:(NSNumber * _Nullable)customerValueIncrease;
+		[Export("localyticsDidTagEvent:attributes:customerValueIncrease:")]
+		void LocalyticsDidTagEvent(string eventName, [NullAllowed] NSDictionary attributes, [NullAllowed] NSNumber customerValueIncrease);
 
 		// @optional -(void)localyticsSessionWillClose;
 		[Export ("localyticsSessionWillClose")]
@@ -393,23 +727,68 @@ namespace LocalyticsXamarin.iOS
 
 	// @protocol LLMessagingDelegate <NSObject>
 	[Protocol, Model]
-	[BaseType (typeof(NSObject))]
+	[BaseType(typeof(NSObject))]
 	interface LLMessagingDelegate
 	{
 		// @optional -(void)localyticsWillDisplayInAppMessage;
-		[Export ("localyticsWillDisplayInAppMessage")]
-		void LocalyticsWillDisplayInAppMessage ();
+		[Export("localyticsWillDisplayInAppMessage")]
+		void LocalyticsWillDisplayInAppMessage();
 
 		// @optional -(void)localyticsDidDisplayInAppMessage;
-		[Export ("localyticsDidDisplayInAppMessage")]
-		void LocalyticsDidDisplayInAppMessage ();
+		[Export("localyticsDidDisplayInAppMessage")]
+		void LocalyticsDidDisplayInAppMessage();
 
 		// @optional -(void)localyticsWillDismissInAppMessage;
-		[Export ("localyticsWillDismissInAppMessage")]
-		void LocalyticsWillDismissInAppMessage ();
+		[Export("localyticsWillDismissInAppMessage")]
+		void LocalyticsWillDismissInAppMessage();
 
 		// @optional -(void)localyticsDidDismissInAppMessage;
-		[Export ("localyticsDidDismissInAppMessage")]
-		void LocalyticsDidDismissInAppMessage ();
+		[Export("localyticsDidDismissInAppMessage")]
+		void LocalyticsDidDismissInAppMessage();
+
+		// @optional -(BOOL)localyticsShouldDisplayPlacesCampaign:(LLPlacesCampaign * _Nonnull)campaign;
+		[Export("localyticsShouldDisplayPlacesCampaign:")]
+		bool LocalyticsShouldDisplayPlacesCampaign(LLPlacesCampaign campaign);
+
+		// @optional -(UILocalNotification * _Nonnull)localyticsWillDisplayNotification:(UILocalNotification * _Nonnull)notification forPlacesCampaign:(LLPlacesCampaign * _Nonnull)campaign;
+		[Export("localyticsWillDisplayNotification:forPlacesCampaign:")]
+		UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign);
+
+		// @optional -(UNMutableNotificationContent * _Nonnull)localyticsWillDisplayNotificationContent:(UNMutableNotificationContent * _Nonnull)notification forPlacesCampaign:(LLPlacesCampaign * _Nonnull)campaign;
+		[Export("localyticsWillDisplayNotificationContent:forPlacesCampaign:")]
+		UNMutableNotificationContent LocalyticsWillDisplayNotificationContent(UNMutableNotificationContent notification, LLPlacesCampaign campaign);
+
 	}
+
+	// @protocol LLLocationDelegate <NSObject>
+	[Protocol, Model]
+	[BaseType(typeof(NSObject))]
+	interface LLLocationDelegate
+	{
+		// @optional -(void)localyticsDidUpdateLocation:(CLLocation * _Nonnull)location;
+		[Export("localyticsDidUpdateLocation:")]
+		void LocalyticsDidUpdateLocation(CLLocation location);
+
+		// @optional -(void)localyticsDidUpdateMonitoredRegions:(NSArray<LLRegion *> * _Nonnull)addedRegions removeRegions:(NSArray<LLRegion *> * _Nonnull)removedRegions;
+		[Export("localyticsDidUpdateMonitoredRegions:removeRegions:")]
+		void LocalyticsDidUpdateMonitoredRegions(LLRegion[] addedRegions, LLRegion[] removedRegions);
+
+		// @optional -(void)localyticsDidTriggerRegions:(NSArray<LLRegion *> * _Nonnull)regions withEvent:(LLRegionEvent)event;
+		[Export("localyticsDidTriggerRegions:withEvent:")]
+		void LocalyticsDidTriggerRegions(LLRegion[] regions, LLRegionEvent @event);
+	}
+
+	// @interface LLInboxDetailViewController : UIViewController
+	[BaseType(typeof(UIViewController))]
+	interface LLInboxDetailViewController
+	{
+		// @property (readonly, nonatomic, strong) LLInboxCampaign * _Nonnull campaign;
+		[Export("campaign", ArgumentSemantic.Strong)]
+		LLInboxCampaign Campaign { get; }
+
+		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
+		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
+		UIView CreativeLoadErrorView { get; set; }
+	}
+
 }
