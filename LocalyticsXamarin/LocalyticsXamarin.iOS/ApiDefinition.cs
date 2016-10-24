@@ -3,6 +3,7 @@ using CoreLocation;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
+using UserNotifications;
 
 namespace LocalyticsXamarin.iOS
 {
@@ -260,15 +261,16 @@ namespace LocalyticsXamarin.iOS
 	[BaseType (typeof(NSObject))]
 	interface Localytics
 	{
-		// +(void)autoIntegrate:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions;
+		// +(void)autoIntegrate:(NSString * _Nonnull)appKey launchOptions:(NSDictionary * _Nullable)launchOptions;
 		[Static]
-		[Export ("autoIntegrate:launchOptions:")]
-		void AutoIntegrate (string appKey, NSDictionary launchOptions);
+		[Export("autoIntegrate:launchOptions:")]
+		void AutoIntegrate(string appKey, [NullAllowed] NSDictionary launchOptions);
 
-		// +(void)integrate:(NSString *)appKey;
+		// +(void)integrate:(NSString * _Nonnull)appKey;
 		[Static]
-		[Export ("integrate:")]
-		void Integrate (string appKey);
+		[Export("integrate:")]
+		void Integrate(string appKey);
+
 
 		// +(void)openSession;
 		[Static]
@@ -285,10 +287,10 @@ namespace LocalyticsXamarin.iOS
 		[Export ("upload")]
 		void Upload ();
 
-		// +(void)tagEvent:(NSString *)eventName;
+		// +(void)tagEvent:(NSString * _Nonnull)eventName;
 		[Static]
-		[Export ("tagEvent:")]
-		void TagEvent (string eventName);
+		[Export("tagEvent:")]
+		void TagEvent(string eventName);
 
 		// +(void)tagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes;
 		[Static]
@@ -511,6 +513,21 @@ namespace LocalyticsXamarin.iOS
 		[Export("handleNotification:")]
 		void HandleNotification(NSDictionary notificationInfo);
 
+		// +(void)didReceiveNotificationResponseWithUserInfo:(NSDictionary * _Nonnull)userInfo;
+		[Static]
+		[Export("didReceiveNotificationResponseWithUserInfo:")]
+		void DidReceiveNotificationResponseWithUserInfo(NSDictionary userInfo);
+
+		// +(void)didRegisterUserNotificationSettings:(UIUserNotificationSettings * _Nonnull)notificationSettings;
+		[Static]
+		[Export("didRegisterUserNotificationSettings:")]
+		void DidRegisterUserNotificationSettings(UIUserNotificationSettings notificationSettings);
+
+		// +(void)didRequestUserNotificationAuthorizationWithOptions:(NSUInteger)options granted:(BOOL)granted;
+		[Static]
+		[Export("didRequestUserNotificationAuthorizationWithOptions:granted:")]
+		void DidRequestUserNotificationAuthorizationWithOptions(nuint options, bool granted);
+
 		// +(BOOL)handleTestModeURL:(NSURL *)url;
 		[Static]
 		[Export ("handleTestModeURL:")]
@@ -519,12 +536,12 @@ namespace LocalyticsXamarin.iOS
 		// +(void)setInAppMessageDismissButtonImage:(UIImage *)image;
 		[Static]
 		[Export ("setInAppMessageDismissButtonImage:")]
-		void SetInAppMessageDismissButtonImage (UIImage image);
+		void SetInAppMessageDismissButtonImage ([NullAllowed] UIImage image);
 
 		// +(void)setInAppMessageDismissButtonImageWithName:(NSString *)imageName;
 		[Static]
 		[Export ("setInAppMessageDismissButtonImageWithName:")]
-		void SetInAppMessageDismissButtonImageWithName (string imageName);
+		void SetInAppMessageDismissButtonImageWithName ([NullAllowed] string imageName);
 
 		// +(LLInAppMessageDismissButtonLocation)inAppMessageDismissButtonLocation;
 		// +(void)setInAppMessageDismissButtonLocation:(LLInAppMessageDismissButtonLocation)location;
@@ -736,6 +753,11 @@ namespace LocalyticsXamarin.iOS
 		// @optional -(UILocalNotification * _Nonnull)localyticsWillDisplayNotification:(UILocalNotification * _Nonnull)notification forPlacesCampaign:(LLPlacesCampaign * _Nonnull)campaign;
 		[Export("localyticsWillDisplayNotification:forPlacesCampaign:")]
 		UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign);
+
+		// @optional -(UNMutableNotificationContent * _Nonnull)localyticsWillDisplayNotificationContent:(UNMutableNotificationContent * _Nonnull)notification forPlacesCampaign:(LLPlacesCampaign * _Nonnull)campaign;
+		[Export("localyticsWillDisplayNotificationContent:forPlacesCampaign:")]
+		UNMutableNotificationContent LocalyticsWillDisplayNotificationContent(UNMutableNotificationContent notification, LLPlacesCampaign campaign);
+
 	}
 
 	// @protocol LLLocationDelegate <NSObject>
