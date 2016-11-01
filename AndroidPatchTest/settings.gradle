@@ -1,1 +1,1 @@
-include ':app', ':androidpatch'
+include ':androidpatch'

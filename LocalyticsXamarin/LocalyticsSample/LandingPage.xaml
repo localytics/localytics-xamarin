@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="LocalyticsSample.LandingPage"
 	Padding="10,10,10,10" Title="Localytics Xamarin.Forms Sample">
 	<ContentPage.Content>
@@ -12,10 +12,6 @@
                  <Label x:Name="info5" Text=""/>
                  <Label x:Name="info6" Text=""/>
                  <Label x:Name="info7" Text=""/>
-                 <Label x:Name="info8" Text=""/>
-                 <Label x:Name="info9" Text=""/>
-                 <Label x:Name="info10" Text=""/>
-                 <Label x:Name="info11" Text=""/>
 
                  <Button Text="Refresh" IsEnabled="true" Clicked="OnRefresh"  BorderWidth="2" BorderColor="Black"/>
 

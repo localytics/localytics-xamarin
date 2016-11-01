@@ -1,5 +1,5 @@
 ﻿using System;
-using MonoTouch.ObjCRuntime;
+using ObjCRuntime;
 
 namespace LocalyticsXamarin.iOS
 {
@@ -16,4 +16,12 @@ namespace LocalyticsXamarin.iOS
 		Application,
 		Organization
 	}
+
+	[Native]
+	public enum LLRegionEvent : long
+	{
+		Enter,
+		Exit
+	}
 }
+

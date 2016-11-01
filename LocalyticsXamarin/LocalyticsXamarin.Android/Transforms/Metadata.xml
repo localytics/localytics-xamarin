@@ -1,19 +1,17 @@
 ﻿<metadata>
     <attr path="/api/package[@name='com.localytics.android']" name="managedName">LocalyticsXamarin.Android</attr>
     <attr path="/api/package[@name='com.localytics.androidpatch']" name="managedName">LocalyticsXamarin.AndroidPatch</attr>
-
-    <attr path="/api/package[@name='com.localytics.android']/class[@name='LocalyticsActivity']/method[@name='onPause']" name="visibility">protected</attr>
-    <attr path="/api/package[@name='com.localytics.android']/class[@name='LocalyticsActivity']/method[@name='onResume']" name="visibility">protected</attr>
-    <attr path="/api/package[@name='com.localytics.android']/class[@name='LocalyticsActivityWithMarketing']/method[@name='onPause']" name="visibility">protected</attr>
-    <attr path="/api/package[@name='com.localytics.android']/class[@name='LocalyticsActivityWithMarketing']/method[@name='onResume']" name="visibility">protected</attr>
+       
     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getCreativeUri']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getLocalCreativeUri']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getLocalThumbnailUri']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getInboxId']" name="visibility">public</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='PlacesCampaign']/method[@name='setCreativeType']" name="visibility">public</attr>
 
     <attr path="/api/package[@name='com.localytics.android']/class[@name='BaseHandler']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='BaseUploadThread']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='BaseProvider']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.localytics.android']/class[@name='GeofenceTransitionsService']" name="visibility">private</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='Campaign']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='WebViewCampaign']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']" name="visibility">public</attr>
@@ -21,13 +19,13 @@
     <attr path="/api/package[@name='com.localytics.android']/class[@name='MarketingWebView.MarketingWebViewClient']" name="visibility">public</attr>
     <attr path="/api/package[@name='com.localytics.android']/interface[@name='LocalyticsDao']" name="visibility">public</attr>
 
-    <remove-node path="/api/package[@name='com.localytics.android']/interface[@name='BaseHandler.BaseListener']" />
     <remove-node path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']" />
     <remove-node path="/api/package[@name='com.localytics.android']/interface[@name='MessagingListener']" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='AnalyticsListenerAdapter']" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='MessagingListenerAdapter']" />
-    <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='addAnalyticsListener']" />
-    <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='removeAnalyticsListener']" />
-    <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='addMessagingListener']" />
-    <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='removeMessagingListener']" />
+	<remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setMessagingListener']" />
+	<remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setAnalyticsListener']" />
+	<remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLocationListener']" />
+	<remove-node path="/api/package[@name='com.localytics.android']/class[@name='TestModeListView']/method[@name='setCallbacks']" />
+	
 </metadata>

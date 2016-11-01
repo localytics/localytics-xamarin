@@ -32,18 +32,14 @@ namespace LocalyticsSample
 
 		void RefreshInfo() {
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string value0 = "AnalyticsHost: " + DependencyService.Get<ILocalyticsXamarinForms>().AnalyticsHost;
-				string value1 = "AppKey: " + DependencyService.Get<ILocalyticsXamarinForms>().AppKey;
-				string value2 = "CustomerId: " + DependencyService.Get<ILocalyticsXamarinForms>().CustomerId;
-				string value3 = "InstallId: " + DependencyService.Get<ILocalyticsXamarinForms>().InstallId;
-				string value4 = "LibraryVersion: " + DependencyService.Get<ILocalyticsXamarinForms>().LibraryVersion;
-				string value5 = "MessagingHost: " + DependencyService.Get<ILocalyticsXamarinForms>().MessagingHost;
-				string value6 = "ProfilesHost: " + DependencyService.Get<ILocalyticsXamarinForms>().ProfilesHost;
-				string value7 = "SessionTimeout: " + DependencyService.Get<ILocalyticsXamarinForms>().SessionTimeoutInterval;
-				string value8 = "OptedOut: " + DependencyService.Get<ILocalyticsXamarinForms>().OptedOut;
-				string value9 = "TestModeEnabled: " + DependencyService.Get<ILocalyticsXamarinForms>().TestModeEnabled;
-				string value10= "Push Token/RegID: " + DependencyService.Get<ILocalyticsXamarinForms>().PushToken;
-				string value11 = "LoggingEnabled: " + DependencyService.Get<ILocalyticsXamarinForms>().LoggingEnabled;
+				string value0 = "AppKey: " + DependencyService.Get<ILocalyticsXamarinForms>().AppKey;
+				string value1 = "CustomerId: " + DependencyService.Get<ILocalyticsXamarinForms>().CustomerId;
+				string value2 = "InstallId: " + DependencyService.Get<ILocalyticsXamarinForms>().InstallId;
+				string value3 = "LibraryVersion: " + DependencyService.Get<ILocalyticsXamarinForms>().LibraryVersion;
+				string value4 = "OptedOut: " + DependencyService.Get<ILocalyticsXamarinForms>().OptedOut;
+				string value5 = "TestModeEnabled: " + DependencyService.Get<ILocalyticsXamarinForms>().TestModeEnabled;
+				string value6= "Push Token/RegID: " + DependencyService.Get<ILocalyticsXamarinForms>().PushToken;
+				string value7 = "LoggingEnabled: " + DependencyService.Get<ILocalyticsXamarinForms>().LoggingEnabled;
 
 
 				Device.BeginInvokeOnMainThread(delegate {
@@ -55,10 +51,6 @@ namespace LocalyticsSample
 					info5.Text = value5;
 					info6.Text = value6;
 					info7.Text = value7;
-					info8.Text = value8;
-					info9.Text = value9;
-					info10.Text = value10;
-					info11.Text = value11;
 				});
 			});
 		}

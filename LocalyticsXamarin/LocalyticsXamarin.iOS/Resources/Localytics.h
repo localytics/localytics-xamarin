@@ -11,23 +11,26 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Localytics/LocalyticsTypes.h>
+#import <Localytics/LLCustomer.h>
+#import <Localytics/LLCampaignBase.h>
+#import <Localytics/LLWebViewCampaign.h>
+#import <Localytics/LLInboxCampaign.h>
+#import <Localytics/LLPlacesCampaign.h>
+#import <Localytics/LLRegion.h>
+#import <Localytics/LLGeofence.h>
+#import <Localytics/LLInboxViewController.h>
+#import <Localytics/LLInboxDetailViewController.h>
 
-#define LOCALYTICS_LIBRARY_VERSION      @"3.5.1"
+#define LOCALYTICS_LIBRARY_VERSION      @"4.1.0"
 
-typedef NS_ENUM(NSUInteger, LLInAppMessageDismissButtonLocation){
-    LLInAppMessageDismissButtonLocationLeft,
-    LLInAppMessageDismissButtonLocationRight
-};
-
-typedef NS_ENUM(NSInteger, LLProfileScope){
-    LLProfileScopeApplication,
-    LLProfileScopeOrganization
-};
+@class UNMutableNotificationContent;
 
 @protocol LLMessagingDelegate;
 @protocol LLAnalyticsDelegate;
+@protocol LLLocationDelegate;
 
-/** 
+/**
  @discussion The class which manages creating, collecting, & uploading a Localytics session.
  Please see the following guides for information on how to best use this
  library, sample code, and other useful information:
@@ -35,7 +38,7 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  <li><a href="http://wiki.localytics.com/index.php?title=Developer's_Integration_Guide">
  Main Developer's Integration Guide</a></li>
  </ul>
- 
+
  <strong>Best Practices</strong>
  <ul>
  <li>Integrate Localytics in <code>applicationDidFinishLaunching</code>.</li>
@@ -64,24 +67,24 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  integration is accomplished by proxing the AppDelegate and "inserting" a Localytics AppDelegate
  behind the applications AppDelegate. The proxy will first call the applications AppDelegate and
  then call the Localytics AppDelegate.
- 
+
  @param appKey The unique key for each application generated at www.localytics.com
  @param launchOptions The launchOptions provided by application:DidFinishLaunchingWithOptions:
  */
-+ (void)autoIntegrate:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions;
++ (void)autoIntegrate:(nonnull NSString *)appKey launchOptions:(nullable NSDictionary *)launchOptions;
 
 /** Manually integrate the Localytic SDK into the application.
- 
+
  Use this method to manually integrate the Localytics SDK. The developer still has to make sure to
- open and close the Localytics session as well as call upload to ensure data is uploaded to 
+ open and close the Localytics session as well as call upload to ensure data is uploaded to
  Localytics
- 
+
  @param appKey The unique key for each application generated at www.localytics.com
  @see openSession
  @see closeSession
  @see upload
  */
-+ (void)integrate:(NSString *)appKey;
++ (void)integrate:(nonnull NSString *)appKey;
 
 /** Opens the Localytics session.
  The session time as presented on the website is the time between <code>open</code> and the
@@ -126,7 +129,7 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param eventName The name of the event which occurred.
  @see tagEvent:attributes:customerValueIncrease:
  */
-+ (void)tagEvent:(NSString *)eventName;
++ (void)tagEvent:(nonnull NSString *)eventName;
 
 /** Tag an event with attributes
  @param eventName The name of the event which occurred.
@@ -134,7 +137,7 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  contextual data specific to the event.
  @see tagEvent:attributes:customerValueIncrease:
  */
-+ (void)tagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes;
++ (void)tagEvent:(nonnull NSString *)eventName attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
 
 /** Allows a session to tag a particular event as having occurred.  For
  example, if a view has three buttons, it might make sense to tag
@@ -160,15 +163,135 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param customerValueIncrease (Optional) Numeric value, added to customer lifetime value.
  Integer expected. Try to use lowest possible unit, such as cents for US currency.
  */
-+ (void)tagEvent:(NSString *)eventName attributes:(NSDictionary *)attributes customerValueIncrease:(NSNumber *)customerValueIncrease;
++ (void)tagEvent:(nonnull NSString *)eventName attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes customerValueIncrease:(nullable NSNumber *)customerValueIncrease;
+
+#pragma mark - Standard Event Tagging
+/** ---------------------------------------------------------------------------------------
+ * @name Standard Event Tagging
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ * A standard event to tag a single item purchase event (after the action has occurred)
+ *
+ * @param itemName      The name of the item purchased (optional, can be null)
+ * @param itemId        A unique identifier of the item being purchased, such as a SKU (optional, can be null)
+ * @param itemType      The type of item (optional, can be null)
+ * @param itemPrice     The price of the item (optional, can be null). Will be added to customer lifetime value. Try to use lowest possible unit, such as cents for US currency.
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagPurchased:(nullable NSString *)itemName itemId:(nullable NSString *)itemId itemType:(nullable NSString *)itemType itemPrice:(nullable NSNumber *)itemPrice attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the addition of a single item to a cart (after the action has occurred)
+ *
+ * @param itemName      The name of the item purchased (optional, can be null)
+ * @param itemId        A unique identifier of the item being purchased, such as a SKU (optional, can be null)
+ * @param itemType      The type of item (optional, can be null)
+ * @param itemPrice     The price of the item (optional, can be null). Will NOT be added to customer lifetime value.
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagAddedToCart:(nullable NSString *)itemName itemId:(nullable NSString *)itemId itemType:(nullable NSString *)itemType itemPrice:(nullable NSNumber *)itemPrice attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the start of the checkout process (after the action has occurred)
+ *
+ * @param totalPrice    The total price of all the items in the cart (optional, can be null). Will NOT be added to customer lifetime value.
+ * @param itemCount     Total count of items in the cart (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagStartedCheckout:(nullable NSNumber *)totalPrice itemCount:(nullable NSNumber *)itemCount attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the conclusions of the checkout process (after the action has occurred)
+ *
+ * @param totalPrice    The total price of all the items in the cart (optional, can be null). Will be added to customer lifetime value. Try to use lowest possible unit, such as cents for US currency.
+ * @param itemCount     Total count of items in the cart (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagCompletedCheckout:(nullable NSNumber *)totalPrice itemCount:(nullable NSNumber *)itemCount attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the viewing of content (after the action has occurred)
+ *
+ * @param contentName   The name of the content being viewed (such as article name) (optional, can be null)
+ * @param contentId     A unique identifier of the content being viewed (optional, can be null)
+ * @param contentType   The type of content (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagContentViewed:(nullable NSString *)contentName contentId:(nullable NSString *)contentId contentType:(nullable NSString *)contentType attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag a search event (after the action has occurred)
+ *
+ * @param queryText     The query user for the search (optional, can be null)
+ * @param contentType   The type of content (optional, can be null)
+ * @param resultCount   The number of results returned by the query (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagSearched:(nullable NSString *)queryText contentType:(nullable NSString *)contentType resultCount:(nullable NSNumber *)resultCount attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag a share event (after the action has occurred)
+ *
+ * @param contentName   The name of the content being viewed (such as article name) (optional, can be null)
+ * @param contentId     A unique identifier of the content being viewed (optional, can be null)
+ * @param contentType   The type of content (optional, can be null)
+ * @param methodName    The method by which the content was shared such as Twitter, Facebook, Native (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagShared:(nullable NSString *)contentName contentId:(nullable NSString *)contentId contentType:(nullable NSString *)contentType methodName:(nullable NSString *)methodName attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the rating of content (after the action has occurred)
+ *
+ * @param contentName   The name of the content being viewed (such as article name) (optional, can be null)
+ * @param contentId     A unique identifier of the content being viewed (optional, can be null)
+ * @param contentType   The type of content (optional, can be null)
+ * @param rating        A rating of the content (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagContentRated:(nullable NSString *)contentName contentId:(nullable NSString *)contentId contentType:(nullable NSString *)contentType rating:(nullable NSNumber *)rating attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the registration of a user (after the action has occurred)
+ *
+ * @param customer      An object providing information about the customer that registered (optional, can be null)
+ * @param methodName    The method by which the user was registered such as Twitter, Facebook, Native (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagCustomerRegistered:(nullable LLCustomer *)customer methodName:(nullable NSString *)methodName attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the logging in of a user (after the action has occurred)
+ *
+ * @param customer      An object providing information about the customer that logged in (optional, can be null)
+ * @param methodName    The method by which the user was logged in such as Twitter, Facebook, Native (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagCustomerLoggedIn:(nullable LLCustomer *)customer methodName:(nullable NSString *)methodName attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the logging out of a user (after the action has occurred)
+ *
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagCustomerLoggedOut:(nullable NSDictionary<NSString *, NSString *> *)attributes;
+
+/**
+ * A standard event to tag the invitation of a user (after the action has occured)
+ *
+ * @param methodName    The method by which the user was invited such as Twitter, Facebook, Native (optional, can be null)
+ * @param attributes    Any additional attributes to attach to this event (optional, can be null)
+ */
++ (void)tagInvited:(nullable NSString *)methodName attributes:(nullable NSDictionary<NSString *, NSString *> *)attributes;
 
 #pragma mark - Tag Screen Method
 
 /** Allows tagging the flow of screens encountered during the session.
  @param screenName The name of the screen
  */
-
-+ (void)tagScreen:(NSString *)screenName;
++ (void)tagScreen:(nonnull NSString *)screenName;
 
 #pragma mark - Custom Dimensions
 /** ---------------------------------------------------------------------------------------
@@ -187,7 +310,7 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param dimension The dimension to set the value of
  @see valueForCustomDimension:
  */
-+ (void)setValue:(NSString *)value forCustomDimension:(NSUInteger)dimension;
++ (void)setValue:(nullable NSString *)value forCustomDimension:(NSUInteger)dimension;
 
 /** Gets the custom value for a given dimension. Avoid calling this on the main thread, as it
  may take some time for all pending database execution.
@@ -195,7 +318,7 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @return The current value for the given custom dimension
  @see setValue:forCustomDimension:
  */
-+ (NSString *)valueForCustomDimension:(NSUInteger)dimension;
++ (nullable NSString *)valueForCustomDimension:(NSUInteger)dimension;
 
 #pragma mark - Identifiers
 /** ---------------------------------------------------------------------------------------
@@ -205,14 +328,14 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
 
 /** Sets the value of a custom identifier. Identifiers are a form of key/value storage
  which contain custom user data. Identifiers might include things like email addresses,
- customer IDs, twitter handles, and facebook IDs. Once a value is set, the device it was set 
+ customer IDs, twitter handles, and facebook IDs. Once a value is set, the device it was set
  on will continue to upload that value until the value is changed.
  To delete a property, pass in nil as the value.
  @param value The value to set the identifier to. To delete a propert set the value to nil
  @param identifier The name of the identifier to have it's value set
  @see valueForIdentifier:
  */
-+ (void)setValue:(NSString *)value forIdentifier:(NSString *)identifier;
++ (void)setValue:(nullable NSString *)value forIdentifier:(nonnull NSString *)identifier;
 
 /** Gets the identifier value for a given identifier. Avoid calling this on the main thread, as it
  may take some time for all pending database execution.
@@ -220,19 +343,19 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @return The current value for the given identifier
  @see setValue:forCustomDimension:
  */
-+ (NSString *)valueForIdentifier:(NSString *)identifier;
++ (nullable NSString *)valueForIdentifier:(nonnull NSString *)identifier;
 
-/** This is an identifier helper method. This method acts the same as calling
-    [Localytics setValue:userId forIdentifier:@"customer_id"]
- @param customerId The user id to set the 'customer_id' identifier to
+/** Set the identifier for the customer. This valued is used when setting profile attributes,
+ targeting users for push and mapping data exported from Localytics to a user.
+ @param customerId The value to set the customer identifier to
  */
-+ (void)setCustomerId:(NSString *)customerId;
++ (void)setCustomerId:(nullable NSString *)customerId;
 
 /** Gets the customer id. Avoid calling this on the main thread, as it
  may take some time for all pending database execution.
  @return The current value for customer id
  */
-+ (NSString *)customerId;
++ (nullable NSString *)customerId;
 
 /** Stores the user's location.  This will be used in all event and session calls.
  If your application has already collected the user's location, it may be passed to Localytics
@@ -250,35 +373,35 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
 
 /** Sets the value of a profile attribute.
  @param value The value to set the profile attribute to. value can be one of the following: NSString,
- NSNumber(long & int), NSDate, NSArray of Strings, NSArray of NSNumbers(long & int), NSArray of Date,
+ NSNumber(long & int), NSDate, NSSet of Strings, NSSet of NSNumbers(long & int), NSSet of Date,
  nil. Passing in a 'nil' value will result in that attribute being deleted from the profile
  @param attribute The name of the profile attribute to be set
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)setValue:(NSObject *)value forProfileAttribute:(NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)setValue:(nonnull NSObject *)value forProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Sets the value of a profile attribute (scope: Application).
  @param value The value to set the profile attribute to. value can be one of the following: NSString,
- NSNumber(long & int), NSDate, NSArray of Strings, NSArray of NSNumbers(long & int), NSArray of Date,
+ NSNumber(long & int), NSDate, NSSet of Strings, NSSet of NSNumbers(long & int), NSSet of Date,
  nil. Passing in a 'nil' value will result in that attribute being deleted from the profile
  @param attribute The name of the profile attribute to be set
  */
-+ (void)setValue:(NSObject *)value forProfileAttribute:(NSString *)attribute;
++ (void)setValue:(nonnull NSObject *)value forProfileAttribute:(nonnull NSString *)attribute;
 
 /** Adds values to a profile attribute that is a set
- @param values The value to be added to the profile attributes set
+ @param values The value to be added to the profile attributes set.
  @param attribute The name of the profile attribute to have it's set modified
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)addValues:(NSArray *)values toSetForProfileAttribute:(NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)addValues:(nonnull NSArray *)values toSetForProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Adds values to a profile attribute that is a set (scope: Application).
  @param values The value to be added to the profile attributes set
  @param attribute The name of the profile attribute to have it's set modified
  */
-+ (void)addValues:(NSArray *)values toSetForProfileAttribute:(NSString *)attribute;
++ (void)addValues:(nonnull NSArray *)values toSetForProfileAttribute:(nonnull NSString *)attribute;
 
 /** Removes values from a profile attribute that is a set
  @param values The value to be removed from the profile attributes set
@@ -286,13 +409,13 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)removeValues:(NSArray *)values fromSetForProfileAttribute:(NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)removeValues:(nonnull NSArray *)values fromSetForProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Removes values from a profile attribute that is a set (scope: Application).
  @param values The value to be removed from the profile attributes set
  @param attribute The name of the profile attribute to have it's set modified
  */
-+ (void)removeValues:(NSArray *)values fromSetForProfileAttribute:(NSString *)attribute;
++ (void)removeValues:(nonnull NSArray *)values fromSetForProfileAttribute:(nonnull NSString *)attribute;
 
 /** Increment the value of a profile attribute.
  @param value An NSInteger to be added to an existing profile attribute value.
@@ -300,13 +423,13 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)incrementValueBy:(NSInteger)value forProfileAttribute:(NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)incrementValueBy:(NSInteger)value forProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Increment the value of a profile attribute (scope: Application).
  @param value An NSInteger to be added to an existing profile attribute value.
  @param attribute The name of the profile attribute to have it's value incremented
  */
-+ (void)incrementValueBy:(NSInteger)value forProfileAttribute:(NSString *)attribute;
++ (void)incrementValueBy:(NSInteger)value forProfileAttribute:(nonnull NSString *)attribute;
 
 /** Decrement the value of a profile attribute.
  @param value An NSInteger to be subtracted from an existing profile attribute value.
@@ -314,49 +437,49 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)decrementValueBy:(NSInteger)value forProfileAttribute:(NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)decrementValueBy:(NSInteger)value forProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Decrement the value of a profile attribute (scope: Application).
  @param value An NSInteger to be subtracted from an existing profile attribute value.
  @param attribute The name of the profile attribute to have it's value decremented
  */
-+ (void)decrementValueBy:(NSInteger)value forProfileAttribute:(NSString *)attribute;
++ (void)decrementValueBy:(NSInteger)value forProfileAttribute:(nonnull NSString *)attribute;
 
 /** Delete a profile attribute
  @param attribute The name of the attribute to be deleted
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)deleteProfileAttribute:(NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)deleteProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Delete a profile attribute (scope: Application)
  @param attribute The name of the attribute to be deleted
  */
-+ (void)deleteProfileAttribute:(NSString *)attribute;
++ (void)deleteProfileAttribute:(nonnull NSString *)attribute;
 
 /** Convenience method to set a customer's email as both a profile attribute and
  as a customer identifier (scope: Organization)
  @param email Customer's email
  */
-+ (void)setCustomerEmail:(NSString *)email;
++ (void)setCustomerEmail:(nullable NSString *)email;
 
 /** Convenience method to set a customer's first name as both a profile attribute and
  as a customer identifier (scope: Organization)
  @param firstName Customer's first name
  */
-+ (void)setCustomerFirstName:(NSString *)firstName;
++ (void)setCustomerFirstName:(nullable NSString *)firstName;
 
 /** Convenience method to set a customer's last name as both a profile attribute and
  as a customer identifier (scope: Organization)
  @param lastName Customer's last name
  */
-+ (void)setCustomerLastName:(NSString *)lastName;
++ (void)setCustomerLastName:(nullable NSString *)lastName;
 
 /** Convenience method to set a customer's full name as both a profile attribute and
  as a customer identifier (scope: Organization)
  @param fullName Customer's full name
  */
-+ (void)setCustomerFullName:(NSString *)fullName;
++ (void)setCustomerFullName:(nullable NSString *)fullName;
 
 #pragma mark - Push
 /** ---------------------------------------------------------------------------------------
@@ -368,19 +491,32 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @return The device's APNS token if one has been set otherwise nil
  @see setPushToken:
  */
-+ (NSString *)pushToken;
++ (nullable NSString *)pushToken;
 
 /** Stores the device's APNS token. This will be used in all event and session calls.
  @param pushToken The devices APNS token returned by application:didRegisterForRemoteNotificationsWithDeviceToken:
  @see pushToken
  */
-+ (void)setPushToken:(NSData *)pushToken;
++ (void)setPushToken:(nullable NSData *)pushToken;
 
-/** Used to record performance data for push notifications
- @param notificationInfo The dictionary from either didFinishLaunchingWithOptions or
- didReceiveRemoteNotification should be passed on to this method
+/** Used to record performance data for notifications
+ @param notificationInfo The dictionary from either didFinishLaunchingWithOptions, didReceiveRemoteNotification,
+ or didReceiveLocalNotification should be passed on to this method
  */
-+ (void)handlePushNotificationOpened:(NSDictionary *)notificationInfo;
++ (void)handleNotification:(nonnull NSDictionary *)notificationInfo;
+
+/** Use to record performance data for notifications when using UNUserNotificationCenterDelegate
+ @param userInfo The UNNotificationResponse's userInfo retrieved by calling response.notification.request.content.userInfo
+ */
++ (void)didReceiveNotificationResponseWithUserInfo:(nonnull NSDictionary *)userInfo;
+
+/** Used to notify the Localytics SDK that notification settings have changed
+ */
++ (void)didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings;
+
+/** Used to notify the Localytics SDK that user notification authorization has changed
+ */
++ (void)didRequestUserNotificationAuthorizationWithOptions:(NSUInteger)options granted:(BOOL)granted;
 
 #pragma mark - In-App Message
 /** ---------------------------------------------------------------------------------------
@@ -393,20 +529,20 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @return YES if the URL was successfully handled or NO if the attempt to handle the
  URL failed.
  */
-+ (BOOL)handleTestModeURL:(NSURL *)url;
++ (BOOL)handleTestModeURL:(nonnull NSURL *)url;
 
 /** Set the image to be used for dimissing an In-App message
  @param image The image to be used for dismissing an In-App message. By default this is a
  circle with an 'X' in the middle of it
  */
-+ (void)setInAppMessageDismissButtonImage:(UIImage *)image;
++ (void)setInAppMessageDismissButtonImage:(nullable UIImage *)image;
 
 /** Set the image to be used for dimissing an In-App message by providing the name of the
  image to be loaded and used
  @param imageName The name of an image to be loaded and used for dismissing an In-App
  message. By default the image is a circle with an 'X' in the middle of it
  */
-+ (void)setInAppMessageDismissButtonImageWithName:(NSString *)imageName;
++ (void)setInAppMessageDismissButtonImageWithName:(nullable NSString *)imageName;
 
 /** Set the location of the dismiss button on an In-App msg
  @param location The location of the button (left or right)
@@ -420,16 +556,89 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  */
 + (LLInAppMessageDismissButtonLocation)inAppMessageDismissButtonLocation;
 
-+ (void)triggerInAppMessage:(NSString *)triggerName;
-+ (void)triggerInAppMessage:(NSString *)triggerName withAttributes:(NSDictionary *)attributes;
++ (void)triggerInAppMessage:(nonnull NSString *)triggerName;
++ (void)triggerInAppMessage:(nonnull NSString *)triggerName withAttributes:(nonnull NSDictionary<NSString *,NSString *> *)attributes;
 
 + (void)dismissCurrentInAppMessage;
+
+#pragma mark - Inbox
+
+/** Returns an array of all Inbox campaigns that are enabled and ready for display.
+ @return an array of LLInboxCampaign objects
+ */
++ (nonnull NSArray<LLInboxCampaign *> *)inboxCampaigns;
+
+/** Refresh inbox campaigns from the Localytics server.
+ @param completionBlock the block invoked with refresh is complete
+ */
++ (void)refreshInboxCampaigns:(nonnull void (^)(NSArray<LLInboxCampaign *> * _Nullable inboxCampaigns))completionBlock;
+
+/** Set an Inbox campaign as read. Read state can be used to display opened but not disabled Inbox
+ campaigns differently (e.g. greyed out).
+ @param campaignId the campaign ID of the Inbox campaign.
+ @param read YES to mark the campaign as read, NO to mark it as unread
+ @see [LLInboxCampaign class]
+ */
++ (void)setInboxCampaignId:(NSInteger)campaignId asRead:(BOOL)read;
+
+/** Get the count of unread inbox messages
+ @return the count of unread inbox messages
+ */
++ (NSInteger)inboxCampaignsUnreadCount;
+
+/** Returns a inbox campaign detail view controller with the given inbox campaign data.
+ @return a LLInboxDetailViewController from a given LLInboxCampaign object
+ */
++ (nonnull LLInboxDetailViewController *)inboxDetailViewControllerForCampaign:(nonnull LLInboxCampaign *)campaign;
+
+#pragma mark - Location
+
+/** Enable or disable location monitoring for geofence monitoring. Enabling location monitoring
+ will prompt the user for location permissions. The NSLocationAlwaysUsageDescription key must
+ also be set in your Info.plist
+ @param enabled YES to enable location monitoring, NO to disable monitoring
+ */
++ (void)setLocationMonitoringEnabled:(BOOL)enabled;
+
+/** Retrieve the closest 20 geofences to monitor based on the devices current location. This method
+ should be used if you would rather manage location updates and region monitoring instead of
+ allowing the Localytics SDK to manage location updates and region monitoring automatically when
+ using setLocationMonitoringEnabled. This method should be used in conjunction with triggerRegion:withEvent:
+ and triggerRegions:withEvent: to notify the Localytics SDK that regions have been entered or exited.
+ @param currentCoordinate The devices current location coordinate
+ @see triggerRegion:withEvent:
+ @see triggerRegions:withEvent:
+ */
++ (nonnull NSArray<LLRegion *> *)geofencesToMonitor:(CLLocationCoordinate2D)currentCoordinate;
+
+/** Trigger a region with a certain event. This method should be used in conjunction with geofencesToMonitor:.
+ @param region The CLRegion that is triggered
+ @param event The triggering event (enter or exit)
+ @see geofencesToMonitor:
+ */
++ (void)triggerRegion:(nonnull CLRegion *)region withEvent:(LLRegionEvent)event;
+
+/** Trigger regions with a certain event. This method should be used in conjunction with geofencesToMonitor:.
+ @param region An array of CLRegion object that are triggered
+ @param event The triggering event (enter or exit)
+ @see geofencesToMonitor:
+ */
++ (void)triggerRegions:(nonnull NSArray<CLRegion *> *)regions withEvent:(LLRegionEvent)event;
 
 #pragma mark - Developer Options
 /** ---------------------------------------------------------------------------------------
  * @name Developer Options
  *  ---------------------------------------------------------------------------------------
  */
+
+/**
+ * Customize the behavior of the SDK by setting custom values for various options.
+ * In each entry, the key specifies the option to modify, and the value specifies what value
+ * to set the option to. Options can be restored to default by passing in a value of NSNull,
+ * or an empty string for values with type NSString.
+ * @param options The dictionary of options and values to modify
+ */
++ (void)setOptions:(nullable NSDictionary<NSString *, NSObject *> *)options;
 
 /** Returns whether the Localytics SDK is set to emit logging information
  @return YES if logging is enabled, NO otherwise
@@ -442,19 +651,6 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  @param loggingEnabled Set to YES to enable logging or NO to disable it
  */
 + (void)setLoggingEnabled:(BOOL)loggingEnabled;
-
-/** Returns whether or not an IDFA is collected and sent to Localytics
- @return YES if an IDFA is collected, NO otherwise
- @see setCollectAdvertisingIdentifier
- */
-+ (BOOL)isCollectingAdvertisingIdentifier;
-
-/** Set whether or not an IDFA is collected and sent to Localytics
- @param collectAdvertisingIdentifier When set to YES an IDFA is collected. No prevents the IDFA
- from being collected. By default an IDFA is collected
- @see isCollectingAdvertisingIdentifier
- */
-+ (void)setCollectAdvertisingIdentifier:(BOOL)collectAdvertisingIdentifier;
 
 /** Returns whether or not the application will collect user data.
  @return YES if the user is opted out, NO otherwise. Default is NO
@@ -487,66 +683,20 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  */
 + (void)setTestModeEnabled:(BOOL)enabled;
 
-/** Returns the session time out interval. If a user backgrounds the app and then foregrounds
- the app before the session timeout interval expires then the session will be considered as
- resuming. If the user returns after the time out interval expires the old session willl be
- closed and a new session will be initiated.
- @return the session time out interval (defaults to 15 seconds)
- */
-+ (NSTimeInterval)sessionTimeoutInterval;
-
-/** Sets the session time out interval. If a user backgrounds the app and then foregrounds
- the app before the session time out interval expires then the session will be considered as
- resuming. If the user returns after the time out interval expires the old session willl be
- closed and a new session will be initiated.
- @param timeoutInterval The session time out interval
- */
-+ (void)setSessionTimeoutInterval:(NSTimeInterval)timeoutInterval;
-
 /** Returns the install id
  @return the install id as an NSString
  */
-+ (NSString *)installId;
++ (nullable NSString *)installId;
 
 /** Returns the version of the Localytics SDK
  @return the version of the Localytics SDK as an NSString
  */
-+ (NSString *)libraryVersion;
++ (nonnull NSString *)libraryVersion;
 
 /** Returns the app key currently set in Localytics
  @return the app key currently set in Localytics as an NSString
  */
-+ (NSString *)appKey;
-
-/** Returns the analytics API hostname
- @return the analyics API hostname currently set in Localytics as an NSString
- */
-+ (NSString *)analyticsHost;
-
-/** Sets the analytics API hostname
- @param analyticsHost The hostname for analytics API requests
- */
-+ (void)setAnalyticsHost:(NSString *)analyticsHost;
-
-/** Returns the messaging API hostname
- @return the messaging API hostname currently set in Localytics as an NSString
- */
-+ (NSString *)messagingHost;
-
-/** Sets the messaging API hostname
- @param messagingHost The hostname for messaging API requests
- */
-+ (void)setMessagingHost:(NSString *)messagingHost;
-
-/** Returns the profiles API hostname
- @return the profiles API hostname currently set in Localytics as an NSString
- */
-+ (NSString *)profilesHost;
-
-/** Sets the profiles API hostname
- @param profilesHost The hostname for profiles API requests
- */
-+ (void)setProfilesHost:(NSString *)profilesHost;
++ (nullable NSString *)appKey;
 
 #pragma mark - In-App Message Delegate
 /** ---------------------------------------------------------------------------------------
@@ -554,19 +704,12 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  *  ---------------------------------------------------------------------------------------
  */
 
-/** Add a Messaging delegate
+/** Set a Messaging delegate
  @param delegate An object that implements the LLMessagingDelegate and is called
- when an In-App message will display, did display, will hide, and did hide. Multiple objects
- can be delegates, and each one will receive callbacks.
+ when an In-App message will display, did display, will hide, and did hide.
  @see LLMessagingDelegate
  */
-+ (void)addMessagingDelegate:(id<LLMessagingDelegate>)delegate;
-
-/** Remove a Messaging delegate
- @param delegate The delegate previously added that now being removed
- @see LLMessagingDelegate
- */
-+ (void)removeMessagingDelegate:(id<LLMessagingDelegate>)delegate;
++ (void)setMessagingDelegate:(nullable id<LLMessagingDelegate>)delegate;
 
 /** Returns whether the ADID parameter is added to In-App call to action URLs
  @return YES if parameter is added, NO otherwise
@@ -585,35 +728,23 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
  *  ---------------------------------------------------------------------------------------
  */
 
-/** Add an Analytics delegate
- @param delegate An object implementing the LLAnalyticsDelegate protocol. Multiple objects
- can be delegates, and each one will receive callbacks.
+/** Set an Analytics delegate
+ @param delegate An object implementing the LLAnalyticsDelegate protocol.
  @see LLAnalyticsDelegate
  */
-+ (void)addAnalyticsDelegate:(id<LLAnalyticsDelegate>)delegate;
++ (void)setAnalyticsDelegate:(nullable id<LLAnalyticsDelegate>)delegate;
 
-/** Remove an Analytics delegate
- @param delegate The delegate previously added that now being removed
- @see LLAnalyticsDelegate
- */
-+ (void)removeAnalyticsDelegate:(id<LLAnalyticsDelegate>)delegate;
-
-#pragma mark - WatchKit
+#pragma mark - Location Delegate
 /** ---------------------------------------------------------------------------------------
- * @name WatchKit
+ * @name Location Delegate
  *  ---------------------------------------------------------------------------------------
  */
 
-/** Handle calls to the SDK from a WatchKit Extension app
- 
- Call this in the UIApplicationDelegate's application:handleWatchKitExtensionRequest:reply: 
- method.
- 
- @param userInfo the userInfo provided by application:handleWatchKitExtensionRequest:reply:
- @param reply The reply provided by application:handleWatchKitExtensionRequest:reply:
- @return YES if the Localytics SDK has handled replying to the WatchKit Extension; NO otherwise
+/** Set a Location delegate
+ @param delegate An object implementing the LLLocationDelegate protocol.
+ @see LLLocationDelegate
  */
-+ (BOOL)handleWatchKitExtensionRequest:(NSDictionary *)userInfo reply:(void (^)(NSDictionary *replyInfo))reply;
++ (void)setLocationDelegate:(nullable id<LLLocationDelegate>)delegate;
 
 @end
 
@@ -623,13 +754,15 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
 - (void)localyticsSessionWillOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume;
 - (void)localyticsSessionDidOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume;
 
-- (void)localyticsDidTagEvent:(NSString *)eventName
-                   attributes:(NSDictionary *)attributes
-        customerValueIncrease:(NSNumber *)customerValueIncrease;
+- (void)localyticsDidTagEvent:(nonnull NSString *)eventName
+                   attributes:(nullable NSDictionary<NSString *,NSString *> *)attributes
+        customerValueIncrease:(nullable NSNumber *)customerValueIncrease;
 
 - (void)localyticsSessionWillClose;
 
 @end
+
+#pragma mark -
 
 @protocol LLMessagingDelegate <NSObject>
 @optional
@@ -638,5 +771,17 @@ typedef NS_ENUM(NSInteger, LLProfileScope){
 - (void)localyticsDidDisplayInAppMessage;
 - (void)localyticsWillDismissInAppMessage;
 - (void)localyticsDidDismissInAppMessage;
+- (BOOL)localyticsShouldDisplayPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+- (nonnull UILocalNotification *)localyticsWillDisplayNotification:(nonnull UILocalNotification *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+- (nonnull UNMutableNotificationContent *)localyticsWillDisplayNotificationContent:(nonnull UNMutableNotificationContent *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+
+@end
+
+@protocol LLLocationDelegate <NSObject>
+@optional
+
+- (void)localyticsDidUpdateLocation:(nonnull CLLocation *)location;
+- (void)localyticsDidUpdateMonitoredRegions:(nonnull NSArray<LLRegion *> *)addedRegions removeRegions:(nonnull NSArray<LLRegion *> *)removedRegions;
+- (void)localyticsDidTriggerRegions:(nonnull NSArray<LLRegion *> *)regions withEvent:(LLRegionEvent)event;
 
 @end

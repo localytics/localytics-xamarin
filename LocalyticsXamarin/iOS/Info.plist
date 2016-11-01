@@ -5,13 +5,13 @@
 	<key>CFBundleDisplayName</key>
 	<string>LocalyticsSample</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.localytics.sample</string>
+	<string>com.localytics.xamarin.sample</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>8.3</string>
+	<string>8.0</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -70,5 +70,18 @@
 	</dict>
 	<key>CFBundleShortVersionString</key>
 	<string>0.9</string>
+	<key>CFBundleName</key>
+	<string>LocalyticsSample</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We just want to know where you are!</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ampYOUR_LOCALYTICS_APP_KEY</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

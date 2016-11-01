@@ -15,7 +15,6 @@ namespace LocalyticsXamarin.Forms
 
 		public void onAppStart ()
 		{
-			Localytics.SessionTimeoutInterval = 10;
 		}
 
 		public void SmokeTest ()
@@ -257,15 +256,6 @@ namespace LocalyticsXamarin.Forms
 			}
 		}
 
-		public long SessionTimeoutInterval {
-			get {
-				return Convert.ToInt64(Localytics.SessionTimeoutInterval);
-			}
-			set {
-				Localytics.SessionTimeoutInterval = value;
-			}
-		}
-
 		public string InstallId {
 			get {
 				return Localytics.InstallId();
@@ -281,33 +271,6 @@ namespace LocalyticsXamarin.Forms
 		public string AppKey {
 			get {
 				return Localytics.AppKey();
-			}
-		}
-
-		public string AnalyticsHost {
-			get {
-				return Localytics.AnalyticsHost();
-			}
-			set {
-				Localytics.SetAnalyticsHost(value);
-			}
-		}
-
-		public string MessagingHost {
-			get {
-				return Localytics.MessagingHost();
-			}
-			set {
-				Localytics.SetMessagingHost(value);
-			}
-		}
-
-		public string ProfilesHost {
-			get {
-				return Localytics.ProfilesHost();
-			}
-			set {
-				Localytics.SetProfilesHost(value);
 			}
 		}
 

@@ -1,25 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.localytics.sample">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+		android:versionCode="1" 
+		android:versionName="1.0"
+		package="com.localytics.xamarin.messaging.sample">
 	<uses-sdk android:minSdkVersion="16" />
+	
+	<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<permission android:name="com.localytics.sample.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="com.localytics.sample.permission.C2D_MESSAGE" />
+	<uses-permission android:name="com.localytics.xamarin.messaging.sample.permission.C2D_MESSAGE" />
+	<permission
+		android:name="com.localytics.xamarin.messaging.sample.permission.C2D_MESSAGE" 
+		android:protectionLevel="signature" />
+	
 	<application android:label="LocalyticsMessagingSample.Android">
-		<meta-data android:name="LOCALYTICS_APP_KEY" android:value="xxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
-		<receiver android:name="com.localytics.android.PushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-			<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<category android:name="com.localytics.sample" />
-			</intent-filter>
-		</receiver>
+		
+		<meta-data android:name="LOCALYTICS_APP_KEY" android:value="YOUR-LOCALYTICS-APP-KEY" />
+		
+		<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+		
 		<activity android:name="com.localytics.android.PushTrackingActivity" />
+		
+		<receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.localytics.xamarin.messaging.sample" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.localytics.android.GcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+		<service
+            android:name="com.localytics.android.InstanceIDListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+		
+		<activity android:name="com.localytics.android.PushTrackingActivity" />
+		
 		<receiver android:name="com.localytics.android.ReferralReceiver" android:exported="true">
 			<intent-filter>
 				<action android:name="com.android.vending.INSTALL_REFERRER" />
 			</intent-filter>
 		</receiver>
+
+		<service android:name="com.localytics.android.GeofenceTransitionsService"/>
+
+		<receiver android:name="com.localytics.android.BootReceiver" >
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
+		
 	</application>
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
+
 </manifest>

@@ -59,14 +59,9 @@ namespace LocalyticsXamarin.Forms
 
 		bool TestModeEnabled { get; set;}
 
-		long SessionTimeoutInterval { get; set; }
-
 		string InstallId { get; }
 		string LibraryVersion { get; }
 		string AppKey { get; }
-		string AnalyticsHost { get; set; }
-		string MessagingHost { get; set; }
-		string ProfilesHost { get; set; }
 	}
 }
 

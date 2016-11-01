@@ -3,12 +3,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{A226284E-54FD-4D43-B799-2B181AE28A33}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>LocalyticsiOSClassicTest</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>LocalyticsiOSClassicTest</AssemblyName>
+    <TargetFrameworkIdentifier>Xamarin.iOS</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
@@ -64,9 +66,9 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
+    <Reference Include="Xamarin.iOS" />
     <Reference Include="Calabash">
-      <HintPath>..\packages\Xamarin.TestCloud.Agent.0.13.0\lib\MonoTouch10\Calabash.dll</HintPath>
+      <HintPath>..\packages\Xamarin.TestCloud.Agent.0.20.3\lib\Xamarin.iOS10\Calabash.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,11 +90,11 @@
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard.storyboard" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsXamarin.iOS-Classic\LocalyticsXamarin.iOS-Classic.csproj">
       <Project>{911670D5-07C2-46BF-B406-30D1E851E741}</Project>
       <Name>LocalyticsXamarin.iOS-Classic</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using UIKit;
 
 using LocalyticsXamarin.iOS;
 
@@ -28,6 +29,18 @@ namespace LocalyticsSample.iOS
 		public override void LocalyticsWillDisplayInAppMessage ()
 		{
 			Console.WriteLine ("LocalyticsWillDisplayInAppMessage");
+		}
+
+		public override bool LocalyticsShouldDisplayPlacesCampaign(LLPlacesCampaign campaign)
+		{
+			Console.Write("LocalyticsShouldDisplayPlacesCampaign");
+			return true;
+		}
+
+		UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign)
+		{
+			Console.Write("LocalyticsWillDisplayNotification");
+			return notification;
 		}
 	}
 }
