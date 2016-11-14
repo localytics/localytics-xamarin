@@ -1,6 +1,6 @@
 //
 //  Localytics.h
-//  Copyright (C) 2014 Char Software Inc., DBA Localytics
+//  Copyright (C) 2016 Char Software Inc., DBA Localytics
 //
 //  This code is provided under the Localytics Modified BSD License.
 //  A copy of this license has been distributed in a file called LICENSE
@@ -9,10 +9,15 @@
 // Please visit www.localytics.com for more information.
 //
 
-#import <UIKit/UIKit.h>
+#import <JavaScriptCore/JavaScriptCore.h>
 #import <CoreLocation/CoreLocation.h>
-#import <Localytics/LocalyticsTypes.h>
 #import <Localytics/LLCustomer.h>
+#import <Localytics/LocalyticsTypes.h>
+
+@protocol LLAnalyticsDelegate;
+
+#if !TARGET_OS_TV
+
 #import <Localytics/LLCampaignBase.h>
 #import <Localytics/LLWebViewCampaign.h>
 #import <Localytics/LLInboxCampaign.h>
@@ -22,38 +27,19 @@
 #import <Localytics/LLInboxViewController.h>
 #import <Localytics/LLInboxDetailViewController.h>
 
-#define LOCALYTICS_LIBRARY_VERSION      @"4.1.0"
-
-@class UNMutableNotificationContent;
-
 @protocol LLMessagingDelegate;
-@protocol LLAnalyticsDelegate;
 @protocol LLLocationDelegate;
 
-/**
- @discussion The class which manages creating, collecting, & uploading a Localytics session.
- Please see the following guides for information on how to best use this
- library, sample code, and other useful information:
- <ul>
- <li><a href="http://wiki.localytics.com/index.php?title=Developer's_Integration_Guide">
- Main Developer's Integration Guide</a></li>
- </ul>
+@class UNMutableNotificationContent;
+#define LOCALYTICS_LIBRARY_VERSION      @"4.2.0" //iOS version
 
- <strong>Best Practices</strong>
- <ul>
- <li>Integrate Localytics in <code>applicationDidFinishLaunching</code>.</li>
- <li>Open your session and begin your uploads in <code>applicationDidBecomeActive</code>. This way the
- upload has time to complete and it all happens before your users have a
- chance to begin any data intensive actions of their own.</li>
- <li>Close the session in <code>applicationWillResignActive</code>.</li>
- <li>Do not call any Localytics functions inside a loop.  Instead, calls
- such as <code>tagEvent</code> should follow user actions.  This limits the
- amount of data which is stored and uploaded.</li>
- <li>Do not instantiate a Localtyics object, instead use only the exposed class methods.</li>
- </ul>
- */
+#else
 
-@interface Localytics : NSObject
+#define LOCALYTICS_LIBRARY_VERSION      @"1.0.0" //tvOS version
+
+#endif
+
+@protocol Localytics <JSExport>
 
 #pragma mark - SDK Integration
 /** ---------------------------------------------------------------------------------------
@@ -62,23 +48,23 @@
  */
 
 /** Auto-integrates the Localytic SDK into the application.
-
+ 
  Use this method to automatically integrate the Localytics SDK in a single line of code. Automatic
  integration is accomplished by proxing the AppDelegate and "inserting" a Localytics AppDelegate
  behind the applications AppDelegate. The proxy will first call the applications AppDelegate and
  then call the Localytics AppDelegate.
-
+ 
  @param appKey The unique key for each application generated at www.localytics.com
  @param launchOptions The launchOptions provided by application:DidFinishLaunchingWithOptions:
  */
 + (void)autoIntegrate:(nonnull NSString *)appKey launchOptions:(nullable NSDictionary *)launchOptions;
 
 /** Manually integrate the Localytic SDK into the application.
-
+ 
  Use this method to manually integrate the Localytics SDK. The developer still has to make sure to
  open and close the Localytics session as well as call upload to ensure data is uploaded to
  Localytics
-
+ 
  @param appKey The unique key for each application generated at www.localytics.com
  @see openSession
  @see closeSession
@@ -92,7 +78,7 @@
  it at the last moment. It is recommended that this call be placed in <code>applicationDidBecomeActive</code>.
  <br>
  If for any reason this is called more than once every subsequent open call will be ignored.
-
+ 
  Resumes the Localytics session.  When the App enters the background, the session is
  closed and the time of closing is recorded.  When the app returns to the foreground, the session
  is resumed.  If the time since closing is greater than BACKGROUND_SESSION_TIMEOUT, (15 seconds
@@ -357,13 +343,6 @@
  */
 + (nullable NSString *)customerId;
 
-/** Stores the user's location.  This will be used in all event and session calls.
- If your application has already collected the user's location, it may be passed to Localytics
- via this function.  This will cause all events and the session close to include the location
- information.  It is not required that you call this function.
- @param location The user's location.
- */
-+ (void)setLocation:(CLLocationCoordinate2D)location;
 
 #pragma mark - Profile
 /** ---------------------------------------------------------------------------------------
@@ -379,7 +358,7 @@
  @param scope The scope of the attribute governs the visability of the profile attribute (application
  only or organization wide)
  */
-+ (void)setValue:(nonnull NSObject *)value forProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
++ (void)setValue:(nonnull id)value forProfileAttribute:(nonnull NSString *)attribute withScope:(LLProfileScope)scope;
 
 /** Sets the value of a profile attribute (scope: Application).
  @param value The value to set the profile attribute to. value can be one of the following: NSString,
@@ -387,7 +366,7 @@
  nil. Passing in a 'nil' value will result in that attribute being deleted from the profile
  @param attribute The name of the profile attribute to be set
  */
-+ (void)setValue:(nonnull NSObject *)value forProfileAttribute:(nonnull NSString *)attribute;
++ (void)setValue:(nonnull id)value forProfileAttribute:(nonnull NSString *)attribute;
 
 /** Adds values to a profile attribute that is a set
  @param values The value to be added to the profile attributes set.
@@ -480,6 +459,86 @@
  @param fullName Customer's full name
  */
 + (void)setCustomerFullName:(nullable NSString *)fullName;
+
+
+#pragma mark - Developer Options
+/** ---------------------------------------------------------------------------------------
+ * @name Developer Options
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/**
+ * Customize the behavior of the SDK by setting custom values for various options.
+ * In each entry, the key specifies the option to modify, and the value specifies what value
+ * to set the option to. Options can be restored to default by passing in a value of NSNull,
+ * or an empty string for values with type NSString.
+ * @param options The dictionary of options and values to modify
+ */
++ (void)setOptions:(nullable NSDictionary<NSString *, NSObject *> *)options;
+
+/** Returns whether the Localytics SDK is set to emit logging information
+ @return YES if logging is enabled, NO otherwise
+ */
++ (BOOL)isLoggingEnabled;
+
+/** Set whether Localytics SDK should emit logging information. By default the Localytics SDK
+ is set to not to emit logging information. It is recommended that you only enable logging
+ for debugging purposes.
+ @param loggingEnabled Set to YES to enable logging or NO to disable it
+ */
++ (void)setLoggingEnabled:(BOOL)loggingEnabled;
+
+/** Returns whether or not the application will collect user data.
+ @return YES if the user is opted out, NO otherwise. Default is NO
+ @see setOptedOut:
+ */
++ (BOOL)isOptedOut;
+
+/** Allows the application to control whether or not it will collect user data.
+ Even if this call is used, it is necessary to continue calling upload().  No new data will be
+ collected, so nothing new will be uploaded but it is necessary to upload an event telling the
+ server this user has opted out.
+ @param optedOut YES if the user is opted out, NO otherwise.
+ @see isOptedOut
+ */
++ (void)setOptedOut:(BOOL)optedOut;
+
+/** Returns the install id
+ @return the install id as an NSString
+ */
++ (nullable NSString *)installId;
+
+/** Returns the version of the Localytics SDK
+ @return the version of the Localytics SDK as an NSString
+ */
++ (nonnull NSString *)libraryVersion;
+
+/** Returns the app key currently set in Localytics
+ @return the app key currently set in Localytics as an NSString
+ */
++ (nullable NSString *)appKey;
+
+#pragma mark - Analytics Delegate
+/** ---------------------------------------------------------------------------------------
+ * @name Analytics Delegate
+ *  ---------------------------------------------------------------------------------------
+ */
+
+/** Set an Analytics delegate
+ @param delegate An object implementing the LLAnalyticsDelegate protocol.
+ @see LLAnalyticsDelegate
+ */
++ (void)setAnalyticsDelegate:(nullable id<LLAnalyticsDelegate>)delegate;
+
+/** Stores the user's location.  This will be used in all event and session calls.
+ If your application has already collected the user's location, it may be passed to Localytics
+ via this function.  This will cause all events and the session close to include the location
+ information.  It is not required that you call this function.
+ @param location The user's location.
+ */
++ (void)setLocation:(CLLocationCoordinate2D)location;
+
+#if !TARGET_OS_TV
 
 #pragma mark - Push
 /** ---------------------------------------------------------------------------------------
@@ -625,47 +684,6 @@
  */
 + (void)triggerRegions:(nonnull NSArray<CLRegion *> *)regions withEvent:(LLRegionEvent)event;
 
-#pragma mark - Developer Options
-/** ---------------------------------------------------------------------------------------
- * @name Developer Options
- *  ---------------------------------------------------------------------------------------
- */
-
-/**
- * Customize the behavior of the SDK by setting custom values for various options.
- * In each entry, the key specifies the option to modify, and the value specifies what value
- * to set the option to. Options can be restored to default by passing in a value of NSNull,
- * or an empty string for values with type NSString.
- * @param options The dictionary of options and values to modify
- */
-+ (void)setOptions:(nullable NSDictionary<NSString *, NSObject *> *)options;
-
-/** Returns whether the Localytics SDK is set to emit logging information
- @return YES if logging is enabled, NO otherwise
- */
-+ (BOOL)isLoggingEnabled;
-
-/** Set whether Localytics SDK should emit logging information. By default the Localytics SDK
- is set to not to emit logging information. It is recommended that you only enable logging
- for debugging purposes.
- @param loggingEnabled Set to YES to enable logging or NO to disable it
- */
-+ (void)setLoggingEnabled:(BOOL)loggingEnabled;
-
-/** Returns whether or not the application will collect user data.
- @return YES if the user is opted out, NO otherwise. Default is NO
- @see setOptedOut:
- */
-+ (BOOL)isOptedOut;
-
-/** Allows the application to control whether or not it will collect user data.
- Even if this call is used, it is necessary to continue calling upload().  No new data will be
- collected, so nothing new will be uploaded but it is necessary to upload an event telling the
- server this user has opted out.
- @param optedOut YES if the user is opted out, NO otherwise.
- @see isOptedOut
- */
-+ (void)setOptedOut:(BOOL)optedOut;
 
 /** Returns whether the Localytics SDK is currently in test mode or not. When in test mode
  a small Localytics tab will appear on the left side of the screen which enables a developer
@@ -683,20 +701,6 @@
  */
 + (void)setTestModeEnabled:(BOOL)enabled;
 
-/** Returns the install id
- @return the install id as an NSString
- */
-+ (nullable NSString *)installId;
-
-/** Returns the version of the Localytics SDK
- @return the version of the Localytics SDK as an NSString
- */
-+ (nonnull NSString *)libraryVersion;
-
-/** Returns the app key currently set in Localytics
- @return the app key currently set in Localytics as an NSString
- */
-+ (nullable NSString *)appKey;
 
 #pragma mark - In-App Message Delegate
 /** ---------------------------------------------------------------------------------------
@@ -722,17 +726,6 @@
  */
 + (void)setInAppAdIdParameterEnabled:(BOOL)enabled;
 
-#pragma mark - Analytics Delegate
-/** ---------------------------------------------------------------------------------------
- * @name Analytics Delegate
- *  ---------------------------------------------------------------------------------------
- */
-
-/** Set an Analytics delegate
- @param delegate An object implementing the LLAnalyticsDelegate protocol.
- @see LLAnalyticsDelegate
- */
-+ (void)setAnalyticsDelegate:(nullable id<LLAnalyticsDelegate>)delegate;
 
 #pragma mark - Location Delegate
 /** ---------------------------------------------------------------------------------------
@@ -746,9 +739,38 @@
  */
 + (void)setLocationDelegate:(nullable id<LLLocationDelegate>)delegate;
 
+#endif
+
 @end
 
-@protocol LLAnalyticsDelegate <NSObject>
+/**
+ @discussion The class which manages creating, collecting, & uploading a Localytics session.
+ Please see the following guides for information on how to best use this
+ library, sample code, and other useful information:
+ <ul>
+ <li><a href="http://wiki.localytics.com/index.php?title=Developer's_Integration_Guide">
+ Main Developer's Integration Guide</a></li>
+ </ul>
+ 
+ <strong>Best Practices</strong>
+ <ul>
+ <li>Integrate Localytics in <code>applicationDidFinishLaunching</code>.</li>
+ <li>Open your session and begin your uploads in <code>applicationDidBecomeActive</code>. This way the
+ upload has time to complete and it all happens before your users have a
+ chance to begin any data intensive actions of their own.</li>
+ <li>Close the session in <code>applicationWillResignActive</code>.</li>
+ <li>Do not call any Localytics functions inside a loop.  Instead, calls
+ such as <code>tagEvent</code> should follow user actions.  This limits the
+ amount of data which is stored and uploaded.</li>
+ <li>Do not instantiate a Localtyics object, instead use only the exposed class methods.</li>
+ </ul>
+ */
+@interface Localytics : NSObject <Localytics>
+@end
+
+#pragma mark -
+
+@protocol LLAnalyticsDelegate <NSObject, JSExport>
 @optional
 
 - (void)localyticsSessionWillOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume;
@@ -762,7 +784,8 @@
 
 @end
 
-#pragma mark -
+
+#if !TARGET_OS_TV
 
 @protocol LLMessagingDelegate <NSObject>
 @optional
@@ -772,7 +795,9 @@
 - (void)localyticsWillDismissInAppMessage;
 - (void)localyticsDidDismissInAppMessage;
 - (BOOL)localyticsShouldDisplayPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+
 - (nonnull UILocalNotification *)localyticsWillDisplayNotification:(nonnull UILocalNotification *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
+
 - (nonnull UNMutableNotificationContent *)localyticsWillDisplayNotificationContent:(nonnull UNMutableNotificationContent *)notification forPlacesCampaign:(nonnull LLPlacesCampaign *)campaign;
 
 @end
@@ -785,3 +810,5 @@
 - (void)localyticsDidTriggerRegions:(nonnull NSArray<LLRegion *> *)regions withEvent:(LLRegionEvent)event;
 
 @end
+
+#endif

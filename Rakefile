@@ -3,7 +3,7 @@ require "rake/clean"
 CLEAN.include "*.xam"
 CLEAN.include "xamarin-component"
 
-COMPONENT = "localytics-sdk-4.1.0.xam"
+COMPONENT = "localytics-sdk-4.2.0.xam"
 
 file "xamarin-component/xamarin-component.exe" do
 	puts "* Downloading xamarin-component..."
@@ -35,4 +35,3 @@ task :default => "xamarin-component/xamarin-component.exe" do
 	sh line, :verbose => false
 	puts "* Created #{COMPONENT}"
 end
-

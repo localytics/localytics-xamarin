@@ -203,6 +203,10 @@ namespace LocalyticsXamarin.iOS
 		[Export("tableView", ArgumentSemantic.Strong)]
 		UITableView TableView { get; set; }
 
+		// @property (nonatomic, strong, nullable) NSArray *tableData;
+		[Export("tableData", ArgumentSemantic.Strong)]
+		NSObject[] TableData { get; set; }
+
 		// @property (nonatomic, strong) UIView * _Nonnull emptyCampaignsView;
 		[Export("emptyCampaignsView", ArgumentSemantic.Strong)]
 		UIView EmptyCampaignsView { get; set; }
