@@ -83,7 +83,7 @@ namespace LocalyticsXamarin.iOS
 		[Static]
 		[Export ("customerId")]
 		//[Verify (MethodToProperty)]
-		string CustomerId { get; set; }
+		string CustomerId { get; [NullAllowed] set; }
 
 		// +(void)setLocation:(CLLocationCoordinate2D)location;
 		[Static]
