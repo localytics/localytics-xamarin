@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!-- Unique key for cached download -->
+        <_XbdKey_playservicesgass>playservices-10.0.1/playservicesgass</_XbdKey_playservicesgass>
+        
+        <!-- Path to .aar file within the extracted contents of the cached download -->
+        <_XbdAarFile_playservicesgass>m2repository\com\google\android\gms\play-services-gass\10.0.1\play-services-gass-10.0.1.aar</_XbdAarFile_playservicesgass>
+        
+        <!-- Full path to .aar file, assuming we had to download to the cache - we reset this later if it is in the sdk -->
+        <_XbdAarFileFullPath_playservicesgass>$(XamarinBuildDownloadDir)$(_XbdKey_playservicesgass)\play-services-gass-10.0.1.aar</_XbdAarFileFullPath_playservicesgass>
+
+        <!-- Assembly name to embed .aar in -->
+        <_XbdAssemblyName_playservicesgass>Xamarin.GooglePlayServices.Gass</_XbdAssemblyName_playservicesgass>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <XamarinBuildRestoreResources Include="_XbdRestoreItems_playservicesgass"/>
+    </ItemGroup>
+
+    <Target Name="_XbdRestoreItems_playservicesgass">
+        <!-- Check if the aar file is in the android sdk already and change the path to use to it, if it's found -->
+        <CreateProperty Value="$(AndroidSdkDirectory)\extras\google\$(_XbdAarFile_playservicesgass)" Condition="Exists('$(AndroidSdkDirectory)\extras\google\$(_XbdAarFile_playservicesgass)')">
+            <Output PropertyName="_XbdAarFileFullPath_playservicesgass" TaskParameter="Value" />
+        </CreateProperty>
+
+        <ItemGroup>
+            <XamarinBuildDownloadPartialZip Include="$(_XbdKey_playservicesgass)" Condition="!Exists('$(_XbdAarFileFullPath_playservicesgass)')">
+                <Url>https://dl-ssl.google.com/android/repository/google_m2repository_gms_v8_rc42_wear_2a3.zip</Url>
+                <ToFile>play-services-gass-10.0.1.aar</ToFile>
+                <RangeStart>72843266</RangeStart>
+                <RangeEnd>72852386</RangeEnd>
+                <Md5>e026c085daaa19009a7cb9e4c4b8ee0e</Md5>
+                <CustomErrorMessage>Please open the Android SDK Manager and install the latest version of 'Google Repository' from the 'Extras' section, and then reload your solution.</CustomErrorMessage>
+                <CustomErrorCode>XBD404</CustomErrorCode>
+            </XamarinBuildDownloadPartialZip>
+        </ItemGroup>
+
+        <ItemGroup>
+            <XamarinBuildDownloadRestoreAssemblyAar Include="$(_XbdAarFileFullPath_playservicesgass)">
+                <LogicalName>__AndroidLibraryProjects__.zip</LogicalName>
+                <AssemblyName>$(_XbdAssemblyName_playservicesgass)</AssemblyName>
+            </XamarinBuildDownloadRestoreAssemblyAar>
+        </ItemGroup>
+    </Target>
+</Project>
