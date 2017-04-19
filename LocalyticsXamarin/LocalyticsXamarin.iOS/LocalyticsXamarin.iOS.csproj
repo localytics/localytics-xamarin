@@ -56,6 +56,6 @@
   <ItemGroup>
     <BundleResource Include="Resources\LICENSE" />
     <BundleResource Include="Resources\Localytics.h" />
-    <BundleResource Include="Resources\iOSa_4.1.0.version" />
+    <BundleResource Include="Resources\iOSa_4.2.0.version" />
   </ItemGroup>
 </Project>
