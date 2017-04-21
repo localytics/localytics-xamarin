@@ -2,7 +2,7 @@ Localytics Xamarin Component
 ---
 This repository contains the element necessary to build the Localytics Xamarin Component (*.xam*).  For instruction on how to use the Component, refer to /component/GettingStarted.md
 
-##Contents
+## Contents
 * **/components** contains metadata and files for packaging .xam (used by `xamarin-component.exe` when you call `rake`)
 * **/LocalyticsXamarin** contains the entire solution for the libraries and sample applications
 * **/AndroidPatchTest** Android Studio Project that have a module for bridging localytics.jar. It helps generate the c#/JNI bindings for the Listeners.

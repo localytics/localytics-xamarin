@@ -14,10 +14,10 @@ publish {
 nuspec {
 
     title = "LocalyticsXamarin"
-    authors = "BeTomorrow"
+    authors = "Localytics"
     owners = "Localtyics"
     description = "Localytics SDK for Xamarin"
-    copyright = "Copyright 2017 BeTomorrow"
+    copyright = "Copyright 2017 Localytics"
 
     packages {
         "default" {
