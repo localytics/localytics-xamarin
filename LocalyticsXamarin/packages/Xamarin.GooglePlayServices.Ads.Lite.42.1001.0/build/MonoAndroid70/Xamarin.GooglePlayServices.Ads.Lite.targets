@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!-- Unique key for cached download -->
+        <_XbdKey_playservicesadslite>playservices-10.0.1/playservicesadslite</_XbdKey_playservicesadslite>
+        
+        <!-- Path to .aar file within the extracted contents of the cached download -->
+        <_XbdAarFile_playservicesadslite>m2repository\com\google\android\gms\play-services-ads-lite\10.0.1\play-services-ads-lite-10.0.1.aar</_XbdAarFile_playservicesadslite>
+        
+        <!-- Full path to .aar file, assuming we had to download to the cache - we reset this later if it is in the sdk -->
+        <_XbdAarFileFullPath_playservicesadslite>$(XamarinBuildDownloadDir)$(_XbdKey_playservicesadslite)\play-services-ads-lite-10.0.1.aar</_XbdAarFileFullPath_playservicesadslite>
+
+        <!-- Assembly name to embed .aar in -->
+        <_XbdAssemblyName_playservicesadslite>Xamarin.GooglePlayServices.Ads.Lite</_XbdAssemblyName_playservicesadslite>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <XamarinBuildRestoreResources Include="_XbdRestoreItems_playservicesadslite"/>
+    </ItemGroup>
+
+    <Target Name="_XbdRestoreItems_playservicesadslite">
+        <!-- Check if the aar file is in the android sdk already and change the path to use to it, if it's found -->
+        <CreateProperty Value="$(AndroidSdkDirectory)\extras\google\$(_XbdAarFile_playservicesadslite)" Condition="Exists('$(AndroidSdkDirectory)\extras\google\$(_XbdAarFile_playservicesadslite)')">
+            <Output PropertyName="_XbdAarFileFullPath_playservicesadslite" TaskParameter="Value" />
+        </CreateProperty>
+
+        <ItemGroup>
+            <XamarinBuildDownloadPartialZip Include="$(_XbdKey_playservicesadslite)" Condition="!Exists('$(_XbdAarFileFullPath_playservicesadslite)')">
+                <Url>https://dl-ssl.google.com/android/repository/google_m2repository_gms_v8_rc42_wear_2a3.zip</Url>
+                <ToFile>play-services-ads-lite-10.0.1.aar</ToFile>
+                <RangeStart>76441621</RangeStart>
+                <RangeEnd>76733741</RangeEnd>
+                <Md5>6ce5d84e3c020f212d543aa8030c3033</Md5>
+                <CustomErrorMessage>Please open the Android SDK Manager and install the latest version of 'Google Repository' from the 'Extras' section, and then reload your solution.</CustomErrorMessage>
+                <CustomErrorCode>XBD404</CustomErrorCode>
+            </XamarinBuildDownloadPartialZip>
+        </ItemGroup>
+
+        <ItemGroup>
+            <XamarinBuildDownloadRestoreAssemblyAar Include="$(_XbdAarFileFullPath_playservicesadslite)">
+                <LogicalName>__AndroidLibraryProjects__.zip</LogicalName>
+                <AssemblyName>$(_XbdAssemblyName_playservicesadslite)</AssemblyName>
+            </XamarinBuildDownloadRestoreAssemblyAar>
+        </ItemGroup>
+    </Target>
+</Project>
