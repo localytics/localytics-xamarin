@@ -7,6 +7,27 @@ This repository contains the element necessary to build the Localytics Xamarin C
 * **/LocalyticsXamarin** contains the entire solution for the libraries and sample applications
 * **/AndroidPatchTest** Android Studio Project that have a module for bridging localytics.jar. It helps generate the c#/JNI bindings for the Listeners.
 
+## Building the Nupkg
+You will need Xcode, and Xamarin Studio (with Android API 15) and java 8.Simply call `gradle` to build/install or deploy the nupkg on your custom nuget server
+
+**Build**
+```
+$ cd LocalyticsXamarin
+$ ./gradlew package
+```
+
+**Install localy**
+```
+$ cd LocalyticsXamarin
+$ ./gradlew install
+```
+
+**Deploy on your custom nuget server**
+```
+$ cd LocalyticsXamarin
+$ ./gradlew deploy -PurlNugetNexus="http://CustomNugetRepoUrl" -PapiKeyNugetNexus="CustomNugetRepoApiKey
+```
+
 ## Building the Xamarin Component
 You will need Xcode, and Xamarin Studio (with Android API 15). Simply call `make` to build the .dll and then `rake` to package the .xam.
 ```

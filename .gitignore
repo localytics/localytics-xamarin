@@ -26,3 +26,7 @@
 */*/*/*/Resource.designer.cs
 
 xamarin-component/
+LocalyticsXamarin.nuspec
+LocalyticsXamarin/.gradle
+LocalyticsXamarin/dist
+LocalyticsXamarin/packages
