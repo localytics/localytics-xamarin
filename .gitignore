@@ -32,3 +32,4 @@ LocalyticsXamarin/packages
 LocalyticsXamarin/dist
 .vscode
 LocalyticsXamarin/.vs/**
+LocalyticsXamarin/packages/**

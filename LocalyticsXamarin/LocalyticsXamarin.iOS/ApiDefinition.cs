@@ -176,7 +176,7 @@ namespace LocalyticsXamarin.iOS
 	{
 		// @property (readonly, copy, nonatomic) CLCircularRegion * _Nonnull region;
 		[Export("region", ArgumentSemantic.Copy)]
-		CLCircularRegion Region { get; }
+		CLCircularRegion CircularRegion { get; }
 	}
 
 	public interface ILLInboxCampaignsRefreshingDelegate { }

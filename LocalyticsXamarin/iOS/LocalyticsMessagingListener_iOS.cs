@@ -37,7 +37,7 @@ namespace LocalyticsSample.iOS
 			return true;
 		}
 
-		UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign)
+		public override UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign)
 		{
 			Console.Write("LocalyticsWillDisplayNotification");
 			return notification;
