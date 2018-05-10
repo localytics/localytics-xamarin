@@ -7,17 +7,6 @@ using UserNotifications;
 
 namespace LocalyticsXamarin.iOS
 {
-	partial interface Constants
-	{
-		// extern double LocalyticsVersionNumber;
-		[Field("LocalyticsVersionNumber", "__Internal")]
-		double LocalyticsVersionNumber { get; }
-
-		// extern const unsigned char [] LocalyticsVersionString;
-		[Field("LocalyticsVersionString", "__Internal")]
-		byte[] LocalyticsVersionString { get; }
-	}
-
 	// @interface LLCustomerBuilder : NSObject
 	[BaseType(typeof(NSObject))]
 	interface LLCustomerBuilder
