@@ -4,11 +4,9 @@ JAVA_LT_180 := $(shell expr `javac -version 2>&1 | sed -Ee 's/^.{6}//' -Ee 's/([
 
 all :
 	cd LocalyticsXamarin/LocalyticsXamarin.iOS && make
-	cd LocalyticsXamarin/LocalyticsXamarin.iOS-Classic && make
 	cd LocalyticsXamarin/LocalyticsXamarin.Android && make
 
 clean :
 	cd LocalyticsXamarin/LocalyticsXamarin.iOS && make clean
-	cd LocalyticsXamarin/LocalyticsXamarin.iOS-Classic && make clean
 	cd LocalyticsXamarin/LocalyticsXamarin.Android && make clean
 	rm -rf LocalyticsXamarin/*/bin LocalyticsXamarin/*/obj
