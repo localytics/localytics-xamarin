@@ -1,292 +1,254 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using Foundation;
 
+using LocalyticsXamarin.Shared;
 using LocalyticsXamarin.iOS;
+using LocalyticsXamarin.iOS.Enums;
+using UIKit;
+using CoreLocation;
+using System.Collections;
 
 [assembly: Xamarin.Forms.Dependency (typeof (LocalyticsXamarin.Forms.LocalyticsXamarinForms_iOS))]
 namespace LocalyticsXamarin.Forms
 {
-	public class LocalyticsXamarinForms_iOS : ILocalyticsXamarinForms
+	public interface ILocalyticIOS
+    {
+        bool HandleTestModeURL(NSUrl url);
+        void SetInAppMessageDismissButtonImage(UIImage image);
+        void SetLocation(CLLocationCoordinate2D location);
+        LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate);
+        void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location);
+        void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location);
+        void TagImpressionForInAppCampaign(object campaign, LLImpressionType impressionType);
+        void TagImpressionForInboxCampaign(object campaign, LLImpressionType impressionType);
+        LLInboxDetailViewController InboxDetailViewControllerForCampaign(object campaign);
+    }
+
+	public class LocalyticsXamarinForms_iOS : ILocalytics , ILocalyticsXamarinForms
 	{
-		public LocalyticsXamarinForms_iOS () {}
+		public LocalyticsXamarinForms_iOS() { }
 
-		public void onAppStart ()
-		{
-		}
-
-		public void SmokeTest ()
-		{
-			Localytics.CustomerId = "XamarinFormIOS CustomerId";
-			Localytics.SetProfileAttribute ((NSString)("Age"), "83", LLProfileScope.Organization);
-
-			Localytics.AddProfileAttributesToSet(new NSObject[] { (NSNumber)(222), (NSString)("333") }, "Lucky numbers", LLProfileScope.Application);
-
-			Localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", LLProfileScope.Application);
-
-			Localytics.SetCustomerEmail("XamarinFormIOS Email");
-			Localytics.SetCustomerFirstName("XamarinFormIOS FirstName");
-			Localytics.SetCustomerLastName("XamarinFormIOS LastName");
-			Localytics.SetCustomerFullName("XamarinFormIOS Full Name");
-
-			Localytics.SetCustomDimension("XamarinFormIOSCD1", 1);
-
-			Localytics.TagEvent ("XamarinFormIOS Start");
-			Localytics.TagScreen ("XamarinFormIOS Landing");
-
-			Localytics.Upload ();
-
-
-			// Run through some Interface function
-			this.AddProfileAttributesToSet (new object[] { 234, 345 }, "Android Interface Lucky Number", XFLLProfileScope.Application);
-		}
-
-		public void OpenSession ()
+		public void OpenSession()
 		{
 			Localytics.OpenSession();
 		}
 
-		public void CloseSession ()
+		public void CloseSession()
 		{
 			Localytics.CloseSession();
 		}
 
-		public void Upload ()
+		public void Upload()
 		{
 			Localytics.Upload();
 		}
 
-		public void TagEvent (string eventName)
+		public void TagEvent(string eventName)
 		{
 			Localytics.TagEvent(eventName);
 		}
 
-		public void TagEvent (string eventName, System.Collections.Generic.IDictionary<string, string> attributes)
+		public void TagEvent(string eventName, System.Collections.Generic.IDictionary<string, string> attributes)
 		{
-			Localytics.TagEvent(eventName, ToNSDictionary(attributes));
+			Localytics.TagEvent(eventName, attributes.ToNSDictionary());
 		}
 
-		public void TagEvent (string eventName, System.Collections.Generic.IDictionary<string, string> attributes, long customerValueIncrease)
+		public void TagEvent(string eventName, System.Collections.Generic.IDictionary<string, string> attributes, long customerValueIncrease)
 		{
-			Localytics.TagEvent(eventName, ToNSDictionary(attributes), customerValueIncrease);
+			Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
 		}
 
-		public void TagScreen (string screenName)
+		public void TagScreen(string screenName)
 		{
 			Localytics.TagScreen(screenName);
 		}
 
-		public void SetCustomDimension (string value, uint dimension)
+		public void SetCustomDimension(string value, uint dimension)
 		{
-			Localytics.SetCustomDimension (value, dimension);
+			Localytics.SetCustomDimension(value, dimension);
 		}
 
-		public string GetCustomDimension (uint dimension)
+		public string GetCustomDimension(uint dimension)
 		{
-			return Localytics.GetCustomDimension (dimension);
+			return Localytics.GetCustomDimension(dimension);
 		}
 
-		public void SetIdentifier (string value, string identifier)
+		public void SetIdentifier(string value, string identifier)
 		{
-			Localytics.SetIdentifier (value, identifier);
+			Localytics.SetIdentifier(value, identifier);
 		}
 
-		public string GetIdentifier (string identifier)
+		public string GetIdentifier(string identifier)
 		{
-			return Localytics.GetIdentifier (identifier);
+			return Localytics.GetIdentifier(identifier);
 		}
 
-		public string CustomerId {
-			get {
+		public string CustomerId
+		{
+			get
+			{
 				return Localytics.CustomerId;
 			}
-			set {
+			set
+			{
 				Localytics.CustomerId = value;
 			}
 		}
 
-		public void SetProfileAttribute (object value, string attribute, XFLLProfileScope scope)
+		public void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
 		{
-			Localytics.SetProfileAttribute (NSObject.FromObject(value), attribute, ToLLProfileScope (scope));
+			Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, ToLLProfileScope(scope));
 		}
 
-		public void SetProfileAttribute (object value, string attribute)
+		public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
 		{
-			Localytics.SetProfileAttribute (NSObject.FromObject(value), attribute);
+			Localytics.AddProfileAttributes(attribute, ToLLProfileScope(scope), values);
+		}
+        
+		public void RemoveProfileAttributes(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application, params object[] values)
+		{
+			Localytics.RemoveProfileAttributes(attribute, ToLLProfileScope(scope), values);
 		}
 
-		public void AddProfileAttributesToSet (object[] values, string attribute, XFLLProfileScope scope)
+		public void IncrementProfileAttribute(int value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
 		{
-			Localytics.AddProfileAttributesToSet (ToNSObjects(values), attribute, ToLLProfileScope(scope));
+			Localytics.IncrementProfileAttribute(value, attribute, ToLLProfileScope(scope));
 		}
 
-		public void AddProfileAttributesToSet (object[] values, string attribute)
+		public void DecrementProfileAttribute(int value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
 		{
-			Localytics.AddProfileAttributesToSet (ToNSObjects(values), attribute);
+			Localytics.DecrementProfileAttribute(value, attribute, ToLLProfileScope(scope));
 		}
 
-		public void RemoveProfileAttributesFromSet (object[] values, string attribute, XFLLProfileScope scope)
+		public void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
 		{
-			Localytics.RemoveProfileAttributesFromSet (ToNSObjects(values), attribute, ToLLProfileScope(scope));
+			Localytics.DeleteProfileAttribute(attribute, ToLLProfileScope(scope));
 		}
 
-		public void RemoveProfileAttributesFromSet (object[] values, string attribute)
-		{
-			Localytics.RemoveProfileAttributesFromSet (ToNSObjects(values), attribute);
-		}
-
-		public void IncrementProfileAttribute (int value, string attribute, XFLLProfileScope scope)
-		{
-			Localytics.IncrementProfileAttribute (value, attribute, ToLLProfileScope (scope));
-		}
-
-		public void IncrementProfileAttribute (int value, string attribute)
-		{
-			Localytics.IncrementProfileAttribute (value, attribute);
-		}
-
-		public void DecrementProfileAttribute (int value, string attribute, XFLLProfileScope scope)
-		{
-			Localytics.DecrementProfileAttribute (value, attribute, ToLLProfileScope (scope));
-		}
-
-		public void DecrementProfileAttribute (int value, string attribute)
-		{
-			Localytics.DecrementProfileAttribute (value, attribute);
-		}
-
-		public void DeleteProfileAttribute (string attribute, XFLLProfileScope scope)
-		{
-			Localytics.DeleteProfileAttribute (attribute, ToLLProfileScope (scope));
-		}
-
-		public void DeleteProfileAttribute (string attribute)
-		{
-			Localytics.DeleteProfileAttribute (attribute);
-		}
-
-		public void SetCustomerEmail (string email)
+		public void SetCustomerEmail(string email)
 		{
 			Localytics.SetCustomerEmail(email);
 		}
 
-		public void SetCustomerFirstName (string firstName)
+		public void SetCustomerFirstName(string firstName)
 		{
 			Localytics.SetCustomerFirstName(firstName);
 		}
 
-		public void SetCustomerLastName (string lastName)
+		public void SetCustomerLastName(string lastName)
 		{
 			Localytics.SetCustomerLastName(lastName);
 		}
 
-		public void SetCustomerFullName (string fullName)
+		public void SetCustomerFullName(string fullName)
 		{
 			Localytics.SetCustomerFullName(fullName);
 		}
 
-		public string PushToken {
-			get {
-				return Localytics.PushToken;
-			}
-			set {
-				Localytics.SetPushToken(NSData.FromString(value));
-			}
-		}
-
-		public string PushRegistrationId {
-			get {
-				return Localytics.PushToken;
-			}
-			set {
-				Localytics.SetPushToken(NSData.FromString(value));
+		public string PushTokenInfo
+		{
+			get
+			{
+				return Localytics.PushTokenInfo;
 			}
 		}
 
-		public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation {
-			get {
+		public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation
+		{
+			get
+			{
 				return ToXFLLInAppMessageDismissButtonLocation(Localytics.InAppMessageDismissButtonLocation);
 			}
-			set {
+			set
+			{
 				Localytics.InAppMessageDismissButtonLocation = ToLLInAppMessageDismissButtonLocation(value);
 			}
 		}
 
-		public void TriggerInAppMessage (string triggerName)
+		public void TriggerInAppMessage(string triggerName)
 		{
-			Localytics.TriggerInAppMessage (triggerName);
+			Localytics.TriggerInAppMessage(triggerName);
 		}
 
-		public void TriggerInAppMessage (string triggerName, IDictionary<string, string> attributes)
+		public void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes)
 		{
-			Localytics.TriggerInAppMessage (triggerName, ToNSDictionary(attributes));
+			Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
 		}
 
-		public void DismissCurrentInAppMessage ()
+		public void DismissCurrentInAppMessage()
 		{
-			Localytics.DismissCurrentInAppMessage ();
+			Localytics.DismissCurrentInAppMessage();
 		}
 
-		public bool LoggingEnabled {
-			get {
-				return Localytics.IsLoggingEnabled;
+		public bool LoggingEnabled
+		{
+			get
+			{
+				return Localytics.LoggingEnabled;
 			}
-			set {
-				Localytics.SetLoggingEnabled(value);
-			}
-		}
-
-		public bool OptedOut {
-			get {
-				return Localytics.IsOptedOut;
-			}
-			set {
-				Localytics.SetOptedOut(value);
+			set
+			{
+				Localytics.LoggingEnabled = value;
 			}
 		}
 
-		public bool TestModeEnabled {
-			get {
-				return Localytics.IsTestModeEnabled;
+		public bool OptedOut
+		{
+			get
+			{
+				return Localytics.OptedOut;
 			}
-			set {
-				Localytics.SetTestModeEnabled (value);
+			set
+			{
+				Localytics.OptedOut = value;
 			}
 		}
 
-		public string InstallId {
-			get {
+		public bool TestModeEnabled
+		{
+			get
+			{
+				return Localytics.TestModeEnabled;
+			}
+			set
+			{
+				Localytics.TestModeEnabled = value;
+			}
+		}
+
+		public string InstallId
+		{
+			get
+			{
 				return Localytics.InstallId();
 			}
 		}
 
-		public string LibraryVersion {
-			get {
+		public string LibraryVersion
+		{
+			get
+			{
 				return Localytics.LibraryVersion();
 			}
 		}
 
-		public string AppKey {
-			get {
+		public string AppKey
+		{
+			get
+			{
 				return Localytics.AppKey();
 			}
 		}
+        
+		public bool PrivacyOptedOut { get => Localytics.PrivacyOptedOut; set => Localytics.PrivacyOptedOut = value; }
 
-		private NSDictionary ToNSDictionary(IDictionary<string,string> source) {
-			NSMutableDictionary result = new NSMutableDictionary();
+		public object[] InboxCampaigns { get => Localytics.InboxCampaigns; }
 
-			if (source != null) {
-				foreach (string key in source.Keys)
-				{
-					result.Add ((NSString)(key), (NSString)(source[key]));
-				}
-			}
-
-			return result;
-		}
-
+		public bool InAppAdIdParameterEnabled { get => Localytics.InAppAdIdParameterEnabled; set => Localytics.InAppAdIdParameterEnabled = value; }
+		public bool InboxAdIdParameterEnabled { get => Localytics.InboxAdIdParameterEnabled; set => Localytics.InboxAdIdParameterEnabled = value; }
+        
 		private LLInAppMessageDismissButtonLocation ToLLInAppMessageDismissButtonLocation(XFLLInAppMessageDismissButtonLocation source) {
 			if (source == XFLLInAppMessageDismissButtonLocation.Right) {
 				return LLInAppMessageDismissButtonLocation.Right;
@@ -311,14 +273,183 @@ namespace LocalyticsXamarin.Forms
 			return LLProfileScope.Application;
 		}
 
-		private NSObject[] ToNSObjects(object[] objects) {
-			List<NSObject> result = new List<NSObject>();
-			foreach (object i in objects)
-			{
-				result.Add(NSObject.FromObject(i));
-			}
+		public void TagPurchased(string itemName, string itemId, string itemType, double itemPrice, IDictionary<string, string> attributes)
+		{
+			Localytics.TagPurchased(itemName, itemId, itemType, new NSNumber(itemPrice), attributes.ToNSDictionary());
+		}
 
-			return result.ToArray ();
+		public void TagAddedToCart(string itemName, string itemId, string itemType, double itemPrice, IDictionary<string, string> attributes)
+		{
+			Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, attributes.ToNSDictionary());
+		}
+
+		public void TagStartedCheckout(double totalPrice, double itemCount, IDictionary<string, string> attributes)
+		{
+			Localytics.TagStartedCheckout(totalPrice, itemCount, attributes.ToNSDictionary());
+		}
+
+		public void TagCompletedCheckout(double totalPrice, double itemCount, IDictionary<string, string> attributes)
+		{
+			Localytics.TagCompletedCheckout(new NSNumber(totalPrice), new NSNumber(itemCount), attributes.ToNSDictionary());
+		}
+
+		public void TagContentViewed(string contentName, string contentId, string contentType, IDictionary<string, string> attributes)
+		{
+			Localytics.TagContentViewed(contentName, contentId, contentType, attributes.ToNSDictionary());
+		}
+
+		public void TagSearched(string queryText, string contentType, double resultCount, IDictionary<string, string> attributes)
+		{
+			Localytics.TagSearched(queryText, contentType, new NSNumber(resultCount), attributes.ToNSDictionary());
+		}
+
+		public void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes)
+		{
+			Localytics.TagShared(contentName, contentId, contentType, methodName, attributes.ToNSDictionary());
+		}
+        
+		public void TagContentRated(string contentName, string contentId, string contentType, double rating, IDictionary<string, string> attributes)
+		{
+			Localytics.TagContentRated(contentName, contentId, contentType, new NSNumber(rating), attributes.ToNSDictionary());
+		}
+
+		public void TagCustomerRegistered(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes)
+		{			
+			Localytics.TagCustomerRegistered(customer, methodName, attributes.ToNSDictionary());
+		}
+        
+		public void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes)
+		{
+			Localytics.TagCustomerLoggedIn(customer, methodName, attributes.ToNSDictionary());
+		}
+
+		public void TagCustomerLoggedOut(IDictionary<string, string> attributes)
+		{
+			Localytics.TagCustomerLoggedOut(attributes.ToNSDictionary());
+		}
+
+		public void TagInvited(string methodName, IDictionary attributes)
+		{
+			Localytics.TagInvited(methodName, attributes.ToNSDictionary());
+		}
+
+		public void RedirectLoggingToDisk()
+		{
+			Localytics.RedirectLoggingToDisk();
+		}
+
+		public void DidRegisterUserNotificationSettings()
+		{
+			Localytics.DidRegisterUserNotificationSettings();
+		}
+
+		public void SetInAppMessageDismissButtonImageWithName(string imageName)
+		{
+			Localytics.SetInAppMessageDismissButtonImageWithName(imageName);
+		}
+
+		public void SetInAppMessageDismissButtonHidden(bool hidden)
+		{
+			Localytics.SetInAppMessageDismissButtonHidden(hidden);
+		}
+
+		public void RefreshInboxCampaigns(InboxCampaignsDelegate inboxCampaignsDelegate)
+		{
+			Localytics.RefreshInboxCampaigns(new Action<LLInboxCampaign[]>((LLInboxCampaign[] obj) => {
+				inboxCampaignsDelegate(obj);
+            }));
+		}
+
+		public void SetInboxCampaign(object campaign, bool read)
+		{
+			Localytics.SetInboxCampaign((LLInboxCampaign)campaign, read);
+		}
+
+		public long InboxCampaignsUnreadCount()
+		{
+			return Localytics.InboxCampaignsUnreadCount();
+		}
+
+		public void SetLocationMonitoringEnabled(bool enabled)
+		{
+			Localytics.SetLocationMonitoringEnabled(enabled);
+		}
+
+		public void SetOptions(IDictionary options)
+		{
+			Localytics.SetOptions(options.ToNSDictionary());
+		}
+
+		public void PauseDataUploading(bool pause)
+		{
+			Localytics.PauseDataUploading(pause);
+		}
+
+		public void SetCustomerId(string customerId, bool optedOut)
+		{
+			Localytics.SetCustomerId(customerId, optedOut);
+		}
+
+		public void TriggerInAppMessagesForSessionStart()
+		{
+			Localytics.TriggerInAppMessagesForSessionStart();
+		}
+
+		public void TagImpressionForInAppCampaign(object campaign, string customAction)
+		{
+			Localytics.TagImpressionForInAppCampaign((LLInAppCampaign)campaign, customAction);
+		}
+
+		public object[] AllInboxCampaigns()
+		{
+			return Localytics.AllInboxCampaigns();
+		}
+
+		public void RefreshAllInboxCampaigns(InboxCampaignsDelegate inboxCampaignsDelegate)
+		{
+			Localytics.RefreshAllInboxCampaigns(new Action<LLInboxCampaign[]>((LLInboxCampaign[] obj) => {
+				inboxCampaignsDelegate(obj);
+			}));
+		}
+
+		public void TagImpressionForInboxCampaign(object campaign, string customAction)
+		{
+			Localytics.TagImpressionForInboxCampaign((LLInboxCampaign)campaign, customAction);
+		}
+
+		public void TagImpressionForPushToInboxCampaign(object campaign, bool success)
+		{
+			Localytics.TagImpressionForPushToInboxCampaign((LLInboxCampaign)campaign, success);
+		}
+
+		public void InboxListItemTapped(object campaign)
+		{
+			Localytics.InboxListItemTapped((LLInboxCampaign)campaign);
+		}
+
+		public void TagPlacesPushReceived(object campaign)
+		{
+			Localytics.TagPlacesPushReceived((LLPlacesCampaign)campaign);
+		}
+
+		public void TagPlacesPushOpened(object campaign)
+		{
+			Localytics.TagPlacesPushOpened((LLPlacesCampaign)campaign);
+		}
+
+		public void TagPlacesPushOpened(object campaign, string identifier)
+		{
+			Localytics.TagPlacesPushOpened((LLPlacesCampaign)campaign, identifier);
+		}
+
+		public void TriggerPlacesNotificationForCampaign(object campaign)
+		{
+			Localytics.TriggerPlacesNotificationForCampaign((LLPlacesCampaign)campaign);
+		}
+
+		public void TriggerPlacesNotificationForCampaignId(long campaignId, string regionId)
+		{
+			Localytics.TriggerPlacesNotificationForCampaignId((nint)campaignId, regionId);
 		}
 	}
 }

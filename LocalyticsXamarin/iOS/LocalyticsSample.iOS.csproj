@@ -12,6 +12,7 @@
     <AssemblyName>LocalyticsSample.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
@@ -127,12 +128,16 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="LocalyticsXamarinForms_iOS.cs" />
-    <Compile Include="LocalyticsAnalyticsListener_iOS.cs" />
-    <Compile Include="LocalyticsMessagingListener_iOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
     <ITunesArtwork Include="ITunesArtwork%402x" />
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="..\..\Localytics-iOS-Latest\Localytics.framework">
+      <Kind>Framework</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.3.0.0.446417\build\netstandard2.0\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.3.0.0.446417\build\netstandard2.0\Xamarin.Forms.targets')" />
