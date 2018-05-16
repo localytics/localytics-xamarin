@@ -19,7 +19,7 @@ namespace LocalyticsSample.Android
 		{
 			base.OnCreate (bundle);
 
-			Localytics.RegisterPush("YOUR_GCM_PROJECT_NUMBER");
+			Localytics.RegisterPush();//("YOUR_GCM_PROJECT_NUMBER");
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 

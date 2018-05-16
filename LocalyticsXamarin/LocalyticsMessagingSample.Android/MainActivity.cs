@@ -36,7 +36,7 @@ namespace LocalyticsMessagingSample.Android
 			Localytics.CustomerId = "ms_test_user";
 
 			// Register Push
-			Localytics.RegisterPush("YOUR_GCM_PROJECT_NUMBER");
+			Localytics.RegisterPush(); //"YOUR_GCM_PROJECT_NUMBER");
 			Localytics.SetOption("session_timeout", 1); // Shorten for testing purpose only
 
 			Button tagEventButton = FindViewById<Button> (Resource.Id.tagEventButton);

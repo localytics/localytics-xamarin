@@ -6,7 +6,6 @@ using Android.Runtime;
 using Android.Support.V4.App;
 
 using LocalyticsXamarin.Android;
-using LocalyticsXamarin.AndroidPatch;
 
 namespace LocalyticsMessagingSample.Android
 {
@@ -48,7 +47,8 @@ namespace LocalyticsMessagingSample.Android
 
 			// Location callbacks
 			LocalyticsEvents.OnLocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
-			LocalyticsEvents.OnLocalyticsDidTriggerRegions += LL_OnLocalyticsDidTriggerRegions;
+            // TODO Fix me
+			//LocalyticsEvents.OnLocalyticsDidTriggerRegions +=
 			LocalyticsEvents.OnLocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
 		}
 
@@ -128,10 +128,10 @@ namespace LocalyticsMessagingSample.Android
 			Console.WriteLine("Did update location: " + location);
 		}
 
-		void LL_OnLocalyticsDidTriggerRegions(IList<Region> regions, LLRegionEvent regionEvent)
-		{
-			Console.WriteLine("Did trigger regions: " + regions + " with event: " + regionEvent);
-		}
+		//void LL_OnLocalyticsDidTriggerRegions(IList<Region> regions, LLRegionEvent regionEvent)
+		//{
+		//	Console.WriteLine("Did trigger regions: " + regions + " with event: " + regionEvent);
+		//}
 
 		void LL_OnLocalyticsDidUpdateMonitoredGeofences(IList<CircularRegion> added, IList<CircularRegion> removed)
 		{

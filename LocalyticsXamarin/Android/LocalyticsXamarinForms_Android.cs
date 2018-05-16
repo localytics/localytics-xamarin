@@ -9,6 +9,7 @@ using Android.App;
 using Java.Util;
 
 using LocalyticsXamarin.Android;
+using LocalyticsXamarin.Shared;
 
 [assembly: Xamarin.Forms.Dependency (typeof (LocalyticsXamarin.Forms.LocalyticsXamarinForms_Android))]
 namespace LocalyticsXamarin.Forms
