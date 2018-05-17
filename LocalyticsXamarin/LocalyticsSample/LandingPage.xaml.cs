@@ -4,16 +4,16 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using Xamarin.Forms;
-using LocalyticsXamarin.Shared;
-using LocalyticsXamarin.Forms;
+using LocalyticsXamarin.Common;
 
-namespace LocalyticsSample
+namespace LocalyticsSample.Shared
 {
 	public partial class LandingPage : ContentPage
 	{
 		public LandingPage ()
 		{
 			InitializeComponent ();
+			localytics = DependencyService.Get<ILocalytics>();
 		}
 
 		protected override void OnAppearing ()
@@ -29,17 +29,18 @@ namespace LocalyticsSample
 		{
 			RefreshInfo ();
 		}
+		ILocalytics localytics;
 
 		void RefreshInfo() {
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string value0 = "AppKey: " + DependencyService.Get<ILocalytics>().AppKey;
-				string value1 = "CustomerId: " + DependencyService.Get<ILocalytics>().CustomerId;
-				string value2 = "InstallId: " + DependencyService.Get<ILocalytics>().InstallId;
-				string value3 = "LibraryVersion: " + DependencyService.Get<ILocalytics>().LibraryVersion;
-				string value4 = "OptedOut: " + DependencyService.Get<ILocalytics>().OptedOut;
-				string value5 = "TestModeEnabled: " + DependencyService.Get<ILocalytics>().TestModeEnabled;
-				string value6 = "Push Token/RegID: " + DependencyService.Get<ILocalytics>().PushTokenInfo;
-				string value7 = "LoggingEnabled: " + DependencyService.Get<ILocalytics>().LoggingEnabled;
+				string value0 = "AppKey: " + localytics.AppKey;
+				string value1 = "CustomerId: " + localytics.CustomerId;
+				string value2 = "InstallId: " + localytics.InstallId;
+				string value3 = "LibraryVersion: " + localytics.LibraryVersion;
+				string value4 = "OptedOut: " + localytics.OptedOut;
+				string value5 = "TestModeEnabled: " + localytics.TestModeEnabled;
+				string value6 = "Push Token/RegID: " + localytics.PushTokenInfo;
+				string value7 = "LoggingEnabled: " + localytics.LoggingEnabled;
 
 
 				Device.BeginInvokeOnMainThread(delegate {
@@ -56,28 +57,28 @@ namespace LocalyticsSample
 		}
 			
 		void OnOpenSession(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().OpenSession ();
+			localytics.OpenSession ();
 		}
 
 		void OnCloseSession(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().CloseSession ();
+			localytics.CloseSession ();
 		}
 
 		void OnUpload(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().Upload ();
+			localytics.Upload ();
 		}
 
 		void OnTagEvent(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().TagEvent (eventText.Text);
+			localytics.TagEvent (eventText.Text);
 		}
 
 		void OnTagScreen(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().TagScreen (screenText.Text);
+			localytics.TagScreen (screenText.Text);
 		}
 
 		void OnGetCD(object sender, EventArgs e) {
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string cd = DependencyService.Get<ILocalytics> ().GetCustomDimension (Convert.ToUInt32(cdNumber.Text));
+				string cd = localytics.GetCustomDimension (Convert.ToUInt32(cdNumber.Text));
 
 				Device.BeginInvokeOnMainThread(delegate {
 					cdValue.Text = cd;
@@ -86,16 +87,16 @@ namespace LocalyticsSample
 		}
 
 		void OnSetCD(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().SetCustomDimension (cdValue.Text, Convert.ToUInt32 (cdNumber.Text));
+			localytics.SetCustomDimension (cdValue.Text, Convert.ToUInt32 (cdNumber.Text));
 		}
 
 		void OnSetProfile(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().SetProfileAttribute (profileValue.Text, profileAttribute.Text);
+			localytics.SetProfileAttribute (profileValue.Text, profileAttribute.Text);
 		}
 
 		void OnGetIdentifier(object sender, EventArgs e) {
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string id = DependencyService.Get<ILocalytics> ().GetIdentifier (identifier.Text);
+				string id = localytics.GetIdentifier (identifier.Text);
 
 				Device.BeginInvokeOnMainThread(delegate {
 					identifierValue.Text = id;
@@ -104,7 +105,7 @@ namespace LocalyticsSample
 		}
 
 		void OnSetIdentifier(object sender, EventArgs e) {
-			DependencyService.Get<ILocalytics> ().SetIdentifier (identifierValue.Text, identifier.Text);
+			localytics.SetIdentifier (identifierValue.Text, identifier.Text);
 		}
 	}
 }

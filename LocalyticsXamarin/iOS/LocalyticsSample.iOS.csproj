@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\XNLocalytics.Shared\XNLocalytics.Shared.projitems" Label="Shared" Condition="Exists('..\XNLocalytics.Shared\XNLocalytics.Shared.projitems')" />
   <Import Project="..\packages\Xamarin.Forms.3.0.0.446417\build\netstandard2.0\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.3.0.0.446417\build\netstandard2.0\Xamarin.Forms.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <OutputPath>..\..\build\bin\iPhoneSimulator\Debug</OutputPath>
     <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,7 +43,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <OutputPath>..\..\build\bin\iPhoneSimulator\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>i386</MtouchArch>
@@ -88,15 +89,24 @@
     <Reference Include="Calabash">
       <HintPath>..\packages\Xamarin.TestCloud.Agent.0.21.5\lib\Xamarin.iOS\Calabash.dll</HintPath>
     </Reference>
+    <Reference Include="LocalyticsXamarin.iOS">
+      <HintPath>..\..\build\bin\Debug\LocalyticsXamarin.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="LocalyticsXamarin.iOS">
+      <HintPath>..\..\build\bin\Debug\LocalyticsXamarin.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="LocalyticsXamarin.iOS">
+      <HintPath>..\..\build\bin\Debug\LocalyticsXamarin.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsSample\LocalyticsSample.csproj">
       <Project>{E291B500-93AB-423A-874D-29DB2CA50526}</Project>
       <Name>LocalyticsSample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
-      <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
-      <Name>LocalyticsXamarin.iOS</Name>
+    <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Common.csproj">
+      <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
+      <Name>LocalyticsXamarin.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

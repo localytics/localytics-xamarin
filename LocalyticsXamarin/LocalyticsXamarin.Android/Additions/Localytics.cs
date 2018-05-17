@@ -1,5 +1,5 @@
 ﻿using System;
-namespace LocalyticsXamarin.Android.Additions
+namespace LocalyticsXamarin.Android
 {
 	public partial class Localytics
     {

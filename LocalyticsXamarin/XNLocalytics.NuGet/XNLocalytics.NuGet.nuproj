@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.props" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D21B247-4672-466E-9F96-616FC955F033}</ProjectGuid>
+    <Description>XNLocalytics</Description>
+    <PackageId>XNLocalytics</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>abashyam</Authors>
+    <DevelopmentDependency>false</DevelopmentDependency>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>XNLocalytics</RootNamespace>
+    <UsePartialTypes>false</UsePartialTypes>
+    <AssemblyName>XNLocalytics.NuGet</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XNLocalytics.iOS\XNLocalytics.iOS.csproj">
+      <Project>{A799F4D9-6C10-4722-9210-6CDC286CE382}</Project>
+      <Name>XNLocalytics.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
+      <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
+      <Name>LocalyticsXamarin.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Shared.csproj">
+      <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
+      <Name>LocalyticsXamarin.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging">
+      <Version>0.2.2</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets')" />
+</Project>

@@ -9,6 +9,7 @@ using Android.Widget;
 using Android.OS;
 
 using LocalyticsXamarin.Android;
+using LocalyticsSample.Shared;
 
 namespace LocalyticsSample.Android
 {

@@ -1,17 +1,14 @@
-﻿using System;
-
+﻿
 using Xamarin.Forms;
-
-using LocalyticsXamarin.Forms;
-using LocalyticsXamarin.Shared;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using LocalyticsXamarin.Common;
 
-namespace LocalyticsSample
+namespace LocalyticsSample.Shared
 {
 	public class App : Application
 	{
+		ILocalytics localytics;
 		void HandleInboxCampaignsDelegate(object[] campaigns)
 		{
 			foreach (object a in campaigns)
@@ -20,11 +17,11 @@ namespace LocalyticsSample
             }
 		}
 
-
 		public App ()
 		{
 			// The root page of your application
 			MainPage = new NavigationPage(new LandingPage());
+			localytics = DependencyService.Get<ILocalytics>();
 		}
 
 		protected override void OnStart ()
@@ -34,8 +31,6 @@ namespace LocalyticsSample
 
 		private void CommonSmokeTest()
         {
-			ILocalytics localytics = DependencyService.Get<ILocalytics>();
-
 			localytics.OpenSession();
 			localytics.Upload();
 			localytics.TagEvent("TagEvent");
@@ -115,25 +110,24 @@ namespace LocalyticsSample
 			localytics.TriggerInAppMessagesForSessionStart();
 			localytics.DismissCurrentInAppMessage();
             
-			foreach (object a in localytics.InboxCampaigns) {
-				Debug.WriteLine("inbox campaign " + a.ToString());
-			}
 			localytics.RefreshInboxCampaigns(HandleInboxCampaignsDelegate);
 			localytics.RefreshAllInboxCampaigns(HandleInboxCampaignsDelegate);
 
 			localytics.InboxAdIdParameterEnabled = true;
 			localytics.InAppAdIdParameterEnabled = true;
             
-			localytics.InboxListItemTapped(null);
+			//foreach (object a in localytics.InboxCampaigns) {
+            //  Debug.WriteLine("inbox campaign " + a.ToString());
+            //}
+			//localytics.InboxListItemTapped(null);
+ 			//localytics.TagImpressionForInAppCampaign(null, "custom");
+   //         localytics.TagImpressionForInboxCampaign(null, "custom");
+   //         localytics.TagImpressionForPushToInboxCampaign(null, true);
 
-			localytics.TagImpressionForInAppCampaign(null, "custom");
-            localytics.TagImpressionForInboxCampaign(null, "custom");
-            localytics.TagImpressionForPushToInboxCampaign(null, true);
-
-			localytics.TagPlacesPushReceived(null);
-			localytics.TagPlacesPushOpened(null);
-			localytics.TagPlacesPushOpened(null, "123");
-			localytics.TriggerPlacesNotificationForCampaign(null);
+			//localytics.TagPlacesPushReceived(null);
+			//localytics.TagPlacesPushOpened(null);
+			//localytics.TagPlacesPushOpened(null, "123");
+			//localytics.TriggerPlacesNotificationForCampaign(null);
 			localytics.TriggerPlacesNotificationForCampaignId(1, "1");
        }
 
