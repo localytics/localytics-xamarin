@@ -9,9 +9,9 @@ using LocalyticsXamarin.iOS;
 namespace LocalyticsSample.iOS
 {
 	[Register ("AppDelegate")]
-	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+	public class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 	{
-		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+		public override bool FinishedLaunching (UIApplication uiApplication, NSDictionary launchOptions)
 		{
 			if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
             {
@@ -88,7 +88,7 @@ namespace LocalyticsSample.iOS
 			#endif
 
 			// Localytics Auto Integrate
-			Localytics.AutoIntegrate ("d66a71cf596a2df62e39508-6de4aff6-2236-11e8-4a93-007c928ca240", options != null? options : new NSDictionary(), new NSDictionary());
+			Localytics.AutoIntegrate ("d66a71cf596a2df62e39508-6de4aff6-2236-11e8-4a93-007c928ca240", launchOptions != null? launchOptions : new NSDictionary(), new NSDictionary());
 
 			// Register for remote notifications
 			if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {
@@ -112,7 +112,7 @@ namespace LocalyticsSample.iOS
 
 			LoadApplication (new App ());
 
-			return base.FinishedLaunching (app, options);
+			return base.FinishedLaunching (uiApplication, launchOptions);
 		}
 
 		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)

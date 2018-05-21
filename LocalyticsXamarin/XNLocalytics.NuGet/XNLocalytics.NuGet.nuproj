@@ -28,17 +28,17 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XNLocalytics.iOS\XNLocalytics.iOS.csproj">
-      <Project>{A799F4D9-6C10-4722-9210-6CDC286CE382}</Project>
-      <Name>XNLocalytics.iOS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
       <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
       <Name>LocalyticsXamarin.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Shared.csproj">
+    <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
-      <Name>LocalyticsXamarin.Shared</Name>
+      <Name>LocalyticsXamarin.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalyticsXamarin.Android\LocalyticsXamarin.Android.csproj">
+      <Project>{8D4D1584-55B7-4E32-9373-9D1DA7D9A209}</Project>
+      <Name>LocalyticsXamarin.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

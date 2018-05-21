@@ -4,14 +4,14 @@
 	<ContentPage.Content>
 		<ScrollView>
 			<StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="8">
-                 <Label x:Name="info0" Text=""/>
-                 <Label x:Name="info1" Text=""/>
-                 <Label x:Name="info2" Text=""/>
-                 <Label x:Name="info3" Text=""/>
-                 <Label x:Name="info4" Text=""/>
-                 <Label x:Name="info5" Text=""/>
-                 <Label x:Name="info6" Text=""/>
-                 <Label x:Name="info7" Text=""/>
+                 <Label x:Name="info0" Text="Label0"/>
+                 <Label x:Name="info1" Text="Label1"/>
+                 <Label x:Name="info2" Text="Label2"/>
+                 <Label x:Name="info3" Text="Label3"/>
+                 <Label x:Name="info4" Text="Label4"/>
+                 <Label x:Name="info5" Text="Label5"/>
+                 <Label x:Name="info6" Text="Label6"/>
+                 <Label x:Name="info7" Text="Label7"/>
 
                  <Button Text="Refresh" IsEnabled="true" Clicked="OnRefresh"  BorderWidth="2" BorderColor="Black"/>
 

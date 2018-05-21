@@ -89,15 +89,6 @@
     <Reference Include="Calabash">
       <HintPath>..\packages\Xamarin.TestCloud.Agent.0.21.5\lib\Xamarin.iOS\Calabash.dll</HintPath>
     </Reference>
-    <Reference Include="LocalyticsXamarin.iOS">
-      <HintPath>..\..\build\bin\Debug\LocalyticsXamarin.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="LocalyticsXamarin.iOS">
-      <HintPath>..\..\build\bin\Debug\LocalyticsXamarin.iOS.dll</HintPath>
-    </Reference>
-    <Reference Include="LocalyticsXamarin.iOS">
-      <HintPath>..\..\build\bin\Debug\LocalyticsXamarin.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsSample\LocalyticsSample.csproj">
@@ -107,6 +98,10 @@
     <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
+      <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
+      <Name>LocalyticsXamarin.iOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

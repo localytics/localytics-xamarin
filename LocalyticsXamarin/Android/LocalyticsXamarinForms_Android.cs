@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Java.Util;
@@ -9,7 +10,7 @@ using XNLocalytics.Shared;
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Forms.LocalyticsXamarinForms_Android))]
 namespace LocalyticsXamarin.Forms
 {
-	public class LocalyticsXamarinForms_Android
+	public class LocalyticsXamarinForms_Android : ILocalytics
 	{
 		public LocalyticsXamarinForms_Android () {}
 
@@ -17,28 +18,28 @@ namespace LocalyticsXamarin.Forms
 		{
 		}
 
-		public void SmokeTest() {
-			Localytics.CustomerId = "XamarinFormAndroid CustomerId";
-			Localytics.SetProfileAttribute ("Age", 83, Localytics.ProfileScope.Organization);
+		//public void SmokeTest() {
+		//	Localytics.CustomerId = "XamarinFormAndroid CustomerId";
+		//	Localytics.SetProfileAttribute ("Age", 83, Localytics.ProfileScope.Organization);
 
-			Localytics.AddProfileAttributesToSet("Android Lucky Number", new long[] { 321,654}, Localytics.ProfileScope.Application);
+		//	Localytics.AddProfileAttributesToSet("Android Lucky Number", new long[] { 321,654}, Localytics.ProfileScope.Application);
 
-			Localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", Localytics.ProfileScope.Application);
+		//	Localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", Localytics.ProfileScope.Application);
 
-			Localytics.SetCustomerEmail("XamarinFormAndroid Email");
-			Localytics.SetCustomerFirstName("XamarinFormAndroid FirstName");
-			Localytics.SetCustomerLastName("XamarinFormAndroid LastName");
-			Localytics.SetCustomerFullName("XamarinFormAndroid Full Name");
+		//	Localytics.SetCustomerEmail("XamarinFormAndroid Email");
+		//	Localytics.SetCustomerFirstName("XamarinFormAndroid FirstName");
+		//	Localytics.SetCustomerLastName("XamarinFormAndroid LastName");
+		//	Localytics.SetCustomerFullName("XamarinFormAndroid Full Name");
 
-			Localytics.SetCustomDimension(1, "XamarinFormAndroidCD1");
+		//	Localytics.SetCustomDimension(1, "XamarinFormAndroidCD1");
 
-			Localytics.TagEvent ("XamarinFormAndroid Start");
-			Localytics.TagScreen ("XamarinFormAndroid Landing");
-			Localytics.Upload();
+		//	Localytics.TagEvent ("XamarinFormAndroid Start");
+		//	Localytics.TagScreen ("XamarinFormAndroid Landing");
+		//	Localytics.Upload();
 
-			// Run through some Interface function
-			this.AddProfileAttributesToSet (new object[] { 234, 345 }, "Android Interface Lucky Number", XFLLProfileScope.Application);
-		}
+		//	// Run through some Interface function
+		//	this.AddProfileAttributesToSet (new object[] { 234, 345 }, "Android Interface Lucky Number", XFLLProfileScope.Application);
+		//}
 
 
 		public void OpenSession ()
@@ -327,7 +328,16 @@ namespace LocalyticsXamarin.Forms
 			}
 		}
 
-        // TODO fix me
+		public string PushTokenInfo => throw new NotImplementedException();
+
+		public bool PrivacyOptedOut { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+		public object[] InboxCampaigns => throw new NotImplementedException();
+
+		public bool InAppAdIdParameterEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public bool InboxAdIdParameterEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+		// TODO fix me
 		//private Localytics.InAppMessageDismissButtonLocation ToLLInAppMessageDismissButtonLocation(XFLLInAppMessageDismissButtonLocation source) {
 		//	if (source == XFLLInAppMessageDismissButtonLocation.Right) {
 		//		return Localytics.InAppMessageDismissButtonLocation.Right;
@@ -374,6 +384,197 @@ namespace LocalyticsXamarin.Forms
 
 		private string[] ToStringArray(object[] source) {
 			return Array.ConvertAll<object, string>(source, x=>x.ToString());
+		}
+
+		public void TagPurchased(string itemName, string itemId, string itemType, double itemPrice, IDictionary<string, string> attributes)
+		{
+			// TODO FIXME Type of itemPrice
+			Localytics.TagPurchased(itemName, itemId, itemType, new Java.Lang.Long((Int64)itemPrice), attributes);
+		}
+
+		public void TagAddedToCart(string itemName, string itemId, string itemType, double itemPrice, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagStartedCheckout(double totalPrice, double itemCount, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagCompletedCheckout(double totalPrice, double itemCount, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagContentViewed(string contentName, string contentId, string contentType, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagSearched(string queryText, string contentType, double resultCount, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagContentRated(string contentName, string contentId, string contentType, double rating, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagCustomerRegistered(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagCustomerLoggedOut(IDictionary<string, string> attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagInvited(string methodName, IDictionary attributes)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RemoveProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RedirectLoggingToDisk()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DidRegisterUserNotificationSettings()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetInAppMessageDismissButtonImageWithName(string imageName)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetInAppMessageDismissButtonHidden(bool hidden)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RefreshInboxCampaigns(InboxCampaignsDelegate inboxCampaignsDelegate)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetInboxCampaign(object campaign, bool read)
+		{
+			throw new NotImplementedException();
+		}
+
+		public long InboxCampaignsUnreadCount()
+		{
+			return Localytics.InboxCampaignsUnreadCount;
+		}
+
+		public void SetLocationMonitoringEnabled(bool enabled)
+		{
+			Localytics.SetLocationMonitoringEnabled(enabled);
+		}
+
+		public void SetOptions(IDictionary options)
+		{
+			throw new NotImplementedException();
+			//Localytics.SetOptions(options);
+		}
+
+		public void PauseDataUploading(bool pause)
+		{
+			Localytics.PauseDataUploading(pause);
+		}
+
+		public void SetCustomerId(string customerId, bool optedOut)
+		{
+			Localytics.SetCustomerIdWithPrivacyOptedOut(customerId, optedOut);
+		}
+
+		public void TriggerInAppMessagesForSessionStart()
+		{
+			Localytics.TriggerInAppMessagesForSessionStart();
+		}
+
+		public object[] AllInboxCampaigns()
+		{
+			throw new NotImplementedException();
+			//return Localytics.AllInboxCampaigns;
+		}
+
+		public void RefreshAllInboxCampaigns(InboxCampaignsDelegate inboxCampaignsDelegate)
+		{
+			throw new NotImplementedException();
+			//Localytics.RefreshAllInboxCampaigns(new IInboxRefreshListener())
+		}
+
+		public void TriggerPlacesNotificationForCampaignId(long campaignId, string regionId)
+		{
+			Localytics.TriggerPlacesNotification(campaignId, regionId);
+		}
+
+		public void TagImpressionForInAppCampaign(object campaign, string customAction)
+		{
+			//Localytics.TagInAppImpression(campaign, customAction);
+			throw new NotImplementedException();
+		}
+
+		public void TagImpressionForInboxCampaign(object campaign, string customAction)
+		{
+			
+			throw new NotImplementedException();
+		}
+
+		public void TagImpressionForPushToInboxCampaign(object campaign, bool success)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void InboxListItemTapped(object campaign)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagPlacesPushReceived(object campaign)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagPlacesPushOpened(object campaign)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TagPlacesPushOpened(object campaign, string identifier)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TriggerPlacesNotificationForCampaign(object campaign)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
