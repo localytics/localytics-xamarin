@@ -29,10 +29,22 @@ namespace LocalyticsSample.Shared
 			CommonSmokeTest();
 		}
 
+
 		private void CommonSmokeTest()
         {
-			localytics.OpenSession();
+
+			localytics.SetOptions(new Dictionary<string, object>
+            {
+                {"ll_wifi_upload_interval_seconds", 15},
+                {"ll_session_timeout_seconds", 10}
+            });
+
+			localytics.TestModeEnabled = true;
+   			localytics.OpenSession();
+			localytics.CloseSession();
 			localytics.Upload();
+			localytics.PauseDataUploading(true);
+			localytics.PauseDataUploading(false);
 			localytics.TagEvent("TagEvent");
 			localytics.TagEvent("TagEventWithEmptyAttribs", new Dictionary<string, string>());
 			Dictionary<string, string> dict = new Dictionary<string, string>
@@ -43,14 +55,16 @@ namespace LocalyticsSample.Shared
 			localytics.TagEvent("TagEventWithAttribsWithValue", dict, 0);
 			localytics.TagEvent("TagEventWithAttribsWithValue", dict, 10);
 
-			localytics.TagPurchased("item1", "1", "item", 100.0, new Dictionary<string, string>());
-			localytics.TagAddedToCart("item1", "1", "item", 100.0, new Dictionary<string, string>());
-			localytics.TagStartedCheckout(100.0, 5, new Dictionary<string, string>());
-			localytics.TagCompletedCheckout(100.0, 5, new Dictionary<string, string>());
+
+
+			localytics.TagPurchased("item1", "1", "item", 100, new Dictionary<string, string>());
+			localytics.TagAddedToCart("item1", "1", "item", 100, new Dictionary<string, string>());
+			localytics.TagStartedCheckout(100, 5, new Dictionary<string, string>());
+			localytics.TagCompletedCheckout(100, 5, new Dictionary<string, string>());
 			localytics.TagContentViewed("name", "is", "type", new Dictionary<string, string>());
 			localytics.TagSearched("query", "type", 5, new Dictionary<string, string>());
 			localytics.TagShared("name", "id", "type", "method", new Dictionary<string, string>());
-			localytics.TagContentRated("name", "id", "type", 1.0, new Dictionary<string, string>());
+			localytics.TagContentRated("name", "id", "type", 1, new Dictionary<string, string>());
 			localytics.TagCustomerRegistered(new Dictionary<string, object>() {
 				{"customerId", "1234"},
 				{"firstName", "Anand"},
@@ -58,24 +72,32 @@ namespace LocalyticsSample.Shared
 				{"fullName", "A B"},
 				{"emailAddress", "ab@localytics.com"}
 			}, "method", new Dictionary<string, string>());
+			localytics.TagCustomerLoggedIn(new Dictionary<string, object> {
+				{"customerId", "1234"}
+			}, null, null);
+			localytics.TagCustomerLoggedOut(new Dictionary<string, string> {
+                {"customerId", "1234"}
+			});
 			localytics.TagInvited("method", new Dictionary<string, string>());
 
 			localytics.CloseSession();
-
 
 
 			localytics.CustomerId = "XamarinFormIOS CustomerId";
 			//localytics.TagCustomerLoggedIn(null, "method", new Dictionary<string, string>());
 			localytics.SetProfileAttribute("Age", "83", XFLLProfileScope.Organization);
 			localytics.SetProfileAttribute("MyAge", "3", XFLLProfileScope.Application);
-
-			localytics.AddProfileAttributes("Lucky numbers", XFLLProfileScope.Application, new object[] { 222, "333",  });
-			localytics.AddProfileAttributes("Lucky numbers", XFLLProfileScope.Application, 222, "333" );
-            localytics.AddProfileAttributes("Android Interface Lucky Number", XFLLProfileScope.Application, new object[] { 234, 345 });
+            
+			localytics.AddProfileAttributes("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333});
+			localytics.AddProfileAttributes("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc" );
+            localytics.AddProfileAttributes("Lucky String", XFLLProfileScope.Application, new string[] { "234", "345" });
 			localytics.RemoveProfileAttributes("Lucky numbers", XFLLProfileScope.Application, 222);
 			localytics.IncrementProfileAttribute(1, "Age");
 			localytics.IncrementProfileAttribute(1, "MyAge");
 			localytics.DecrementProfileAttribute(2, "Age", XFLLProfileScope.Organization);
+
+            // Need Data based Profile tests
+
 
 			localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", XFLLProfileScope.Application);
 
@@ -87,7 +109,9 @@ namespace LocalyticsSample.Shared
 			localytics.SetCustomDimension("XamarinFormIOSCD1", 1);
 			Debug.WriteLine("Dimension 1:" + localytics.GetCustomDimension(1));
 
-			localytics.RedirectLoggingToDisk();
+			// This should be platform specific
+            //localytics.DidRegisterUserNotificationSettings();
+//			localytics.RedirectLoggingToDisk();
 
 			localytics.SetIdentifier("test", "id1");
 			Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
@@ -100,13 +124,11 @@ namespace LocalyticsSample.Shared
 
 			localytics.PrivacyOptedOut = true;
 			localytics.PrivacyOptedOut = false;
-            // This should be platform specific
-			localytics.DidRegisterUserNotificationSettings();
-			localytics.SetInAppMessageDismissButtonImageWithName(null);
+			//localytics.SetInAppMessageDismissButtonImageWithName(null);
 			localytics.SetInAppMessageDismissButtonHidden(true);
 			localytics.SetInAppMessageDismissButtonHidden(false);
 
-			localytics.TriggerInAppMessage("javascript");
+			localytics.TriggerInAppMessage("lang");
 			localytics.TriggerInAppMessagesForSessionStart();
 			localytics.DismissCurrentInAppMessage();
             

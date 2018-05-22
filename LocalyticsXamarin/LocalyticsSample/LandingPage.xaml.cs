@@ -10,6 +10,61 @@ namespace LocalyticsSample.Shared
 {
 	public partial class LandingPage : ContentPage
 	{
+		void OnPauseDataUpload(object sender, System.EventArgs e)
+		{
+			localytics.PauseDataUploading(true);
+		}
+
+		void OnResumeDataUpload(object sender, System.EventArgs e)
+		{
+			localytics.PauseDataUploading(false);
+		}
+
+		void OnPrivacyOptOut(object sender, System.EventArgs e)
+        {
+			localytics.PrivacyOptedOut = true;
+        }
+
+		void OnPrivacyOptIn(object sender, System.EventArgs e)
+        {
+			localytics.PrivacyOptedOut = false;
+        }
+
+		void OnTriggerInApp(object sender, System.EventArgs e)
+		{
+			localytics.TriggerInAppMessage(this.triggerName.Text);
+		}
+
+		void OnInboxAdidDisable(object sender, System.EventArgs e)
+		{
+			localytics.InboxAdIdParameterEnabled = false;
+		}
+
+		void OnInboxAdidEnable(object sender, System.EventArgs e)
+		{
+			localytics.InboxAdIdParameterEnabled = true;
+		}
+
+		void OnInappAdidDisable(object sender, System.EventArgs e)
+		{
+			localytics.InAppAdIdParameterEnabled = false;
+		}
+        
+		void OnInappAdidEnable(object sender, System.EventArgs e)
+		{
+			localytics.InAppAdIdParameterEnabled = true;
+		}
+
+		void OnOptOut(object sender, System.EventArgs e)
+		{
+			localytics.OptedOut = true;
+		}
+
+		void OnOptIn(object sender, System.EventArgs e)
+		{
+			localytics.OptedOut = false;
+		}
+
 		public LandingPage ()
 		{
 			InitializeComponent ();
@@ -23,8 +78,6 @@ namespace LocalyticsSample.Shared
 			RefreshInfo ();
 		}
 
-       
-
 		void OnRefresh(object sender, EventArgs e)
 		{
 			RefreshInfo ();
@@ -32,6 +85,7 @@ namespace LocalyticsSample.Shared
 		ILocalytics localytics;
 
 		void RefreshInfo() {
+			localytics.LoggingEnabled = true;
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
 				string value0 = "AppKey: " + localytics.AppKey;
 				string value1 = "CustomerId: " + localytics.CustomerId;

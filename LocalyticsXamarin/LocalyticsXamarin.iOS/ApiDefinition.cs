@@ -4,9 +4,8 @@ using Foundation;
 using ObjCRuntime;
 using UIKit;
 using UserNotifications;
-using LocalyticsXamarin.iOS.Enums;
 
-namespace LocalyticsXamarin.iOS
+namespace LocalyticsXamarin.IOS
 {
     // @interface LLCustomerBuilder : NSObject
     [BaseType(typeof(NSObject))]
@@ -35,6 +34,7 @@ namespace LocalyticsXamarin.iOS
 
     // @interface LLCustomer : NSObject
     [BaseType(typeof(NSObject))]
+	//[Model]
     public interface LLCustomer
     {
         // @property (readonly, nonatomic, strong) NSString * _Nullable customerId;
@@ -58,15 +58,15 @@ namespace LocalyticsXamarin.iOS
         string EmailAddress { get; }
 
         // +(instancetype _Nullable)customerWithBlock:(void (^ _Nonnull)(LLCustomerBuilder * _Nonnull))block;
-        [Static]
         [Export("customerWithBlock:")]
         [return: NullAllowed]
+		[Static]
         LLCustomer CustomerWithBlock(Action<LLCustomerBuilder> block);
     }
 
     // @interface LLCampaignBase : NSObject
     [BaseType(typeof(NSObject))]
-    interface LLCampaignBase
+    public interface LLCampaignBase
     {
         // @property (readonly, assign, nonatomic) NSInteger campaignId;
         [Export("campaignId")]
@@ -83,7 +83,7 @@ namespace LocalyticsXamarin.iOS
 
     // @interface LLWebViewCampaign : LLCampaignBase
     [BaseType(typeof(LLCampaignBase))]
-    interface LLWebViewCampaign
+    public interface LLWebViewCampaign
     {
         // @property (readonly, copy, nonatomic) NSString * _Nullable creativeFilePath;
         [NullAllowed, Export("creativeFilePath")]
@@ -392,7 +392,7 @@ namespace LocalyticsXamarin.iOS
         // @required +(void)tagShared:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagShared:contentId:contentType:methodName:attributes:")]
-        void TagShared( string contentName,  string contentId,  string contentType,  string methodName,  NSDictionary attributes);
+		void TagShared( string contentName,  string contentId,  string contentType,  [NullAllowed]string methodName,  [NullAllowed]NSDictionary attributes);
 
         // @required +(void)tagContentRated:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType rating:(NSNumber * _Nullable)rating attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
@@ -409,7 +409,7 @@ namespace LocalyticsXamarin.iOS
         [Static]
         [Export("tagCustomerLoggedIn:methodName:attributes:")]
 		[Protected]
-        void TagCustomerLoggedInPrivate( LLCustomer customer,  string methodName,  NSDictionary attributes);
+		void TagCustomerLoggedInPrivate( LLCustomer customer, [NullAllowed]string methodName,  [NullAllowed]NSDictionary attributes);
 
         // @required +(void)tagCustomerLoggedOut:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
@@ -419,7 +419,7 @@ namespace LocalyticsXamarin.iOS
         // @required +(void)tagInvited:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagInvited:attributes:")]
-        void TagInvited( string methodName,  NSDictionary attributes);
+		void TagInvited( [NullAllowed]string methodName,  [NullAllowed]NSDictionary attributes);
 
         // @required +(void)tagScreen:(NSString * _Nonnull)screenName;
         [Static]
@@ -627,7 +627,8 @@ namespace LocalyticsXamarin.iOS
         // @required +(void)triggerInAppMessage:(NSString * _Nonnull)triggerName;
         [Static]
         [Export("triggerInAppMessage:")]
-        void TriggerInAppMessage(string triggerName);
+		[Internal]
+		void TriggerInAppMessageInternal(string triggerName);
 
         // @required +(void)triggerInAppMessage:(NSString * _Nonnull)triggerName withAttributes:(NSDictionary<NSString *,NSString *> * _Nonnull)attributes;
         [Static]
@@ -677,12 +678,12 @@ namespace LocalyticsXamarin.iOS
         // @required +(void)triggerRegion:(CLRegion * _Nonnull)region withEvent:(LLRegionEvent)event atLocation:(CLLocation * _Nullable)location;
         [Static]
         [Export("triggerRegion:withEvent:atLocation:")]
-        void TriggerRegion(CLRegion region, LLRegionEvent @event,  CLLocation location);
+		void TriggerRegion(CLRegion region, LLRegionEvent regionEvent,  CLLocation location);
 
         // @required +(void)triggerRegions:(NSArray<CLRegion *> * _Nonnull)regions withEvent:(LLRegionEvent)event atLocation:(CLLocation * _Nullable)location;
         [Static]
         [Export("triggerRegions:withEvent:atLocation:")]
-        void TriggerRegions(CLRegion[] regions, LLRegionEvent @event,  CLLocation location);
+		void TriggerRegions(CLRegion[] regions, LLRegionEvent regionEvent,  CLLocation location);
 
         // @required +(void)setOptions:(NSDictionary<NSString *,NSObject *> * _Nullable)options;
         [Static]
@@ -880,7 +881,7 @@ namespace LocalyticsXamarin.iOS
     // @protocol LLAnalyticsDelegate <NSObject>
     [BaseType(typeof(NSObject))]
     [Protocol]
-    internal interface LLAnalyticsDelegate
+    interface LLAnalyticsDelegate
     {
         // @optional -(void)localyticsSessionWillOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume;
         [Export("localyticsSessionWillOpen:isUpgrade:isResume:")]
@@ -902,7 +903,7 @@ namespace LocalyticsXamarin.iOS
     // @protocol LLMessagingDelegate <NSObject>
     [Model] [Protocol]
     [BaseType(typeof(NSObject))]
-    internal interface LLMessagingDelegate
+    interface LLMessagingDelegate
     {
         // @optional -(BOOL)localyticsShouldShowInAppMessage:(LLInAppCampaign * _Nonnull)campaign;
         //[Export("localyticsShouldShowInAppMessage:"), DelegateName("InAppShouldShowCondition"), DefaultValue("true")]
@@ -1031,7 +1032,7 @@ namespace LocalyticsXamarin.iOS
 
     // @interface LLInboxDetailViewController : UIViewController
     [BaseType(typeof(UIViewController))]
-    interface LLInboxDetailViewController
+    public interface LLInboxDetailViewController
     {
         // @property (readonly, nonatomic, strong) LLInboxCampaign * _Nonnull campaign;
         [Export("campaign", ArgumentSemantic.Strong)]

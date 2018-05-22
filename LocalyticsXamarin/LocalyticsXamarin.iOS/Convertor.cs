@@ -1,117 +1,226 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Foundation;
-namespace LocalyticsXamarin.iOS
+namespace LocalyticsXamarin.IOS
 {
 	public static class Convertor
-    {
-        private static Dictionary<Type, Func<object, NSObject>> _Strategies;
-        static Convertor()
-        {
-            // Prepare all available strategies.
-            _Strategies = new Dictionary<Type, Func<object, NSObject>>();
+	{
+		static Dictionary<Type, Func<object, NSObject>> _Strategies;
+		static Convertor()
+		{
+			// Prepare all available strategies.
+			_Strategies = new Dictionary<Type, Func<object, NSObject>>();
 
-            _Strategies.Add(typeof(NSObject), (o) => { return (NSObject)o; });
-            _Strategies.Add(typeof(string), (o) => { return new NSString((string)o); });
-            _Strategies.Add(typeof(float), (o) => { return new NSNumber((float)o); });
-            _Strategies.Add(typeof(double), (o) => { return new NSNumber((double)o); });
-            _Strategies.Add(typeof(UInt16), (o) => { return new NSNumber((UInt16)o); });
-            _Strategies.Add(typeof(UInt32), (o) => { return new NSNumber((UInt32)o); });
-            _Strategies.Add(typeof(UInt64), (o) => { return new NSNumber((UInt64)o); });
-            _Strategies.Add(typeof(Int16), (o) => { return new NSNumber((Int16)o); });
-            _Strategies.Add(typeof(Int32), (o) => { return new NSNumber((Int32)o); });
-            _Strategies.Add(typeof(Int64), (o) => { return new NSNumber((Int64)o); });
-            _Strategies.Add(typeof(byte), (o) => { return new NSNumber((byte)o); });
-        }
-        public static NSObject[] ToNSObjects(object[] objects)
-        {
-            List<NSObject> result = new List<NSObject>();
-            foreach (object i in objects)
-            {
-                result.Add(NSObject.FromObject(i));
-            }
+			_Strategies.Add(typeof(NSObject), (o) => { return (NSObject)o; });
+			_Strategies.Add(typeof(NSString), (o) => { return (NSString)o; });
+			_Strategies.Add(typeof(NSNumber), (o) => { return (NSNumber)o; });
+			_Strategies.Add(typeof(string), (o) => { return new NSString((string)o); });
+			_Strategies.Add(typeof(float), (o) => { return new NSNumber((float)o); });
+			_Strategies.Add(typeof(double), (o) => { return new NSNumber((double)o); });
+			//_Strategies.Add(typeof(long), (o) => { return new NSNumber((long)o); });
+			_Strategies.Add(typeof(UInt16), (o) => { return new NSNumber((UInt16)o); });
+			_Strategies.Add(typeof(UInt32), (o) => { return new NSNumber((UInt32)o); });
+			_Strategies.Add(typeof(UInt64), (o) => { return new NSNumber((UInt64)o); });
+			_Strategies.Add(typeof(Int16), (o) => { return new NSNumber((Int16)o); });
+			_Strategies.Add(typeof(Int32), (o) => { return new NSNumber((Int32)o); });
+			_Strategies.Add(typeof(Int64), (o) => { return new NSNumber((Int64)o); });
+			_Strategies.Add(typeof(byte), (o) => { return new NSNumber((byte)o); });
+		}
+		public static NSObject[] ToNSObjects(object[] objects)
+		{
+			if (objects==null) {
+				return null;
+			}
+			var result = new List<NSObject>();
+			foreach (object i in objects)
+			{
+				result.Add(NSObject.FromObject(i));
+			}
 
-            return result.ToArray();
-        }
+			return result.ToArray();
+		}
 
-        public static NSDictionary ToNSDictionary(this IDictionary<string, string> source)
-        {
-            NSMutableDictionary result = new NSMutableDictionary();
+		//public static NSDictionary<NSString, NSObject> ToNSDictionaryGeneric(this IDictionary<string, object> source)
+		//     {
+		//NSMutableDictionary<NSString, NSObject> result = new NSMutableDictionary<NSString, NSObject>();
 
-            if (source != null)
-            {
-                foreach (string key in source.Keys)
-                {
-                    result.Add((NSString)(key), (NSString)(source[key]));
-                }
-            }
+		//         if (source != null)
+		//         {
+		//             foreach (string key in source.Keys)
+		//             {
+		//		object o = source[key];
+		//		if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
+		//                 {
+		//                     // If not, log error, throw exception, whatever.
+		//                     throw new ArgumentException("Unknown object of type " + o.GetType());
+		//                 }
+		//                 result.Add((NSString)(key), action(o));
+		//             }
+		//         }
 
-            return result;
-        }
+		//return (NSDictionary< NSString, NSObject >)result.ToNSDictionary<NSString, NSObject>();
+		//}
+
+		public static NSDictionary ToNSDictionary(this IDictionary<string, string> source)
+		{
+			if (source==null)
+			{
+				return null;
+			}
+			Debug.WriteLine("Calling s:s to Dictionary");
+			var result = new NSMutableDictionary();
+
+			if (source != null)
+			{
+				foreach (string key in source.Keys)
+				{
+					result.Add((NSString)(key), (NSString)(source[key]));
+				}
+			}
+
+			return result;
+		}
 
 		public static NSDictionary ToNSDictionary(this IDictionary<string, object> source)
-        {
-            NSMutableDictionary result = new NSMutableDictionary();
+		{
+			if (source==null)
+			{
+				return null;
+			}
+			Debug.WriteLine("Calling s:o to Dictionary");
+			var result = new NSMutableDictionary();
 
-            if (source != null)
-            {
-                foreach (string key in source.Keys)
-                {
-					if (source[key] is NSObject) {
-						result.Add((NSString)(key), (NSObject)source[key]);
-					} else {
-						result.Add((NSString)(key), (NSString)(source[key]));
-					}
-                }
-            }
+			if (source != null)
+			{
+				foreach (string key in source.Keys)
+				{
+					object o = source[key];
+					if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
+                    {
+                        // If not, log error, throw exception, whatever.
+                        throw new ArgumentException("Unknown object of type " + o.GetType());
+                    }
+					result.Add((NSString)(key), action(o));
+				}
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        public static NSDictionary ToNSDictionary(this IDictionary dictionary)
+		public static NSDictionary ToNSDictionary(this IDictionary dictionary)
+		{
+			var result = new NSMutableDictionary();
+			foreach (string key in dictionary.Keys)
+			{
+				result.Add(new NSString(key), new NSString(dictionary[key].ToString()));
+			}
+			return result;
+		}
+        
+		public static NSArray ToArray(long[] values)
         {
-            NSMutableDictionary result = new NSMutableDictionary();
-            foreach (string key in dictionary.Keys)
-            {
-                result.Add(new NSString(key), new NSString(dictionary[key].ToString()));
-            }
-            return result;
-        }
-        public static NSArray ToDictionary(params object[] values)
-        {
-            NSMutableArray list = new NSMutableArray();
+            var list = new NSMutableArray();
             foreach (object o in values)
             {
-				// Check if we have a matching strategy.
-				if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
-				{
-					// If not, log error, throw exception, whatever.
-					throw new ArgumentException("Unknown object of type " + o.GetType());
-				}
-				list.Add(action(o));
+                // Check if we have a matching strategy.
+                if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
+                {
+                    // If not, log error, throw exception, whatever.
+                    throw new ArgumentException("Unknown object of type " + o.GetType());
+                }
+                list.Add(action(o));
             }
             return list;
         }
 
+		public static NSArray ToArray(object[] values)
+        {
+            var list = new NSMutableArray();
+            foreach (object o in values)
+            {
+				//if (o is NSArray) 
+				//{
+				//	NSArray ary = (NSArray)o;
+    //                list.A
+				//	list.AddObjects(((NSArray)o));
+				//}
+				if (o is NSMutableArray)
+				{
+					NSMutableArray ary = (NSMutableArray)o;
+					nuint i;
+					nuint max = ary.Count;
+					for (i = 0; i < max; i++)
+					{
+						list.Add(ary.GetItem<NSObject>(i));
+					}
+				}
+                // Check if we have a matching strategy.
+				else {
+					if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
+                    {
+                        Debug.WriteLine("Unknown Object Type " + o.GetType());
+                        // If not, log error, throw exception, whatever.
+                        throw new ArgumentException("Unknown object of type " + o.GetType());
+                    }
+                    list.Add(action(o));
+				}
+            }
+            return list;
+        }
+
+		//public static NSArray ToArray(params object[] values)
+		//{
+		//	var list = new NSMutableArray();
+		//	foreach (object o in values)
+		//	{
+		//		// Check if we have a matching strategy.
+		//		if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
+		//		{
+		//			// If not, log error, throw exception, whatever.
+		//			throw new ArgumentException("Unknown object of type " + o.GetType());
+		//		}
+		//		list.Add(action(o));
+		//	}
+		//	return list;
+		//}
+
 		internal static IDictionary<string, object> ToDictionary(this LLCustomer customer)
 		{
-			return new Dictionary<string, object>()
-            {
+			return new Dictionary<string, object>
+			{
 				{ "_nativeHandle", customer },
 				{ "customerId", customer.CustomerId},
 				{ "firstName", customer.FirstName},
 				{ "lastName", customer.LastName},
 				{ "fullName", customer.FullName},
 				{ "emailAddress", customer.EmailAddress}
-            };
+			};
 		}
 
-		internal static LLCustomer toCustomer(IDictionary<string, object> customerProps)
+		public static void toBuilder(this LLCustomer customer, LLCustomerBuilder builder)
 		{
-			// TODO handle if the _nativeHandle is present.
-			return LLCustomer.CustomerWithBlock((LLCustomerBuilder builder) => {
-				builder.CustomerId = (string)customerProps[@"customerId"];
+			builder.CustomerId = customer.CustomerId;
+			builder.EmailAddress = customer.EmailAddress;
+			builder.FirstName = customer.FirstName;
+			builder.FullName = customer.FullName;
+			builder.LastName = customer.LastName;
+		}
+        
+        
+		public static LLCustomer toCustomer(IDictionary<string, object> customerProps)
+		{
+			LLCustomer customer = new LLCustomer();
+			customer = LLCustomer.CustomerWithBlock((LLCustomerBuilder builder) => {
+				if (customerProps.ContainsKey("_nativeHandle")) {
+				toBuilder((LLCustomer)customerProps[@"_nativeHandle"], builder);
+				    //customer = (LLCustomer)customerProps[@"_nativeHandle"];
+				}
+    			if (customerProps.ContainsKey(@"customerId"))
+    			{
+					builder.CustomerId = (string)customerProps[@"customerId"];
+    			}
 				if (customerProps.ContainsKey(@"firstName")) {
 					builder.FirstName = (string)customerProps[@"firstName"];
 				}
@@ -126,11 +235,12 @@ namespace LocalyticsXamarin.iOS
 					builder.EmailAddress = (string)customerProps[@"emailAddress"];
 				}
 			});
+			return customer;
 		}
         
 		internal static IDictionary<string, object> ToDictionary(this LLInboxCampaign campaign)
         {
-            return new Dictionary<string, object>()
+            return new Dictionary<string, object>
 			{
 				{ "_nativeHandle", campaign },
 				{ "campaignId", campaign.CampaignId },
@@ -151,7 +261,7 @@ namespace LocalyticsXamarin.iOS
         
 		internal static IDictionary<string, object> ToDictionary(this LLPlacesCampaign campaign)
         {
-            return new Dictionary<string, object>()
+            return new Dictionary<string, object>
             {
 				{ "_nativeHandle", campaign },
                 { "campaignId", campaign.CampaignId },
@@ -169,7 +279,7 @@ namespace LocalyticsXamarin.iOS
 
 		internal static IDictionary<string, object> ToDictionary(this LLInAppCampaign campaign)
         {
-            return new Dictionary<string, object>()
+            return new Dictionary<string, object>
             {
 				{ "_nativeHandle", campaign },
                 { "campaignId", campaign.CampaignId },
@@ -188,7 +298,7 @@ namespace LocalyticsXamarin.iOS
 
 		internal static IDictionary<string, object> ToDictionary(this LLInAppConfiguration config)
         {
-            return new Dictionary<string, object>()
+            return new Dictionary<string, object>
             {
 				{ "dismissButtonLocation", config.DismissButtonLocation },
 				//{ "dismissButtonImage", config.DismissButtonImage },
@@ -207,7 +317,7 @@ namespace LocalyticsXamarin.iOS
 
 		internal static LLInAppConfiguration toInAppConfiguration(IDictionary<string, object> props)
         {
-			LLInAppConfiguration configuration = (LLInAppConfiguration) props["_nativeHandle"];
+			var configuration = (LLInAppConfiguration) props["_nativeHandle"];
 			//configuration.DismissButtonLocation = props["dismissButtonLocation"];
 			//configuration.DismissButtonImage
 			configuration.DismissButtonHidden = Convert.ToBoolean(props["dismissButtonHidden"]);

@@ -30,7 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
       <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
-      <Name>LocalyticsXamarin.iOS</Name>
+      <Name>LocalyticsXamarin.IOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>

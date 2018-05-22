@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{8FFB629D-F513-41CE-95D2-7ECE97B6EEEC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>LocalyticsXamarin.iOS</RootNamespace>
+    <RootNamespace>LocalyticsXamarin.IOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>LocalyticsXamarin.iOS</AssemblyName>
   </PropertyGroup>
@@ -42,7 +42,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Localytics.cs" />
     <Compile Include="Convertor.cs" />
-    <Compile Include="ILocalyticsPlatformIOS.cs" />
+    <Compile Include="LocalyticsPlatform.cs" />
+    <Compile Include="ILocalyticsIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />

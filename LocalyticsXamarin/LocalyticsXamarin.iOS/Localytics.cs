@@ -3,10 +3,9 @@ using System.Collections;
 using CoreLocation;
 using Foundation;
 using UIKit;
-using LocalyticsXamarin.iOS.Enums;
 using System.Collections.Generic;
 
-namespace LocalyticsXamarin.iOS
+namespace LocalyticsXamarin.IOS
 {
 	public partial class Localytics
 	{
@@ -35,13 +34,13 @@ namespace LocalyticsXamarin.iOS
         
 		public static void TagCustomerRegistered(IDictionary<string, object> customerProps, string methodName, NSDictionary attributes)
 		{
-			LLCustomer customer = Convertor.toCustomer(customerProps);
+			var customer = Convertor.toCustomer(customerProps);
 			Localytics.TagCustomerRegisteredPrivate(customer, methodName, attributes);
 		}
 
 		public static void TagCustomerLoggedIn(IDictionary<string, object> customerProps, string methodName, NSDictionary attributes)
 		{
-			LLCustomer customer = Convertor.toCustomer(customerProps);
+			var customer = Convertor.toCustomer(customerProps);
 			Localytics.TagCustomerLoggedInPrivate(customer, methodName, attributes);
 		}
 
@@ -57,12 +56,12 @@ namespace LocalyticsXamarin.iOS
         
 		public static void AddProfileAttributes(string attribute, LLProfileScope scope, params object[] values)
 		{
-			Localytics.AddProfileAttributesToSetPrivate(Convertor.ToDictionary(values), attribute, scope);
+			Localytics.AddProfileAttributesToSetPrivate(Convertor.ToArray(values), attribute, scope);
 		}
 
 		public static void RemoveProfileAttributes(string attribute, LLProfileScope scope, params object[] values)
 		{
-			Localytics.RemoveProfileAttributesFromSetPrivate(Convertor.ToDictionary(values), attribute, scope);
+			Localytics.RemoveProfileAttributesFromSetPrivate(Convertor.ToArray(values), attribute, scope);
  		}
         
 		static public bool LoggingEnabled
@@ -83,7 +82,6 @@ namespace LocalyticsXamarin.iOS
             {
                 return Localytics.PushToken();
             }
-            
         }
 
         static public bool OptedOut
@@ -115,9 +113,9 @@ namespace LocalyticsXamarin.iOS
 		static public bool InAppAdIdParameterEnabled { get => Localytics.IsInAppAdIdParameterEnabledPrivate(); set => Localytics.SetInAppAdIdParameterEnabled(value); }
 
 
-		private static AnalyticsListener analyticsListener = new AnalyticsListener();
-		private static LocalyticsMessagingListener messagingListener = new LocalyticsMessagingListener();
-		private static LocationListener locationListener = new LocationListener();
+	    static AnalyticsListener analyticsListener = new AnalyticsListener();
+		static LocalyticsMessagingListener messagingListener = new LocalyticsMessagingListener();
+		static LocationListener locationListener = new LocationListener();
         static Localytics() {
 			Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString("XAMARIN_2.0.1"), new Foundation.NSString("plugin_library")));
 			Localytics.SetAnalyticsDelegatePrivate(analyticsListener);
@@ -218,10 +216,10 @@ namespace LocalyticsXamarin.iOS
         {
             public string EventName { get; set; }
             public IDictionary Attributes { get; set; }
-            public Nullable<double> customerValue { get; set; }
+            public double? customerValue { get; set; }
             public SessionDidTagEventArgs(string name,
                                           IDictionary attribs,
-                                          Nullable<double> customerValue)
+										  double? customerValue)
             {
                 EventName = name;
                 Attributes = attribs;
@@ -254,7 +252,7 @@ namespace LocalyticsXamarin.iOS
         public delegate void SessionWillCloseEventHandler(object sender, SessionWillCloseEventArgs e);
         static public event SessionWillCloseEventHandler SessionWillCloseEvent;
 
-		private sealed class AnalyticsListener : LLAnalyticsDelegate
+		sealed class AnalyticsListener : LLAnalyticsDelegate
         {
             public override void LocalyticsSessionDidOpen(bool isFirst, bool isUpgrade, bool isResume)
             {
@@ -309,7 +307,7 @@ namespace LocalyticsXamarin.iOS
         static public InboxWillDismissViewControllerEventHandler InboxWillDismissViewControllerEvent;
  		public static Func<bool> InAppDelaySessionStartMessages;
 
-		public class NativeHelper
+		public static class NativeHelper
         {
             //public static void OnSessionDidOpenEvent(SessionDidOpenEventArgs eventArgs)
             //{
@@ -381,7 +379,7 @@ namespace LocalyticsXamarin.iOS
 
             public override bool LocalyticsShouldDelaySessionStartInAppMessages()
             {
-                return InAppDelaySessionStartMessages != null ? InAppDelaySessionStartMessages() : true;
+                return InAppDelaySessionStartMessages == null || InAppDelaySessionStartMessages();
             }
 
             public override LLInAppConfiguration LocalyticsWillDisplayInAppMessage(LLInAppCampaign campaign, LLInAppConfiguration configuration)

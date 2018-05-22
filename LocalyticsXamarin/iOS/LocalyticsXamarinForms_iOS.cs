@@ -5,57 +5,38 @@ using Foundation;
 using UIKit;
 using CoreLocation;
 using LocalyticsXamarin.Common;
-using LocalyticsXamarin.iOS;
-using LocalyticsXamarin.iOS.Enums;
+using LocalyticsXamarin.IOS;
 using XNLocalytics.Shared;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Forms.LocalyticsXamarinForms_iOS))]
 namespace LocalyticsXamarin.Forms
 {
-	public interface ILocalyticIOS
-    {
-        bool HandleTestModeURL(NSUrl url);
-        void SetInAppMessageDismissButtonImage(UIImage image);
-        void SetLocation(CLLocationCoordinate2D location);
-        LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate);
-        void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location);
-        void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location);
-        void TagImpressionForInAppCampaign(object campaign, LLImpressionType impressionType);
-        void TagImpressionForInboxCampaign(object campaign, LLImpressionType impressionType);
-        LLInboxDetailViewController InboxDetailViewControllerForCampaign(object campaign);
-    }
-
-	public class LocalyticsXamarinForms_iOS :  LocalyticsPlatformIOS , ILocalytics
+	// TODO Entire implementation should be provided by Localytics
+	public class LocalyticsXamarinForms_iOS :  LocalyticsPlatformCommon, ILocalytics, ILocalyticsIOS
 	{
-		public LocalyticsXamarinForms_iOS() { }
 		public void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
-            Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, ToLLProfileScope(scope));
-        }
-
-        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
-        {
-            Localytics.AddProfileAttributes(attribute, ToLLProfileScope(scope), values);
+            Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, Utils.ToLLProfileScope(scope));
         }
 
         public void RemoveProfileAttributes(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application, params object[] values)
         {
-            Localytics.RemoveProfileAttributes(attribute, ToLLProfileScope(scope), values);
+			Localytics.RemoveProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
+        }
+        
+		public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        {
+			Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
         }
 
-        public void IncrementProfileAttribute(int value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+		public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
-            Localytics.IncrementProfileAttribute(value, attribute, ToLLProfileScope(scope));
-        }
-
-        public void DecrementProfileAttribute(int value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
-        {
-            Localytics.DecrementProfileAttribute(value, attribute, ToLLProfileScope(scope));
+			Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
         }
 
         public void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
-            Localytics.DeleteProfileAttribute(attribute, ToLLProfileScope(scope));
+			Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
         }
         public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation
         {
@@ -68,35 +49,43 @@ namespace LocalyticsXamarin.Forms
                 Localytics.InAppMessageDismissButtonLocation = Utils.ToLLInAppMessageDismissButtonLocation(value);
             }
         }
-
-        public void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes)
-        {
-            Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
-        }
         
-        private LLProfileScope ToLLProfileScope(XFLLProfileScope source)
+		// object must be Date (Android) or NSDate (iOS)
+        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
         {
-            if (source == XFLLProfileScope.Organization)
-            {
-                return LLProfileScope.Organization;
-            }
-
-            return LLProfileScope.Application;
+            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
         }
 
-		public void RefreshInboxCampaigns(InboxCampaignsDelegate inboxCampaignsDelegate)
+        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values)
         {
-            Localytics.RefreshInboxCampaigns(new Action<LLInboxCampaign[]>((LLInboxCampaign[] obj) => {
-                inboxCampaignsDelegate(obj);
-            }));
+            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
         }
 
-		public void RefreshAllInboxCampaigns(InboxCampaignsDelegate inboxCampaignsDelegate)
+        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values)
         {
-            Localytics.RefreshAllInboxCampaigns(new Action<LLInboxCampaign[]>((LLInboxCampaign[] obj) => {
-                inboxCampaignsDelegate(obj);
-            }));
+			NSArray ary = Convertor.ToArray(values);
+			Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), ary);
         }
+
+		public void AddProfileAttributes(string attribute, LLProfileScope scope, params NSDate[] values)
+		{
+			Localytics.AddProfileAttributes(attribute, scope, values);
+		}
+
+		public void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success)
+		{
+			Localytics.TagImpressionForPushToInboxCampaign(campaign, success);
+		}
+
+		public LLInboxDetailViewController InboxDetailViewControllerForCampaign(LLInboxCampaign campaign)
+		{
+			return Localytics.InboxDetailViewControllerForCampaign(campaign);
+		}
+
+		public void AddDateProfileAttributes(string attribute, LLProfileScope scope, params object[] values)
+		{
+			Localytics.AddProfileAttributes(attribute, scope, values);
+		}
 	}
 }
 

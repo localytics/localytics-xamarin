@@ -50,6 +50,37 @@
                      <Button Text="Get" IsEnabled="true" Clicked="OnGetIdentifier"  BorderWidth="2" BorderColor="Black"/>
                      <Button Text="Set Identifier" IsEnabled="true" Clicked="OnSetIdentifier"  BorderWidth="2" BorderColor="Black"/>
                  </StackLayout>
+
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Button Text="PauseDataUpload" IsEnabled="true" Clicked="OnPauseDataUpload"  BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="ResumeDataUpload" IsEnabled="true" Clicked="OnResumeDataUpload"  BorderWidth="2" BorderColor="Black"/>
+               </StackLayout>
+               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Button Text="PrivacyOptOut" IsEnabled="true" Clicked="OnPrivacyOptOut"  BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="PrivacyOptIn" IsEnabled="true" Clicked="OnPrivacyOptIn"  BorderWidth="2" BorderColor="Black"/>
+               </StackLayout>
+
+               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Button Text="OptOut" IsEnabled="true" Clicked="OnPauseDataUpload" BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="OptIn" IsEnabled="true" Clicked="OnResumeDataUpload"  BorderWidth="2" BorderColor="Black"/>
+               </StackLayout>
+
+               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Button Text="InappAdidEnable" IsEnabled="true" Clicked="OnInappAdidEnable"  BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="InappAdidDisable" IsEnabled="true" Clicked="OnInappAdidDisable" BorderWidth="2" BorderColor="Black"/>
+               </StackLayout>
+
+               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Button Text="InboxAdidEnable" IsEnabled="true" Clicked="OnInboxAdidEnable" BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="InboxAdidDisable" IsEnabled="true" Clicked="OnInboxAdidDisable" BorderWidth="2" BorderColor="Black"/>
+               </StackLayout>
+
+               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="3">
+                     <Entry x:Name="triggerName" Text="javascript" HorizontalOptions="FillAndExpand" Keyboard="Default"/>
+                     <Button Text="Trigger InApp" Clicked="OnTriggerInApp" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                 </StackLayout>
+
+                
 			</StackLayout>
 		</ScrollView>
 	</ContentPage.Content>

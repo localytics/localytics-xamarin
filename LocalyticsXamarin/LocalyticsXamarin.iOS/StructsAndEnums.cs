@@ -1,7 +1,7 @@
 using System;
 using ObjCRuntime;
 
-namespace LocalyticsXamarin.iOS.Enums
+namespace LocalyticsXamarin.IOS
 {
 	[Native]
 	public enum LLInAppMessageDismissButtonLocation : ulong

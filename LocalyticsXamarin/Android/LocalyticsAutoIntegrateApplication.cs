@@ -15,6 +15,7 @@ namespace LocalyticsSample.Android
 
 		override public void OnCreate() {
 			base.OnCreate ();
+            
 
 			#if DEBUG
 			Localytics.LoggingEnabled = true;

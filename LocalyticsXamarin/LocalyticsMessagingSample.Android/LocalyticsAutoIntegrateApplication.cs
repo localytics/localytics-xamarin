@@ -27,29 +27,30 @@ namespace LocalyticsMessagingSample.Android
 			Localytics.AutoIntegrate(this);
 			Localytics.SetLocationMonitoringEnabled(true);
 
-			LocalyticsEvents.SubscribeToAll ();
+            // TODO FIxme
+			//LocalyticsEvents.SubscribeToAll ();
 
-			// Analytics callbacks
-			LocalyticsEvents.OnLocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
-			LocalyticsEvents.OnLocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
-			LocalyticsEvents.OnLocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
-			LocalyticsEvents.OnLocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
+			//// Analytics callbacks
+			//LocalyticsEvents.OnLocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
+			//LocalyticsEvents.OnLocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
+			//LocalyticsEvents.OnLocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
+			//LocalyticsEvents.OnLocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
 
-			// Messaging callbacks
-			LocalyticsEvents.OnLocalyticsDidDismissInAppMessage += LL_OnLocalyticsDidDismissInAppMessage;
-			LocalyticsEvents.OnLocalyticsDidDisplayInAppMessage += LL_OnLocalyticsDidDisplayInAppMessage;
-			LocalyticsEvents.OnLocalyticsWillDismissInAppMessage += LL_OnLocalyticsWillDismissInAppMessage;
-			LocalyticsEvents.OnLocalyticsWillDisplayInAppMessage += LL_OnLocalyticsWillDisplayInAppMessage;
-			LocalyticsEvents.OnLocalyticsShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
-			LocalyticsEvents.OnLocalyticsWillShowPushNotification += LL_OnLocalyticsWillShowPushNotification;
-			LocalyticsEvents.OnLocalyticsShouldShowPlacesPushNotification += LL_OnLocalyticsShouldShowPlacesPushNotification;
-			LocalyticsEvents.OnLocalyticsWillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
+			//// Messaging callbacks
+			//LocalyticsEvents.OnLocalyticsDidDismissInAppMessage += LL_OnLocalyticsDidDismissInAppMessage;
+			//LocalyticsEvents.OnLocalyticsDidDisplayInAppMessage += LL_OnLocalyticsDidDisplayInAppMessage;
+			//LocalyticsEvents.OnLocalyticsWillDismissInAppMessage += LL_OnLocalyticsWillDismissInAppMessage;
+			//LocalyticsEvents.OnLocalyticsWillDisplayInAppMessage += LL_OnLocalyticsWillDisplayInAppMessage;
+			//LocalyticsEvents.OnLocalyticsShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
+			//LocalyticsEvents.OnLocalyticsWillShowPushNotification += LL_OnLocalyticsWillShowPushNotification;
+			//LocalyticsEvents.OnLocalyticsShouldShowPlacesPushNotification += LL_OnLocalyticsShouldShowPlacesPushNotification;
+			//LocalyticsEvents.OnLocalyticsWillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
 
-			// Location callbacks
-			LocalyticsEvents.OnLocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
-            // TODO Fix me
-			//LocalyticsEvents.OnLocalyticsDidTriggerRegions +=
-			LocalyticsEvents.OnLocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
+			//// Location callbacks
+			//LocalyticsEvents.OnLocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
+   //         // TODO Fix me
+			////LocalyticsEvents.OnLocalyticsDidTriggerRegions +=
+			//LocalyticsEvents.OnLocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
 		}
 
 		void LL_OnLocalyticsDidTagEvent(string eventName, IDictionary<string, string> attributes, long customerValueIncrease)

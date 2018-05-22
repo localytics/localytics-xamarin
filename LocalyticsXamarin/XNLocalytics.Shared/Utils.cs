@@ -1,17 +1,19 @@
 ﻿using System;
 using LocalyticsXamarin.Common;
 #if __IOS__
-using LocalyticsXamarin.iOS.Enums;
+using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.IOS.LLInAppMessageDismissButtonLocation;
+using NativeProfileScope = LocalyticsXamarin.IOS.LLProfileScope;
 #else
-using LLInAppMessageDismissButtonLocation= LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation; 
+using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.InAppMessageDismissButtonLocation;
+using NativeProfileScope = LocalyticsXamarin.Android.Localytics.ProfileScope;
 #endif
 namespace XNLocalytics.Shared
 {
-    public class Utils
+    public static class Utils
     {
-		public static XFLLInAppMessageDismissButtonLocation ToXFLLInAppMessageDismissButtonLocation(LLInAppMessageDismissButtonLocation source)
+		public static XFLLInAppMessageDismissButtonLocation ToXFLLInAppMessageDismissButtonLocation(NativeInAppMessageDismissButtonLocation source)
         {
-            if (source == LLInAppMessageDismissButtonLocation.Right)
+			if (source == NativeInAppMessageDismissButtonLocation.Right)
             {
                 return XFLLInAppMessageDismissButtonLocation.Right;
             }
@@ -19,14 +21,24 @@ namespace XNLocalytics.Shared
             return XFLLInAppMessageDismissButtonLocation.Left;
         }
 
-		public static LLInAppMessageDismissButtonLocation ToLLInAppMessageDismissButtonLocation(XFLLInAppMessageDismissButtonLocation source)
+		public static NativeInAppMessageDismissButtonLocation ToLLInAppMessageDismissButtonLocation(XFLLInAppMessageDismissButtonLocation source)
         {
             if (source == XFLLInAppMessageDismissButtonLocation.Right)
             {
-                return LLInAppMessageDismissButtonLocation.Right;
+				return NativeInAppMessageDismissButtonLocation.Right;
             }
 
-            return LLInAppMessageDismissButtonLocation.Left;
-        }      
+			return NativeInAppMessageDismissButtonLocation.Left;
+        }
+
+		public static NativeProfileScope ToLLProfileScope(XFLLProfileScope source)
+        {
+            if (source == XFLLProfileScope.Organization)
+            {
+				return NativeProfileScope.Organization;
+            }
+
+			return NativeProfileScope.Application;
+        }
     }
 }
