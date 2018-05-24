@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Diagnostics;
 using LocalyticsXamarin.Common;
+using System.Threading.Tasks;
 
 namespace LocalyticsSample.Shared
 {
@@ -28,7 +29,6 @@ namespace LocalyticsSample.Shared
 		{
 			CommonSmokeTest();
 		}
-
 
 		private void CommonSmokeTest()
         {
@@ -106,15 +106,33 @@ namespace LocalyticsSample.Shared
 			localytics.SetCustomerLastName("XamarinFormIOS LastName");
 			localytics.SetCustomerFullName("XamarinFormIOS Full Name");
 
-			localytics.SetCustomDimension("XamarinFormIOSCD1", 1);
-			Debug.WriteLine("Dimension 1:" + localytics.GetCustomDimension(1));
+			for (int i = 0; i < 20; i++) {
+				localytics.SetCustomDimension("XamarinFormIOSCD" +  i, (uint)i);
+				Task.Run(() =>
+				{
+					try
+					{
+						string dimensionVal = localytics.GetCustomDimension((uint)i);
+						Debug.WriteLine("Dimension " + i + ":" + dimensionVal == null ? "(null)": dimensionVal);
+
+					}
+					catch (System.Exception ex)
+					{
+						Debug.WriteLine("Failed to get Dimension " + i + ":" + ex.Message + "\n" + ex.StackTrace);
+
+					}
+     			});
+ 		    }
 
 			// This should be platform specific
             //localytics.DidRegisterUserNotificationSettings();
 //			localytics.RedirectLoggingToDisk();
 
 			localytics.SetIdentifier("test", "id1");
-			Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
+			Task.Run(() =>
+			{
+				Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
+			});
 
 
 			localytics.TagEvent("XamarinFormIOS Start");

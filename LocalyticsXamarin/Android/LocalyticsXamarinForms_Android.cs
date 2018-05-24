@@ -3,21 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Java.Util;
-using LocalyticsXamarin.Android;
 using LocalyticsXamarin.Common;
+using LocalyticsXamarin.Android;
 using XNLocalytics.Shared;
+using System.Diagnostics;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Forms.LocalyticsXamarinForms_Android))]
 namespace LocalyticsXamarin.Forms
 {
 	public class LocalyticsXamarinForms_Android : LocalyticsPlatform, ILocalytics
 	{
+		public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+		{
+			Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
+		}
+
+		public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+		{
+			Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
+		}
+
 		public void SetProfileAttribute (object value, string attribute, XFLLProfileScope scope)
 		{
 			if (value is long || value is int) {
 				Localytics.SetProfileAttribute (attribute, Convert.ToInt64(value), Utils.ToLLProfileScope(scope));
 			} else if (value is DateTime) {
-				Localytics.SetProfileAttribute (attribute, ToJavaDate (value), Utils.ToLLProfileScope(scope));
+				DateTime dateTime = (DateTime)value;
+				Localytics.SetProfileAttribute (attribute, new Java.Util.Date(dateTime.Ticks), Utils.ToLLProfileScope(scope));
 			} else {
 				Localytics.SetProfileAttribute (attribute, value.ToString(), Utils.ToLLProfileScope(scope));
 			}
@@ -33,19 +45,20 @@ namespace LocalyticsXamarin.Forms
             object firstValue = values[0];
             if (firstValue is Java.Util.Date)
             {
-                Localytics.AddProfileAttributesToSet(attribute, ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
             }
             else if (firstValue is string || firstValue is Java.Lang.String)
             {
-                Localytics.AddProfileAttributesToSet(attribute, ToStringArray(values), Utils.ToLLProfileScope(scope));
+				Localytics.AddProfileAttributesToSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
             }
             else if (firstValue is DateTime || firstValue is Date)
             {
-                Localytics.AddProfileAttributesToSet(attribute, ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+				Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
             }
             else
             {
-                throw new InvalidCastException();
+				Debug.WriteLine("Unknown Object Type " + firstValue.GetType());
+				throw new ArgumentException("Unknown Array Object Type " + firstValue.GetType());
             }
 		}
 
@@ -57,7 +70,7 @@ namespace LocalyticsXamarin.Forms
         public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values)
         {
 			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
-       }
+        }
 
         public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values)
         {
@@ -73,19 +86,24 @@ namespace LocalyticsXamarin.Forms
             object firstValue = values[0];
             if (firstValue is Java.Util.Date)
             {
-				Localytics.RemoveProfileAttributesFromSet(attribute, ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
             }
             else if (firstValue is string || firstValue is Java.Lang.String)
             {
-				Localytics.RemoveProfileAttributesFromSet(attribute, ToStringArray(values), Utils.ToLLProfileScope(scope));
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
             }
             else if (firstValue is DateTime || firstValue is Date)
             {
-				Localytics.RemoveProfileAttributesFromSet(attribute, ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
             }
+			else if (firstValue is Int16 || firstValue is Int32 || firstValue is Int64)
+			{
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+			}
             else
             {
-                throw new InvalidCastException();
+				Debug.WriteLine("Invalid Object type " + firstValue.GetType());
+				throw new ArgumentException("Invalid Object type " + firstValue.GetType());
             }
 		}
 
@@ -118,54 +136,13 @@ namespace LocalyticsXamarin.Forms
 			}
 		}
 
-		public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation {
-			get {
-				return Utils.ToXFLLInAppMessageDismissButtonLocation(Localytics.GetInAppMessageDismissButtonLocation());
-			}
-			set {
-				Localytics.SetInAppMessageDismissButtonLocation(Utils.ToLLInAppMessageDismissButtonLocation(value));
-			}
-		}
-
-		private Date ToJavaDate(object source)
-		{
-			if (source is DateTime)
-			{
-				DateTime sourceDateTime = (DateTime)(source);
-
-				TimeSpan t = sourceDateTime - new DateTime(1970, 1, 1);
-				double epochMilliseconds = t.TotalMilliseconds;
-				return new Date(Convert.ToInt64(epochMilliseconds));
-			}
-			else if (source is Date)
-			{
-				return (Date)source;
-			}
-			else
-			{
-				return null;
-			}
-		}
-
-		private long[] ToLongArray(object[] source)
-		{
-			return Array.ConvertAll<object, long>(source, Convert.ToInt64);
-		}
-
-		private Date[] ToJavaDateArray(object[] source)
-		{
-			return Array.ConvertAll<object, Date>(source, ToJavaDate);
-		}
-
-		private string[] ToStringArray(object[] source)
-		{
-			return Array.ConvertAll<object, string>(source, x => x.ToString());
-		}
-
-		//public void RedirectLoggingToDisk(object context)
-		//{
-		//    Localytics.RedirectLogsToDisk(true, context);
+		//public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation {
+		//	get {
+		//		return Utils.ToXFLLInAppMessageDismissButtonLocation(Localytics.GetInAppMessageDismissButtonLocation());
+		//	}
+		//	set {
+		//		Localytics.SetInAppMessageDismissButtonLocation(Utils.ToLLInAppMessageDismissButtonLocation(value));
+		//	}
 		//}
 	}
 }
-

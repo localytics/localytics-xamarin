@@ -117,7 +117,7 @@ namespace LocalyticsXamarin.IOS
 		static LocalyticsMessagingListener messagingListener = new LocalyticsMessagingListener();
 		static LocationListener locationListener = new LocationListener();
         static Localytics() {
-			Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString("XAMARIN_2.0.1"), new Foundation.NSString("plugin_library")));
+			Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString("XAMARIN_5.1.0"), new Foundation.NSString("plugin_library")));
 			Localytics.SetAnalyticsDelegatePrivate(analyticsListener);
 			Localytics.SetMessagingDelegatePrivate(messagingListener);
 			Localytics.SetLocationDelegatePrivate(locationListener);

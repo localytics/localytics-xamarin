@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LocalyticsXamarin.Android
 {
-	public class LocalyticsPlatform
+	public abstract class LocalyticsPlatformCommon
 	{
 		public void OpenSession()
 		{
@@ -20,19 +21,21 @@ namespace LocalyticsXamarin.Android
 			Localytics.Upload();
 		}
 
-		public void TagEvent(string eventName)
+		public void TagEvent(string eventName, IDictionary<string, string> attributes=null, long? customerValueIncrease=null)
 		{
-			Localytics.TagEvent(eventName);
-		}
-
-		public void TagEvent(string eventName, IDictionary<string, string> attributes)
-		{
-			Localytics.TagEvent(eventName, attributes);
-		}
-
-		public void TagEvent(string eventName, IDictionary<string, string> attributes, long customerValueIncrease)
-		{
-			Localytics.TagEvent(eventName, attributes, customerValueIncrease);
+			// TODO Fixme
+			if (attributes == null && customerValueIncrease == null)
+            {
+                Localytics.TagEvent(eventName);
+            }
+            else if (customerValueIncrease == null)
+            {
+                //Localytics.TagEvent(eventName, attributes.ToNSDictionary());
+            }
+            else
+            {
+                //Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
+            }
 		}
 
 		public void TagScreen(string screenName)
@@ -100,13 +103,14 @@ namespace LocalyticsXamarin.Android
 			}
 		}
 
-		public void TriggerInAppMessage(string triggerName)
-		{
-			Localytics.TriggerInAppMessage(triggerName);
-		}
-
 		public void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes)
 		{
+			// TODO FIXME
+			if (attributes == null)
+            {
+                Localytics.TriggerInAppMessage(triggerName);
+                return;
+            }
 			Localytics.TriggerInAppMessage(triggerName, attributes);
 		}
 
@@ -175,30 +179,37 @@ namespace LocalyticsXamarin.Android
 			}
 		}
 
-		public bool PrivacyOptedOut { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public bool PrivacyOptedOut { get => Localytics.PrivacyOptedOut; set => Localytics.PrivacyOptedOut = value; }
 
-		public object[] InboxCampaigns => throw new NotImplementedException();
+		public object[] InboxCampaigns { get => (object[])Localytics.InboxCampaigns; }
 
-		public bool InAppAdIdParameterEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		public bool InboxAdIdParameterEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public bool InAppAdIdParameterEnabled { get => Localytics.IsAdidAppendedToInAppUrls; set => Localytics.AppendAdidToInAppUrls(value); }
+		public bool InboxAdIdParameterEnabled { get => Localytics.IsAdidAppendedToInboxUrls; set => Localytics.AppendAdidToInboxUrls(value); }
 
-		public void TagPurchased(string itemName, string itemId, string itemType, Int64 itemPrice, IDictionary<string, string> attributes)
+		public void TagPurchased(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
 		{
-			Localytics.TagPurchased(itemName, itemId, itemType, new Java.Lang.Long(itemPrice), attributes);
+			// TODO FIXME
+			Java.Lang.Long price = null;
+            if (itemPrice != null)
+            {
+				price = new Java.Lang.Long(itemPrice.Value);
+            }
+            Localytics.TagPurchased(itemName, itemId, itemType, price, attributes);
 		}
 
-		public void TagAddedToCart(string itemName, string itemId, string itemType, Int64 itemPrice, IDictionary<string, string> attributes)
+		public void TagAddedToCart(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
 		{
-			Localytics.TagAddedToCart(itemName, itemId, itemType, new Java.Lang.Long(itemPrice), attributes);
-		}
-		public void TagStartedCheckout(Int64 totalPrice, Int64 itemCount, IDictionary<string, string> attributes)
-		{
-			Localytics.TagStartedCheckout(new Java.Lang.Long(totalPrice), new Java.Lang.Long(itemCount), attributes);
+			Localytics.TagAddedToCart(itemName, itemId, itemType, new Java.Lang.Long(itemPrice.Value), attributes);
 		}
 
-		public void TagCompletedCheckout(Int64 totalPrice, Int64 itemCount, IDictionary<string, string> attributes)
+		public void TagStartedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
 		{
-			Localytics.TagCompletedCheckout(new Java.Lang.Long(totalPrice), new Java.Lang.Long(itemCount), attributes);
+			Localytics.TagStartedCheckout(new Java.Lang.Long(totalPrice.Value), new Java.Lang.Long(itemCount.Value), attributes);
+		}
+
+		public void TagCompletedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
+		{
+			Localytics.TagCompletedCheckout(new Java.Lang.Long(totalPrice.Value), new Java.Lang.Long(itemCount.Value), attributes);
 		}
 
 		public void TagContentViewed(string contentName, string contentId, string contentType, IDictionary<string, string> attributes)
@@ -206,9 +217,9 @@ namespace LocalyticsXamarin.Android
 			Localytics.TagContentViewed(contentName, contentId, contentType, attributes);
 		}
 
-		public void TagSearched(string queryText, string contentType, Int64 resultCount, IDictionary<string, string> attributes)
+		public void TagSearched(string queryText, string contentType, long? resultCount, IDictionary<string, string> attributes)
 		{
-			Localytics.TagSearched(queryText, contentType, new Java.Lang.Long(resultCount), attributes);
+			Localytics.TagSearched(queryText, contentType, new Java.Lang.Long(resultCount.Value), attributes);
 		}
 
 		public void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes)
@@ -216,9 +227,14 @@ namespace LocalyticsXamarin.Android
 			Localytics.TagShared(contentName, contentId, contentType, methodName, attributes);
 		}
 
-		public void TagContentRated(string contentName, string contentId, string contentType, Int64 rating, IDictionary<string, string> attributes)
+		public void TagContentRated(string contentName, string contentId, string contentType, long? rating, IDictionary<string, string> attributes)
 		{
-			Localytics.TagContentRated(contentName, contentId, contentType, new Java.Lang.Long(rating), attributes);
+			Java.Lang.Long ratingValue = null;
+            if (rating.HasValue)
+            {
+				ratingValue = new Java.Lang.Long(rating.Value);
+            }
+            Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes);
 		}
 
 		public void TagCustomerRegistered(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
@@ -239,7 +255,7 @@ namespace LocalyticsXamarin.Android
 		}
 
 		public void TagInvited(string methodName, IDictionary<string, string> attributes)
-		{
+ 		{
 			Localytics.TagInvited(methodName, attributes);
 		}
 

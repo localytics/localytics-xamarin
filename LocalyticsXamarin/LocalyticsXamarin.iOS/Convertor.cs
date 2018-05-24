@@ -42,27 +42,6 @@ namespace LocalyticsXamarin.IOS
 			return result.ToArray();
 		}
 
-		//public static NSDictionary<NSString, NSObject> ToNSDictionaryGeneric(this IDictionary<string, object> source)
-		//     {
-		//NSMutableDictionary<NSString, NSObject> result = new NSMutableDictionary<NSString, NSObject>();
-
-		//         if (source != null)
-		//         {
-		//             foreach (string key in source.Keys)
-		//             {
-		//		object o = source[key];
-		//		if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
-		//                 {
-		//                     // If not, log error, throw exception, whatever.
-		//                     throw new ArgumentException("Unknown object of type " + o.GetType());
-		//                 }
-		//                 result.Add((NSString)(key), action(o));
-		//             }
-		//         }
-
-		//return (NSDictionary< NSString, NSObject >)result.ToNSDictionary<NSString, NSObject>();
-		//}
-
 		public static NSDictionary ToNSDictionary(this IDictionary<string, string> source)
 		{
 			if (source==null)
@@ -99,7 +78,7 @@ namespace LocalyticsXamarin.IOS
 					object o = source[key];
 					if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
                     {
-                        // If not, log error, throw exception, whatever.
+						Debug.WriteLine("Unknown Object Type " + o.GetType());
                         throw new ArgumentException("Unknown object of type " + o.GetType());
                     }
 					result.Add((NSString)(key), action(o));
@@ -127,7 +106,7 @@ namespace LocalyticsXamarin.IOS
                 // Check if we have a matching strategy.
                 if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
                 {
-                    // If not, log error, throw exception, whatever.
+					Debug.WriteLine("Unknown Object Type " + o.GetType());
                     throw new ArgumentException("Unknown object of type " + o.GetType());
                 }
                 list.Add(action(o));
@@ -140,12 +119,6 @@ namespace LocalyticsXamarin.IOS
             var list = new NSMutableArray();
             foreach (object o in values)
             {
-				//if (o is NSArray) 
-				//{
-				//	NSArray ary = (NSArray)o;
-    //                list.A
-				//	list.AddObjects(((NSArray)o));
-				//}
 				if (o is NSMutableArray)
 				{
 					NSMutableArray ary = (NSMutableArray)o;
@@ -161,7 +134,6 @@ namespace LocalyticsXamarin.IOS
 					if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
                     {
                         Debug.WriteLine("Unknown Object Type " + o.GetType());
-                        // If not, log error, throw exception, whatever.
                         throw new ArgumentException("Unknown object of type " + o.GetType());
                     }
                     list.Add(action(o));
@@ -169,22 +141,6 @@ namespace LocalyticsXamarin.IOS
             }
             return list;
         }
-
-		//public static NSArray ToArray(params object[] values)
-		//{
-		//	var list = new NSMutableArray();
-		//	foreach (object o in values)
-		//	{
-		//		// Check if we have a matching strategy.
-		//		if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
-		//		{
-		//			// If not, log error, throw exception, whatever.
-		//			throw new ArgumentException("Unknown object of type " + o.GetType());
-		//		}
-		//		list.Add(action(o));
-		//	}
-		//	return list;
-		//}
 
 		internal static IDictionary<string, object> ToDictionary(this LLCustomer customer)
 		{

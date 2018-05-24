@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Java.Util;
 
 namespace LocalyticsXamarin.Android
 {
@@ -66,17 +68,56 @@ namespace LocalyticsXamarin.Android
 			IDictionary<string, Java.Lang.Object> result = new Dictionary<string, Java.Lang.Object>();
 			foreach (string key in source.Keys)
             {
+				// TODO improve see IOS for sample
 				if (source[key] is Java.Lang.Object) {
 					result.Add(key, (Java.Lang.Object)(source[key]));
 				} else if (source[key] is string){
 					result.Add(key, (Java.Lang.String)(source[key]));
+				} else if (source[key] is int) {
+					result.Add(key, new Java.Lang.Long((int)(source[key])));
+				}
+                else if ( source[key] is long)
+                {
+					result.Add(key, new Java.Lang.Long((long)(source[key])));
 				} else {
-					throw new InvalidCastException();
+					Debug.WriteLine("Unknown Object Type " + source[key].GetType());
+ 					throw new ArgumentException("Invalid Type converting to Object " + source[key].GetType());
 				}
             }
            
 			return result;
 		}
+
+		public static Date ToJavaDate(object source)
+        {
+            if (source is DateTime)
+            {
+                DateTime sourceDateTime = (DateTime)(source);
+
+                TimeSpan t = sourceDateTime - new DateTime(1970, 1, 1);
+                double epochMilliseconds = t.TotalMilliseconds;
+                return new Date(Convert.ToInt64(epochMilliseconds));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+		public static long[] ToLongArray(object[] source)
+        {
+            return Array.ConvertAll<object, long>(source, Convert.ToInt64);
+        }
+
+		public static Date[] ToJavaDateArray(object[] source)
+        {
+            return Array.ConvertAll<object, Date>(source, ToJavaDate);
+        }
+
+		public static string[] ToStringArray(object[] source)
+        {
+            return Array.ConvertAll<object, string>(source, x => x.ToString());
+        }
     }
 
 	//public static LocalyticsXamarin.Android.ImpressionType ImpressionType(string impression)
