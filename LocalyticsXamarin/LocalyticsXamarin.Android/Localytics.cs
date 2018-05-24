@@ -43,12 +43,4 @@ namespace LocalyticsXamarin.Android
 			return ret;
     	}
     }
-
-	//public partial class Localytics
-	//{
-	//	public void RedirectLoggingToDisk()
- //       {
- //           Localytics.RedirectLogsToDisk(true, Xamarin.Android.App.Application.Context);
- //       }
-	//}
 }

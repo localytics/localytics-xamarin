@@ -135,14 +135,5 @@ namespace LocalyticsXamarin.Forms
 				Localytics.PushRegistrationId = value;
 			}
 		}
-
-		//public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation {
-		//	get {
-		//		return Utils.ToXFLLInAppMessageDismissButtonLocation(Localytics.GetInAppMessageDismissButtonLocation());
-		//	}
-		//	set {
-		//		Localytics.SetInAppMessageDismissButtonLocation(Utils.ToLLInAppMessageDismissButtonLocation(value));
-		//	}
-		//}
 	}
 }

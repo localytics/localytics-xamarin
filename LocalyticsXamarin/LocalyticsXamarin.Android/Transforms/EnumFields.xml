@@ -21,9 +21,9 @@
         <field jni-name="APPLICATION" clr-name="AnotherValue" value="app" />
     </mapping>
 -->
-        <mapping jni-class="com/localytics/android/Localytics$InAppMessageDismissButtonLocation" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation">
+<!--        <mapping jni-class="com/localytics/android/Localytics$InAppMessageDismissButtonLocation" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation">
         <field jni-name="LEFT" clr-name="Left" value="0" />
         <field jni-name="RIGHT" clr-name="Right" value="1" />
-    </mapping>
+    </mapping>-->
 
 </enum-field-mappings>

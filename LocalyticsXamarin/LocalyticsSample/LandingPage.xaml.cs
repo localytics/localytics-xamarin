@@ -10,6 +10,18 @@ namespace LocalyticsSample.Shared
 {
 	public partial class LandingPage : ContentPage
 	{
+		void OnDismissButtonRight(object sender, System.EventArgs e)
+		{
+			localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Right;
+			this.dismissBtnLocation.Text = localytics.InAppMessageDismissButtonLocation.ToString();
+		}
+
+		void OnDismissButtonLeft(object sender, System.EventArgs e)
+		{
+			localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Left;
+			this.dismissBtnLocation.Text = localytics.InAppMessageDismissButtonLocation.ToString();
+		}
+
 		void OnPauseDataUpload(object sender, System.EventArgs e)
 		{
 			localytics.PauseDataUploading(true);
@@ -23,11 +35,13 @@ namespace LocalyticsSample.Shared
 		void OnPrivacyOptOut(object sender, System.EventArgs e)
         {
 			localytics.PrivacyOptedOut = true;
+			RefreshBackgroundProperties();
         }
 
 		void OnPrivacyOptIn(object sender, System.EventArgs e)
         {
 			localytics.PrivacyOptedOut = false;
+			RefreshBackgroundProperties();
         }
 
 		void OnTriggerInApp(object sender, System.EventArgs e)
@@ -38,31 +52,37 @@ namespace LocalyticsSample.Shared
 		void OnInboxAdidDisable(object sender, System.EventArgs e)
 		{
 			localytics.InboxAdIdParameterEnabled = false;
+			RefreshBackgroundProperties();
 		}
 
 		void OnInboxAdidEnable(object sender, System.EventArgs e)
 		{
 			localytics.InboxAdIdParameterEnabled = true;
+			RefreshBackgroundProperties();
 		}
 
 		void OnInappAdidDisable(object sender, System.EventArgs e)
 		{
+			RefreshBackgroundProperties();
 			localytics.InAppAdIdParameterEnabled = false;
 		}
         
 		void OnInappAdidEnable(object sender, System.EventArgs e)
 		{
+			RefreshBackgroundProperties();
 			localytics.InAppAdIdParameterEnabled = true;
 		}
 
 		void OnOptOut(object sender, System.EventArgs e)
 		{
 			localytics.OptedOut = true;
+			RefreshBackgroundProperties();
 		}
 
 		void OnOptIn(object sender, System.EventArgs e)
 		{
 			localytics.OptedOut = false;
+			RefreshBackgroundProperties();
 		}
 
 		public LandingPage ()
@@ -84,6 +104,22 @@ namespace LocalyticsSample.Shared
 		}
 		ILocalytics localytics;
 
+		void RefreshBackgroundProperties() {
+			Task.Run(() =>
+            {
+                var privacyOptout = localytics.PrivacyOptedOut;
+                var optout = localytics.OptedOut;
+                var inboxAdid = localytics.InboxAdIdParameterEnabled;
+                var inappAdid = localytics.InAppAdIdParameterEnabled;
+                Device.BeginInvokeOnMainThread(delegate
+                {
+                    this.privacyoptout.Text = privacyOptout.ToString();
+                    this.optout.Text = optout.ToString();
+                    this.inboxAdid.Text = inboxAdid.ToString();
+                    this.inappAdid.Text = inappAdid.ToString();
+                });
+            });
+		}
 		void RefreshInfo() {
 			localytics.LoggingEnabled = true;
 			System.Threading.Tasks.Task.Factory.StartNew (() => {
@@ -96,8 +132,11 @@ namespace LocalyticsSample.Shared
 				string value6 = "Push Token/RegID: " + localytics.PushTokenInfo;
 				string value7 = "LoggingEnabled: " + localytics.LoggingEnabled;
 
+				RefreshBackgroundProperties();
+				var btnLoc = localytics.InAppMessageDismissButtonLocation;
 
 				Device.BeginInvokeOnMainThread(delegate {
+					this.dismissBtnLocation.Text = btnLoc.ToString();
 					info0.Text = value0;
 					info1.Text = value1;
 					info2.Text = value2;

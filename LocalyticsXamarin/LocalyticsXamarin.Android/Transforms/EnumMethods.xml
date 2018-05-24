@@ -20,8 +20,8 @@
         <method jni-name="addProfileAttributesToSet" parameter="P3" clr-enum-type="LocalyticsXamarin.Android.ProfileScope" />
     </mapping>
  -->
-    <mapping jni-class="com/localytics/android/Localytics">
+<!--    <mapping jni-class="com/localytics/android/Localytics">
         <method jni-name="getInAppMessageDismissButtonLocation" parameter="return" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation" />
         <method jni-name="setInAppMessageDismissButtonLocation" parameter="p0" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation" />
-    </mapping>
+    </mapping>-->
 </enum-method-mappings>

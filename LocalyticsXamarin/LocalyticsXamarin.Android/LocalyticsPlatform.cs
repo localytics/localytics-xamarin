@@ -28,13 +28,13 @@ namespace LocalyticsXamarin.Android
             {
                 Localytics.TagEvent(eventName);
             }
-            else if (customerValueIncrease == null)
+			else if (customerValueIncrease == null && attributes!=null)
             {
-                //Localytics.TagEvent(eventName, attributes.ToNSDictionary());
+				Localytics.TagEvent(eventName, attributes);
             }
             else
             {
-                //Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
+				Localytics.TagEvent(eventName, attributes, customerValueIncrease.Value);
             }
 		}
 
