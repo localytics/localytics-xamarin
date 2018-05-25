@@ -11,5 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LocalyticsPlatform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LocalyticsXamarinForms.cs" />
   </ItemGroup>
 </Project>
