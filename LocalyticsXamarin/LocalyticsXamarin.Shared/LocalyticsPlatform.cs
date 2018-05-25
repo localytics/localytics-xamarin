@@ -8,7 +8,7 @@ using LocalyticsXamarin.IOS;
 using Java.Util;
 using LocalyticsXamarin.Android;
 #endif
-namespace XNLocalytics.Shared
+namespace LocalyticsXamarin.Shared
 {
     public class LocalyticsPlatform : LocalyticsPlatformCommon
     {
@@ -98,17 +98,7 @@ namespace XNLocalytics.Shared
 #endif
         }
 
-
-
-
-
-#if __IOS__
-        private void test()
-        {
-#if __IOS__
-#else
-#endif
-        }
+  #if __IOS__
 
         public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation
         {

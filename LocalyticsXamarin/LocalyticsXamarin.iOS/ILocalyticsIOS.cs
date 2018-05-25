@@ -20,8 +20,8 @@ namespace LocalyticsXamarin.IOS
         void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location);
         void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location);
 
-        void TagImpressionForInAppCampaign(LLInAppCampaign campaign, LLImpressionType impressionType);
-        void TagImpressionForInAppCampaign(LLInAppCampaign campaign, string customAction);
+        void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
+        void TagInAppImpression(LLInAppCampaign campaign, string customAction);
 
         void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType);
         void TagImpressionForInboxCampaign(LLInboxCampaign campaign, string customAction);

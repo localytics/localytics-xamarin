@@ -32,7 +32,7 @@
       <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
       <Name>LocalyticsXamarin.iOS</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Common.csproj">
+    <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
     </ProjectReference>
@@ -46,6 +46,19 @@
       <Version>0.2.2</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Localytics">
+      <Link>Localytics</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LocalyticsXamarin.Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
+      <Link>LocalyticsXamarinForms.cs</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
   <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets')" />

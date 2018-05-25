@@ -440,7 +440,8 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)setValue:(NSString * _Nullable)value forIdentifier:(NSString * _Nonnull)identifier;
         [Static]
         [Export("setValue:forIdentifier:")]
-		void SetIdentifier([NullAllowed] string value, string identifier);
+        [Protected]
+        void SetIdentifierPrivate(string identifier, [NullAllowed] string value);
 
         // @required +(NSString * _Nullable)valueForIdentifier:(NSString * _Nonnull)identifier;
         [Static]
@@ -627,7 +628,6 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)triggerInAppMessage:(NSString * _Nonnull)triggerName;
         [Static]
         [Export("triggerInAppMessage:")]
-		[Internal]
 		void TriggerInAppMessageInternal(string triggerName);
 
         // @required +(void)triggerInAppMessage:(NSString * _Nonnull)triggerName withAttributes:(NSDictionary<NSString *,NSString *> * _Nonnull)attributes;
@@ -653,12 +653,12 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)setInboxCampaign:(LLInboxCampaign * _Nonnull)campaign asRead:(BOOL)read;
         [Static]
         [Export("setInboxCampaign:asRead:")]
-        void SetInboxCampaign(LLInboxCampaign campaign, bool read);
+        void SetInboxCampaignRead(LLInboxCampaign campaign, bool read);
 
 		// @required +(NSInteger)inboxCampaignsUnreadCount;
 		[Static]
 		[Export("inboxCampaignsUnreadCount")]
-		nint InboxCampaignsUnreadCount();
+		nint InboxCampaignsUnreadCount { get; }
 
         // @required +(LLInboxDetailViewController * _Nonnull)inboxDetailViewControllerForCampaign:(LLInboxCampaign * _Nonnull)campaign;
         [Static]
@@ -739,17 +739,18 @@ namespace LocalyticsXamarin.IOS
         // @required +(NSString * _Nullable)installId;
         [Static]
         [NullAllowed, Export("installId")]
-        string InstallId();
+        //string InstallId();
+        string InstallId { get; }
 
         // @required +(NSString * _Nonnull)libraryVersion;
         [Static]
         [Export("libraryVersion")]
-        string LibraryVersion();
+        string LibraryVersion { get; }
 
         // @required +(NSString * _Nullable)appKey;
         [Static]
         [NullAllowed, Export("appKey")]
-        string AppKey();
+        string AppKey { get; }
 
         // @required +(void)setMessagingDelegate:(id<LLMessagingDelegate> _Nullable)delegate;
         [Static]
@@ -760,14 +761,12 @@ namespace LocalyticsXamarin.IOS
 		// @required +(BOOL)isInAppAdIdParameterEnabled;
 		[Static]
 		[Export("isInAppAdIdParameterEnabled")]
-		[Protected]
-		bool IsInAppAdIdParameterEnabledPrivate();
+        bool IsAdidAppendedToInAppUrls { get; }
 
         // @required +(void)setInAppAdIdParameterEnabled:(BOOL)enabled;
         [Static]
         [Export("setInAppAdIdParameterEnabled:")]
-		[Protected]
-        void SetInAppAdIdParameterEnabled(bool enabled);
+        void AppendAdidToInAppUrls(bool enabled);
 
         // @required +(void)setAnalyticsDelegate:(id<LLAnalyticsDelegate> _Nullable)delegate;
         [Static]
@@ -789,7 +788,7 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)setCustomerId:(NSString * _Nullable)customerId privacyOptedOut:(BOOL)optedOut;
         [Static]
         [Export("setCustomerId:privacyOptedOut:")]
-		void SetCustomerId([NullAllowed] string customerId, bool optedOut);
+        void SetCustomerIdWithPrivacyOptedOut([NullAllowed] string customerId, bool optedOut);
 
         // @required +(void)triggerInAppMessagesForSessionStart;
         [Static]
@@ -799,12 +798,12 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
         [Static]
         [Export("tagImpressionForInAppCampaign:withType:")]
-        void TagImpressionForInAppCampaign(LLInAppCampaign campaign, LLImpressionType impressionType);
+        void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
 
         // @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
         [Static]
         [Export("tagImpressionForInAppCampaign:withCustomAction:")]
-        void TagImpressionForInAppCampaign(LLInAppCampaign campaign, string customAction);
+        void TagInAppImpression(LLInAppCampaign campaign, string customAction);
 
         // @required +(NSArray<LLInboxCampaign *> * _Nonnull)allInboxCampaigns;
         [Static]
@@ -819,12 +818,12 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)tagImpressionForInboxCampaign:(LLInboxCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
         [Static]
         [Export("tagImpressionForInboxCampaign:withType:")]
-        void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType);
+		void TagInboxImpression(LLInboxCampaign campaign, LLImpressionType impressionType);
 
         // @required +(void)tagImpressionForInboxCampaign:(LLInboxCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
         [Static]
         [Export("tagImpressionForInboxCampaign:withCustomAction:")]
-        void TagImpressionForInboxCampaign(LLInboxCampaign campaign, string customAction);
+		void TagInboxImpression(LLInboxCampaign campaign, string customAction);
 
         // @required +(void)tagImpressionForPushToInboxCampaign:(LLInboxCampaign * _Nonnull)campaign success:(BOOL)success;
         [Static]
@@ -857,25 +856,22 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)triggerPlacesNotificationForCampaign:(LLPlacesCampaign * _Nonnull)campaign;
         [Static]
         [Export("triggerPlacesNotificationForCampaign:")]
-		[Protected]
-		void TriggerPlacesNotificationForCampaignPrivate(LLPlacesCampaign campaign);
+		void TriggerPlacesNotification(LLPlacesCampaign campaign);
 
         // @required +(void)triggerPlacesNotificationForCampaignId:(NSInteger)campaignId regionIdentifier:(NSString * _Nonnull)regionId;
         [Static]
         [Export("triggerPlacesNotificationForCampaignId:regionIdentifier:")]
-        void TriggerPlacesNotificationForCampaignId(nint campaignId, string regionId);
+		void TriggerPlacesNotification(nint campaignId, string regionId);
 
         // @required +(BOOL)isInboxAdIdParameterEnabled;
         [Static]
         [Export("isInboxAdIdParameterEnabled")]
-		[Protected]
-        bool IsInboxAdIdParameterEnabledPrivate();
+        bool IsAdidAppendedToInboxUrls { get; }
 
         // @required +(void)setInboxAdIdParameterEnabled:(BOOL)enabled;
         [Static]
         [Export("setInboxAdIdParameterEnabled:")]
-		[Protected]
-        void SetInboxAdIdParameterEnabledPrivate(bool enabled);
+        void AppendAdidToInboxUrls(bool enabled);
     }
 
     // @protocol LLAnalyticsDelegate <NSObject>

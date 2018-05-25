@@ -109,9 +109,11 @@ namespace LocalyticsXamarin.IOS
         }
 
         static public bool PrivacyOptedOut { get => Localytics.IsPrivacyOptedOutPrivate(); set => Localytics.SetPrivacyOptedOutPrivate(value); }
-        static public bool InboxAdIdParameterEnabled { get => Localytics.IsInboxAdIdParameterEnabledPrivate(); set => Localytics.SetInboxAdIdParameterEnabledPrivate(value); }
-        static public bool InAppAdIdParameterEnabled { get => Localytics.IsInAppAdIdParameterEnabledPrivate(); set => Localytics.SetInAppAdIdParameterEnabled(value); }
 
+        static public void SetIdentifier(string identifier, string value)
+        {
+            Localytics.SetIdentifierPrivate(value, identifier);
+        }
 
         static AnalyticsListener analyticsListener = new AnalyticsListener();
         static LocalyticsMessagingListener messagingListener = new LocalyticsMessagingListener();

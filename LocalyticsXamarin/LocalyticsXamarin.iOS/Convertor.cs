@@ -122,7 +122,7 @@ namespace LocalyticsXamarin.IOS
             {
                 if (o is NSMutableArray)
                 {
-                    NSMutableArray ary = (NSMutableArray)o;
+                    var ary = (NSMutableArray)o;
                     nuint i;
                     nuint max = ary.Count;
                     for (i = 0; i < max; i++)
@@ -169,7 +169,7 @@ namespace LocalyticsXamarin.IOS
 
         public static LLCustomer toCustomer(IDictionary<string, object> customerProps)
         {
-            LLCustomer customer = new LLCustomer();
+            var customer = new LLCustomer();
             customer = LLCustomer.CustomerWithBlock((LLCustomerBuilder builder) =>
             {
                 if (customerProps.ContainsKey("_nativeHandle"))

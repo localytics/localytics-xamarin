@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace LocalyticsXamarin.Android
 {
+
 	internal sealed partial class IInboxRefreshListenerImplementor
 	{
 		Action<object[]> inboxRefresh;

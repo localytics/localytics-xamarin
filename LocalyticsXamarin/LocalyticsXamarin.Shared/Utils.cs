@@ -8,7 +8,7 @@ using LocalyticsXamarin.Android;
 using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
 using NativeProfileScope = LocalyticsXamarin.Android.Localytics.ProfileScope;
 #endif
-namespace XNLocalytics.Shared
+namespace LocalyticsXamarin.Shared
 {
     public static class Utils
     {

@@ -105,7 +105,6 @@
     <Compile Include="Additions\Localytics.cs" />
     <Compile Include="Convertor.cs" />
     <Compile Include="ILocalyticsAndroid.cs" />
-    <Compile Include="LocalyticsPlatform.cs" />
     <Compile Include="Localytics.cs" />
   </ItemGroup>
   <ItemGroup>

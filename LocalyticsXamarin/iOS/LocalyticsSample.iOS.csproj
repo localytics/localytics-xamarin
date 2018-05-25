@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\XNLocalytics.Shared\XNLocalytics.Shared.projitems" Label="Shared" Condition="Exists('..\XNLocalytics.Shared\XNLocalytics.Shared.projitems')" />
   <Import Project="..\packages\Xamarin.Forms.3.0.0.446417\build\netstandard2.0\Xamarin.Forms.props" Condition="Exists('..\packages\Xamarin.Forms.3.0.0.446417\build\netstandard2.0\Xamarin.Forms.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -95,7 +94,7 @@
       <Project>{E291B500-93AB-423A-874D-29DB2CA50526}</Project>
       <Name>LocalyticsSample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Common.csproj">
+    <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
     </ProjectReference>
@@ -132,6 +131,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
+      <Link>LocalyticsXamarinForms.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
