@@ -41,5 +41,7 @@ namespace LocalyticsXamarin.Shared
 
             return NativeProfileScope.Application;
         }
+
+        // TODO ImpressionType
     }
 }

@@ -28,6 +28,7 @@ namespace LocalyticsXamarin.IOS
             _Strategies.Add(typeof(Int64), (o) => { return new NSNumber((Int64)o); });
             _Strategies.Add(typeof(byte), (o) => { return new NSNumber((byte)o); });
         }
+
         public static NSObject[] ToNSObjects(object[] objects)
         {
             if (objects == null)
@@ -111,6 +112,36 @@ namespace LocalyticsXamarin.IOS
                     throw new ArgumentException("Unknown object of type " + o.GetType());
                 }
                 list.Add(action(o));
+            }
+            return list;
+        }
+
+		public static NSArray ToArray(Array array)
+		{
+			var list = new NSMutableArray();
+			for (int j = 0; j < array.Length; j++)
+            {
+				object o = array.GetValue(j);
+                if (o is NSMutableArray)
+                {
+                    var ary = (NSMutableArray)o;
+                    nuint i;
+                    nuint max = ary.Count;
+                    for (i = 0; i < max; i++)
+                    {
+                        list.Add(ary.GetItem<NSObject>(i));
+                    }
+                }
+                // Check if we have a matching strategy.
+                else
+                {
+                    if (!_Strategies.TryGetValue(o.GetType(), out Func<object, NSObject> action))
+                    {
+                        Debug.WriteLine("Unknown Object Type " + o.GetType());
+                        throw new ArgumentException("Unknown object of type " + o.GetType());
+                    }
+                    list.Add(action(o));
+                }
             }
             return list;
         }

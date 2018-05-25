@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using LocalyticsXamarin.Common;
 
 #if __IOS__
-using CoreLocation;
 using Foundation;
-using UIKit;
 using LocalyticsXamarin.IOS;
 #else
 using LocalyticsXamarin.Android;
@@ -55,7 +55,7 @@ namespace LocalyticsXamarin.Shared
 			else if (customerValueIncrease == null && attributes != null)
 			{
 #if __IOS__
-                Localytics.TagEvent(eventName, attributes.ToNSDictionary());
+				Localytics.TagEvent(eventName, attributes.ToNSDictionary());
 #else
 				Localytics.TagEvent(eventName, attributes);
 #endif
@@ -63,7 +63,7 @@ namespace LocalyticsXamarin.Shared
 			else
 			{
 #if __IOS__
-                Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
+				Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
 #else
 				Localytics.TagEvent(eventName, attributes, customerValueIncrease.Value);
 #endif
@@ -78,7 +78,7 @@ namespace LocalyticsXamarin.Shared
 		public void SetCustomDimension(string value, uint dimension)
 		{
 #if __IOS__
-            Localytics.SetCustomDimension(value, dimension);
+			Localytics.SetCustomDimension(value, dimension);
 #else
 			Localytics.SetCustomDimension((int)dimension, value);
 #endif
@@ -87,7 +87,7 @@ namespace LocalyticsXamarin.Shared
 		public string GetCustomDimension(uint dimension)
 		{
 #if __IOS__
-            return Localytics.GetCustomDimension(dimension);
+			return Localytics.GetCustomDimension(dimension);
 #else
 			return Localytics.GetCustomDimension((int)dimension);
 #endif
@@ -140,7 +140,7 @@ namespace LocalyticsXamarin.Shared
 			get
 			{
 #if __IOS__
-                return Localytics.PushTokenInfo;
+				return Localytics.PushTokenInfo;
 #else
 				return Localytics.PushRegistrationId;
 #endif
@@ -153,14 +153,14 @@ namespace LocalyticsXamarin.Shared
 			if (attributes == null)
 			{
 #if __IOS__
-                Localytics.TriggerInAppMessageInternal(triggerName);
+				Localytics.TriggerInAppMessageInternal(triggerName);
 #else
 				Localytics.TriggerInAppMessage(triggerName);
 #endif
 				return;
 			}
 #if __IOS__
-            Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
+			Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
 #else
 			Localytics.TriggerInAppMessage(triggerName, attributes);
 #endif
@@ -241,7 +241,7 @@ namespace LocalyticsXamarin.Shared
 				price = new NativeNumber(itemPrice.Value);
 			}
 #if __IOS__
-            Localytics.TagPurchased(itemName, itemId, itemType, price, attributes.ToNSDictionary());
+			Localytics.TagPurchased(itemName, itemId, itemType, price, attributes.ToNSDictionary());
 #else
 			Localytics.TagPurchased(itemName, itemId, itemType, price, attributes);
 #endif
@@ -250,7 +250,7 @@ namespace LocalyticsXamarin.Shared
 		public void TagAddedToCart(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
 		{
 #if __IOS__
-            Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, attributes.ToNSDictionary());
+			Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, attributes.ToNSDictionary());
 #else
 			Localytics.TagAddedToCart(itemName, itemId, itemType, new NativeNumber(itemPrice.Value), attributes);
 #endif
@@ -259,7 +259,7 @@ namespace LocalyticsXamarin.Shared
 		public void TagStartedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
 		{
 #if __IOS__
-            Localytics.TagStartedCheckout(totalPrice, itemCount, attributes.ToNSDictionary());
+			Localytics.TagStartedCheckout(totalPrice, itemCount, attributes.ToNSDictionary());
 #else
 			Localytics.TagStartedCheckout(new Java.Lang.Long(totalPrice.Value), new Java.Lang.Long(itemCount.Value), attributes);
 #endif
@@ -278,7 +278,7 @@ namespace LocalyticsXamarin.Shared
 				count = new NativeNumber(itemCount.Value);
 			}
 #if __IOS__
-            Localytics.TagCompletedCheckout(price, count, attributes.ToNSDictionary());
+			Localytics.TagCompletedCheckout(price, count, attributes.ToNSDictionary());
 #else
 			Localytics.TagCompletedCheckout(price, count, attributes);
 #endif
@@ -286,11 +286,11 @@ namespace LocalyticsXamarin.Shared
 
 		public void TagContentViewed(string contentName, string contentId, string contentType, IDictionary<string, string> attributes)
 		{
-			#if __IOS__
+#if __IOS__
 			Localytics.TagContentViewed(contentName, contentId, contentType, attributes.ToNSDictionary());
-			#else
+#else
 			Localytics.TagContentViewed(contentName, contentId, contentType, attributes);
-			#endif
+#endif
 		}
 
 		public void TagSearched(string queryText, string contentType, long? resultCount, IDictionary<string, string> attributes)
@@ -301,7 +301,7 @@ namespace LocalyticsXamarin.Shared
 				count = new NativeNumber(resultCount.Value);
 			}
 #if __IOS__
-            Localytics.TagSearched(queryText, contentType, count, attributes.ToNSDictionary());
+			Localytics.TagSearched(queryText, contentType, count, attributes.ToNSDictionary());
 #else
 			Localytics.TagSearched(queryText, contentType, count, attributes);
 #endif
@@ -309,7 +309,7 @@ namespace LocalyticsXamarin.Shared
 
 		public void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes)
 		{
-			#if __IOS__
+#if __IOS__
 			Localytics.TagShared(contentName, contentId, contentType, methodName, attributes.ToNSDictionary());
 #else
 			Localytics.TagShared(contentName, contentId, contentType, methodName, attributes);
@@ -323,7 +323,7 @@ namespace LocalyticsXamarin.Shared
 			{
 				ratingValue = new NativeNumber(rating.Value);
 			}
-			#if __IOS__
+#if __IOS__
 			Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes.ToNSDictionary());
 #else
 			Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes);
@@ -333,7 +333,7 @@ namespace LocalyticsXamarin.Shared
 		public void TagCustomerRegistered(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
 		{
 #if __IOS__
-            Localytics.TagCustomerRegistered(customerProps, methodName, attributes.ToNSDictionary());
+			Localytics.TagCustomerRegistered(customerProps, methodName, attributes.ToNSDictionary());
 #else
 			var cust = Convertor.toCustomer(customerProps);
 			Localytics.TagCustomerRegistered(cust, methodName, attributes);
@@ -343,7 +343,7 @@ namespace LocalyticsXamarin.Shared
 		public void TagCustomerLoggedIn(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
 		{
 #if __IOS__
-            Localytics.TagCustomerLoggedIn(customerProps, methodName, attributes.ToNSDictionary());
+			Localytics.TagCustomerLoggedIn(customerProps, methodName, attributes.ToNSDictionary());
 #else
 			var cust = Convertor.toCustomer(customerProps);
 			Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
@@ -352,7 +352,7 @@ namespace LocalyticsXamarin.Shared
 
 		public void TagCustomerLoggedOut(IDictionary<string, string> attributes)
 		{
-			#if __IOS__
+#if __IOS__
 			Localytics.TagCustomerLoggedOut(attributes.ToNSDictionary());
 #else
 			Localytics.TagCustomerLoggedOut(attributes);
@@ -362,24 +362,24 @@ namespace LocalyticsXamarin.Shared
 		public void TagInvited(string methodName, IDictionary<string, string> attributes)
 		{
 #if __IOS__
-            Localytics.TagInvited(methodName, attributes.ToNSDictionary());
+			Localytics.TagInvited(methodName, attributes.ToNSDictionary());
 #else
 			Localytics.TagInvited(methodName, attributes);
 #endif
 		}
 
-		#if __IOS__
+#if __IOS__
 		public void SetInAppMessageDismissButtonImageWithName(string imageName)
 		{
 			Localytics.SetInAppMessageDismissButtonImageWithName(imageName);
 		}
-		#endif
+#endif
 
 
 		public void SetInAppMessageDismissButtonHidden(bool hidden)
 		{
 #if __IOS__
-            Localytics.SetInAppMessageDismissButtonHidden(hidden);
+			Localytics.SetInAppMessageDismissButtonHidden(hidden);
 #else
 			// View.INVISBLE or 4 hides  it.
 			Localytics.SetInAppMessageDismissButtonVisibility(hidden ? 4 : 1);
@@ -389,6 +389,11 @@ namespace LocalyticsXamarin.Shared
 		public void SetInboxCampaign(object campaign, bool read)
 		{
 			Localytics.SetInboxCampaignRead((NativeInboxCampaign)campaign, read);
+		}
+
+		public void InboxListItemTapped(object campaign)
+		{
+			Localytics.InboxListItemTapped((NativeInboxCampaign)campaign);
 		}
 
 		public long InboxCampaignsUnreadCount()
@@ -405,11 +410,18 @@ namespace LocalyticsXamarin.Shared
 		{
 			Localytics.SetOptions(
 #if __IOS__
-            Convertor.ToNSDictionary(options)
+			Convertor.ToNSDictionary(options)
 #else
             Convertor.ToGenericDictionary(options)
 #endif
 			);
+		}
+
+		public void SetOption(string key, object value)
+		{
+			var dict = new Dictionary<string, object>();
+			dict.Add(key, value);
+			this.SetOptions(dict);
 		}
 
 		public void PauseDataUploading(bool pause)
@@ -441,7 +453,7 @@ namespace LocalyticsXamarin.Shared
 		public object[] AllInboxCampaigns()
 		{
 #if __IOS__
-            return Localytics.AllInboxCampaigns();
+			return Localytics.AllInboxCampaigns();
 #else
 			return Localytics.AllInboxCampaigns.ToArray();
 #endif
@@ -495,14 +507,14 @@ namespace LocalyticsXamarin.Shared
 		public void TagPlacesPushOpened(NativePlacesCampaign campaign, string identifier)
 		{
 #if __IOS__
-            if (identifier == null)
-            {
-                Localytics.TagPlacesPushOpened(campaign);
-            }
-            else
-            {
-                Localytics.TagPlacesPushOpened(campaign, identifier);
-            }
+			if (identifier == null)
+			{
+				Localytics.TagPlacesPushOpened(campaign);
+			}
+			else
+			{
+				Localytics.TagPlacesPushOpened(campaign, identifier);
+			}
 #else
 			Localytics.TagPlacesPushOpened(campaign, identifier);
 #endif
@@ -515,9 +527,9 @@ namespace LocalyticsXamarin.Shared
 
 		public void TriggerPlacesNotificationForCampaignId(long campaignId, string regionId)
 		{
-			#if __IOS__
+#if __IOS__
 			Localytics.TriggerPlacesNotification((nint)campaignId, regionId);
-			#else
+#else
 			Localytics.TriggerPlacesNotification(campaignId, regionId);
 #endif
 		}
@@ -530,7 +542,7 @@ namespace LocalyticsXamarin.Shared
 		public void RefreshAllInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
 		{
 #if __IOS__
-            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(x));
+			Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(x));
 #else
 			inboxAllRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
@@ -539,54 +551,142 @@ namespace LocalyticsXamarin.Shared
 		public void RefreshInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
 		{
 #if __IOS__
-            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(x));
+			Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(x));
 #else
 			inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
 		}
 
-		//#pragma region Platform Specific API's
+		public void SetProfileAttribute(string attribute, XFLLProfileScope scope, params object[] values)
+		{
+			if (values.Length == 1)
+			{
+				object value = values[0];
 #if __IOS__
-        public void RedirectLoggingToDisk()
-        {
-            Localytics.RedirectLoggingToDisk();
-        }
-
-        public void DidRegisterUserNotificationSettings()
-        {
-            Localytics.DidRegisterUserNotificationSettings();
-        }
-
-        public void SetLocation(CLLocationCoordinate2D location)
-        {
-            Localytics.SetLocation(location);
-        }
-
-        public bool HandleTestModeURL(NSUrl url)
-        {
-            return Localytics.HandleTestModeURL(url);
-        }
-
-        public void SetInAppMessageDismissButtonImage(UIImage image)
-        {
-            Localytics.SetInAppMessageDismissButtonImage(image);
-        }
-
-        public LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate)
-        {
-            return Localytics.GeofencesToMonitor(currentCoordinate);
-        }
-
-        public void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location)
-        {
-            Localytics.TriggerRegion((CLRegion)region, regionEvent, location);
-        }
-
-        public void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location)
-        {
-            Localytics.TriggerRegions((CLRegion[])regions, regionEvent, location);
-        }
+				Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, Utils.ToLLProfileScope(scope));
+#else
+                    if (value is long || value is int)
+                    {
+                        Localytics.SetProfileAttribute(attribute, Convert.ToInt64(value), Utils.ToLLProfileScope(scope));
+                    }
+                    else if (value is DateTime)
+                    {
+                        DateTime dateTime = (DateTime)value;
+                        Localytics.SetProfileAttribute(attribute, new Java.Util.Date(dateTime.Ticks), Utils.ToLLProfileScope(scope));
+                    }
+                    else
+                    {
+                        Localytics.SetProfileAttribute(attribute, value.ToString(), Utils.ToLLProfileScope(scope));
+                    }
 #endif
+			}
+			else
+			{
+#if __IOS__
+				Localytics.SetProfileAttribute(Convertor.ToArray(values), attribute, Utils.ToLLProfileScope(scope));
+#else
+	            object value = values[0];
+                if (value is long || value is int)
+                {
+		            Localytics.SetProfileAttribute(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+                }
+                else if (value is DateTime)
+                {
+            		Localytics.SetProfileAttribute(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+                }
+				else if (value is string || value is Java.Lang.String)
+                {
+		            Localytics.SetProfileAttribute(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+                }
+				else
+                {
+					Debug.WriteLine("Unknown Object Type " + value.GetType());
+					throw new ArgumentException("SetProfileAttribute- Unknown Array Object Type " + value.GetType());
+                }
+#endif
+			}
+		}
+
+		// object must be Date (Android) or NSDate (iOS)
+		public void AddProfileAttribute(string attribute, XFLLProfileScope scope, params object[] values)
+		{
+				#if __IOS__
+                Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
+#else
+            object value = values[0];
+            if (value is long || value is int)
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is DateTime)
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is string || value is Java.Lang.String)
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else
+            {
+                Debug.WriteLine("Unknown Object Type " + value.GetType());
+                throw new ArgumentException("AddProfileAttribute:2-Unknown Array Object Type " + value.GetType());
+            }
+#endif
+		}
+
+        public void RemoveProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application, params object[] values)
+        {
+#if __IOS__
+            Localytics.RemoveProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
+#else
+			object value = values[0];
+            if (value is long || value is int)
+            {
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is DateTime)
+            {
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+            }
+			else if (value is string || value is Java.Lang.String)
+            {
+				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+            }
+			else
+            {
+				Debug.WriteLine("Unknown Object Type " + value.GetType());
+				throw new ArgumentException("RemoveProfileAttributeUnknown Array Object Type " + value.GetType());
+            }
+#endif
+        }
+
+        public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        {
+#if __IOS__
+            Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
+#else
+            Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
+#endif
+        }
+
+        public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        {
+#if __IOS__
+            Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
+#else
+            Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
+#endif
+        }
+
+        public void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        {
+#if __IOS__
+            Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
+#else
+        Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
+#endif
+        }
+
     }
 }
 #if __IOS__

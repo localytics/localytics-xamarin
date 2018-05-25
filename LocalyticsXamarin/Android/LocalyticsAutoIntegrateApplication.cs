@@ -18,11 +18,13 @@ namespace LocalyticsSample.Android
             base.OnCreate();
 
 
+           
 #if DEBUG
             Localytics.LoggingEnabled = true;
 #endif
 
             Localytics.AutoIntegrate(this);
+
         }
     }
 }

@@ -17,22 +17,21 @@ namespace LocalyticsXamarin.IOS
         void SetInAppMessageDismissButtonImage(UIImage image);
         void SetLocation(CLLocationCoordinate2D location);
         LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate);
-        void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location);
-        void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location);
+		// CLLocation vs Location
+		void TriggerRegion(LLRegionEvent regionEvent, CLLocation location, params object[] region);
 
         void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
         void TagInAppImpression(LLInAppCampaign campaign, string customAction);
-
         void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType);
         void TagImpressionForInboxCampaign(LLInboxCampaign campaign, string customAction);
+		void TagPlacesPushReceived(LLPlacesCampaign campaign);
+
+        void TagPlacesPushOpened(LLPlacesCampaign campaign, string identifier);
+		void TriggerPlacesNotificationForCampaign(LLPlacesCampaign campaign);
 
         void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success);
         LLInboxDetailViewController InboxDetailViewControllerForCampaign(LLInboxCampaign campaign);
-        void InboxListItemTapped(LLInboxCampaign campaign);
 
-        void TagPlacesPushReceived(LLPlacesCampaign campaign);
-        void TagPlacesPushOpened(LLPlacesCampaign campaign, string identifier);
-        void TriggerPlacesNotificationForCampaign(object campaign);
         void SetLocationMonitoringEnabled(bool enabled);
 
         /*
@@ -49,7 +48,7 @@ namespace LocalyticsXamarin.IOS
         //+ (void) setMessagingDelegate:(nullable id<LLMessagingDelegate>)delegate;
         //+ (void) setLocationDelegate:(nullable id<LLLocationDelegate>)delegate;
 
-        // On Android the Date are of Type Date and on iOS they are of type NSDate
-        void AddDateProfileAttributes(string attribute, LLProfileScope scope, params object[] values);
+        //// On Android the Date are of Type Date and on iOS they are of type NSDate
+        //void AddDateProfileAttributes(string attribute, LLProfileScope scope, params object[] values);
     }
 }

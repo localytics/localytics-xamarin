@@ -19,10 +19,10 @@
 
     <!-- Toggle the Localytics GCM services which handle incoming request from GCM. If this value is
     set to true, then the app must specify the com.google.android.gms:play-services-gcm dependency -->
-    <bool name="ll_gcm_service_enabled">true</bool>
+    <bool name="ll_gcm_service_enabled">false</bool>
 
     <!-- Specify the GCM Sender ID which will be used to register for push tokens -->
-    <string name="ll_gcm_sender_id" translatable="false">331346870110</string>
+    <string name="ll_gcm_sender_id" translatable="false">995606817677</string>
 
     <!-- Toggle the Localytics FirebaseInstanceIdService and FirebaseMessagingService, which handle
     incoming requests from FCM. If this value is set to true, then the app must specify the

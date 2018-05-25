@@ -198,7 +198,8 @@ namespace LocalyticsSample.Shared
 
         void OnSetProfile(object sender, EventArgs e)
         {
-            localytics.SetProfileAttribute(profileValue.Text, profileAttribute.Text);
+			localytics.SetProfileAttribute(profileAttribute.Text, XFLLProfileScope.Application, profileValue.Text);
+			localytics.SetProfileAttribute(profileAttribute.Text + "_ORG", XFLLProfileScope.Organization, profileValue.Text);
         }
 
         void OnGetIdentifier(object sender, EventArgs e)

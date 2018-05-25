@@ -1,5 +1,4 @@
-﻿
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Diagnostics;
 using LocalyticsXamarin.Common;
@@ -85,13 +84,25 @@ namespace LocalyticsSample.Shared
 
             localytics.CustomerId = "XamarinFormIOS CustomerId";
             //localytics.TagCustomerLoggedIn(null, "method", new Dictionary<string, string>());
-            localytics.SetProfileAttribute("Age", "83", XFLLProfileScope.Organization);
-            localytics.SetProfileAttribute("MyAge", "3", XFLLProfileScope.Application);
+			localytics.SetProfileAttribute("Age", XFLLProfileScope.Organization, "83");
+            localytics.SetProfileAttribute("Age", XFLLProfileScope.Application, "3");
+            
+			localytics.SetProfileAttribute("Ticker", XFLLProfileScope.Application, "CHAR", "LCTS");
 
-            localytics.AddProfileAttributes("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333 });
-            localytics.AddProfileAttributes("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc");
-            localytics.AddProfileAttributes("Lucky String", XFLLProfileScope.Application, new string[] { "234", "345" });
-            localytics.RemoveProfileAttributes("Lucky numbers", XFLLProfileScope.Application, 222);
+
+            try
+			{
+  				localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333 });
+				localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, new string[] { "234", "345" });
+			}
+			catch (System.Exception ex)
+			{
+				Debug.WriteLine("Potential Upgrade Issue : AddProfileAttribute evaluate " + ex.Message +"\n" + ex.StackTrace);
+			}
+
+			localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222, 333 );
+            localytics.AddProfileAttribute("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc");
+            localytics.RemoveProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222);
             localytics.IncrementProfileAttribute(1, "Age");
             localytics.IncrementProfileAttribute(1, "MyAge");
             localytics.DecrementProfileAttribute(2, "Age", XFLLProfileScope.Organization);

@@ -473,7 +473,6 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)addValues:(NSArray * _Nonnull)values toSetForProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
         [Static]
         [Export("addValues:toSetForProfileAttribute:withScope:")]
-		[Protected]
 		void AddProfileAttributesToSetPrivate(NSArray values, string attribute, LLProfileScope scope);
 
         // @required +(void)addValues:(NSArray * _Nonnull)values toSetForProfileAttribute:(NSString * _Nonnull)attribute;

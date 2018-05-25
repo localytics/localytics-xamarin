@@ -10,6 +10,10 @@ using Android.OS;
 
 using LocalyticsXamarin.Android;
 using LocalyticsSample.Shared;
+using Firebase.Messaging;
+using Firebase.Iid;
+using Android.Util;
+using Android.Gms.Common;
 
 namespace LocalyticsSample.Android
 {
@@ -20,7 +24,14 @@ namespace LocalyticsSample.Android
         {
             base.OnCreate(bundle);
 
-            Localytics.RegisterPush();//("YOUR_GCM_PROJECT_NUMBER");
+			if (IsPlayServicesAvailable())
+            {
+                var intent = new Intent(this, typeof(RegistrationIntentService));
+                StartService(intent);
+            }
+
+			Localytics.SetOption("ll_gcm_sender_id", "995606817677");
+            //Localytics.RegisterPush();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
@@ -31,6 +42,27 @@ namespace LocalyticsSample.Android
         {
             base.OnNewIntent(intent);
             this.Intent = intent;
+        }
+
+		public bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+					Console.WriteLine(GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                else
+                {
+					Console.WriteLine("This device is not supported");
+                    Finish();
+                }
+                return false;
+            }
+            else
+            {
+				Console.WriteLine("Google Play Services is available.") ;
+                return true;
+            }
         }
     }
 }

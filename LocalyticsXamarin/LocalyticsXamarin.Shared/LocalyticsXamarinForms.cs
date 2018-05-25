@@ -7,9 +7,12 @@ using LocalyticsXamarin.IOS;
 namespace LocalyticsXamarin.Shared
 {
     public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics
-#if __IOS__
-    , ILocalyticsIOS
-#endif
+//#if __IOS__
+//    ,ILocalyticsIOS
+//#else 
+//	.ILocalyticsAndroid
+//#endif
     {
+		
     }
 }

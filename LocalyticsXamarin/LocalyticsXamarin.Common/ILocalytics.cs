@@ -51,14 +51,16 @@ namespace LocalyticsXamarin.Common
         string CustomerId { get; set; }
         void SetCustomerId(string customerId, bool privacyOptedOut);
 
-        void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
-        void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values);
-        void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values);
-        void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values);
-        void RemoveProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values);
+        // object can be long, long[], string, string[], Date[], Date
+		void SetProfileAttribute(string attribute, XFLLProfileScope scope, params object[] values);
+        void AddProfileAttribute(string attribute, XFLLProfileScope scope, params object[] values);
+        void RemoveProfileAttribute(string attribute, XFLLProfileScope scope, params object[] values);
         void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
         void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
         void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
+
+		//void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values);
+        //void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values);
 
         void SetCustomerEmail(string email);
         void SetCustomerFirstName(string firstName);
@@ -66,6 +68,7 @@ namespace LocalyticsXamarin.Common
         void SetCustomerFullName(string fullName);
 
         void SetOptions(IDictionary<string, object> options);
+		void SetOption(string key, object value);
 
         bool LoggingEnabled { get; set; }
 
@@ -104,6 +107,7 @@ namespace LocalyticsXamarin.Common
         void RefreshAllInboxCampaigns(Action<object[]> inboxAllCampaignsDelegate);
         //LLInboxCampaign
         void SetInboxCampaign(object campaign, bool read);
+		void InboxListItemTapped(object campaign);
 
         long InboxCampaignsUnreadCount();
 

@@ -3,6 +3,8 @@ using LocalyticsXamarin.Common;
 using System.Diagnostics;
 #if __IOS__
 using Foundation;
+using CoreLocation;
+using UIKit;
 using LocalyticsXamarin.IOS;
 #else
 using Java.Util;
@@ -12,91 +14,69 @@ namespace LocalyticsXamarin.Shared
 {
     public class LocalyticsPlatform : LocalyticsPlatformCommon
     {
-        public void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
-        {
+		//#pragma region Platform Specific API's
 #if __IOS__
-            Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, Utils.ToLLProfileScope(scope));
-#else
-			if (value is long || value is int)
-            {
-                Localytics.SetProfileAttribute(attribute, Convert.ToInt64(value), Utils.ToLLProfileScope(scope));
-            }
-            else if (value is DateTime)
-            {
-                DateTime dateTime = (DateTime)value;
-                Localytics.SetProfileAttribute(attribute, new Java.Util.Date(dateTime.Ticks), Utils.ToLLProfileScope(scope));
-            }
-            else
-            {
-                Localytics.SetProfileAttribute(attribute, value.ToString(), Utils.ToLLProfileScope(scope));
-            }
-#endif
+        public void RedirectLoggingToDisk()
+        {
+            Localytics.RedirectLoggingToDisk();
         }
 
-        public void RemoveProfileAttributes(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application, params object[] values)
+        public void DidRegisterUserNotificationSettings()
         {
-#if __IOS__
-            Localytics.RemoveProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
-#else
-			RemoveProfileAttributesFromSet(values, attribute, scope);
-#endif
+            Localytics.DidRegisterUserNotificationSettings();
         }
 
-        public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        public void SetLocation(CLLocationCoordinate2D location)
         {
-#if __IOS__
-            Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
-#else
-			Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
-#endif
+            Localytics.SetLocation(location);
         }
 
-        public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        public bool HandleTestModeURL(NSUrl url)
         {
-#if __IOS__
-            Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
-#else
-			Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
-#endif
+            return Localytics.HandleTestModeURL(url);
         }
 
-        public void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        public void SetInAppMessageDismissButtonImage(UIImage image)
         {
-#if __IOS__
-            Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
-#else
-        Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
-#endif
+            Localytics.SetInAppMessageDismissButtonImage(image);
         }
 
-        // object must be Date (Android) or NSDate (iOS)
-        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
+        public LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate)
         {
-#if __IOS__
-            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
-#else
-				AddProfileAttributesToSet(values, attribute, scope);
-#endif
+            return Localytics.GeofencesToMonitor(currentCoordinate);
         }
 
-        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values)
+        public void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location)
         {
-#if __IOS__
-            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
-#else
-			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
-#endif
+            Localytics.TriggerRegion((CLRegion)region, regionEvent, location);
         }
 
-        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values)
+        public void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location)
         {
-#if __IOS__
-            NSArray ary = Convertor.ToArray(values);
-            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), ary);
-#else
-			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
-#endif
+            Localytics.TriggerRegions((CLRegion[])regions, regionEvent, location);
         }
+#endif
+
+      
+
+//        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values)
+//        {
+//#if __IOS__
+//            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
+//#else
+//			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
+//#endif
+//        }
+
+//        public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values)
+//        {
+//#if __IOS__
+//            NSArray ary = Convertor.ToArray(values);
+//            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), ary);
+//#else
+//			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
+//#endif
+        //}
 
   #if __IOS__
 
@@ -146,84 +126,6 @@ namespace LocalyticsXamarin.Shared
             }
         }
 
-        // Provided for backward compatibility
-        public void AddProfileAttributesToSet(object[] values, string attribute, XFLLProfileScope scope)
-        {
-            if (values == null)
-            {
-                return;
-            }
-            object firstValue = values[0];
-            if (firstValue is Java.Util.Date)
-            {
-                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else if (firstValue is string || firstValue is Java.Lang.String)
-            {
-                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else if (firstValue is DateTime || firstValue is Date)
-            {
-                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else
-            {
-                Debug.WriteLine("Unknown Object Type " + firstValue.GetType());
-                throw new ArgumentException("Unknown Array Object Type " + firstValue.GetType());
-            }
-        }
-
-        public void RemoveProfileAttributesFromSet(object[] values, string attribute, XFLLProfileScope scope)
-        {
-            if (values == null)
-            {
-                return;
-            }
-            object firstValue = values[0];
-            if (firstValue is Java.Util.Date)
-            {
-                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else if (firstValue is string || firstValue is Java.Lang.String)
-            {
-                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else if (firstValue is DateTime || firstValue is Date)
-            {
-                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else if (firstValue is Int16 || firstValue is Int32 || firstValue is Int64)
-            {
-                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
-            }
-            else
-            {
-                Debug.WriteLine("Invalid Object type " + firstValue.GetType());
-                throw new ArgumentException("Invalid Object type " + firstValue.GetType());
-            }
-        }
-
-        public void IncrementProfileAttribute(int value, string attribute, XFLLProfileScope scope)
-        {
-            Localytics.IncrementProfileAttribute(attribute, (long)(value), Utils.ToLLProfileScope(scope));
-        }
-
-        public void DecrementProfileAttribute(int value, string attribute, XFLLProfileScope scope)
-        {
-            Localytics.DecrementProfileAttribute(attribute, (long)(value), Utils.ToLLProfileScope(scope));
-        }
-
-        public string PushRegistrationId
-        {
-            get
-            {
-                return Localytics.PushRegistrationId;
-            }
-            set
-            {
-                Localytics.PushRegistrationId = value;
-            }
-        }
 #endif
     }
 }

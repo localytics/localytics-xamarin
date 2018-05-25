@@ -103,7 +103,7 @@ namespace LocalyticsXamarin.Android
                 return null;
             }
         }
-
+        
 		public static long[] ToLongArray(object[] source)
         {
             return Array.ConvertAll<object, long>(source, Convert.ToInt64);
