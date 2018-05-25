@@ -6,22 +6,23 @@ using LocalyticsXamarin.Android;
 
 namespace LocalyticsSample.Android
 {
-	[Application]
-	public class LocalyticsAutoIntegrateApplication: Application
-	{
-		public LocalyticsAutoIntegrateApplication (IntPtr handle, JniHandleOwnership ownerShip) : base (handle, ownerShip)
-		{
-		}
+    [Application]
+    public class LocalyticsAutoIntegrateApplication : Application
+    {
+        public LocalyticsAutoIntegrateApplication(IntPtr handle, JniHandleOwnership ownerShip) : base(handle, ownerShip)
+        {
+        }
 
-		override public void OnCreate() {
-			base.OnCreate ();
-            
+        override public void OnCreate()
+        {
+            base.OnCreate();
 
-			#if DEBUG
-			Localytics.LoggingEnabled = true;
-			#endif
 
-			Localytics.AutoIntegrate(this);
-		}
-	}
+#if DEBUG
+            Localytics.LoggingEnabled = true;
+#endif
+
+            Localytics.AutoIntegrate(this);
+        }
+    }
 }

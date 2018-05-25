@@ -8,104 +8,105 @@ using LocalyticsXamarin.Common;
 
 namespace LocalyticsSample.Shared
 {
-	public partial class LandingPage : ContentPage
-	{
-		void OnDismissButtonRight(object sender, System.EventArgs e)
-		{
-			localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Right;
-			this.dismissBtnLocation.Text = localytics.InAppMessageDismissButtonLocation.ToString();
-		}
-
-		void OnDismissButtonLeft(object sender, System.EventArgs e)
-		{
-			localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Left;
-			this.dismissBtnLocation.Text = localytics.InAppMessageDismissButtonLocation.ToString();
-		}
-
-		void OnPauseDataUpload(object sender, System.EventArgs e)
-		{
-			localytics.PauseDataUploading(true);
-		}
-
-		void OnResumeDataUpload(object sender, System.EventArgs e)
-		{
-			localytics.PauseDataUploading(false);
-		}
-
-		void OnPrivacyOptOut(object sender, System.EventArgs e)
+    public partial class LandingPage : ContentPage
+    {
+        void OnDismissButtonRight(object sender, System.EventArgs e)
         {
-			localytics.PrivacyOptedOut = true;
-			RefreshBackgroundProperties();
+            localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Right;
+            this.dismissBtnLocation.Text = localytics.InAppMessageDismissButtonLocation.ToString();
         }
 
-		void OnPrivacyOptIn(object sender, System.EventArgs e)
+        void OnDismissButtonLeft(object sender, System.EventArgs e)
         {
-			localytics.PrivacyOptedOut = false;
-			RefreshBackgroundProperties();
+            localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Left;
+            this.dismissBtnLocation.Text = localytics.InAppMessageDismissButtonLocation.ToString();
         }
 
-		void OnTriggerInApp(object sender, System.EventArgs e)
-		{
-			localytics.TriggerInAppMessage(this.triggerName.Text);
-		}
+        void OnPauseDataUpload(object sender, System.EventArgs e)
+        {
+            localytics.PauseDataUploading(true);
+        }
 
-		void OnInboxAdidDisable(object sender, System.EventArgs e)
-		{
-			localytics.InboxAdIdParameterEnabled = false;
-			RefreshBackgroundProperties();
-		}
+        void OnResumeDataUpload(object sender, System.EventArgs e)
+        {
+            localytics.PauseDataUploading(false);
+        }
 
-		void OnInboxAdidEnable(object sender, System.EventArgs e)
-		{
-			localytics.InboxAdIdParameterEnabled = true;
-			RefreshBackgroundProperties();
-		}
+        void OnPrivacyOptOut(object sender, System.EventArgs e)
+        {
+            localytics.PrivacyOptedOut = true;
+            RefreshBackgroundProperties();
+        }
 
-		void OnInappAdidDisable(object sender, System.EventArgs e)
-		{
-			RefreshBackgroundProperties();
-			localytics.InAppAdIdParameterEnabled = false;
-		}
-        
-		void OnInappAdidEnable(object sender, System.EventArgs e)
-		{
-			RefreshBackgroundProperties();
-			localytics.InAppAdIdParameterEnabled = true;
-		}
+        void OnPrivacyOptIn(object sender, System.EventArgs e)
+        {
+            localytics.PrivacyOptedOut = false;
+            RefreshBackgroundProperties();
+        }
 
-		void OnOptOut(object sender, System.EventArgs e)
-		{
-			localytics.OptedOut = true;
-			RefreshBackgroundProperties();
-		}
+        void OnTriggerInApp(object sender, System.EventArgs e)
+        {
+            localytics.TriggerInAppMessage(this.triggerName.Text);
+        }
 
-		void OnOptIn(object sender, System.EventArgs e)
-		{
-			localytics.OptedOut = false;
-			RefreshBackgroundProperties();
-		}
+        void OnInboxAdidDisable(object sender, System.EventArgs e)
+        {
+            localytics.InboxAdIdParameterEnabled = false;
+            RefreshBackgroundProperties();
+        }
 
-		public LandingPage ()
-		{
-			InitializeComponent ();
-			localytics = DependencyService.Get<ILocalytics>();
-		}
+        void OnInboxAdidEnable(object sender, System.EventArgs e)
+        {
+            localytics.InboxAdIdParameterEnabled = true;
+            RefreshBackgroundProperties();
+        }
 
-		protected override void OnAppearing ()
-		{
-			base.OnAppearing ();
+        void OnInappAdidDisable(object sender, System.EventArgs e)
+        {
+            RefreshBackgroundProperties();
+            localytics.InAppAdIdParameterEnabled = false;
+        }
 
-			RefreshInfo ();
-		}
+        void OnInappAdidEnable(object sender, System.EventArgs e)
+        {
+            RefreshBackgroundProperties();
+            localytics.InAppAdIdParameterEnabled = true;
+        }
 
-		void OnRefresh(object sender, EventArgs e)
-		{
-			RefreshInfo ();
-		}
-		ILocalytics localytics;
+        void OnOptOut(object sender, System.EventArgs e)
+        {
+            localytics.OptedOut = true;
+            RefreshBackgroundProperties();
+        }
 
-		void RefreshBackgroundProperties() {
-			Task.Run(() =>
+        void OnOptIn(object sender, System.EventArgs e)
+        {
+            localytics.OptedOut = false;
+            RefreshBackgroundProperties();
+        }
+
+        public LandingPage()
+        {
+            InitializeComponent();
+            localytics = DependencyService.Get<ILocalytics>();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            RefreshInfo();
+        }
+
+        void OnRefresh(object sender, EventArgs e)
+        {
+            RefreshInfo();
+        }
+        ILocalytics localytics;
+
+        void RefreshBackgroundProperties()
+        {
+            Task.Run(() =>
             {
                 var privacyOptout = localytics.PrivacyOptedOut;
                 var optout = localytics.OptedOut;
@@ -119,87 +120,104 @@ namespace LocalyticsSample.Shared
                     this.inappAdid.Text = inappAdid.ToString();
                 });
             });
-		}
-		void RefreshInfo() {
-			localytics.LoggingEnabled = true;
-			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string value0 = "AppKey: " + localytics.AppKey;
-				string value1 = "CustomerId: " + localytics.CustomerId;
-				string value2 = "InstallId: " + localytics.InstallId;
-				string value3 = "LibraryVersion: " + localytics.LibraryVersion;
-				string value4 = "OptedOut: " + localytics.OptedOut;
-				string value5 = "TestModeEnabled: " + localytics.TestModeEnabled;
-				string value6 = "Push Token/RegID: " + localytics.PushTokenInfo;
-				string value7 = "LoggingEnabled: " + localytics.LoggingEnabled;
+        }
+        void RefreshInfo()
+        {
+            localytics.LoggingEnabled = true;
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                string value0 = "AppKey: " + localytics.AppKey;
+                string value1 = "CustomerId: " + localytics.CustomerId;
+                string value2 = "InstallId: " + localytics.InstallId;
+                string value3 = "LibraryVersion: " + localytics.LibraryVersion;
+                string value4 = "OptedOut: " + localytics.OptedOut;
+                string value5 = "TestModeEnabled: " + localytics.TestModeEnabled;
+                string value6 = "Push Token/RegID: " + localytics.PushTokenInfo;
+                string value7 = "LoggingEnabled: " + localytics.LoggingEnabled;
 
-				RefreshBackgroundProperties();
-				var btnLoc = localytics.InAppMessageDismissButtonLocation;
+                RefreshBackgroundProperties();
+                var btnLoc = localytics.InAppMessageDismissButtonLocation;
 
-				Device.BeginInvokeOnMainThread(delegate {
-					this.dismissBtnLocation.Text = btnLoc.ToString();
-					info0.Text = value0;
-					info1.Text = value1;
-					info2.Text = value2;
-					info3.Text = value3;
-					info4.Text = value4;
-					info5.Text = value5;
-					info6.Text = value6;
-					info7.Text = value7;
-				});
-			});
-		}
-			
-		void OnOpenSession(object sender, EventArgs e) {
-			localytics.OpenSession ();
-		}
+                Device.BeginInvokeOnMainThread(delegate
+                {
+                    this.dismissBtnLocation.Text = btnLoc.ToString();
+                    info0.Text = value0;
+                    info1.Text = value1;
+                    info2.Text = value2;
+                    info3.Text = value3;
+                    info4.Text = value4;
+                    info5.Text = value5;
+                    info6.Text = value6;
+                    info7.Text = value7;
+                });
+            });
+        }
 
-		void OnCloseSession(object sender, EventArgs e) {
-			localytics.CloseSession ();
-		}
+        void OnOpenSession(object sender, EventArgs e)
+        {
+            localytics.OpenSession();
+        }
 
-		void OnUpload(object sender, EventArgs e) {
-			localytics.Upload ();
-		}
+        void OnCloseSession(object sender, EventArgs e)
+        {
+            localytics.CloseSession();
+        }
 
-		void OnTagEvent(object sender, EventArgs e) {
-			localytics.TagEvent (eventText.Text);
-		}
+        void OnUpload(object sender, EventArgs e)
+        {
+            localytics.Upload();
+        }
 
-		void OnTagScreen(object sender, EventArgs e) {
-			localytics.TagScreen (screenText.Text);
-		}
+        void OnTagEvent(object sender, EventArgs e)
+        {
+            localytics.TagEvent(eventText.Text);
+        }
 
-		void OnGetCD(object sender, EventArgs e) {
-			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string cd = localytics.GetCustomDimension (Convert.ToUInt32(cdNumber.Text));
+        void OnTagScreen(object sender, EventArgs e)
+        {
+            localytics.TagScreen(screenText.Text);
+        }
 
-				Device.BeginInvokeOnMainThread(delegate {
-					cdValue.Text = cd;
-				});
-			});
-		}
+        void OnGetCD(object sender, EventArgs e)
+        {
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                string cd = localytics.GetCustomDimension(Convert.ToUInt32(cdNumber.Text));
 
-		void OnSetCD(object sender, EventArgs e) {
-			localytics.SetCustomDimension (cdValue.Text, Convert.ToUInt32 (cdNumber.Text));
-		}
+                Device.BeginInvokeOnMainThread(delegate
+                {
+                    cdValue.Text = cd;
+                });
+            });
+        }
 
-		void OnSetProfile(object sender, EventArgs e) {
-			localytics.SetProfileAttribute (profileValue.Text, profileAttribute.Text);
-		}
+        void OnSetCD(object sender, EventArgs e)
+        {
+            localytics.SetCustomDimension(cdValue.Text, Convert.ToUInt32(cdNumber.Text));
+        }
 
-		void OnGetIdentifier(object sender, EventArgs e) {
-			System.Threading.Tasks.Task.Factory.StartNew (() => {
-				string id = localytics.GetIdentifier (identifier.Text);
+        void OnSetProfile(object sender, EventArgs e)
+        {
+            localytics.SetProfileAttribute(profileValue.Text, profileAttribute.Text);
+        }
 
-				Device.BeginInvokeOnMainThread(delegate {
-					identifierValue.Text = id;
-				});
-			});
-		}
+        void OnGetIdentifier(object sender, EventArgs e)
+        {
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                string id = localytics.GetIdentifier(identifier.Text);
 
-		void OnSetIdentifier(object sender, EventArgs e) {
-			localytics.SetIdentifier (identifierValue.Text, identifier.Text);
-		}
-	}
+                Device.BeginInvokeOnMainThread(delegate
+                {
+                    identifierValue.Text = id;
+                });
+            });
+        }
+
+        void OnSetIdentifier(object sender, EventArgs e)
+        {
+            localytics.SetIdentifier(identifierValue.Text, identifier.Text);
+        }
+    }
 }
 

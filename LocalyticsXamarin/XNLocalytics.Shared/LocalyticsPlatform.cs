@@ -10,10 +10,10 @@ using LocalyticsXamarin.Android;
 #endif
 namespace XNLocalytics.Shared
 {
-	public class LocalyticsPlatform : LocalyticsPlatformCommon
-	{
-		public void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
-		{
+    public class LocalyticsPlatform : LocalyticsPlatformCommon
+    {
+        public void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        {
 #if __IOS__
             Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, Utils.ToLLProfileScope(scope));
 #else
@@ -31,9 +31,9 @@ namespace XNLocalytics.Shared
                 Localytics.SetProfileAttribute(attribute, value.ToString(), Utils.ToLLProfileScope(scope));
             }
 #endif
-		}
-  
-		public void RemoveProfileAttributes(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application, params object[] values)
+        }
+
+        public void RemoveProfileAttributes(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application, params object[] values)
         {
 #if __IOS__
             Localytics.RemoveProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
@@ -41,39 +41,39 @@ namespace XNLocalytics.Shared
 			RemoveProfileAttributesFromSet(values, attribute, scope);
 #endif
         }
-        
-		public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+
+        public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
 #if __IOS__
-			Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
+            Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
 #else
 			Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
 #endif
         }
 
-		public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
 #if __IOS__
-			Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
+            Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
 #else
 			Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
 #endif
         }
 
-		public void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
+        public void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
 #if __IOS__
-        Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
+            Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
 #else
         Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
 #endif
         }
 
-		// object must be Date (Android) or NSDate (iOS)
+        // object must be Date (Android) or NSDate (iOS)
         public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values)
         {
 #if __IOS__
-				Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
+            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
 #else
 				AddProfileAttributesToSet(values, attribute, scope);
 #endif
@@ -82,7 +82,7 @@ namespace XNLocalytics.Shared
         public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values)
         {
 #if __IOS__
-			Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
+            Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
 #else
 			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
 #endif
@@ -91,7 +91,7 @@ namespace XNLocalytics.Shared
         public void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values)
         {
 #if __IOS__
-			NSArray ary = Convertor.ToArray(values);
+            NSArray ary = Convertor.ToArray(values);
             Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), ary);
 #else
 			Localytics.AddProfileAttributesToSet(attribute, values, Utils.ToLLProfileScope(scope));
@@ -101,10 +101,10 @@ namespace XNLocalytics.Shared
 
 
 
- 
+
 #if __IOS__
         private void test()
-		{
+        {
 #if __IOS__
 #else
 #endif
@@ -121,7 +121,7 @@ namespace XNLocalytics.Shared
                 Localytics.InAppMessageDismissButtonLocation = Utils.ToLLInAppMessageDismissButtonLocation(value);
             }
         }
-        
+
 
         public void AddProfileAttributes(string attribute, LLProfileScope scope, params NSDate[] values)
         {
@@ -235,5 +235,5 @@ namespace XNLocalytics.Shared
             }
         }
 #endif
-	}
+    }
 }

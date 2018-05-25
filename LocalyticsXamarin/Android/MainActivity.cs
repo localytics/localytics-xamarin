@@ -13,24 +13,24 @@ using LocalyticsSample.Shared;
 
 namespace LocalyticsSample.Android
 {
-	[Activity (Label = "LocalyticsSample.Android", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
-	{
-		protected override void OnCreate (Bundle bundle)
-		{
-			base.OnCreate (bundle);
+    [Activity(Label = "LocalyticsSample.Android", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
+    {
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
 
-			Localytics.RegisterPush();//("YOUR_GCM_PROJECT_NUMBER");
+            Localytics.RegisterPush();//("YOUR_GCM_PROJECT_NUMBER");
 
-			global::Xamarin.Forms.Forms.Init (this, bundle);
+            global::Xamarin.Forms.Forms.Init(this, bundle);
 
-			LoadApplication (new App ());
-		}
+            LoadApplication(new App());
+        }
 
-		protected override void OnNewIntent (Intent intent)
-		{
-			base.OnNewIntent (intent);
-			this.Intent = intent;
-		}
-	}
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+            this.Intent = intent;
+        }
+    }
 }

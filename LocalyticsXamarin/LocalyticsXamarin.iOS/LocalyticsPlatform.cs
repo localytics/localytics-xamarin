@@ -6,9 +6,9 @@ using UIKit;
 
 namespace LocalyticsXamarin.IOS
 {
-	public abstract class LocalyticsPlatformCommon
+    public abstract class LocalyticsPlatformCommon
     {
-		public void OpenSession()
+        public void OpenSession()
         {
             Localytics.OpenSession();
         }
@@ -23,15 +23,20 @@ namespace LocalyticsXamarin.IOS
             Localytics.Upload();
         }
 
-		public void TagEvent(string eventName, IDictionary<string, string> attributes = null, long? customerValueIncrease = null)
+        public void TagEvent(string eventName, IDictionary<string, string> attributes = null, long? customerValueIncrease = null)
         {
-			if (attributes==null && customerValueIncrease == null) {
-				Localytics.TagEvent(eventName);
-			} else if (customerValueIncrease==null) {
-				Localytics.TagEvent(eventName, attributes.ToNSDictionary());
-			} else {
-				Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
-			}
+            if (attributes == null && customerValueIncrease == null)
+            {
+                Localytics.TagEvent(eventName);
+            }
+            else if (customerValueIncrease == null)
+            {
+                Localytics.TagEvent(eventName, attributes.ToNSDictionary());
+            }
+            else
+            {
+                Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
+            }
         }
 
         public void TagScreen(string screenName)
@@ -99,14 +104,14 @@ namespace LocalyticsXamarin.IOS
             }
         }
 
-		public void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes)
+        public void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes)
         {
-			if (attributes==null)
-			{
-				Localytics.TriggerInAppMessageInternal(triggerName);
-				return;
-			}
-			Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
+            if (attributes == null)
+            {
+                Localytics.TriggerInAppMessageInternal(triggerName);
+                return;
+            }
+            Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
         }
 
         public void DismissCurrentInAppMessage()
@@ -181,37 +186,38 @@ namespace LocalyticsXamarin.IOS
         public bool InAppAdIdParameterEnabled { get => Localytics.InAppAdIdParameterEnabled; set => Localytics.InAppAdIdParameterEnabled = value; }
         public bool InboxAdIdParameterEnabled { get => Localytics.InboxAdIdParameterEnabled; set => Localytics.InboxAdIdParameterEnabled = value; }
 
-		public void TagPurchased(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
+        public void TagPurchased(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
         {
-			NSNumber price = null;
-			if (itemPrice != null) {
-				price = new NSNumber(itemPrice.Value);
-			}
+            NSNumber price = null;
+            if (itemPrice != null)
+            {
+                price = new NSNumber(itemPrice.Value);
+            }
             Localytics.TagPurchased(itemName, itemId, itemType, price, attributes.ToNSDictionary());
         }
 
-		public void TagAddedToCart(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
+        public void TagAddedToCart(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
         {
             Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, attributes.ToNSDictionary());
         }
 
-		public void TagStartedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
+        public void TagStartedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
         {
             Localytics.TagStartedCheckout(totalPrice, itemCount, attributes.ToNSDictionary());
         }
 
-		public void TagCompletedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
+        public void TagCompletedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
         {
-			NSNumber price = null;
-			if (totalPrice.HasValue)
+            NSNumber price = null;
+            if (totalPrice.HasValue)
             {
-				price = new NSNumber(totalPrice.Value);
+                price = new NSNumber(totalPrice.Value);
             }
-			NSNumber count = null;
-			if (itemCount.HasValue) 
-			{
-				count = new NSNumber(itemCount.Value);
-			}
+            NSNumber count = null;
+            if (itemCount.HasValue)
+            {
+                count = new NSNumber(itemCount.Value);
+            }
             Localytics.TagCompletedCheckout(price, count, attributes.ToNSDictionary());
         }
 
@@ -220,14 +226,14 @@ namespace LocalyticsXamarin.IOS
             Localytics.TagContentViewed(contentName, contentId, contentType, attributes.ToNSDictionary());
         }
 
-		public void TagSearched(string queryText, string contentType, long? resultCount, IDictionary<string, string> attributes)
+        public void TagSearched(string queryText, string contentType, long? resultCount, IDictionary<string, string> attributes)
         {
-			NSNumber count = null;
-			if (resultCount.HasValue)
+            NSNumber count = null;
+            if (resultCount.HasValue)
             {
-				count = new NSNumber(resultCount.Value);
+                count = new NSNumber(resultCount.Value);
             }
-			Localytics.TagSearched(queryText, contentType, count, attributes.ToNSDictionary());
+            Localytics.TagSearched(queryText, contentType, count, attributes.ToNSDictionary());
         }
 
         public void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes)
@@ -235,19 +241,19 @@ namespace LocalyticsXamarin.IOS
             Localytics.TagShared(contentName, contentId, contentType, methodName, attributes.ToNSDictionary());
         }
 
-		public void TagContentRated(string contentName, string contentId, string contentType, long? rating, IDictionary<string, string> attributes)
+        public void TagContentRated(string contentName, string contentId, string contentType, long? rating, IDictionary<string, string> attributes)
         {
-			NSNumber ratingValue = null;
-			if (rating.HasValue)
+            NSNumber ratingValue = null;
+            if (rating.HasValue)
             {
-				ratingValue = new NSNumber(rating.Value);
+                ratingValue = new NSNumber(rating.Value);
             }
-			Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes.ToNSDictionary());
+            Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes.ToNSDictionary());
         }
-        
-		public void TagCustomerRegistered(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
+
+        public void TagCustomerRegistered(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
         {
-			Localytics.TagCustomerRegistered(customerProps, methodName, attributes.ToNSDictionary());
+            Localytics.TagCustomerRegistered(customerProps, methodName, attributes.ToNSDictionary());
         }
 
         public void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes)
@@ -260,7 +266,7 @@ namespace LocalyticsXamarin.IOS
             Localytics.TagCustomerLoggedOut(attributes.ToNSDictionary());
         }
 
-		public void TagInvited(string methodName, IDictionary<string, string> attributes)
+        public void TagInvited(string methodName, IDictionary<string, string> attributes)
         {
             Localytics.TagInvited(methodName, attributes.ToNSDictionary());
         }
@@ -290,9 +296,9 @@ namespace LocalyticsXamarin.IOS
             Localytics.SetLocationMonitoringEnabled(enabled);
         }
 
-		public void SetOptions(IDictionary<string, object> options)
+        public void SetOptions(IDictionary<string, object> options)
         {
-			Localytics.SetOptions(Convertor.ToNSDictionary(options));
+            Localytics.SetOptions(Convertor.ToNSDictionary(options));
         }
 
         public void PauseDataUploading(bool pause)
@@ -310,34 +316,34 @@ namespace LocalyticsXamarin.IOS
             Localytics.TriggerInAppMessagesForSessionStart();
         }
 
-		public void TagImpressionForInAppCampaign(LLInAppCampaign campaign, LLImpressionType type)
+        public void TagImpressionForInAppCampaign(LLInAppCampaign campaign, LLImpressionType type)
         {
-			Localytics.TagImpressionForInAppCampaign(campaign, type);
+            Localytics.TagImpressionForInAppCampaign(campaign, type);
         }
 
         public void TagImpressionForInAppCampaign(LLInAppCampaign campaign, string customAction)
         {
-			Localytics.TagImpressionForInAppCampaign(campaign, customAction);
+            Localytics.TagImpressionForInAppCampaign(campaign, customAction);
         }
 
         public object[] AllInboxCampaigns()
         {
             return Localytics.AllInboxCampaigns();
         }
-        
-		public void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType)
+
+        public void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType)
         {
-			Localytics.TagImpressionForInboxCampaign((LLInboxCampaign)campaign, impressionType);
+            Localytics.TagImpressionForInboxCampaign((LLInboxCampaign)campaign, impressionType);
         }
 
-		public void TagImpressionForInboxCampaign(LLInboxCampaign campaign, string customAction)
+        public void TagImpressionForInboxCampaign(LLInboxCampaign campaign, string customAction)
         {
-			Localytics.TagImpressionForInboxCampaign((LLInboxCampaign)campaign, customAction);
+            Localytics.TagImpressionForInboxCampaign((LLInboxCampaign)campaign, customAction);
         }
 
-   //     public void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success)
-   //     {
-			//Localytics.TagImpressionForInboxCampaign(campaign, success);
+        //     public void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success)
+        //     {
+        //Localytics.TagImpressionForInboxCampaign(campaign, success);
         //}
 
         public void TagImpressionForPushToInboxCampaign(object campaign, bool success)
@@ -345,23 +351,26 @@ namespace LocalyticsXamarin.IOS
             Localytics.TagImpressionForPushToInboxCampaign((LLInboxCampaign)campaign, success);
         }
 
-		public void InboxListItemTapped(LLInboxCampaign campaign)
+        public void InboxListItemTapped(LLInboxCampaign campaign)
         {
             Localytics.InboxListItemTapped((LLInboxCampaign)campaign);
         }
 
-		public void TagPlacesPushReceived(LLPlacesCampaign campaign)
+        public void TagPlacesPushReceived(LLPlacesCampaign campaign)
         {
             Localytics.TagPlacesPushReceived((LLPlacesCampaign)campaign);
         }
 
-		public void TagPlacesPushOpened(LLPlacesCampaign campaign, string identifier)
+        public void TagPlacesPushOpened(LLPlacesCampaign campaign, string identifier)
         {
-			if (identifier==null) {
-				Localytics.TagPlacesPushOpened((LLPlacesCampaign)campaign);
-			} else {
-				Localytics.TagPlacesPushOpened((LLPlacesCampaign)campaign, identifier);
-			}
+            if (identifier == null)
+            {
+                Localytics.TagPlacesPushOpened((LLPlacesCampaign)campaign);
+            }
+            else
+            {
+                Localytics.TagPlacesPushOpened((LLPlacesCampaign)campaign, identifier);
+            }
         }
 
         public void TriggerPlacesNotificationForCampaign(object campaign)
@@ -373,19 +382,19 @@ namespace LocalyticsXamarin.IOS
         {
             Localytics.TriggerPlacesNotificationForCampaignId((nint)campaignId, regionId);
         }
-        
-		public void RefreshAllInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
+
+        public void RefreshAllInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
         {
-			Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(x));
+            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(x));
         }
 
-		public void RefreshInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
+        public void RefreshInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
         {
-			Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(x));
+            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(x));
         }
-        
+
         //#pragma region Platform Specific API's
-		public void RedirectLoggingToDisk()
+        public void RedirectLoggingToDisk()
         {
             Localytics.RedirectLoggingToDisk();
         }
@@ -395,34 +404,34 @@ namespace LocalyticsXamarin.IOS
             Localytics.DidRegisterUserNotificationSettings();
         }
 
-		public void SetLocation(CLLocationCoordinate2D location)
+        public void SetLocation(CLLocationCoordinate2D location)
         {
-			Localytics.SetLocation(location);
+            Localytics.SetLocation(location);
         }
 
-		public bool HandleTestModeURL(NSUrl url)
+        public bool HandleTestModeURL(NSUrl url)
         {
-			return Localytics.HandleTestModeURL(url);
+            return Localytics.HandleTestModeURL(url);
         }
 
-		public void SetInAppMessageDismissButtonImage(UIImage image)
+        public void SetInAppMessageDismissButtonImage(UIImage image)
         {
-			Localytics.SetInAppMessageDismissButtonImage(image);
+            Localytics.SetInAppMessageDismissButtonImage(image);
         }
 
-		public LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate)
+        public LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate)
         {
-			return Localytics.GeofencesToMonitor(currentCoordinate);
+            return Localytics.GeofencesToMonitor(currentCoordinate);
         }
 
-		public void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location)
+        public void TriggerRegion(object region, LLRegionEvent regionEvent, CLLocation location)
         {
-			Localytics.TriggerRegion((CLRegion)region, regionEvent, location);
+            Localytics.TriggerRegion((CLRegion)region, regionEvent, location);
         }
 
         public void TriggerRegions(object[] regions, LLRegionEvent regionEvent, CLLocation location)
         {
-			Localytics.TriggerRegions((CLRegion[])regions, regionEvent, location);
-        }      
+            Localytics.TriggerRegions((CLRegion[])regions, regionEvent, location);
+        }
     }
 }

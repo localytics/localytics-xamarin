@@ -10,11 +10,11 @@ using NativeProfileScope = LocalyticsXamarin.Android.Localytics.ProfileScope;
 #endif
 namespace XNLocalytics.Shared
 {
-	public static class Utils
+    public static class Utils
     {
-		public static XFLLInAppMessageDismissButtonLocation ToXFLLInAppMessageDismissButtonLocation(NativeInAppMessageDismissButtonLocation source)
+        public static XFLLInAppMessageDismissButtonLocation ToXFLLInAppMessageDismissButtonLocation(NativeInAppMessageDismissButtonLocation source)
         {
-			if (source == NativeInAppMessageDismissButtonLocation.Right)
+            if (source == NativeInAppMessageDismissButtonLocation.Right)
             {
                 return XFLLInAppMessageDismissButtonLocation.Right;
             }
@@ -22,24 +22,24 @@ namespace XNLocalytics.Shared
             return XFLLInAppMessageDismissButtonLocation.Left;
         }
 
-		public static NativeInAppMessageDismissButtonLocation ToLLInAppMessageDismissButtonLocation(XFLLInAppMessageDismissButtonLocation source)
+        public static NativeInAppMessageDismissButtonLocation ToLLInAppMessageDismissButtonLocation(XFLLInAppMessageDismissButtonLocation source)
         {
             if (source == XFLLInAppMessageDismissButtonLocation.Right)
             {
-				return NativeInAppMessageDismissButtonLocation.Right;
+                return NativeInAppMessageDismissButtonLocation.Right;
             }
 
-			return NativeInAppMessageDismissButtonLocation.Left;
+            return NativeInAppMessageDismissButtonLocation.Left;
         }
 
-		public static NativeProfileScope ToLLProfileScope(XFLLProfileScope source)
+        public static NativeProfileScope ToLLProfileScope(XFLLProfileScope source)
         {
             if (source == XFLLProfileScope.Organization)
             {
-				return NativeProfileScope.Organization;
+                return NativeProfileScope.Organization;
             }
 
-			return NativeProfileScope.Application;
+            return NativeProfileScope.Application;
         }
     }
 }

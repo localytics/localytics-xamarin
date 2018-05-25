@@ -15,41 +15,41 @@ using LocalyticsXamarin.Android;
 
 namespace LocalyticsMessagingSample.Android
 {
-	[Activity(Label = "InboxActivity")]
-	public class InboxActivity : Activity
-	{
-		protected override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
+    [Activity(Label = "InboxActivity")]
+    public class InboxActivity : Activity
+    {
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
 
-			SetContentView(Resource.Layout.Inbox);
+            SetContentView(Resource.Layout.Inbox);
 
-			ListView listView = FindViewById<ListView>(Resource.Id.lv_inbox);
-			InboxListAdapter listAdapter = new InboxListAdapter(this);
-			listView.Adapter = listAdapter;
-			listView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
-			{
-				InboxCampaign campaign = (InboxCampaign)listAdapter.GetItem(e.Position);
-				campaign.Read = true;
+            ListView listView = FindViewById<ListView>(Resource.Id.lv_inbox);
+            InboxListAdapter listAdapter = new InboxListAdapter(this);
+            listView.Adapter = listAdapter;
+            listView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
+            {
+                InboxCampaign campaign = (InboxCampaign)listAdapter.GetItem(e.Position);
+                campaign.Read = true;
 
-				listAdapter.NotifyDataSetChanged();
+                listAdapter.NotifyDataSetChanged();
 
-				if (campaign.HasCreative)
-				{
-					Intent intent = new Intent(this, typeof(InboxDetailActivity));
-					intent.PutExtra("campaign", campaign);
-					StartActivity(intent);
-				}
-			};
+                if (campaign.HasCreative)
+                {
+                    Intent intent = new Intent(this, typeof(InboxDetailActivity));
+                    intent.PutExtra("campaign", campaign);
+                    StartActivity(intent);
+                }
+            };
 
-			listAdapter.GetData(null);
-		}
+            listAdapter.GetData(null);
+        }
 
-		protected override void OnResume()
-		{
-			base.OnResume();
+        protected override void OnResume()
+        {
+            base.OnResume();
 
-			Localytics.TagScreen("Inbox");
-		}
-	}
+            Localytics.TagScreen("Inbox");
+        }
+    }
 }

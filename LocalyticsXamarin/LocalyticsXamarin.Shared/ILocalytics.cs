@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LocalyticsXamarin.Common
 {
-	public enum XFLLInAppMessageDismissButtonLocation : ulong
+    public enum XFLLInAppMessageDismissButtonLocation : ulong
     {
         Left,
         Right
@@ -21,24 +21,24 @@ namespace LocalyticsXamarin.Common
         void OpenSession();
         void CloseSession();
         void Upload();
-		void PauseDataUploading(bool pause);
+        void PauseDataUploading(bool pause);
 
         //void TagEvent(string eventName);
         //void TagEvent(string eventName, IDictionary<string, string> attributes);
-        void TagEvent(string eventName, IDictionary<string, string> attributes=null, long? customerValueIncrease=null);
+        void TagEvent(string eventName, IDictionary<string, string> attributes = null, long? customerValueIncrease = null);
 
-  		void TagPurchased(string itemName, string itemId, string itemType, Int64? itemPrice, IDictionary<string, string> attributes);
-		void TagAddedToCart(string itemName, string itemId, string itemType, Int64? itemPrice, IDictionary<string, string> attributes);
-		void TagStartedCheckout(Int64? totalPrice, Int64? itemCount, IDictionary<string, string> attributes);
-		void TagCompletedCheckout(Int64? totalPrice, Int64? itemCount, IDictionary<string, string> attributes);
+        void TagPurchased(string itemName, string itemId, string itemType, Int64? itemPrice, IDictionary<string, string> attributes);
+        void TagAddedToCart(string itemName, string itemId, string itemType, Int64? itemPrice, IDictionary<string, string> attributes);
+        void TagStartedCheckout(Int64? totalPrice, Int64? itemCount, IDictionary<string, string> attributes);
+        void TagCompletedCheckout(Int64? totalPrice, Int64? itemCount, IDictionary<string, string> attributes);
         void TagContentViewed(string contentName, string contentId, string contentType, IDictionary<string, string> attributes);
-		void TagSearched(string queryText, string contentType, Int64? resultCount, IDictionary<string, string> attributes);
+        void TagSearched(string queryText, string contentType, Int64? resultCount, IDictionary<string, string> attributes);
         void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes);
-		void TagContentRated(string contentName, string contentId, string contentType, Int64? rating, IDictionary<string, string> attributes);
+        void TagContentRated(string contentName, string contentId, string contentType, Int64? rating, IDictionary<string, string> attributes);
         void TagCustomerRegistered(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
         void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
         void TagCustomerLoggedOut(IDictionary<string, string> attributes);
-		void TagInvited(string methodName, IDictionary<string, string> attributes);
+        void TagInvited(string methodName, IDictionary<string, string> attributes);
 
         void TagScreen(string screenName);
 
@@ -49,15 +49,15 @@ namespace LocalyticsXamarin.Common
         string GetIdentifier(string identifier);
 
         string CustomerId { get; set; }
-		void SetCustomerId(string customerId, bool privacyOptedOut);
- 
+        void SetCustomerId(string customerId, bool privacyOptedOut);
+
         void SetProfileAttribute(object value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
         void AddProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values);
-		void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values);
-		void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values);
+        void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values);
+        void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values);
         void RemoveProfileAttributes(string attribute, XFLLProfileScope scope, params object[] values);
-		void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
-		void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
+        void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
+        void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
         void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
 
         void SetCustomerEmail(string email);
@@ -65,20 +65,20 @@ namespace LocalyticsXamarin.Common
         void SetCustomerLastName(string lastName);
         void SetCustomerFullName(string fullName);
 
- 		void SetOptions(IDictionary<string, object> options);
+        void SetOptions(IDictionary<string, object> options);
 
         bool LoggingEnabled { get; set; }
 
         bool OptedOut { get; set; }
-		bool PrivacyOptedOut { get; set; }
+        bool PrivacyOptedOut { get; set; }
 
         string InstallId { get; }
         string LibraryVersion { get; }
         string AppKey { get; }
-        
-		bool TestModeEnabled { get; set; }
 
-		string PushTokenInfo { get; }
+        bool TestModeEnabled { get; set; }
+
+        string PushTokenInfo { get; }
 
         bool InAppAdIdParameterEnabled { get; set; }
 
@@ -91,22 +91,22 @@ namespace LocalyticsXamarin.Common
         void SetInAppMessageDismissButtonHidden(bool hidden);
 
         //void TriggerInAppMessage(string triggerName);
-        void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes=null);
-		void TriggerInAppMessagesForSessionStart();
+        void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes = null);
+        void TriggerInAppMessagesForSessionStart();
 
         void DismissCurrentInAppMessage();
 
 
-		// LLInboxCampaign
+        // LLInboxCampaign
         object[] InboxCampaigns { get; }
-		object[] AllInboxCampaigns();
+        object[] AllInboxCampaigns();
         void RefreshInboxCampaigns(Action<object[]> inboxCampaignsDelegate);
-		void RefreshAllInboxCampaigns(Action<object[]> inboxAllCampaignsDelegate);
-		//LLInboxCampaign
-		void SetInboxCampaign(object campaign, bool read);
+        void RefreshAllInboxCampaigns(Action<object[]> inboxAllCampaignsDelegate);
+        //LLInboxCampaign
+        void SetInboxCampaign(object campaign, bool read);
 
         long InboxCampaignsUnreadCount();
 
         void SetLocationMonitoringEnabled(bool enabled);
-      }
+    }
 }

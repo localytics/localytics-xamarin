@@ -7,179 +7,180 @@ using System.Threading.Tasks;
 
 namespace LocalyticsSample.Shared
 {
-	public class App : Application
-	{
-		ILocalytics localytics;
-		void HandleInboxCampaignsDelegate(object[] campaigns)
-		{
-			foreach (object a in campaigns)
+    public class App : Application
+    {
+        ILocalytics localytics;
+        void HandleInboxCampaignsDelegate(object[] campaigns)
+        {
+            foreach (object a in campaigns)
             {
                 Debug.WriteLine("inbox campaign " + a.ToString());
             }
-		}
+        }
 
-		public App ()
-		{
-			// The root page of your application
-			MainPage = new NavigationPage(new LandingPage());
-			localytics = DependencyService.Get<ILocalytics>();
-		}
+        public App()
+        {
+            // The root page of your application
+            MainPage = new NavigationPage(new LandingPage());
+            localytics = DependencyService.Get<ILocalytics>();
+        }
 
-		protected override void OnStart ()
-		{
-			CommonSmokeTest();
-		}
+        protected override void OnStart()
+        {
+            CommonSmokeTest();
+        }
 
-		private void CommonSmokeTest()
+        private void CommonSmokeTest()
         {
 
-			localytics.SetOptions(new Dictionary<string, object>
+            localytics.SetOptions(new Dictionary<string, object>
             {
                 {"ll_wifi_upload_interval_seconds", 15},
                 {"ll_session_timeout_seconds", 10}
             });
 
-			localytics.TestModeEnabled = true;
-   			localytics.OpenSession();
-			localytics.CloseSession();
-			localytics.Upload();
-			localytics.PauseDataUploading(true);
-			localytics.PauseDataUploading(false);
-			localytics.TagEvent("TagEvent");
-			localytics.TagEvent("TagEventWithEmptyAttribs", new Dictionary<string, string>());
-			Dictionary<string, string> dict = new Dictionary<string, string>
-			{
-				{ "attr1", "1" }
-			};
-			localytics.TagEvent("TagEventWithAttribs", dict);
-			localytics.TagEvent("TagEventWithAttribsWithValue", dict, 0);
-			localytics.TagEvent("TagEventWithAttribsWithValue", dict, 10);
+            localytics.TestModeEnabled = true;
+            localytics.OpenSession();
+            localytics.CloseSession();
+            localytics.Upload();
+            localytics.PauseDataUploading(true);
+            localytics.PauseDataUploading(false);
+            localytics.TagEvent("TagEvent");
+            localytics.TagEvent("TagEventWithEmptyAttribs", new Dictionary<string, string>());
+            Dictionary<string, string> dict = new Dictionary<string, string>
+            {
+                { "attr1", "1" }
+            };
+            localytics.TagEvent("TagEventWithAttribs", dict);
+            localytics.TagEvent("TagEventWithAttribsWithValue", dict, 0);
+            localytics.TagEvent("TagEventWithAttribsWithValue", dict, 10);
 
 
 
-			localytics.TagPurchased("item1", "1", "item", 100, new Dictionary<string, string>());
-			localytics.TagAddedToCart("item1", "1", "item", 100, new Dictionary<string, string>());
-			localytics.TagStartedCheckout(100, 5, new Dictionary<string, string>());
-			localytics.TagCompletedCheckout(100, 5, new Dictionary<string, string>());
-			localytics.TagContentViewed("name", "is", "type", new Dictionary<string, string>());
-			localytics.TagSearched("query", "type", 5, new Dictionary<string, string>());
-			localytics.TagShared("name", "id", "type", "method", new Dictionary<string, string>());
-			localytics.TagContentRated("name", "id", "type", 1, new Dictionary<string, string>());
-			localytics.TagCustomerRegistered(new Dictionary<string, object>() {
-				{"customerId", "1234"},
-				{"firstName", "Anand"},
-				{"lastName", "B"},
-				{"fullName", "A B"},
-				{"emailAddress", "ab@localytics.com"}
-			}, "method", new Dictionary<string, string>());
-			localytics.TagCustomerLoggedIn(new Dictionary<string, object> {
-				{"customerId", "1234"}
-			}, null, null);
-			localytics.TagCustomerLoggedOut(new Dictionary<string, string> {
+            localytics.TagPurchased("item1", "1", "item", 100, new Dictionary<string, string>());
+            localytics.TagAddedToCart("item1", "1", "item", 100, new Dictionary<string, string>());
+            localytics.TagStartedCheckout(100, 5, new Dictionary<string, string>());
+            localytics.TagCompletedCheckout(100, 5, new Dictionary<string, string>());
+            localytics.TagContentViewed("name", "is", "type", new Dictionary<string, string>());
+            localytics.TagSearched("query", "type", 5, new Dictionary<string, string>());
+            localytics.TagShared("name", "id", "type", "method", new Dictionary<string, string>());
+            localytics.TagContentRated("name", "id", "type", 1, new Dictionary<string, string>());
+            localytics.TagCustomerRegistered(new Dictionary<string, object>() {
+                {"customerId", "1234"},
+                {"firstName", "Anand"},
+                {"lastName", "B"},
+                {"fullName", "A B"},
+                {"emailAddress", "ab@localytics.com"}
+            }, "method", new Dictionary<string, string>());
+            localytics.TagCustomerLoggedIn(new Dictionary<string, object> {
                 {"customerId", "1234"}
-			});
-			localytics.TagInvited("method", new Dictionary<string, string>());
+            }, null, null);
+            localytics.TagCustomerLoggedOut(new Dictionary<string, string> {
+                {"customerId", "1234"}
+            });
+            localytics.TagInvited("method", new Dictionary<string, string>());
 
-			localytics.CloseSession();
+            localytics.CloseSession();
 
 
-			localytics.CustomerId = "XamarinFormIOS CustomerId";
-			//localytics.TagCustomerLoggedIn(null, "method", new Dictionary<string, string>());
-			localytics.SetProfileAttribute("Age", "83", XFLLProfileScope.Organization);
-			localytics.SetProfileAttribute("MyAge", "3", XFLLProfileScope.Application);
-            
-			localytics.AddProfileAttributes("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333});
-			localytics.AddProfileAttributes("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc" );
+            localytics.CustomerId = "XamarinFormIOS CustomerId";
+            //localytics.TagCustomerLoggedIn(null, "method", new Dictionary<string, string>());
+            localytics.SetProfileAttribute("Age", "83", XFLLProfileScope.Organization);
+            localytics.SetProfileAttribute("MyAge", "3", XFLLProfileScope.Application);
+
+            localytics.AddProfileAttributes("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333 });
+            localytics.AddProfileAttributes("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc");
             localytics.AddProfileAttributes("Lucky String", XFLLProfileScope.Application, new string[] { "234", "345" });
-			localytics.RemoveProfileAttributes("Lucky numbers", XFLLProfileScope.Application, 222);
-			localytics.IncrementProfileAttribute(1, "Age");
-			localytics.IncrementProfileAttribute(1, "MyAge");
-			localytics.DecrementProfileAttribute(2, "Age", XFLLProfileScope.Organization);
+            localytics.RemoveProfileAttributes("Lucky numbers", XFLLProfileScope.Application, 222);
+            localytics.IncrementProfileAttribute(1, "Age");
+            localytics.IncrementProfileAttribute(1, "MyAge");
+            localytics.DecrementProfileAttribute(2, "Age", XFLLProfileScope.Organization);
 
             // Need Data based Profile tests
 
 
-			localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", XFLLProfileScope.Application);
+            localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", XFLLProfileScope.Application);
 
-			localytics.SetCustomerEmail("XamarinFormIOS Email");
-			localytics.SetCustomerFirstName("XamarinFormIOS FirstName");
-			localytics.SetCustomerLastName("XamarinFormIOS LastName");
-			localytics.SetCustomerFullName("XamarinFormIOS Full Name");
+            localytics.SetCustomerEmail("XamarinFormIOS Email");
+            localytics.SetCustomerFirstName("XamarinFormIOS FirstName");
+            localytics.SetCustomerLastName("XamarinFormIOS LastName");
+            localytics.SetCustomerFullName("XamarinFormIOS Full Name");
 
-			for (int i = 0; i < 20; i++) {
-				localytics.SetCustomDimension("XamarinFormIOSCD" +  i, (uint)i);
-				Task.Run(() =>
-				{
-					try
-					{
-						string dimensionVal = localytics.GetCustomDimension((uint)i);
-						Debug.WriteLine("Dimension " + i + ":" + dimensionVal == null ? "(null)": dimensionVal);
+            for (int i = 0; i < 20; i++)
+            {
+                localytics.SetCustomDimension("XamarinFormIOSCD" + i, (uint)i);
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        string dimensionVal = localytics.GetCustomDimension((uint)i);
+                        Debug.WriteLine("Dimension " + i + ":" + dimensionVal == null ? "(null)" : dimensionVal);
 
-					}
-					catch (System.Exception ex)
-					{
-						Debug.WriteLine("Failed to get Dimension " + i + ":" + ex.Message + "\n" + ex.StackTrace);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.WriteLine("Failed to get Dimension " + i + ":" + ex.Message + "\n" + ex.StackTrace);
 
-					}
-     			});
- 		    }
+                    }
+                });
+            }
 
-			// This should be platform specific
+            // This should be platform specific
             //localytics.DidRegisterUserNotificationSettings();
-//			localytics.RedirectLoggingToDisk();
+            //			localytics.RedirectLoggingToDisk();
 
-			localytics.SetIdentifier("test", "id1");
-			Task.Run(() =>
-			{
-				Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
-			});
+            localytics.SetIdentifier("test", "id1");
+            Task.Run(() =>
+            {
+                Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
+            });
 
 
-			localytics.TagEvent("XamarinFormIOS Start");
-			localytics.TagScreen("XamarinFormIOS Landing");
-			localytics.TagCustomerLoggedOut(new Dictionary<string, string>());
-			localytics.Upload();
+            localytics.TagEvent("XamarinFormIOS Start");
+            localytics.TagScreen("XamarinFormIOS Landing");
+            localytics.TagCustomerLoggedOut(new Dictionary<string, string>());
+            localytics.Upload();
 
-			localytics.PrivacyOptedOut = true;
-			localytics.PrivacyOptedOut = false;
-			//localytics.SetInAppMessageDismissButtonImageWithName(null);
-			localytics.SetInAppMessageDismissButtonHidden(true);
-			localytics.SetInAppMessageDismissButtonHidden(false);
+            localytics.PrivacyOptedOut = true;
+            localytics.PrivacyOptedOut = false;
+            //localytics.SetInAppMessageDismissButtonImageWithName(null);
+            localytics.SetInAppMessageDismissButtonHidden(true);
+            localytics.SetInAppMessageDismissButtonHidden(false);
 
-			localytics.TriggerInAppMessage("lang");
-			localytics.TriggerInAppMessagesForSessionStart();
-			localytics.DismissCurrentInAppMessage();
-            
-			localytics.RefreshInboxCampaigns(HandleInboxCampaignsDelegate);
-			localytics.RefreshAllInboxCampaigns(HandleInboxCampaignsDelegate);
+            localytics.TriggerInAppMessage("lang");
+            localytics.TriggerInAppMessagesForSessionStart();
+            localytics.DismissCurrentInAppMessage();
 
-			localytics.InboxAdIdParameterEnabled = true;
-			localytics.InAppAdIdParameterEnabled = true;
-            
-			//foreach (object a in localytics.InboxCampaigns) {
+            localytics.RefreshInboxCampaigns(HandleInboxCampaignsDelegate);
+            localytics.RefreshAllInboxCampaigns(HandleInboxCampaignsDelegate);
+
+            localytics.InboxAdIdParameterEnabled = true;
+            localytics.InAppAdIdParameterEnabled = true;
+
+            //foreach (object a in localytics.InboxCampaigns) {
             //  Debug.WriteLine("inbox campaign " + a.ToString());
             //}
-			//localytics.InboxListItemTapped(null);
- 			//localytics.TagImpressionForInAppCampaign(null, "custom");
-   //         localytics.TagImpressionForInboxCampaign(null, "custom");
-   //         localytics.TagImpressionForPushToInboxCampaign(null, true);
+            //localytics.InboxListItemTapped(null);
+            //localytics.TagImpressionForInAppCampaign(null, "custom");
+            //         localytics.TagImpressionForInboxCampaign(null, "custom");
+            //         localytics.TagImpressionForPushToInboxCampaign(null, true);
 
-			//localytics.TagPlacesPushReceived(null);
-			//localytics.TagPlacesPushOpened(null);
-			//localytics.TagPlacesPushOpened(null, "123");
-			//localytics.TriggerPlacesNotificationForCampaign(null);
-			localytics.TriggerPlacesNotificationForCampaignId(1, "1");
-       }
+            //localytics.TagPlacesPushReceived(null);
+            //localytics.TagPlacesPushOpened(null);
+            //localytics.TagPlacesPushOpened(null, "123");
+            //localytics.TriggerPlacesNotificationForCampaign(null);
+            localytics.TriggerPlacesNotificationForCampaignId(1, "1");
+        }
 
-		protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
 }
 

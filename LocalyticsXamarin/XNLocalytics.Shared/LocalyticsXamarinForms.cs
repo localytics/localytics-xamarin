@@ -7,10 +7,10 @@ using LocalyticsXamarin.IOS;
 [assembly: Xamarin.Forms.Dependency(typeof(XNLocalytics.Shared.LocalyticsXamarinForms))]
 namespace XNLocalytics.Shared
 {
-	public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics
+    public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics
 #if __IOS__
-	, ILocalyticsIOS
+    , ILocalyticsIOS
 #endif
-	{
+    {
     }
 }
