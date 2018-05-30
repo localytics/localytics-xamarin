@@ -4,6 +4,7 @@ using CoreLocation;
 using Foundation;
 using UIKit;
 using System.Collections.Generic;
+using LocalyticsXamarin.Shared;
 
 namespace LocalyticsXamarin.IOS
 {
@@ -120,7 +121,7 @@ namespace LocalyticsXamarin.IOS
         static LocationListener locationListener = new LocationListener();
         static Localytics()
         {
-            Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString("XAMARIN_5.1.0"), new Foundation.NSString("plugin_library")));
+			LocalyticsPlatformCommon.UpdatePluginVersion();
             Localytics.SetAnalyticsDelegatePrivate(analyticsListener);
             Localytics.SetMessagingDelegatePrivate(messagingListener);
             Localytics.SetLocationDelegatePrivate(locationListener);

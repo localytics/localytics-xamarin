@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using LocalyticsXamarin.Shared;
 
 namespace LocalyticsXamarin.Android
 {
 	public partial class Localytics
 	{
 		static Localytics() {
-			LocalyticsXamarin.Android.ConstantsHelper.UpdatePluginVersion("XAMARIN_5.1.0");
+			LocalyticsPlatformCommon.UpdatePluginVersion();
 		}
 	}
 	internal sealed partial class IInboxRefreshListenerImplementor

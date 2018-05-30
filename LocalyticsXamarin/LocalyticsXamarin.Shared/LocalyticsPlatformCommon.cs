@@ -30,6 +30,16 @@ namespace LocalyticsXamarin.Shared
 {
 	public abstract class LocalyticsPlatformCommon
 	{
+        internal static void UpdatePluginVersion()
+        {
+			var ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			string versionString = string.Format("XAMARIN_{0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
+#if __IOS__
+			Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString(versionString), new Foundation.NSString("plugin_library")));
+#else
+			LocalyticsXamarin.Android.ConstantsHelper.UpdatePluginVersion(versionString);
+#endif
+        }
 		public void OpenSession()
 		{
 			Localytics.OpenSession();
