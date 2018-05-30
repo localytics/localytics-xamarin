@@ -2,6 +2,9 @@
     <!-- fix namespace -->
     <attr path="/api/package[@name='com.localytics.android']" name="managedName">LocalyticsXamarin.Android</attr>
 
+<!--     <attr path="/api/package[@name='com.localytics.android']/class[@name='Constants']" name="visibility">public</attr>-->
+<!--     <attr path="/api/package[@name='com.localytics.android']/class[@name='Constants']/field[@name='LOCALYTICS_CLIENT_LIBRARY_VERSION']" name="visibility">public</attr>
+-->
 
 <!--        <attr path="/api/package[@name='com.localytics.android']/class[@name='CircularRegion.Builder']" name="visibility">public</attr>-->
 <!--    <attr path="/api/package[@name='com.localytics.android']/class[@name='CircularRegion.Builder']" name="final">true</attr>-->
@@ -66,7 +69,7 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BaseProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'BaseProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BootReceiver')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Constants')]" />
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Constants')]" />-->
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Creative')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'DatapointHelper')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'FrequencyCappingEngine')]" />

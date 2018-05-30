@@ -806,8 +806,8 @@ namespace LocalyticsXamarin.IOS
 
         // @required +(NSArray<LLInboxCampaign *> * _Nonnull)allInboxCampaigns;
         [Static]
-        [Export("allInboxCampaigns")]
-        LLInboxCampaign[] AllInboxCampaigns();
+		[Export("allInboxCampaigns")]
+		LLInboxCampaign[] AllInboxCampaigns { get; }
 
         // @required +(void)refreshAllInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
         [Static]

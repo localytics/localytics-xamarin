@@ -98,9 +98,9 @@ namespace LocalyticsXamarin.Shared
             Localytics.AddProfileAttributes(attribute, scope, values);
         }
 
-        public void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success)
+		public void TagImpressionForPushToInboxCampaign(IInboxCampaign campaign, bool success)
         {
-            Localytics.TagImpressionForPushToInboxCampaign(campaign, success);
+			Localytics.TagImpressionForPushToInboxCampaign((LLInboxCampaign)campaign.Handle(), success);
         }
 
         public LLInboxDetailViewController InboxDetailViewControllerForCampaign(LLInboxCampaign campaign)

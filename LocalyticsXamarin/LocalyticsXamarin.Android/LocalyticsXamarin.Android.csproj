@@ -120,6 +120,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <ItemGroup>
     <EmbeddedJar Include="..\..\Localytics-Android-Latest\localytics.jar" />
+    <EmbeddedJar Include=".\versionpatch.jar" />
   </ItemGroup>
   <ItemGroup>
     <ReferenceJar Include="Jars\android-support-v4.jar" />

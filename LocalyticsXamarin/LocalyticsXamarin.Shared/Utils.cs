@@ -3,10 +3,12 @@ using LocalyticsXamarin.Common;
 #if __IOS__
 using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.IOS.LLInAppMessageDismissButtonLocation;
 using NativeProfileScope = LocalyticsXamarin.IOS.LLProfileScope;
+using NativeImpressionType = LocalyticsXamarin.IOS.LLImpressionType;
 #else
 using LocalyticsXamarin.Android;
 using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
 using NativeProfileScope = LocalyticsXamarin.Android.Localytics.ProfileScope;
+using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
 #endif
 namespace LocalyticsXamarin.Shared
 {
@@ -43,5 +45,34 @@ namespace LocalyticsXamarin.Shared
         }
 
         // TODO ImpressionType
+		public static XFLLImpressionType ToXFLLInAppMessageDismissButtonLocation(NativeImpressionType impressionType)
+        {
+			if (impressionType == NativeImpressionType.Click)
+            {
+				return XFLLImpressionType.Click;
+            }
+
+			return XFLLImpressionType.Dismiss;
+        }
+
+		public static NativeImpressionType ToLLInAppMessageDismissButtonLocation(XFLLImpressionType impressionType)
+        {
+			if (impressionType == XFLLImpressionType.Click)
+            {
+				return NativeImpressionType.Click;
+            }
+
+			return NativeImpressionType.Dismiss;
+        }
+
+		public static XFLLImpressionType? ImpressionType(string impression)
+        {
+            if ("click".Equals(impression, StringComparison.InvariantCultureIgnoreCase)) {
+            	return XFLLImpressionType.Click;
+            } else if ("dismiss".Equals(impression, StringComparison.InvariantCultureIgnoreCase)) {
+            	return XFLLImpressionType.Dismiss;
+            }
+			return null;
+        }
     }
 }

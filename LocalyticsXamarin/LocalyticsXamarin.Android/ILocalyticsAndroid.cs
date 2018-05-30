@@ -13,7 +13,7 @@ namespace LocalyticsXamarin.Android
 		void TagInAppImpression(NativeInAppCampaign campaign, string customAction);
 
 		void TagImpressionForInboxCampaign(NativeInboxCampaign campaign, NativeImpressionType impressionType);
-		void TagImpressionForInboxCampaign(NativeInboxCampaign campaign, string customAction);
+		//void TagImpressionForInboxCampaign(NativeInboxCampaign campaign, string customAction);
 
 		void TagImpressionForPushToInboxCampaign(NativeInboxCampaign campaign);
 		void TagPlacesPushReceived(NativePlacesCampaign campaign);
@@ -41,14 +41,5 @@ namespace LocalyticsXamarin.Android
 		//void SetLocation(Location location);
         //public static void redirectLogsToDisk(final boolean writeExternally, @NonNull final Context context)
 		//public static IDictionary<CircularRegion> getGeofencesToMonitor(double latitude, double longitude); 
-    }
-
-	public sealed class InboxRefreshImplementation
-    {
-        IInboxRefreshListenerImplementor implementor = new IInboxRefreshListenerImplementor();
-        public void SetCallback(Action<object[]> inboxCampaignsDelegate)
-        {
-            implementor.SetCallback(inboxCampaignsDelegate);
-        }
     }
 }

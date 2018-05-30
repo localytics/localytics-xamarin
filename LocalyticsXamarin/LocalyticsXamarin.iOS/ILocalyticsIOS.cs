@@ -22,8 +22,6 @@ namespace LocalyticsXamarin.IOS
 
         void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
         void TagInAppImpression(LLInAppCampaign campaign, string customAction);
-        void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType);
-        void TagImpressionForInboxCampaign(LLInboxCampaign campaign, string customAction);
 		void TagPlacesPushReceived(LLPlacesCampaign campaign);
 
         void TagPlacesPushOpened(LLPlacesCampaign campaign, string identifier);
@@ -31,24 +29,18 @@ namespace LocalyticsXamarin.IOS
 
         void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success);
         LLInboxDetailViewController InboxDetailViewControllerForCampaign(LLInboxCampaign campaign);
+		void TagImpressionForInboxCampaign(LLInboxCampaign campaign, LLImpressionType impressionType);
 
         void SetLocationMonitoringEnabled(bool enabled);
 
         /*
-          * 
-          * TODO FIXME
-         + (void) setAnalyticsDelegate:(nullable id<LLAnalyticsDelegate>)delegate;
+          * These are to be accessed in platform specific code.
          + (void) setPushToken:(nullable NSData *)pushToken;
          + (void) handleNotification:(nonnull NSDictionary *)notificationInfo;
          + (void) handleNotification:(nonnull NSDictionary *)notificationInfo withActionIdentifier:(nullable NSString *)identifier;
          + (void) didReceiveNotificationResponseWithUserInfo:(nonnull NSDictionary *)userInfo;
          + (void) didReceiveNotificationResponseWithUserInfo:(nonnull NSDictionary *)userInfo andActionIdentifier:(nullable NSString *)identifier;
          + (void) didRequestUserNotificationAuthorizationWithOptions:(NSUInteger) options granted:(BOOL) granted;
-  */
-        //+ (void) setMessagingDelegate:(nullable id<LLMessagingDelegate>)delegate;
-        //+ (void) setLocationDelegate:(nullable id<LLLocationDelegate>)delegate;
-
-        //// On Android the Date are of Type Date and on iOS they are of type NSDate
-        //void AddDateProfileAttributes(string attribute, LLProfileScope scope, params object[] values);
+        */
     }
 }

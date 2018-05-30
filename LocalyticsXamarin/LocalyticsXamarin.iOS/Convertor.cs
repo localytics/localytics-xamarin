@@ -232,26 +232,26 @@ namespace LocalyticsXamarin.IOS
             return customer;
         }
 
-        internal static IDictionary<string, object> ToDictionary(this LLInboxCampaign campaign)
-        {
-            return new Dictionary<string, object>
-            {
-                { "_nativeHandle", campaign },
-                { "campaignId", campaign.CampaignId },
-                { "name", campaign.Name },
-				//{ "attributes", campaign.Attributes },
-				//{ "creativeFilePath", campaign.CreativeFilePath },
-				{ "read", campaign.Read },
-                { "titleText", campaign.TitleText },
-                { "summaryText", campaign.SummaryText },
-                { "thumbnailUrl", campaign.ThumbnailUrl.ToString() },
-                { "hasCreative", campaign.HasCreative },
-                { "sortOrder", campaign.SortOrder },
-                { "receivedDate", campaign.ReceivedDate },
-                { "deepLinkURL", campaign.DeepLinkURL.ToString() },
-                { "isPushToInboxCampaign", campaign.IsPushToInboxCampaign }
-            };
-        }
+    //    internal static IDictionary<string, object> ToDictionary(this LLInboxCampaign campaign)
+    //    {
+    //        return new Dictionary<string, object>
+    //        {
+    //            { "_nativeHandle", campaign },
+    //            { "campaignId", campaign.CampaignId },
+    //            { "name", campaign.Name },
+				////{ "attributes", campaign.Attributes },
+				////{ "creativeFilePath", campaign.CreativeFilePath },
+				//{ "read", campaign.Read },
+        //        { "titleText", campaign.TitleText },
+        //        { "summaryText", campaign.SummaryText },
+        //        { "thumbnailUrl", campaign.ThumbnailUrl.ToString() },
+        //        { "hasCreative", campaign.HasCreative },
+        //        { "sortOrder", campaign.SortOrder },
+        //        { "receivedDate", campaign.ReceivedDate },
+        //        { "deepLinkURL", campaign.DeepLinkURL.ToString() },
+        //        { "isPushToInboxCampaign", campaign.IsPushToInboxCampaign }
+        //    };
+        //}
 
         internal static IDictionary<string, object> ToDictionary(this LLPlacesCampaign campaign)
         {

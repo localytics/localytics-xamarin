@@ -218,7 +218,16 @@ namespace LocalyticsXamarin.Shared
 
 		public bool PrivacyOptedOut { get => Localytics.PrivacyOptedOut; set => Localytics.PrivacyOptedOut = value; }
 
-		public object[] InboxCampaigns { get => (object[])Localytics.InboxCampaigns; }
+		public IInboxCampaign[] InboxCampaigns()
+		{
+			return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.InboxCampaigns);
+		}
+
+		public IInboxCampaign[] AllInboxCampaigns()
+		{
+			return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.AllInboxCampaigns);
+        }
+
 
 		public bool InAppAdIdParameterEnabled
 		{
@@ -386,14 +395,14 @@ namespace LocalyticsXamarin.Shared
 #endif
 		}
 
-		public void SetInboxCampaign(object campaign, bool read)
+		public void SetInboxCampaign(IInboxCampaign campaign, bool read)
 		{
-			Localytics.SetInboxCampaignRead((NativeInboxCampaign)campaign, read);
+			Localytics.SetInboxCampaignRead((NativeInboxCampaign)campaign.Handle(), read);
 		}
 
-		public void InboxListItemTapped(object campaign)
+		public void InboxListItemTapped(IInboxCampaign campaign)
 		{
-			Localytics.InboxListItemTapped((NativeInboxCampaign)campaign);
+			Localytics.InboxListItemTapped((NativeInboxCampaign)campaign.Handle());
 		}
 
 		public long InboxCampaignsUnreadCount()
@@ -450,31 +459,22 @@ namespace LocalyticsXamarin.Shared
 			Localytics.TagInAppImpression(campaign, customAction);
 		}
 
-		public object[] AllInboxCampaigns()
+		public void TagImpression(IInboxCampaign campaign, string customAction)
 		{
 #if __IOS__
-			return Localytics.AllInboxCampaigns();
-#else
-			return Localytics.AllInboxCampaigns.ToArray();
-#endif
-		}
-
-		public void TagImpressionForInboxCampaign(NativeInboxCampaign campaign, string customAction)
-		{
-#if __IOS__
-			Localytics.TagInboxImpression(campaign, customAction);
+			Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), customAction);
 #else
 			if ("click".Equals(customAction, StringComparison.InvariantCultureIgnoreCase))
 			{
-				Localytics.TagInboxImpression(campaign, NativeImpressionType.Click);
+			    Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), NativeImpressionType.Click);
 			}
 			else if ("dismiss".Equals(customAction, StringComparison.InvariantCultureIgnoreCase))
 			{
-				Localytics.TagInboxImpression(campaign, Localytics.ImpressionType.Dismiss);
+			    Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), Localytics.ImpressionType.Dismiss);
 			}
 			else
 			{
-				Localytics.TagInboxImpression(campaign, customAction);
+			    Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), customAction);
 			}
 #endif
 		}
@@ -494,10 +494,10 @@ namespace LocalyticsXamarin.Shared
 #endif
 		}
 
-		public void InboxListItemTapped(NativeInboxCampaign campaign)
-		{
-			Localytics.InboxListItemTapped(campaign);
-		}
+		//public void InboxListItemTapped(IInboxCampaign campaign)
+		//{
+		//	Localytics.InboxListItemTapped((NativeInboxCampaign)campaign.Handle());
+		//}
 
 		public void TagPlacesPushReceived(NativePlacesCampaign campaign)
 		{
@@ -535,23 +535,38 @@ namespace LocalyticsXamarin.Shared
 		}
 
 #if __IOS__
+		public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
+        {
+            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
+        }
 #else
-		LocalyticsXamarin.Android.InboxRefreshImplementation inboxAllRefreshListener = new LocalyticsXamarin.Android.InboxRefreshImplementation();
-		LocalyticsXamarin.Android.InboxRefreshImplementation inboxRefreshListener = new LocalyticsXamarin.Android.InboxRefreshImplementation();
-#endif
-		public void RefreshAllInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
-		{
-#if __IOS__
-			Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(x));
-#else
+		private sealed class InboxRefreshImplementation
+        {
+			Action<IInboxCampaign[]> callback = null;
+			LocalyticsXamarin.Android.InboxRefreshImplementationPlatform listener = new LocalyticsXamarin.Android.InboxRefreshImplementationPlatform();
+			public void SetCallback(Action<IInboxCampaign[]> inboxCampaignsDelegate)
+            {
+				callback = inboxCampaignsDelegate;
+				listener.SetCallback(handleCallback);
+            }
+			public void handleCallback(NativeInboxCampaign[] campaigns)
+			{
+				callback(InboxCampaign.From(campaigns));
+			}
+        }
+		InboxRefreshImplementation inboxAllRefreshListener = new InboxRefreshImplementation();
+		InboxRefreshImplementation inboxRefreshListener = new InboxRefreshImplementation();
+        
+		public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
+        {
 			inboxAllRefreshListener.SetCallback(inboxCampaignsDelegate);
-#endif
 		}
+#endif
 
-		public void RefreshInboxCampaigns(Action<object[]> inboxCampaignsDelegate)
+		public void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
 		{
 #if __IOS__
-			Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(x));
+			Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
 #else
 			inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
@@ -610,7 +625,7 @@ namespace LocalyticsXamarin.Shared
 		// object must be Date (Android) or NSDate (iOS)
 		public void AddProfileAttribute(string attribute, XFLLProfileScope scope, params object[] values)
 		{
-				#if __IOS__
+#if __IOS__
                 Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
 #else
             object value = values[0];

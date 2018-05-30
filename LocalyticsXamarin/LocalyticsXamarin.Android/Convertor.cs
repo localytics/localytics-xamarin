@@ -119,14 +119,4 @@ namespace LocalyticsXamarin.Android
             return Array.ConvertAll<object, string>(source, x => x.ToString());
         }
     }
-
-	//public static LocalyticsXamarin.Android.ImpressionType ImpressionType(string impression)
-	//{
-	//	if ("click".Equals(impression, StringComparison.InvariantCultureIgnoreCase)) {
-	//		return LocalyticsXamarin.Android.ImpressionType.Click;
-	//	} else if ("dismiss".Equals(impression, StringComparison.InvariantCultureIgnoreCase)) {
-	//		return LocalyticsXamarin.Android.ImpressionType.Dismiss;
-	//	}
-	//	return null;
-	//}
 }

@@ -4,17 +4,93 @@ using System.Collections.Generic;
 
 namespace LocalyticsXamarin.Common
 {
-    public enum XFLLInAppMessageDismissButtonLocation : ulong
+	public enum XFLLInAppMessageDismissButtonLocation : ulong
+	{
+		Left,
+		Right
+	}
+
+	public enum XFLLProfileScope : ulong
+	{
+		Application,
+		Organization
+	}
+
+	public enum XFLLRegionEvent : long
+	{
+		Enter,
+        Exit
+	}
+
+	public enum XFLLInAppMessageType : long
     {
-        Left,
-        Right
+        Top,
+        Bottom,
+        Center,
+        Full
     }
 
-    public enum XFLLProfileScope : ulong
+	public enum XFLLImpressionType : long
     {
-        Application,
-        Organization
+        Click,
+        Dismiss
     }
+
+	public enum XFCampaignType : long
+    {
+        InApp,
+        Push,
+        Inbox,
+        Places
+    }
+
+	public interface ICampaignBase 
+	{
+		//nint
+		long CampaignId { get; }
+		string Name { get; }
+        //NSDictionary
+		//IDictionary<string, string> Attributes { get; }
+	}
+	public interface IWebViewCampaign : ICampaignBase
+	{
+		string CreativeFilePath { get; }
+	}
+
+	public interface IInAppCampaign : IWebViewCampaign
+	{
+		int ImpressionType { get; }
+		bool IsResponsive { get; }
+        //nfloat
+		float AspectRatop { get; }
+		//nfloat
+		float Offset { get; }
+		//nfloat 
+		float BackgroundAlpha {get;}
+
+		bool DismissButtonHidden { get; }
+		XFLLInAppMessageDismissButtonLocation DismissButtonLocation { get; }
+  	}
+
+	public interface IInboxCampaign : IWebViewCampaign
+	{
+		object Handle();
+		// IOS allows set.
+		bool Read { get; }
+		string TitleText { get; }
+		string SummaryText { get; }
+		bool HasCreative { get; }
+		bool IsPushToInboxCampaign { get; }
+
+		//NSTimeInterval
+		double ReceivedDate { get; }
+    	// NSUrl ThumbnailUrl
+		string ThumbnailUrl { get; }
+        //nint
+		long SortOrder { get;  }
+    	//NSUrl DeepLinkURL 
+		string DeepLinkURL { get; }
+	}
 
     public interface ILocalytics
     {
@@ -100,14 +176,15 @@ namespace LocalyticsXamarin.Common
         void DismissCurrentInAppMessage();
 
 
-        // LLInboxCampaign
-        object[] InboxCampaigns { get; }
-        object[] AllInboxCampaigns();
-        void RefreshInboxCampaigns(Action<object[]> inboxCampaignsDelegate);
-        void RefreshAllInboxCampaigns(Action<object[]> inboxAllCampaignsDelegate);
+		// LLInboxCampaign
+		IInboxCampaign[] InboxCampaigns();
+		IInboxCampaign[] AllInboxCampaigns();
+		void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate);
+		void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxAllCampaignsDelegate);
+		void TagImpression(IInboxCampaign campaign, string customAction);
         //LLInboxCampaign
-        void SetInboxCampaign(object campaign, bool read);
-		void InboxListItemTapped(object campaign);
+		void SetInboxCampaign(IInboxCampaign campaign, bool read);
+		void InboxListItemTapped(IInboxCampaign campaign);
 
         long InboxCampaignsUnreadCount();
 
