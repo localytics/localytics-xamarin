@@ -35,7 +35,10 @@ namespace LocalyticsSample.Shared
 
 		protected override void OnStart()
 		{
-			CommonSmokeTest();
+			Task.Run(() =>
+			{
+				CommonSmokeTest();
+			});
 		}
 
 		private void CommonSmokeTest()
@@ -50,21 +53,31 @@ namespace LocalyticsSample.Shared
 			localytics.TestModeEnabled = true;
 			localytics.OpenSession();
 			localytics.CloseSession();
-			localytics.Upload();
-			localytics.PauseDataUploading(true);
-			localytics.PauseDataUploading(false);
+			localytics.TagEvent("Event bEfore opting out");
+            localytics.PrivacyOptedOut = true;
+            localytics.PrivacyOptedOut = false;
+
+            localytics.OptedOut = true;
+            localytics.TagEvent("EventWhenOptedOut");
+            localytics.OptedOut = false;
+
 			localytics.TagEvent("TagEvent");
-			localytics.TagEvent("TagEventWithEmptyAttribs", new Dictionary<string, string>());
+			localytics.Upload();
+		localytics.TagEvent("TagEventWithEmptyAttribs", new Dictionary<string, string>());
+			localytics.PauseDataUploading(true);
 			Dictionary<string, string> dict = new Dictionary<string, string>
 			{
 				{ "attr1", "1" }
 			};
 			localytics.TagEvent("TagEventWithAttribs", dict);
+			localytics.Upload();
 			localytics.TagEvent("TagEventWithAttribsWithValue", dict, 0);
+			localytics.Upload();
 			localytics.TagEvent("TagEventWithAttribsWithValue", dict, 10);
+			localytics.PauseDataUploading(false);
 
 
-
+			localytics.TagPurchased("item", "id", "sample", null, null);
 			localytics.TagPurchased("item1", "1", "item", 100, new Dictionary<string, string>());
 			localytics.TagAddedToCart("item1", "1", "item", 100, new Dictionary<string, string>());
 			localytics.TagStartedCheckout(100, 5, new Dictionary<string, string>());
@@ -83,11 +96,14 @@ namespace LocalyticsSample.Shared
 			localytics.TagCustomerLoggedIn(new Dictionary<string, object> {
 				{"customerId", "1234"}
 			}, null, null);
-			localytics.TagCustomerLoggedOut(new Dictionary<string, string> {
-				{"customerId", "1234"}
-			});
+			localytics.TagInvited("invited With no attribs", null);
 			localytics.TagInvited("method", new Dictionary<string, string>());
-
+			var dictTagInvited = new Dictionary<string, string>();
+			dictTagInvited.Add("key1", "value1");
+			localytics.TagInvited("method", dictTagInvited);
+			localytics.TagCustomerLoggedOut(new Dictionary<string, string> {
+                {"customerId", "1234"}
+            });
 			localytics.CloseSession();
 
 
@@ -98,7 +114,7 @@ namespace LocalyticsSample.Shared
 
 			localytics.SetProfileAttribute("Ticker", XFLLProfileScope.Application, "CHAR", "LCTS");
 
-
+            
 			try
 			{
 				localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333 });
@@ -145,25 +161,14 @@ namespace LocalyticsSample.Shared
 				});
 			}
 
-			// This should be platform specific
-			//localytics.DidRegisterUserNotificationSettings();
-			//			localytics.RedirectLoggingToDisk();
-
 			localytics.SetIdentifier("test", "id1");
-			Task.Run(() =>
-			{
-				Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
-			});
-
+			Debug.WriteLine("Identifier 1:" + localytics.GetIdentifier("id1"));
 
 			localytics.TagEvent("XamarinFormIOS Start");
 			localytics.TagScreen("XamarinFormIOS Landing");
 			localytics.TagCustomerLoggedOut(new Dictionary<string, string>());
 			localytics.Upload();
 
-			localytics.PrivacyOptedOut = true;
-			localytics.PrivacyOptedOut = false;
-			//localytics.SetInAppMessageDismissButtonImageWithName(null);
 			localytics.SetInAppMessageDismissButtonHidden(true);
 			localytics.SetInAppMessageDismissButtonHidden(false);
 

@@ -135,9 +135,6 @@ namespace LocalyticsXamarin.Common
         void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
         void DeleteProfileAttribute(string attribute, XFLLProfileScope scope = XFLLProfileScope.Application);
 
-		//void AddProfileAttributes(string attribute, XFLLProfileScope scope, params string[] values);
-        //void AddProfileAttributes(string attribute, XFLLProfileScope scope, params long[] values);
-
         void SetCustomerEmail(string email);
         void SetCustomerFirstName(string firstName);
         void SetCustomerLastName(string lastName);
