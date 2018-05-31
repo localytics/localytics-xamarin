@@ -24,6 +24,7 @@ namespace LocalyticsMessagingSample.Android
 #if DEBUG
             Localytics.LoggingEnabled = true;
 #endif
+			Localytics.SetOption("ll_app_key", "f737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8");
 
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);

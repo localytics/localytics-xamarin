@@ -9,4 +9,5 @@ all :
 clean :
 	-cd LocalyticsXamarin/LocalyticsXamarin.iOS && make clean
 	-cd LocalyticsXamarin/LocalyticsXamarin.Android && make clean
-	-rm -rf LocalyticsXamarin/*/bin LocalyticsXamarin/*/obj build
+	-rm -rf LocalyticsXamarin/*/bin LocalyticsXamarin/*/obj build 
+	-rm -rf LocalyticsXamarin/LocalyticsMessagingSample.Android/bin LocalyticsXamarin/LocalyticsMessagingSample.Android/obj

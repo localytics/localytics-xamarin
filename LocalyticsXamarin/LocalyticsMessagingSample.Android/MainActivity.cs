@@ -7,11 +7,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Android.Support.V4.App;
 using Android;
 using Android.Content.PM;
 
 using LocalyticsXamarin.Android;
+using Android.Support.V4.App;
 
 namespace LocalyticsMessagingSample.Android
 {
