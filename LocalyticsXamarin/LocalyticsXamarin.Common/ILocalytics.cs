@@ -172,14 +172,11 @@ namespace LocalyticsXamarin.Common
 
         void DismissCurrentInAppMessage();
 
-
-		// LLInboxCampaign
 		IInboxCampaign[] InboxCampaigns();
 		IInboxCampaign[] AllInboxCampaigns();
 		void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate);
 		void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxAllCampaignsDelegate);
 		void TagImpression(IInboxCampaign campaign, string customAction);
-        //LLInboxCampaign
 		void SetInboxCampaign(IInboxCampaign campaign, bool read);
 		void InboxListItemTapped(IInboxCampaign campaign);
 

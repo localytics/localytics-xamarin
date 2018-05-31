@@ -4,12 +4,6 @@ using LocalyticsXamarin.Shared;
 
 namespace LocalyticsXamarin.Android
 {
-	public partial class Localytics
-	{
-		static Localytics() {
-			LocalyticsPlatformCommon.UpdatePluginVersion();
-		}
-	}
 	internal sealed partial class IInboxRefreshListenerImplementor
 	{
 		Action<LocalyticsXamarin.Android.InboxCampaign[]> inboxRefresh;
@@ -34,12 +28,12 @@ namespace LocalyticsXamarin.Android
 		}
 	}
 
-    public sealed class InboxRefreshImplementationPlatform
-    {
-        readonly IInboxRefreshListenerImplementor implementor = new IInboxRefreshListenerImplementor();
+	public sealed class InboxRefreshImplementationPlatform
+	{
+		readonly IInboxRefreshListenerImplementor implementor = new IInboxRefreshListenerImplementor();
 		public void SetCallback(Action<LocalyticsXamarin.Android.InboxCampaign[]> inboxCampaignsDelegate)
-        {
-            implementor.SetCallback(inboxCampaignsDelegate);
-        }
-    }
+		{
+			implementor.SetCallback(inboxCampaignsDelegate);
+		}
+	}
 }

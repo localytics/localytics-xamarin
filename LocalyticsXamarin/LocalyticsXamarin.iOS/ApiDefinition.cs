@@ -332,11 +332,13 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)openSession;
         [Static]
         [Export("openSession")]
+		[Internal]
         void OpenSession();
 
         // @required +(void)closeSession;
         [Static]
         [Export("closeSession")]
+		[Internal]
         void CloseSession();
 
         // @required +(void)upload;
@@ -347,56 +349,67 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)tagEvent:(NSString * _Nonnull)eventName;
         [Static]
         [Export("tagEvent:")]
+		[Internal]
         void TagEvent(string eventName);
 
         // @required +(void)tagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagEvent:attributes:")]
+		[Internal]
         void TagEvent(string eventName,  NSDictionary attributes);
 
         // @required +(void)tagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes customerValueIncrease:(NSNumber * _Nullable)customerValueIncrease;
         [Static]
         [Export("tagEvent:attributes:customerValueIncrease:")]
+		[Internal]
         void TagEvent(string eventName,  NSDictionary attributes,  NSNumber customerValueIncrease);
 
         // @required +(void)tagPurchased:(NSString * _Nullable)itemName itemId:(NSString * _Nullable)itemId itemType:(NSString * _Nullable)itemType itemPrice:(NSNumber * _Nullable)itemPrice attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagPurchased:itemId:itemType:itemPrice:attributes:")]
+		[Internal]
         void TagPurchased( string itemName,  string itemId,  string itemType,  NSNumber itemPrice,  NSDictionary attributes);
 
         // @required +(void)tagAddedToCart:(NSString * _Nullable)itemName itemId:(NSString * _Nullable)itemId itemType:(NSString * _Nullable)itemType itemPrice:(NSNumber * _Nullable)itemPrice attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagAddedToCart:itemId:itemType:itemPrice:attributes:")]
+		[Internal]
         void TagAddedToCart( string itemName,  string itemId,  string itemType,  NSNumber itemPrice,  NSDictionary attributes);
 
         // @required +(void)tagStartedCheckout:(NSNumber * _Nullable)totalPrice itemCount:(NSNumber * _Nullable)itemCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagStartedCheckout:itemCount:attributes:")]
+		[Internal]
         void TagStartedCheckout( NSNumber totalPrice,  NSNumber itemCount,  NSDictionary attributes);
         
         // @required +(void)tagCompletedCheckout:(NSNumber * _Nullable)totalPrice itemCount:(NSNumber * _Nullable)itemCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagCompletedCheckout:itemCount:attributes:")]
+		[Internal]
         void TagCompletedCheckout( NSNumber totalPrice,  NSNumber itemCount,  NSDictionary attributes);
 
         // @required +(void)tagContentViewed:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagContentViewed:contentId:contentType:attributes:")]
+		[Internal]
         void TagContentViewed( string contentName,  string contentId,  string contentType,  NSDictionary attributes);
 
         // @required +(void)tagSearched:(NSString * _Nullable)queryText contentType:(NSString * _Nullable)contentType resultCount:(NSNumber * _Nullable)resultCount attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagSearched:contentType:resultCount:attributes:")]
+		[Internal]
         void TagSearched( string queryText,  string contentType,  NSNumber resultCount,  NSDictionary attributes);
 
         // @required +(void)tagShared:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagShared:contentId:contentType:methodName:attributes:")]
+		[Internal]
 		void TagShared( string contentName,  string contentId,  string contentType,  [NullAllowed]string methodName,  [NullAllowed]NSDictionary attributes);
 
         // @required +(void)tagContentRated:(NSString * _Nullable)contentName contentId:(NSString * _Nullable)contentId contentType:(NSString * _Nullable)contentType rating:(NSNumber * _Nullable)rating attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagContentRated:contentId:contentType:rating:attributes:")]
+		[Internal]
         void TagContentRated( string contentName,  string contentId,  string contentType,  NSNumber rating,  NSDictionary attributes);
 
         // @required +(void)tagCustomerRegistered:(LLCustomer * _Nullable)customer methodName:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
@@ -414,27 +427,32 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)tagCustomerLoggedOut:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagCustomerLoggedOut:")]
+		[Internal]
         void TagCustomerLoggedOut(NSDictionary attributes);
 
         // @required +(void)tagInvited:(NSString * _Nullable)methodName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes;
         [Static]
         [Export("tagInvited:attributes:")]
+		[Internal]
 		void TagInvited( [NullAllowed]string methodName,  [NullAllowed]NSDictionary attributes);
 
         // @required +(void)tagScreen:(NSString * _Nonnull)screenName;
         [Static]
         [Export("tagScreen:")]
+		[Internal]
         void TagScreen(string screenName);
 
         // @required +(void)setValue:(NSString * _Nullable)value forCustomDimension:(NSUInteger)dimension;
         [Static]
         [Export("setValue:forCustomDimension:")]
+		[Internal]
 		void SetCustomDimension([NullAllowed] string value, nuint dimension);
 
         // @required +(NSString * _Nullable)valueForCustomDimension:(NSUInteger)dimension;
         [Static]
         [Export("valueForCustomDimension:")]
         [return: NullAllowed]
+		[Internal]
         string GetCustomDimension(nuint dimension);
 
         // @required +(void)setValue:(NSString * _Nullable)value forIdentifier:(NSString * _Nonnull)identifier;
@@ -447,22 +465,26 @@ namespace LocalyticsXamarin.IOS
         [Static]
         [Export("valueForIdentifier:")]
         [return: NullAllowed]
+		[Internal]
         string GetIdentifier(string identifier);
 
         // @required +(NSString * _Nullable)customerId;
         // @required +(void)setCustomerId:(NSString * _Nullable)customerId;
         [Static]
         [NullAllowed, Export("customerId")]
+		[Internal]
 		string CustomerId { get;  set; }
 
         // @required +(void)setLocation:(CLLocationCoordinate2D)location;
         [Static]
         [Export("setLocation:")]
+		[Internal]
         void SetLocation(CLLocationCoordinate2D location);
 
         // @required +(void)setValue:(id _Nonnull)value forProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
         [Static]
         [Export("setValue:forProfileAttribute:withScope:")]
+		[Internal]
         void SetProfileAttribute(NSObject value, string attribute, LLProfileScope scope);
 
         // @required +(void)setValue:(id _Nonnull)value forProfileAttribute:(NSString * _Nonnull)attribute;
@@ -473,6 +495,7 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)addValues:(NSArray * _Nonnull)values toSetForProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
         [Static]
         [Export("addValues:toSetForProfileAttribute:withScope:")]
+		[Internal]
 		void AddProfileAttributesToSetPrivate(NSArray values, string attribute, LLProfileScope scope);
 
         // @required +(void)addValues:(NSArray * _Nonnull)values toSetForProfileAttribute:(NSString * _Nonnull)attribute;
@@ -494,6 +517,7 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)incrementValueBy:(NSInteger)value forProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
         [Static]
         [Export("incrementValueBy:forProfileAttribute:withScope:")]
+		[Internal]
         void IncrementProfileAttribute(nint value, string attribute, LLProfileScope scope);
 
         // @required +(void)incrementValueBy:(NSInteger)value forProfileAttribute:(NSString * _Nonnull)attribute;
@@ -504,6 +528,7 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)decrementValueBy:(NSInteger)value forProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
         [Static]
         [Export("decrementValueBy:forProfileAttribute:withScope:")]
+		[Internal]
         void DecrementProfileAttribute(nint value, string attribute, LLProfileScope scope);
 
         // @required +(void)decrementValueBy:(NSInteger)value forProfileAttribute:(NSString * _Nonnull)attribute;
@@ -514,6 +539,7 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)deleteProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
         [Static]
         [Export("deleteProfileAttribute:withScope:")]
+		[Internal]
         void DeleteProfileAttribute(string attribute, LLProfileScope scope);
 
         // @required +(void)deleteProfileAttribute:(NSString * _Nonnull)attribute;
@@ -524,26 +550,31 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)setCustomerEmail:(NSString * _Nullable)email;
         [Static]
         [Export("setCustomerEmail:")]
+		[Internal]
 		void SetCustomerEmail([NullAllowed] string email);
 
         // @required +(void)setCustomerFirstName:(NSString * _Nullable)firstName;
         [Static]
         [Export("setCustomerFirstName:")]
+		[Internal]
 		void SetCustomerFirstName([NullAllowed] string firstName);
 
         // @required +(void)setCustomerLastName:(NSString * _Nullable)lastName;
         [Static]
         [Export("setCustomerLastName:")]
+		[Internal]
 		void SetCustomerLastName([NullAllowed] string lastName);
 
         // @required +(void)setCustomerFullName:(NSString * _Nullable)fullName;
         [Static]
         [Export("setCustomerFullName:")]
+		[Internal]
 		void SetCustomerFullName([NullAllowed] string fullName);
 
 		// @required +(NSString * _Nullable)pushToken;
 		[Static]
 		[Export("pushToken")]
+		[Internal]
 		string PushToken();
 
         // @required +(void)setPushToken:(NSData * _Nullable)pushToken;
@@ -554,6 +585,7 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)redirectLoggingToDisk;
         [Static]
         [Export("redirectLoggingToDisk")]
+		[Internal]
         void RedirectLoggingToDisk();
 
         // @required +(BOOL)isPrivacyOptedOut;
@@ -617,46 +649,55 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)setInAppMessageDismissButtonLocation:(LLInAppMessageDismissButtonLocation)location;
         [Static]
         [Export("inAppMessageDismissButtonLocation")]
+		[Internal]
         LLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation { get; set; }
 
         // @required +(void)setInAppMessageDismissButtonHidden:(BOOL)hidden;
         [Static]
         [Export("setInAppMessageDismissButtonHidden:")]
+		[Internal]
         void SetInAppMessageDismissButtonHidden(bool hidden);
 
         // @required +(void)triggerInAppMessage:(NSString * _Nonnull)triggerName;
         [Static]
         [Export("triggerInAppMessage:")]
+		[Internal]
 		void TriggerInAppMessageInternal(string triggerName);
 
         // @required +(void)triggerInAppMessage:(NSString * _Nonnull)triggerName withAttributes:(NSDictionary<NSString *,NSString *> * _Nonnull)attributes;
         [Static]
         [Export("triggerInAppMessage:withAttributes:")]
+		[Internal]
         void TriggerInAppMessage(string triggerName, NSDictionary attributes);
 
         // @required +(void)dismissCurrentInAppMessage;
         [Static]
         [Export("dismissCurrentInAppMessage")]
+		[Internal]
         void DismissCurrentInAppMessage();
 
         // @required +(NSArray<LLInboxCampaign *> * _Nonnull)inboxCampaigns;
         [Static]
         [Export("inboxCampaigns")]
+		[Internal]
         LLInboxCampaign[] InboxCampaigns { get; }
 
         // @required +(void)refreshInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
         [Static]
         [Export("refreshInboxCampaigns:")]
+		[Internal]
         void RefreshInboxCampaigns(Action<LLInboxCampaign[]> completionBlock);
 
         // @required +(void)setInboxCampaign:(LLInboxCampaign * _Nonnull)campaign asRead:(BOOL)read;
         [Static]
         [Export("setInboxCampaign:asRead:")]
+		[Internal]
         void SetInboxCampaignRead(LLInboxCampaign campaign, bool read);
 
 		// @required +(NSInteger)inboxCampaignsUnreadCount;
 		[Static]
 		[Export("inboxCampaignsUnreadCount")]
+		[Internal]
 		nint InboxCampaignsUnreadCount { get; }
 
         // @required +(LLInboxDetailViewController * _Nonnull)inboxDetailViewControllerForCampaign:(LLInboxCampaign * _Nonnull)campaign;
@@ -716,11 +757,13 @@ namespace LocalyticsXamarin.IOS
         // @required +(BOOL)isOptedOut;
         [Static]
         [Export("isOptedOut")]
+		[Internal]
         bool IsOptedOut { get; }
 
         // @required +(void)setOptedOut:(BOOL)optedOut;
         [Static]
         [Export("setOptedOut:")]
+		[Internal]
         void SetOptedOut(bool optedOut);
 
         // @required +(BOOL)isTestModeEnabled;
@@ -739,16 +782,19 @@ namespace LocalyticsXamarin.IOS
         [Static]
         [NullAllowed, Export("installId")]
         //string InstallId();
+		[Internal]
         string InstallId { get; }
 
         // @required +(NSString * _Nonnull)libraryVersion;
         [Static]
         [Export("libraryVersion")]
+		[Internal]
         string LibraryVersion { get; }
 
         // @required +(NSString * _Nullable)appKey;
         [Static]
         [NullAllowed, Export("appKey")]
+		[Internal]
         string AppKey { get; }
 
         // @required +(void)setMessagingDelegate:(id<LLMessagingDelegate> _Nullable)delegate;
@@ -760,11 +806,13 @@ namespace LocalyticsXamarin.IOS
 		// @required +(BOOL)isInAppAdIdParameterEnabled;
 		[Static]
 		[Export("isInAppAdIdParameterEnabled")]
+		[Internal]
         bool IsAdidAppendedToInAppUrls { get; }
 
         // @required +(void)setInAppAdIdParameterEnabled:(BOOL)enabled;
         [Static]
         [Export("setInAppAdIdParameterEnabled:")]
+		[Internal]
         void AppendAdidToInAppUrls(bool enabled);
 
         // @required +(void)setAnalyticsDelegate:(id<LLAnalyticsDelegate> _Nullable)delegate;
@@ -787,11 +835,13 @@ namespace LocalyticsXamarin.IOS
         // @required +(void)setCustomerId:(NSString * _Nullable)customerId privacyOptedOut:(BOOL)optedOut;
         [Static]
         [Export("setCustomerId:privacyOptedOut:")]
+		[Internal]
         void SetCustomerIdWithPrivacyOptedOut([NullAllowed] string customerId, bool optedOut);
 
         // @required +(void)triggerInAppMessagesForSessionStart;
         [Static]
         [Export("triggerInAppMessagesForSessionStart")]
+		[Internal]
         void TriggerInAppMessagesForSessionStart();
 
         // @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
@@ -807,31 +857,37 @@ namespace LocalyticsXamarin.IOS
         // @required +(NSArray<LLInboxCampaign *> * _Nonnull)allInboxCampaigns;
         [Static]
 		[Export("allInboxCampaigns")]
+		[Internal]
 		LLInboxCampaign[] AllInboxCampaigns { get; }
 
         // @required +(void)refreshAllInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
         [Static]
         [Export("refreshAllInboxCampaigns:")]
+		[Internal]
 		void RefreshAllInboxCampaigns(Action<LLInboxCampaign[]> completionBlock);
 
         // @required +(void)tagImpressionForInboxCampaign:(LLInboxCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
         [Static]
         [Export("tagImpressionForInboxCampaign:withType:")]
+		[Internal]
 		void TagInboxImpression(LLInboxCampaign campaign, LLImpressionType impressionType);
 
         // @required +(void)tagImpressionForInboxCampaign:(LLInboxCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
         [Static]
         [Export("tagImpressionForInboxCampaign:withCustomAction:")]
+		[Internal]
 		void TagInboxImpression(LLInboxCampaign campaign, string customAction);
 
         // @required +(void)tagImpressionForPushToInboxCampaign:(LLInboxCampaign * _Nonnull)campaign success:(BOOL)success;
         [Static]
         [Export("tagImpressionForPushToInboxCampaign:success:")]
-        void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success);
+		[Internal]
+       void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success);
 
         // @required +(void)inboxListItemTapped:(LLInboxCampaign * _Nonnull)campaign;
         [Static]
         [Export("inboxListItemTapped:")]
+		[Internal]
         void InboxListItemTapped(LLInboxCampaign campaign);
 
         // @required +(void)tagPlacesPushReceived:(LLPlacesCampaign * _Nonnull)campaign;
@@ -865,11 +921,13 @@ namespace LocalyticsXamarin.IOS
         // @required +(BOOL)isInboxAdIdParameterEnabled;
         [Static]
         [Export("isInboxAdIdParameterEnabled")]
+		[Internal]
         bool IsAdidAppendedToInboxUrls { get; }
 
         // @required +(void)setInboxAdIdParameterEnabled:(BOOL)enabled;
         [Static]
         [Export("setInboxAdIdParameterEnabled:")]
+		[Internal]
         void AppendAdidToInboxUrls(bool enabled);
     }
 
