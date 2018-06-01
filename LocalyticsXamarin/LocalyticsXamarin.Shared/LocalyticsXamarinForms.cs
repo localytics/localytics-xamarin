@@ -6,13 +6,13 @@ using LocalyticsXamarin.IOS;
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Shared.LocalyticsXamarinForms))]
 namespace LocalyticsXamarin.Shared
 {
-    public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics
-//#if __IOS__
-//    ,ILocalyticsIOS
-//#else 
-//	.ILocalyticsAndroid
-//#endif
-    {
-		
-    }
+	public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics
+	//#if __IOS__
+	//    ,ILocalyticsIOS
+	//#else 
+	//	.ILocalyticsAndroid
+	//#endif
+	{
+
+	}
 }

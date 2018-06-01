@@ -27,23 +27,23 @@ namespace LocalyticsXamarin.Shared
         }
 #else
 		public static IInboxCampaign[] From(IList<NativeInboxCampaign> inboxCampaigns)
-        {
+		{
 			IInboxCampaign[] campaigns = new InboxCampaign[inboxCampaigns.Count];
-            int i = 0;
-            foreach (var item in inboxCampaigns)
-            {
+			int i = 0;
+			foreach (var item in inboxCampaigns)
+			{
 				campaigns[i] = new InboxCampaign(item);
-		        i += 1;
-            }
-            return campaigns;
-        }
+				i += 1;
+			}
+			return campaigns;
+		}
 #endif
 
 		public override string ToString()
 		{
 			return string.Format("\t Read:{0}" +
 						  "\n\t ReceivedDate:{1}" +
-						  "\n\t CreativeFilePath:{2}" + 
+						  "\n\t CreativeFilePath:{2}" +
 						  "\n\t DeepLinkURL:{3}" +
 "\n\t Name:{4}" +
 "\n\t SummaryText:{5}" +
@@ -52,28 +52,28 @@ namespace LocalyticsXamarin.Shared
  "\n\t IsPushToInboxCampaign:{8}" +
  "\n\t CampaignId:{9}" +
  "\n\t HasCreative:{10}" +
-			                     "\n\t SortOrder:{11}"
-                                 
-                        			, this.Read
-			                     , this.ReceivedDate
-			                     , this.CreativeFilePath ?? ""
-			                     , this.DeepLinkURL ?? ""
-			                     , this.Name
-			                     , this.SummaryText ?? ""
-			                     , this.ThumbnailUrl?? ""
-			                     , this.TitleText ?? ""
-			                     , this.IsPushToInboxCampaign
-			                     , this.CampaignId
-			                     , this.HasCreative
-			                     , this.SortOrder);
+								 "\n\t SortOrder:{11}"
+
+									, this.Read
+								 , this.ReceivedDate
+								 , this.CreativeFilePath ?? ""
+								 , this.DeepLinkURL ?? ""
+								 , this.Name
+								 , this.SummaryText ?? ""
+								 , this.ThumbnailUrl ?? ""
+								 , this.TitleText ?? ""
+								 , this.IsPushToInboxCampaign
+								 , this.CampaignId
+								 , this.HasCreative
+								 , this.SortOrder);
 
 		}
 
 		NativeInboxCampaign campaign;
 		public InboxCampaign(NativeInboxCampaign campaign)
-        {
+		{
 			this.campaign = campaign;
-        }
+		}
 
 		public object Handle()
 		{
@@ -110,14 +110,14 @@ namespace LocalyticsXamarin.Shared
 
 		public string TitleText => campaign.Title;
 
-        public string SummaryText => campaign.Summary;
+		public string SummaryText => campaign.Summary;
 
 		public bool HasCreative => campaign.HasCreative;
 
-        public bool IsPushToInboxCampaign => campaign.IsPushToInboxCampaign;
-        
-        // Platform Specific double vs Date
-		public double ReceivedDate => campaign.ReceivedDate.Time/1000;
+		public bool IsPushToInboxCampaign => campaign.IsPushToInboxCampaign;
+
+		// Platform Specific double vs Date
+		public double ReceivedDate => campaign.ReceivedDate.Time / 1000;
 
 		//hasThumbnail()
 
@@ -129,11 +129,11 @@ namespace LocalyticsXamarin.Shared
 
 		public string CreativeFilePath => campaign.CreativeFilePath.ToString();
 
-        public long CampaignId => campaign.CampaignId;
+		public long CampaignId => campaign.CampaignId;
 
-        public string Name => campaign.Name;
+		public string Name => campaign.Name;
 
-        //public IDictionary<string, string> Attributes => throw new NotImplementedException();
+		//public IDictionary<string, string> Attributes => throw new NotImplementedException();
 #endif
 	}
 }

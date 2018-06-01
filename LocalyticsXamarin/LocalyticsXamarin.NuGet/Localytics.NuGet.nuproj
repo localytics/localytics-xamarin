@@ -7,7 +7,7 @@
     <ProjectGuid>{3D21B247-4672-466E-9F96-616FC955F033}</ProjectGuid>
     <Description>Localytics</Description>
     <PackageId>Localytics</PackageId>
-    <PackageVersion>5.1.0</PackageVersion>
+    <PackageVersion>5.1.2</PackageVersion>
     <Authors>Localytics</Authors>
     <DevelopmentDependency>false</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -48,17 +48,65 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Localytics">
-      <Link>Localytics</Link>
+    <Content Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
+      <Link>LocalyticsXamarinForms.cs</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLCampaignBase.h">
+      <Link>Localytics.framework\Headers\LLCampaignBase.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLCustomer.h">
+      <Link>Localytics.framework\Headers\LLCustomer.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLGeofence.h">
+      <Link>Localytics.framework\Headers\LLGeofence.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInAppCampaign.h">
+      <Link>Localytics.framework\Headers\LLInAppCampaign.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInAppConfiguration.h">
+      <Link>Localytics.framework\Headers\LLInAppConfiguration.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInboxCampaign.h">
+      <Link>Localytics.framework\Headers\LLInboxCampaign.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInboxDetailViewController.h">
+      <Link>Localytics.framework\Headers\LLInboxDetailViewController.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInboxViewController.h">
+      <Link>Localytics.framework\Headers\LLInboxViewController.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLPlacesCampaign.h">
+      <Link>Localytics.framework\Headers\LLPlacesCampaign.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLRegion.h">
+      <Link>Localytics.framework\Headers\LLRegion.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLWebViewCampaign.h">
+      <Link>Localytics.framework\Headers\LLWebViewCampaign.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\Localytics-Framework.h">
+      <Link>Localytics.framework\Headers\Localytics-Framework.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\Localytics.h">
+      <Link>Localytics.framework\Headers\Localytics.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LocalyticsTypes.h">
+      <Link>Localytics.framework\Headers\LocalyticsTypes.h</Link>
+    </Content>
+    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\PrivateHeaders\LLPushToInboxCampaignJson.h">
+      <Link>Localytics.framework\PrivateHeaders\LLPushToInboxCampaignJson.h</Link>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="LocalyticsXamarin.Shared\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
-      <Link>LocalyticsXamarinForms.cs</Link>
-    </None>
+    <PackageFile Include="..\..\Localytics-iOS-Latest\Localytics.framework\Modules\module.modulemap">
+      <Link>Localytics.framework\Modules\module.modulemap</Link>
+    </PackageFile>
+    <PackageFile Include="..\..\Localytics-iOS-Latest\Localytics.framework\Localytics">
+      <Link>Localytics.framework\Localytics</Link>
+    </PackageFile>
+    <PackageFile Include="..\..\Localytics-iOS-Latest\Localytics.framework\Info.plist">
+      <Link>Localytics.framework\Info.plist</Link>
+    </PackageFile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
   <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.targets')" />
