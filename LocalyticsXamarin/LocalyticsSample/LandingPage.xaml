@@ -13,7 +13,50 @@
                  <Label x:Name="info6" Text="Label6"/>
                  <Label x:Name="info7" Text="Label7"/>
 
+                
                  <Button Text="Refresh" IsEnabled="true" Clicked="OnRefresh"  BorderWidth="2" BorderColor="Black"/>
+
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="OptOut " IsEnabled="false"/>
+                    <Switch x:Name="OptOut" Toggled="OptOutToggled" />
+               </StackLayout>
+
+                  <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="InappAdid " IsEnabled="false"/>
+                    <Switch x:Name="InappAdid" Toggled="InappAdidToggled" />
+               </StackLayout>
+
+                 <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="InboxAdid " IsEnabled="false"/>
+                    <Switch x:Name="InboxAdid" Toggled="InboxAdidToggled" />
+               </StackLayout>
+                
+           <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="InappDisplay " IsEnabled="false"/>
+                    <Switch x:Name="InappDisplay" Toggled="InappDisplayToggled" />
+               </StackLayout>
+
+               <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="PlacesDisplay " IsEnabled="false"/>
+                    <Switch x:Name="PlacesDisplay" Toggled="PlacesDisplayToggled" />
+               </StackLayout>
+
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="Logging " IsEnabled="false"/>
+                    <Switch x:Name="Logging" Toggled="LoggingToggled" />
+               </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="Test Mode " IsEnabled="false"/>
+                    <Switch x:Name="TestMode" Toggled="TestModeToggled" />
+               </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="DeepLink " IsEnabled="false"/>
+                    <Switch x:Name="DeepLink" Toggled="DeepLinkToggled" />
+               </StackLayout>
 
                  <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
                      <Button Text="Open Session" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnOpenSession" BorderWidth="2" BorderColor="Black"/>
@@ -62,26 +105,10 @@
                </StackLayout>
 
                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
-                       <Entry x:Name="optout" Text="OptOut" HorizontalOptions="FillAndExpand" IsEnabled="false"/>
-                    <Button Text="OptOut" IsEnabled="true" Clicked="OnOptOut" BorderWidth="2" BorderColor="Black"/>
-                     <Button Text="OptIn" IsEnabled="true" Clicked="OnOptIn"  BorderWidth="2" BorderColor="Black"/>
-               </StackLayout>
-
-               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
-                      <Entry x:Name="inappAdid" Text="InApp ADID" HorizontalOptions="FillAndExpand" IsEnabled="false"/>
-                    <Button Text="InappAdidEnable" IsEnabled="true" Clicked="OnInappAdidEnable"  BorderWidth="2" BorderColor="Black"/>
-                     <Button Text="InappAdidDisable" IsEnabled="true" Clicked="OnInappAdidDisable" BorderWidth="2" BorderColor="Black"/>
-               </StackLayout>
-
-               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
-                      <Entry x:Name="inboxAdid" Text="InApp ADID" HorizontalOptions="FillAndExpand" IsEnabled="false"/>
-                    <Button Text="InboxAdidEnable" IsEnabled="true" Clicked="OnInboxAdidEnable" BorderWidth="2" BorderColor="Black"/>
-                     <Button Text="InboxAdidDisable" IsEnabled="true" Clicked="OnInboxAdidDisable" BorderWidth="2" BorderColor="Black"/>
-               </StackLayout>
-
-               <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
-                     <Entry x:Name="triggerName" Text="javascript" HorizontalOptions="FillAndExpand" Keyboard="Default"/>
+                     <Entry x:Name="triggerName" Text="javascript" HorizontalOptions="FillAndExpand" Keyboard="Text"/>
                      <Button Text="Trigger InApp" Clicked="OnTriggerInApp" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                     <Button Text="TriggerInapp lang" Clicked="TriggerInAppLang"  IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                     <Button Text="TriggerSessionStartInApp" Clicked="TriggerInAppSessionStart" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
                  </StackLayout>
 
                  <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
@@ -89,8 +116,21 @@
                      <Button Text="Dismiss Button Left" Clicked="OnDismissButtonLeft"  IsEnabled="true" BorderWidth="2" BorderColor="Black" />
                      <Button Text="Dismiss Button Right" Clicked="OnDismissButtonRight" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
                  </StackLayout>
-              
+
+<!--                     
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                     <Button Text="TestMode On" IsEnabled="true" Clicked="OnTestMode" BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="TestMode Off" IsEnabled="true" Clicked="OffTestMode"  BorderWidth="2" BorderColor="Black"/>
+                    <Switch x:Name="Places_Display" PropertyChanged="PlacesDisplayChanged" />
+                     <Switch x:Name="InApp_Display" PropertyChanged="InappDisplayChanged" />
+                </StackLayout>
+                -->                
+
+
+                
 			</StackLayout>
+
+
 		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

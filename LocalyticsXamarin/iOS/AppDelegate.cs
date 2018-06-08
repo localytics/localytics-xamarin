@@ -5,9 +5,11 @@ using UIKit;
 
 using LocalyticsSample.Shared;
 using LocalyticsXamarin.IOS;
+using System.Diagnostics;
 
 namespace LocalyticsSample.IOS
 {
+    
 	[Register ("AppDelegate")]
 	public class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 	{
@@ -60,23 +62,7 @@ namespace LocalyticsSample.IOS
                 return configurastion;
             };
 
-			Localytics.PlacesShouldDisplayCampaign += (campaign) =>
-            {
-              Console.Write("LocalyticsShouldDisplayPlacesCampaign");
-              return true;
-            };
 
-			Localytics.PlacesWillDisplayNotification += (localNotification, campaign) =>
-			{
-				Console.WriteLine("PlacesWillDisplayNotification");
-				return localNotification;
-			};
-
-			Localytics.PlacesWillDisplayNotificationContent += (notificationContent, campaign) =>
-            {
-              Console.Write("PlacesWillDisplayNotificationContent");
-                return notificationContent;
-            };
 
 			// Localytics Auto Integrate
 			Localytics.LoggingEnabled = true;

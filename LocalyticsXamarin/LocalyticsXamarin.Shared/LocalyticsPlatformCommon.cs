@@ -57,7 +57,6 @@ namespace LocalyticsXamarin.Shared
 
 		public void TagEvent(string eventName, IDictionary<string, string> attributes = null, long? customerValueIncrease = null)
 		{
-			// TODO Fixme
 			if (attributes == null && customerValueIncrease == null)
 			{
 				Localytics.TagEvent(eventName);
@@ -159,7 +158,6 @@ namespace LocalyticsXamarin.Shared
 
 		public void TriggerInAppMessage(string triggerName, IDictionary<string, string> attributes)
 		{
-			// TODO FIXME
 			if (attributes == null)
 			{
 #if __IOS__
@@ -254,7 +252,6 @@ namespace LocalyticsXamarin.Shared
 		public void TagPurchased(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
 		{
 			NativeNumber price = null;
-			// TODO FIXME
 			if (itemPrice != null)
 			{
 				price = new NativeNumber(itemPrice.Value);
@@ -463,7 +460,6 @@ namespace LocalyticsXamarin.Shared
 			Localytics.TagInAppImpression(campaign, type);
 		}
 
-		//TODO FIXME
 		public void TagInAppImpression(NativeInAppCampaign campaign, string customAction)
 		{
 			Localytics.TagInAppImpression(campaign, customAction);

@@ -10,6 +10,70 @@ namespace LocalyticsSample.Shared
 {
     public partial class LandingPage : ContentPage
     {
+        void LoggingToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            localytics.LoggingEnabled = ((Switch)sender).IsToggled;
+            RefreshBackgroundProperties();
+        }
+
+        void InboxAdidToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            localytics.InboxAdIdParameterEnabled = ((Switch)sender).IsToggled;
+            RefreshBackgroundProperties();
+        }
+
+        void InappAdidToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            localytics.InAppAdIdParameterEnabled = ((Switch)sender).IsToggled;
+            RefreshBackgroundProperties();
+        }
+
+        void OptOutToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            App.localytics.OptedOut = ((Switch)sender).IsToggled;
+            RefreshBackgroundProperties();
+        }
+
+        void TestModeToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            App.localytics.TestModeEnabled = ((Switch)sender).IsToggled;
+        }
+
+        void PlacesDisplayToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            App.platform.SetPlacesShouldDisplay(((Switch)sender).IsToggled);
+        }
+
+        void InappDisplayToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            App.platform.SetInAppShouldDisplay(((Switch)sender).IsToggled);
+        }
+
+        void DeepLinkToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
+        {
+            App.platform.SetShouldDeeplink(((Switch)sender).IsToggled);
+        }
+
+        void OnTestMode(object sender, System.EventArgs e)
+        {
+            App.localytics.TestModeEnabled = true;
+        }
+
+        void OffTestMode(object sender, System.EventArgs e)
+        {
+            App.localytics.TestModeEnabled = false;
+        }
+
+        void TriggerInAppSessionStart(object sender, System.EventArgs e)
+        {
+            App.localytics.TriggerInAppMessagesForSessionStart();
+        }
+
+        void TriggerInAppLang(object sender, System.EventArgs e)
+        {
+            App.localytics.TriggerInAppMessage("lang");
+        }
+
         void OnDismissButtonRight(object sender, System.EventArgs e)
         {
             localytics.InAppMessageDismissButtonLocation = XFLLInAppMessageDismissButtonLocation.Right;
@@ -49,42 +113,6 @@ namespace LocalyticsSample.Shared
             localytics.TriggerInAppMessage(this.triggerName.Text);
         }
 
-        void OnInboxAdidDisable(object sender, System.EventArgs e)
-        {
-            localytics.InboxAdIdParameterEnabled = false;
-            RefreshBackgroundProperties();
-        }
-
-        void OnInboxAdidEnable(object sender, System.EventArgs e)
-        {
-            localytics.InboxAdIdParameterEnabled = true;
-            RefreshBackgroundProperties();
-        }
-
-        void OnInappAdidDisable(object sender, System.EventArgs e)
-        {
-            RefreshBackgroundProperties();
-            localytics.InAppAdIdParameterEnabled = false;
-        }
-
-        void OnInappAdidEnable(object sender, System.EventArgs e)
-        {
-            RefreshBackgroundProperties();
-            localytics.InAppAdIdParameterEnabled = true;
-        }
-
-        void OnOptOut(object sender, System.EventArgs e)
-        {
-            localytics.OptedOut = true;
-            RefreshBackgroundProperties();
-        }
-
-        void OnOptIn(object sender, System.EventArgs e)
-        {
-            localytics.OptedOut = false;
-            RefreshBackgroundProperties();
-        }
-
         public LandingPage()
         {
             InitializeComponent();
@@ -110,14 +138,18 @@ namespace LocalyticsSample.Shared
             {
                 var privacyOptout = localytics.PrivacyOptedOut;
                 var optout = localytics.OptedOut;
+                var testMode = localytics.TestModeEnabled;
+                var logging = localytics.LoggingEnabled;
                 var inboxAdid = localytics.InboxAdIdParameterEnabled;
                 var inappAdid = localytics.InAppAdIdParameterEnabled;
                 Device.BeginInvokeOnMainThread(delegate
                 {
                     this.privacyoptout.Text = privacyOptout.ToString();
-                    this.optout.Text = optout.ToString();
-                    this.inboxAdid.Text = inboxAdid.ToString();
-                    this.inappAdid.Text = inappAdid.ToString();
+                    this.OptOut.IsToggled = optout;
+                    this.InboxAdid.IsToggled = inboxAdid;
+                    this.InappAdid.IsToggled = inappAdid;
+                    this.TestMode.IsToggled = testMode;
+                    this.Logging.IsToggled = logging;
                 });
             });
         }
@@ -130,10 +162,10 @@ namespace LocalyticsSample.Shared
                 string value1 = "CustomerId: " + localytics.CustomerId;
                 string value2 = "InstallId: " + localytics.InstallId;
                 string value3 = "LibraryVersion: " + localytics.LibraryVersion;
-                string value4 = "OptedOut: " + localytics.OptedOut;
-                string value5 = "TestModeEnabled: " + localytics.TestModeEnabled;
+                string value4 = "";
+                string value5 = "";
                 string value6 = "Push Token/RegID: " + localytics.PushTokenInfo;
-                string value7 = "LoggingEnabled: " + localytics.LoggingEnabled;
+                string value7 = "";
 
                 RefreshBackgroundProperties();
                 var btnLoc = localytics.InAppMessageDismissButtonLocation;

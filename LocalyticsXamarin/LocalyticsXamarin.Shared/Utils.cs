@@ -44,7 +44,6 @@ namespace LocalyticsXamarin.Shared
 			return NativeProfileScope.Application;
 		}
 
-		// TODO ImpressionType
 		public static XFLLImpressionType ToXFLLInAppMessageDismissButtonLocation(NativeImpressionType impressionType)
 		{
 			if (impressionType == NativeImpressionType.Click)

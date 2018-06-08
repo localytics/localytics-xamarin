@@ -68,7 +68,7 @@ namespace LocalyticsXamarin.Android
 			IDictionary<string, Java.Lang.Object> result = new Dictionary<string, Java.Lang.Object>();
 			foreach (string key in source.Keys)
             {
-				// TODO improve see IOS for sample
+				// TODO - improve see IOS for sample 5.x+
 				if (source[key] is Java.Lang.Object) {
 					result.Add(key, (Java.Lang.Object)(source[key]));
 				} else if (source[key] is string){
