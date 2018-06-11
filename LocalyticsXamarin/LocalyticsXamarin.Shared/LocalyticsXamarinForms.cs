@@ -1,17 +1,26 @@
 ﻿using LocalyticsSample.Shared;
 using LocalyticsXamarin.Common;
 using System.Diagnostics;
-#if __IOS__
 using System;
+#if __IOS__
 
 using Foundation;
 using UIKit;
 using LocalyticsXamarin.IOS;
+#else
+using Android.Support.V4.App;
+using LocalyticsXamarin.Android;
 #endif
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Shared.LocalyticsXamarinForms))]
 namespace LocalyticsXamarin.Shared
 {
+
+    #if __IOS__
+    #else
+   
+    #endif
+
     public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics, IPlatform  //    ,ILocalyticsIOS
     {
         bool inappShouldDisplay = true;
@@ -78,6 +87,96 @@ namespace LocalyticsXamarin.Shared
 
         public void RegisterEvents()
         {
+            // Analytics Events
+#if __ANDROID__
+            Localytics myInstance = new Localytics();
+            myInstance.LocalyticsSessionDidOpen += (sender, e) =>
+            {
+                Console.WriteLine("Xamarin SessionDidOpenEvent: " + e);
+            };            
+            myInstance.LocalyticsDidTagEvent += (sender, e) => {
+                 Console.WriteLine("Xamarin SessionDidTagEvent: " + e);
+            };
+
+            myInstance.LocalyticsSessionWillClose += (sender, e) => {
+                Console.WriteLine("Xamarin SessionWillCloseEvent: " + e);
+            };
+
+            myInstance.LocalyticsSessionWillOpen += (sender, e) => {
+                Console.WriteLine("Xamarin SessionWillOpenEvent: " + e);
+            };
+
+#else
+            Localytics.SessionDidOpenEvent += (sender, e) =>
+            {
+                Console.WriteLine("Xamarin SessionDidOpenEvent: " + e);
+            };
+            Localytics.SessionDidTagEvent += (sender, e) =>
+            {
+                Console.WriteLine("Xamarin SessionDidTagEvent: " + e);
+            };
+
+            Localytics.SessionWillCloseEvent += (sender, e) =>
+            {
+                Console.WriteLine("Xamarin SessionWillCloseEvent: " + e);
+            };
+
+            Localytics.SessionWillOpenEvent += (sender, e) =>
+            {
+                Console.WriteLine("Xamarin SessionWillOpenEvent: " + e);
+            };
+#endif
+
+#if __IOS__
+            Localytics.InAppDidDismissEvent += (sender, e) =>
+            {
+                Console.WriteLine("LocalyticsDidDismissInAppMessage");
+            };
+
+            Localytics.InAppDidDisplayEvent += (sender, e) =>
+            {
+                Console.WriteLine("LocalyticsDidDisplayInAppMessage");
+            };
+
+            Localytics.InAppWillDismissEvent += (sender, e) =>
+            {
+                Console.WriteLine("LocalyticsWillDismissInAppMessage");
+            };
+
+            Localytics.InAppWillDisplay += (campaign, configurastion) =>
+            {
+                Console.WriteLine("LocalyticsWillDisplayInAppMessage");
+                return configurastion;
+            };
+
+#else
+
+            //Localytics.SetMessagingListener(new Mes)
+            Localytics.InAppDidDismissEvent += (sender, e) =>
+            {
+                Console.WriteLine("LocalyticsDidDismissInAppMessage");
+            };
+
+            Localytics.InAppDidDisplayEvent += (sender, e) =>
+            {
+                Console.WriteLine("LocalyticsDidDisplayInAppMessage");
+            };
+
+            Localytics.InAppWillDismissEvent += (sender, e) =>
+            {
+                Console.WriteLine("LocalyticsWillDismissInAppMessage");
+            };
+            
+            Localytics.InAppWillDisplay += (campaign, configurastion) =>
+            {
+                Console.WriteLine("LocalyticsWillDisplayInAppMessage");
+                return configurastion;
+            };
+
+#endif
+
+
+
 #if __IOS__
             Localytics.InAppShouldShow = InAppShouldShow;
             Localytics.InAppWillDisplay = InAppWillDisplay;
@@ -102,6 +201,7 @@ namespace LocalyticsXamarin.Shared
             //    Console.Write("PlacesWillDisplayNotificationContent");
             //    return notificationContent;
             //};
+#else
 #endif
         }
     }

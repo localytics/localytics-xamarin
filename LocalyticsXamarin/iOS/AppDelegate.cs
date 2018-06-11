@@ -24,44 +24,6 @@ namespace LocalyticsSample.IOS
 
             LoadApplication(new App());
 
- 			Localytics.SessionDidOpenEvent += (sender, e) =>
-             {
-                 Console.WriteLine("Xamarin SessionDidOpenEvent: " + e);
-             };
-
-            Localytics.SessionDidTagEvent += (sender, e) => {
-                 Console.WriteLine("Xamarin SessionDidTagEvent: " + e);
-             };
-
-            Localytics.SessionWillCloseEvent += (sender, e) => {
-                Console.WriteLine("Xamarin SessionWillCloseEvent: " + e);
-            };
-
-            Localytics.SessionWillOpenEvent += (sender, e) => {
-                Console.WriteLine("Xamarin SessionWillOpenEvent: " + e);
-            };			
-
-			Localytics.InAppDidDismissEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsDidDismissInAppMessage");
-			};
-
-			Localytics.InAppDidDisplayEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsDidDisplayInAppMessage");
-            };
-
-			Localytics.InAppWillDismissEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsWillDismissInAppMessage");
-            };
-            
-			Localytics.InAppWillDisplay += (campaign, configurastion) =>
-            {
-                Console.WriteLine("LocalyticsWillDisplayInAppMessage");
-                return configurastion;
-            };
-
 
 
 			// Localytics Auto Integrate
