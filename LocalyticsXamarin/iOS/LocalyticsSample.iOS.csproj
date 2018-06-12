@@ -87,9 +87,6 @@
     <Reference Include="Calabash">
       <HintPath>..\packages\Xamarin.TestCloud.Agent.0.21.5\lib\Xamarin.iOS\Calabash.dll</HintPath>
     </Reference>
-    <Reference Include="LocalyticsXamarin.iOS">
-      <HintPath>..\..\build\bin\Release\LocalyticsXamarin.iOS.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsSample\LocalyticsSample.csproj">

@@ -8,7 +8,7 @@ namespace LocalyticsXamarin.Android
 		static Localytics()
 		{
 			LocalyticsPlatformCommon.UpdatePluginVersion();
+			Localytics.SetMessagingListener(new IMessagingListenerV2Implementor());
 		}
-
 	}
 }

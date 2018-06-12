@@ -118,7 +118,7 @@
     <Compile Include="Additions\Localytics.cs" />
     <Compile Include="Convertor.cs" />
     <Compile Include="ILocalyticsAndroid.cs" />
-    <Compile Include="Localytics.cs" />
+    <Compile Include="LocalyticsHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />

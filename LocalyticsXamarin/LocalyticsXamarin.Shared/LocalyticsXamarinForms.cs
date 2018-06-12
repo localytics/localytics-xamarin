@@ -7,202 +7,175 @@ using System;
 using Foundation;
 using UIKit;
 using LocalyticsXamarin.IOS;
+using NativeInAppCampaign = LocalyticsXamarin.IOS.LLInAppCampaign;
+using NativePlacesCampaign = LocalyticsXamarin.IOS.LLPlacesCampaign;
 #else
 using Android.Support.V4.App;
 using LocalyticsXamarin.Android;
+using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
+using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
 #endif
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Shared.LocalyticsXamarinForms))]
 namespace LocalyticsXamarin.Shared
 {
+	public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics, IPlatform  //    ,ILocalyticsIOS
+	{
+		bool inappShouldDisplay = true;
+		bool placesShouldDisplay = true;
+		bool shouldDeepLink = true;
 
-    #if __IOS__
-    #else
-   
-    #endif
+		public void SetPlacesShouldDisplay(bool display)
+		{
+			placesShouldDisplay = display;
+		}
 
-    public class LocalyticsXamarinForms : LocalyticsPlatform, ILocalytics, IPlatform  //    ,ILocalyticsIOS
-    {
-        bool inappShouldDisplay = true;
-        bool placesShouldDisplay = true;
-        bool shouldDeepLink = true;
+		public void SetInAppShouldDisplay(bool display)
+		{
+			inappShouldDisplay = display;
+		}
 
-        public void SetPlacesShouldDisplay(bool display)
-        {
-            placesShouldDisplay = display;
-        }
-
-        public void SetInAppShouldDisplay(bool display)
-        {
-            inappShouldDisplay = display;
-        }
-
-        public void SetShouldDeeplink(bool display)
-        {
-            shouldDeepLink = display;
-        }
+		public void SetShouldDeeplink(bool display)
+		{
+			shouldDeepLink = display;
+		}
 
 #if __IOS__
 
-        public UILocalNotification PlacesWillDisplayNotification(UILocalNotification localNotification, LLPlacesCampaign placesCampaign)
+		public UILocalNotification PlacesWillDisplayNotification(UILocalNotification localNotification, LLPlacesCampaign placesCampaign)
+		{
+			Console.WriteLine("XamarinEvent PlacesWillDisplayNotification {0}", placesCampaign);
+			return localNotification;
+		}
+
+
+		public UserNotifications.UNMutableNotificationContent PlacesWillDisplayNotificationContent(UserNotifications.UNMutableNotificationContent notificationContent, LLPlacesCampaign placesCampaign)
+		{
+			Console.WriteLine("XamarinEvent PlacesWillDisplayNotificationContent {0}", placesCampaign);
+			return notificationContent;
+		}
+		public LLInAppConfiguration InAppWillDisplay(NativeInAppCampaign inAppCampaign, LLInAppConfiguration inAppConfiguration)
         {
-            Debug.WriteLine("PlacesWillDisplayNotification {0}", placesCampaign);
-            return localNotification;
+            Console.WriteLine("XamarinEvent InAppWillDisplay campaign:{0}", inAppCampaign);
+            return inAppConfiguration;
+        }
+		#endif
+
+        public bool InAppShouldShow(NativeInAppCampaign inAppCampaign)
+        {
+            Console.WriteLine("XamarinEvent LLInAppCampaign campaign:{0}", inAppCampaign);
+            return inappShouldDisplay;
         }
 
-
-        public UserNotifications.UNMutableNotificationContent PlacesWillDisplayNotificationContent(UserNotifications.UNMutableNotificationContent notificationContent, LLPlacesCampaign placesCampaign)
+		public bool PlacesShouldDisplay(NativePlacesCampaign placesCampaign)
         {
-            Debug.WriteLine("PlacesWillDisplayNotificationContent {0}", placesCampaign);
-            return notificationContent;
-        }
-
-
-        public bool ShouldDeepLink(NSUrl url)
-        {
-            Debug.WriteLine("ShouldDeepLink Url:{0}", url.ToString());
-            return shouldDeepLink;
-        }
-
-
-        public bool PlacesShouldDisplay(LLPlacesCampaign placesCampaign)
-        {
-            Debug.WriteLine("PlacesShouldDisplay campaign:{0}", placesCampaign);
+            Console.WriteLine("XamarinEvent PlacesShouldDisplay campaign:{0}", placesCampaign);
             return placesShouldDisplay;
         }
 
-
-        public LLInAppConfiguration InAppWillDisplay(LLInAppCampaign inAppCampaign, LLInAppConfiguration inAppConfiguration)
+		public bool ShouldDeepLink(string url)
         {
-            Debug.WriteLine("InAppWillDisplay campaign:{0}", inAppCampaign);
-            return inAppConfiguration;
+            Console.WriteLine("XamarinEvent ShouldDeepLink Url:{0}", url);
+            return shouldDeepLink;
         }
 
-        public bool InAppShouldShow(LLInAppCampaign inAppCampaign)
-        {
-            Debug.WriteLine("LLInAppCampaign campaign:{0}", inAppCampaign);
-            return inappShouldDisplay;
-        }
-#endif
-
-        public void RegisterEvents()
-        {
-            // Analytics Events
-#if __ANDROID__
-            Localytics myInstance = new Localytics();
-            myInstance.LocalyticsSessionDidOpen += (sender, e) =>
-            {
-                Console.WriteLine("Xamarin SessionDidOpenEvent: " + e);
-            };            
-            myInstance.LocalyticsDidTagEvent += (sender, e) => {
-                 Console.WriteLine("Xamarin SessionDidTagEvent: " + e);
-            };
-
-            myInstance.LocalyticsSessionWillClose += (sender, e) => {
-                Console.WriteLine("Xamarin SessionWillCloseEvent: " + e);
-            };
-
-            myInstance.LocalyticsSessionWillOpen += (sender, e) => {
-                Console.WriteLine("Xamarin SessionWillOpenEvent: " + e);
-            };
-
-#else
-            Localytics.SessionDidOpenEvent += (sender, e) =>
-            {
-                Console.WriteLine("Xamarin SessionDidOpenEvent: " + e);
-            };
-            Localytics.SessionDidTagEvent += (sender, e) =>
-            {
-                Console.WriteLine("Xamarin SessionDidTagEvent: " + e);
-            };
-
-            Localytics.SessionWillCloseEvent += (sender, e) =>
-            {
-                Console.WriteLine("Xamarin SessionWillCloseEvent: " + e);
-            };
-
-            Localytics.SessionWillOpenEvent += (sender, e) =>
-            {
-                Console.WriteLine("Xamarin SessionWillOpenEvent: " + e);
-            };
-#endif
-
+		public void RegisterEvents()
+		{
 #if __IOS__
-            Localytics.InAppDidDismissEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsDidDismissInAppMessage");
-            };
-
-            Localytics.InAppDidDisplayEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsDidDisplayInAppMessage");
-            };
-
-            Localytics.InAppWillDismissEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsWillDismissInAppMessage");
-            };
-
-            Localytics.InAppWillDisplay += (campaign, configurastion) =>
-            {
-                Console.WriteLine("LocalyticsWillDisplayInAppMessage");
-                return configurastion;
-            };
-
-#else
-
-            //Localytics.SetMessagingListener(new Mes)
-            Localytics.InAppDidDismissEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsDidDismissInAppMessage");
-            };
-
-            Localytics.InAppDidDisplayEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsDidDisplayInAppMessage");
-            };
-
-            Localytics.InAppWillDismissEvent += (sender, e) =>
-            {
-                Console.WriteLine("LocalyticsWillDismissInAppMessage");
-            };
-            
-            Localytics.InAppWillDisplay += (campaign, configurastion) =>
-            {
-                Console.WriteLine("LocalyticsWillDisplayInAppMessage");
-                return configurastion;
-            };
-
-#endif
-
-
-
-#if __IOS__
-            Localytics.InAppShouldShow = InAppShouldShow;
-            Localytics.InAppWillDisplay = InAppWillDisplay;
             Localytics.PlacesWillDisplayNotification = PlacesWillDisplayNotification;
             Localytics.PlacesWillDisplayNotificationContent = PlacesWillDisplayNotificationContent;
-            Localytics.ShouldDeepLink = ShouldDeepLink;
-
-            //Localytics.PlacesShouldDisplayCampaign += (campaign) =>
-            //{
-            //    Console.Write("LocalyticsShouldDisplayPlacesCampaign");
-            //    return true;
-            //};
-
-            //Localytics.PlacesWillDisplayNotification += (localNotification, campaign) =>
-            //{
-            //    Console.WriteLine("PlacesWillDisplayNotification");
-            //    return localNotification;
-            //};
-
-            //Localytics.PlacesWillDisplayNotificationContent += (notificationContent, campaign) =>
-            //{
-            //    Console.Write("PlacesWillDisplayNotificationContent");
-            //    return notificationContent;
-            //};
-#else
+ #else
+			Localytics myInstance = new Localytics();
+            //Localytics.PlacesWillDisplayNotification = PlacesWillDisplayNotification;
+            //Localytics.PlacesWillDisplayNotificationContent = PlacesWillDisplayNotificationContent;
 #endif
+			Localytics.InAppShouldShow = InAppShouldShow;
+			Localytics.ShouldDeepLink = ShouldDeepLink;
+
+#if __IOS__
+			Localytics.LocationDidTriggerRegionsEvent
+#else
+			myInstance.LocalyticsDidTriggerRegions 
+			#endif
+			          += (sender, e) => {
+				Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e.ToString());
+			};
+
+			#if __IOS__
+			Localytics.LocationUpdateEvent
+#else
+			myInstance.LocalyticsDidUpdateLocation 
+			#endif
+			          += (sender, e) => {
+				Console.WriteLine("XamarinEvent LocalyticsDidUpdateLocation " + e.ToString());
+			};
+
+			#if __IOS__
+			Localytics.LocationDidUpdateMonitoredRegionsEvent
+#else
+			myInstance.LocalyticsDidUpdateMonitoredGeofences 
+			#endif
+			          += (sender, e) => {
+				Console.WriteLine("XamarinEvent LocalyticsDidUpdateMonitoredGeofences " + e.ToString());
+			};
+
+			// Analytics Events
+#if __IOS__
+			Localytics.SessionDidOpenEvent
+#else
+			myInstance.LocalyticsSessionDidOpen
+#endif
+					   += (sender, e) =>
+            {
+                Console.WriteLine("XamarinEvent SessionDidOpenEvent: " + e);
+            };            
+			#if __IOS__
+			Localytics.SessionDidTagEvent
+#else
+			myInstance.LocalyticsDidTagEvent
+#endif
+             += (sender, e) => {
+				Console.WriteLine("XamarinEvent SessionDidTagEvent: " + e);
+            };
+
+			#if __IOS__
+			Localytics.SessionWillCloseEvent
+#else
+			myInstance.LocalyticsSessionWillClose
+#endif
+             += (sender, e) => {
+				Console.WriteLine("XamarinEvent SessionWillCloseEvent: " + e);
+            };
+
+			#if __IOS__
+			Localytics.SessionWillOpenEvent
+#else
+			myInstance.LocalyticsSessionWillOpen
+#endif
+             += (sender, e) => {
+				Console.WriteLine("XamarinEvent SessionWillOpenEvent: " + e);
+            };
+
+            Localytics.InAppDidDismissEvent += (sender, e) =>
+            {
+				Console.WriteLine("XamarinEvent LocalyticsDidDismissInAppMessage");
+            };
+
+            Localytics.InAppDidDisplayEvent += (sender, e) =>
+            {
+				Console.WriteLine("XamarinEvent LocalyticsDidDisplayInAppMessage");
+            };
+
+            Localytics.InAppWillDismissEvent += (sender, e) =>
+            {
+				Console.WriteLine("XamarinEvent LocalyticsWillDismissInAppMessage");
+            };
+
+            Localytics.InAppWillDisplay += (campaign, configuration) =>
+            {
+				Console.WriteLine("XamarinEvent LocalyticsWillDisplayInAppMessage");
+				return configuration;
+            };
         }
     }
 }

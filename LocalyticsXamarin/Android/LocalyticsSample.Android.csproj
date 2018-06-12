@@ -15,9 +15,9 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidApplication>True</AndroidApplication>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>true</AndroidUseLatestPlatformSdk>
     <AssemblyName>LocalyticsSample.Android</AssemblyName>
-    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidTlsProvider></AndroidTlsProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -138,22 +138,19 @@
     <Reference Include="Xamarin.Firebase.Messaging">
       <HintPath>..\packages\Xamarin.Firebase.Messaging.60.1142.1\lib\MonoAndroid80\Xamarin.Firebase.Messaging.dll</HintPath>
     </Reference>
-    <Reference Include="LocalyticsXamarin.Android">
-      <HintPath>..\LocalyticsXamarin.Android\bin\Release\LocalyticsXamarin.Android.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsSample\LocalyticsSample.csproj">
       <Project>{E291B500-93AB-423A-874D-29DB2CA50526}</Project>
       <Name>LocalyticsSample</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.Android\LocalyticsXamarin.Android.csproj">
-      <Project>{8D4D1584-55B7-4E32-9373-9D1DA7D9A209}</Project>
-      <Name>LocalyticsXamarin.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalyticsXamarin.Android\LocalyticsXamarin.Android.csproj">
+      <Project>{8D4D1584-55B7-4E32-9373-9D1DA7D9A209}</Project>
+      <Name>LocalyticsXamarin.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
