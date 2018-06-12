@@ -114,7 +114,6 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ProfilesProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ProfilesUploader')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'PushManager')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'PushTrackingActivity')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ReferralReceiver')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ReferralUploader')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'StreamingGeofenceDownloader')]" />
