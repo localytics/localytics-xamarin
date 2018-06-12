@@ -1,9 +1,9 @@
-﻿using LocalyticsSample.Shared;
-using LocalyticsXamarin.Common;
+﻿using System;
 using System.Diagnostics;
-using System;
-#if __IOS__
+using LocalyticsSample.Shared;
+using LocalyticsXamarin.Common;
 
+#if __IOS__
 using Foundation;
 using UIKit;
 using LocalyticsXamarin.IOS;
@@ -41,7 +41,6 @@ namespace LocalyticsXamarin.Shared
 		}
 
 #if __IOS__
-
 		public UILocalNotification PlacesWillDisplayNotification(UILocalNotification localNotification, LLPlacesCampaign placesCampaign)
 		{
 			Console.WriteLine("XamarinEvent PlacesWillDisplayNotification {0}", placesCampaign);
@@ -59,7 +58,7 @@ namespace LocalyticsXamarin.Shared
             Console.WriteLine("XamarinEvent InAppWillDisplay campaign:{0}", inAppCampaign);
             return inAppConfiguration;
         }
-		#endif
+#endif
 
         public bool InAppShouldShow(NativeInAppCampaign inAppCampaign)
         {
@@ -81,78 +80,40 @@ namespace LocalyticsXamarin.Shared
 
 		public void RegisterEvents()
 		{
+			Localytics myInstance = Localytics.SharedInstance();
 #if __IOS__
             Localytics.PlacesWillDisplayNotification = PlacesWillDisplayNotification;
             Localytics.PlacesWillDisplayNotificationContent = PlacesWillDisplayNotificationContent;
- #else
-			Localytics myInstance = new Localytics();
-            //Localytics.PlacesWillDisplayNotification = PlacesWillDisplayNotification;
-            //Localytics.PlacesWillDisplayNotificationContent = PlacesWillDisplayNotificationContent;
 #endif
 			Localytics.InAppShouldShow = InAppShouldShow;
 			Localytics.ShouldDeepLink = ShouldDeepLink;
-
-#if __IOS__
-			Localytics.LocationDidTriggerRegionsEvent
-#else
-			myInstance.LocalyticsDidTriggerRegions 
-			#endif
-			          += (sender, e) => {
+            
+			myInstance.LocalyticsDidTriggerRegions  += (sender, e) => {
 				Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e.ToString());
 			};
-
-			#if __IOS__
-			Localytics.LocationUpdateEvent
-#else
-			myInstance.LocalyticsDidUpdateLocation 
-			#endif
-			          += (sender, e) => {
+            
+			myInstance.LocalyticsDidUpdateLocation += (sender, e) => {
 				Console.WriteLine("XamarinEvent LocalyticsDidUpdateLocation " + e.ToString());
 			};
-
-			#if __IOS__
-			Localytics.LocationDidUpdateMonitoredRegionsEvent
-#else
-			myInstance.LocalyticsDidUpdateMonitoredGeofences 
-			#endif
-			          += (sender, e) => {
+            
+			myInstance.LocalyticsDidUpdateMonitoredGeofences  += (sender, e) => {
 				Console.WriteLine("XamarinEvent LocalyticsDidUpdateMonitoredGeofences " + e.ToString());
 			};
 
 			// Analytics Events
-#if __IOS__
-			Localytics.SessionDidOpenEvent
-#else
-			myInstance.LocalyticsSessionDidOpen
-#endif
-					   += (sender, e) =>
+			myInstance.LocalyticsSessionDidOpen += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionDidOpenEvent: " + e);
             };            
-			#if __IOS__
-			Localytics.SessionDidTagEvent
-#else
-			myInstance.LocalyticsDidTagEvent
-#endif
-             += (sender, e) => {
+			myInstance.LocalyticsDidTagEvent += (sender, e) => {
 				Console.WriteLine("XamarinEvent SessionDidTagEvent: " + e);
             };
-
-			#if __IOS__
-			Localytics.SessionWillCloseEvent
-#else
-			myInstance.LocalyticsSessionWillClose
-#endif
-             += (sender, e) => {
+            
+			myInstance.LocalyticsSessionWillClose += (sender, e) => {
 				Console.WriteLine("XamarinEvent SessionWillCloseEvent: " + e);
             };
-
-			#if __IOS__
-			Localytics.SessionWillOpenEvent
-#else
-			myInstance.LocalyticsSessionWillOpen
-#endif
-             += (sender, e) => {
+            
+			myInstance.LocalyticsSessionWillOpen += (sender, e) => {
 				Console.WriteLine("XamarinEvent SessionWillOpenEvent: " + e);
             };
 

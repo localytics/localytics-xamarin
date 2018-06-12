@@ -32,6 +32,8 @@
     
      <attr path="/api/package[@name='com.localytics.android']/class[@name='WebViewCampaign']/method[@name='getWebViewAttributes']" name="propertyName"></attr>
 
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/constructor[@name='Localytics' and count(parameter)=0]" name="visibility">internal</attr>
+    
     <!--  need to make public but dont access them -->
      <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getInboxId']" name="visibility">public</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getPtiId']" name="visibility">public</attr>

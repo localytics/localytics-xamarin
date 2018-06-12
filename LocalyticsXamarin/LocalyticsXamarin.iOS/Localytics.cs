@@ -6,11 +6,61 @@ using UIKit;
 using System.Collections.Generic;
 using LocalyticsXamarin.Shared;
 using LocalyticsXamarin.Common;
+using System.Runtime.CompilerServices;
 
 namespace LocalyticsXamarin.IOS
 {
 	public partial class Localytics
 	{
+		static Localytics _instance;
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static Localytics SharedInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new Localytics();
+            }
+            return _instance;
+        }
+
+        /* Events ... */
+		public event EventHandler<LocalyticsDidTriggerRegionsEventArgs> LocalyticsDidTriggerRegions
+        {
+            add
+            {
+				LocationListener.LocationDidTriggerRegionsEvent += value;
+            }
+            remove
+            {
+				LocationListener.LocationDidTriggerRegionsEvent -= value;
+            }
+        }
+
+		public event EventHandler<LocalyticsDidUpdateLocationEventArgs> LocalyticsDidUpdateLocation
+        {
+            add
+            {
+				LocationListener.LocationUpdateEvent += value;
+            }
+            remove
+            {
+				LocationListener.LocationUpdateEvent -= value;
+            }
+        }
+
+        public event EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> LocalyticsDidUpdateMonitoredGeofences
+        {
+            add
+            {
+				LocationListener.LocationDidUpdateMonitoredRegionsEvent += value;
+            }
+            remove
+            {
+				LocationListener.LocationDidUpdateMonitoredRegionsEvent -= value;
+            }
+        }
+
 		public static void TagPlacesPushReceived(LLPlacesCampaign campaign)
 		{
 			Localytics.TagPlacesPushReceivedPrivate(campaign);
@@ -128,60 +178,56 @@ namespace LocalyticsXamarin.IOS
 			Localytics.SetLocationDelegatePrivate(locationListener);
 		}
 
-		public class LocationTriggerRegionsEventArgs : EventArgs
+		public class LocalyticsDidTriggerRegionsEventArgs : EventArgs
 		{
 			public LLRegion[] regions;
 			public LLRegionEvent regionEvent;
 
-			public LocationTriggerRegionsEventArgs(LLRegion[] regions, LLRegionEvent regionEvent)
+			public LocalyticsDidTriggerRegionsEventArgs(LLRegion[] regions, LLRegionEvent regionEvent)
 			{
 				this.regions = regions;
 				this.regionEvent = regionEvent;
 			}
 		}
-		public delegate void LocationDidTriggerRegionsEventHandler(object sender, LocationTriggerRegionsEventArgs e);
-		static public event LocationDidTriggerRegionsEventHandler LocationDidTriggerRegionsEvent;
 
-		public class LocationUpdateEventArgs : EventArgs
+		public class LocalyticsDidUpdateLocationEventArgs : EventArgs
 		{
 			public CLLocation location;
-			public LocationUpdateEventArgs(CLLocation location)
+			public LocalyticsDidUpdateLocationEventArgs(CLLocation location)
 			{
 				this.location = location;
 			}
 		}
-		public delegate void LocationUpdateEventHandler(object sender, LocationUpdateEventArgs e);
-		static public event LocationUpdateEventHandler LocationUpdateEvent;
 
-		public class LocationMonitoredRegionsEventArgs : EventArgs
+		public class LocalyticsDidUpdateMonitoredGeofencesEventArgs : EventArgs
 		{
 			public LLRegion[] addedRegions, removedRegions;
 
-			public LocationMonitoredRegionsEventArgs(LLRegion[] addedRegions, LLRegion[] removedRegions)
+			public LocalyticsDidUpdateMonitoredGeofencesEventArgs(LLRegion[] addedRegions, LLRegion[] removedRegions)
 			{
 				this.addedRegions = addedRegions;
 				this.removedRegions = removedRegions;
 			}
 		}
-		public delegate void LocationDidUpdateMonitoredRegionsEventHandler(object sender, LocationMonitoredRegionsEventArgs e);
-		static public event LocationDidUpdateMonitoredRegionsEventHandler LocationDidUpdateMonitoredRegionsEvent;
-
 
 		public sealed class LocationListener : LLLocationDelegate
 		{
+			static public EventHandler<LocalyticsDidTriggerRegionsEventArgs> LocationDidTriggerRegionsEvent;
+			static public EventHandler<LocalyticsDidUpdateLocationEventArgs> LocationUpdateEvent;
+			static public EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> LocationDidUpdateMonitoredRegionsEvent;
 			public override void LocalyticsDidTriggerRegions(LLRegion[] regions, LLRegionEvent regionEvent)
 			{
-				LocationDidTriggerRegionsEvent?.Invoke(this, new LocationTriggerRegionsEventArgs(regions, regionEvent));
+				LocationDidTriggerRegionsEvent?.Invoke(this, new LocalyticsDidTriggerRegionsEventArgs(regions, regionEvent));
 			}
 
 			public override void LocalyticsDidUpdateLocation(CLLocation location)
 			{
-				LocationUpdateEvent?.Invoke(this, new LocationUpdateEventArgs(location));
+				LocationUpdateEvent?.Invoke(this, new LocalyticsDidUpdateLocationEventArgs(location));
 			}
 
 			public override void LocalyticsDidUpdateMonitoredRegions(LLRegion[] addedRegions, LLRegion[] removedRegions)
 			{
-				LocationDidUpdateMonitoredRegionsEvent?.Invoke(null, new LocationMonitoredRegionsEventArgs(addedRegions, removedRegions));
+				LocationDidUpdateMonitoredRegionsEvent?.Invoke(null, new LocalyticsDidUpdateMonitoredGeofencesEventArgs(addedRegions, removedRegions));
 			}
 		}
 
@@ -204,25 +250,20 @@ namespace LocalyticsXamarin.IOS
 			}
 		}
 
-		public class SessionDidOpenEventArgs : SessionEventArgs
+		public class LocalyticsSessionDidOpenEventArgs : SessionEventArgs
 		{
-			public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+			public LocalyticsSessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
 				: base(isFirst, isUpgrade, isResume)
 			{
 			}
 		}
-
-		public delegate void SessionDidOpenEventHandler(object sender, SessionDidOpenEventArgs e);
-
-
-		static public event SessionDidOpenEventHandler SessionDidOpenEvent;
-
-		public class SessionDidTagEventArgs : EventArgs
+  
+		public class LocalyticsDidTagEventEventArgs : EventArgs
 		{
 			public string EventName { get; set; }
 			public IDictionary Attributes { get; set; }
 			public double? customerValue { get; set; }
-			public SessionDidTagEventArgs(string name,
+			public LocalyticsDidTagEventEventArgs(string name,
 										  IDictionary attribs,
 										  double? customerValue)
 			{
@@ -235,48 +276,94 @@ namespace LocalyticsXamarin.IOS
 				return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, customerValue, Attributes.ToString());
 			}
 		}
-		public delegate void SessionDidTagEventHandler(object sender, SessionDidTagEventArgs e);
-		static public event SessionDidTagEventHandler SessionDidTagEvent;
-
-		public class SessionWillOpenEventArgs : SessionEventArgs
+	
+		public class LocalyticsSessionWillOpenEventArgs : SessionEventArgs
 		{
-			public SessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+			public LocalyticsSessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
 				: base(isFirst, isUpgrade, isResume)
 			{
 			}
 		}
-		public delegate void SessionWillOpenEventHandler(object sender, SessionWillOpenEventArgs e);
-		static public event SessionWillOpenEventHandler SessionWillOpenEvent;
 
-
-		public class SessionWillCloseEventArgs : EventArgs
+		public class LocalyticsSessionWillCloseEventArgs : EventArgs
 		{
 			// No Extra Args.
 
 		}
-		public delegate void SessionWillCloseEventHandler(object sender, SessionWillCloseEventArgs e);
-		static public event SessionWillCloseEventHandler SessionWillCloseEvent;
+
+		public event EventHandler<LocalyticsDidTagEventEventArgs> LocalyticsDidTagEvent
+        {
+            add
+            {
+				AnalyticsListener.SessionDidTagEvent += value;
+            }
+            remove
+            {
+				AnalyticsListener.SessionDidTagEvent -= value;
+            }
+        }
+
+        public event EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
+        {
+            add
+            {
+				AnalyticsListener.SessionDidOpenEvent += value;
+            }
+            remove
+            {
+				AnalyticsListener.SessionDidOpenEvent -= value;
+            }
+        }
+
+		public event EventHandler<LocalyticsSessionWillCloseEventArgs> LocalyticsSessionWillClose
+        {
+            add
+            {
+				AnalyticsListener.SessionWillCloseEvent += value;
+            }
+            remove
+            {
+				AnalyticsListener.SessionWillCloseEvent -= value;
+            }
+        }
+
+        public event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
+        {
+            add
+            {
+				AnalyticsListener.SessionWillOpenEvent += value;
+            }
+            remove
+            {
+				AnalyticsListener.SessionWillOpenEvent -= value;
+            }
+        }
 
 		sealed class AnalyticsListener : LLAnalyticsDelegate
 		{
+			static internal EventHandler<LocalyticsSessionDidOpenEventArgs> SessionDidOpenEvent;
+			static internal EventHandler<LocalyticsDidTagEventEventArgs> SessionDidTagEvent;
+			static internal EventHandler<LocalyticsSessionWillOpenEventArgs> SessionWillOpenEvent;
+			static internal EventHandler<LocalyticsSessionWillCloseEventArgs> SessionWillCloseEvent;
+
 			public override void LocalyticsSessionDidOpen(bool isFirst, bool isUpgrade, bool isResume)
 			{
-				SessionDidOpenEvent?.Invoke(null, new SessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
+				SessionDidOpenEvent?.Invoke(null, new LocalyticsSessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
 			}
 
 			public override void LocalyticsDidTagEvent(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
 			{
-				SessionDidTagEvent?.Invoke(null, new SessionDidTagEventArgs(eventName, attributes, customerValueIncrease?.DoubleValue));
+				SessionDidTagEvent?.Invoke(null, new LocalyticsDidTagEventEventArgs(eventName, attributes, customerValueIncrease?.DoubleValue));
 			}
 
 			public override void LocalyticsSessionWillOpen(bool isFirst, bool isUpgrade, bool isResume)
 			{
-				SessionWillOpenEvent?.Invoke(null, new SessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
+				SessionWillOpenEvent?.Invoke(null, new LocalyticsSessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
 			}
 
 			public override void LocalyticsSessionWillClose()
 			{
-				SessionWillCloseEvent?.Invoke(null, new SessionWillCloseEventArgs());
+				SessionWillCloseEvent?.Invoke(null, new LocalyticsSessionWillCloseEventArgs());
 			}
 		}
 
