@@ -5,14 +5,9 @@ using System.Collections.Generic;
 namespace LocalyticsXamarin.Common
 {
     public class InAppEventArgs : EventArgs { } // No Extra Args.
-
     public class InAppDidDisplayEventArgs : EventArgs { } // No Extra Args.
-    public delegate void InAppDidDisplayEventHandler(object sender, InAppDidDisplayEventArgs e);
     public class InAppWillDismissEventArgs : EventArgs { } // No Extra Args.
-    public delegate void InAppWillDismissEventHandler(object sender, InAppWillDismissEventArgs e);
     public class InAppDidDismissEventArgs : EventArgs { } // No Extra Args.
-    public delegate void InAppDidDismissEventHandler(object sender, InAppDidDismissEventArgs e);
-
 
     public enum XFLLInAppMessageDismissButtonLocation : ulong
     {

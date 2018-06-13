@@ -19,7 +19,6 @@ namespace LocalyticsMessagingSample.Android
     [IntentFilter(new[] { Intent.ActionView }, DataScheme = "ampYOUR-LOCALYTICS-APP-KEY", Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable })]
     public class MainActivity : FragmentActivity
     {
-
         readonly string[] PermissionsLocation = {
             Manifest.Permission.AccessCoarseLocation,
             Manifest.Permission.AccessFineLocation
@@ -32,8 +31,7 @@ namespace LocalyticsMessagingSample.Android
             base.OnCreate(bundle);
 
             SetContentView(Resource.Layout.Main);
-
-            Localytics.CustomerId = "ms_test_user";
+			LocalyticsAutoIntegrateApplication.localyticsXamarin.CustomerId = "ms_test_user";
 
             // Register Push
             Localytics.RegisterPush(); //"YOUR_GCM_PROJECT_NUMBER");
@@ -43,7 +41,7 @@ namespace LocalyticsMessagingSample.Android
 
             tagEventButton.Click += delegate
             {
-                Localytics.TagEvent("MessagingSample Click");
+				LocalyticsAutoIntegrateApplication.localyticsXamarin.TagEvent("MessagingSample Click");
                 Localytics.Upload();
             };
 
@@ -96,7 +94,7 @@ namespace LocalyticsMessagingSample.Android
         {
             base.OnResume();
 
-            Localytics.TagScreen("MessagingSample Landing");
+			LocalyticsAutoIntegrateApplication.localyticsXamarin.TagScreen("MessagingSample Landing");
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +48,7 @@ namespace LocalyticsMessagingSample.Android
         {
             base.OnResume();
 
-            Localytics.TagScreen("Inbox");
+            LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance.TagScreen("Inbox");
         }
     }
 }

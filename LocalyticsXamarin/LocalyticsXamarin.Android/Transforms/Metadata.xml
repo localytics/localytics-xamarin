@@ -32,7 +32,110 @@
     
      <attr path="/api/package[@name='com.localytics.android']/class[@name='WebViewCampaign']/method[@name='getWebViewAttributes']" name="propertyName"></attr>
 
-     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/constructor[@name='Localytics' and count(parameter)=0]" name="visibility">internal</attr>
+
+    <!--  Prevent Access to API's that are available through a common layer -->
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/constructor[@name='Localytics' and count(parameter)=0]" name="visibility">internal</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='openSession']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='closeSession']" name="visibility">internal</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagEvent']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagPurchased']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagAddedToCart']" name="visibility">internal</attr>
+        <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagStartedCheckout']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagCompletedCheckout']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagContentViewed']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagSearched']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagShared']" name="visibility">internal</attr>
+    
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagContentRated']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagCustomerRegistered']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagCustomerLoggedIn']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagCustomerLoggedOut']" name="visibility">internal</attr>
+      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagInvited']" name="visibility">internal</attr>
+      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagScreen']" name="visibility">internal</attr>
+
+      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomDimension']" name="visibility">internal</attr>
+      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getCustomDimension']" name="visibility">internal</attr>
+      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getIdentifier']" name="visibility">internal</attr>
+      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerId']" name="visibility">internal</attr>
+
+<!--    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLocation']" name="visibility">internal</attr>-->
+         <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setTestModeEnabled']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isTestModeEnabled']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setMessagingListener']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setAnalyticsListener']" name="visibility">internal</attr>   
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLocationListener']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerId']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getCustomerId']" name="visibility">internal</attr>
+
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerEmail']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerFirstName']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerFullName']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerLastName']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setPrivacyOptedOut']" name="visibility">internal</attr>
+
+<!--     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getDismissButtonLocation']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setDismissButtonLocation']" name="visibility">internal</attr>
+-->
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='triggerInAppMessage']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='dismissCurrentInAppMessage']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getInboxCampaigns']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getInboxCampaignsUnreadCount']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getAllInboxCampaigns']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setInboxCampaignRead']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLoggingEnabled']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isLoggingEnabled']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isOptedOut']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setOptedOut']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setTestModeEnabled']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isTestModeEnabled']" name="visibility">internal</attr>
+
+
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getLibraryVersion']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getInstallId']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getAppKey']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isAdidAppendedToInAppUrls']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isAdidAppendedToInboxUrls']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='appendAdidToInAppUrls']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='appendAdidToInboxUrls']" name="visibility">internal</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isPrivacyOptedOut']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerIdWithPrivacyOptedOut']" name="visibility">internal</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='tagInboxImpression']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='inboxListItemTapped']" name="visibility">internal</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='pauseDataUploading']" name="visibility">internal</attr>
+
+
+    <!-- Event Args ... -->
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p0']" name="name">eventName</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p1']" name="name">attributes</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p2']" name="name">customerValue</attr>
+ 
+    
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionDidOpen']/parameter[@name='p0']" name="name">first</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionDidOpen']/parameter[@name='p1']" name="name">upgrade</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionDidOpen']/parameter[@name='p2']" name="name">resume</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']/parameter[@name='p0']" name="name">first</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']/parameter[@name='p1']" name="name">upgrade</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']/parameter[@name='p2']" name="name">resume</attr>
+
+
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='LocationListener']/method[@name='localyticsDidUpdateMonitoredGeofences']/parameter[@name='p0']" name="name">addedRegions</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='LocationListener']/method[@name='localyticsDidUpdateMonitoredGeofences']/parameter[@name='p1']" name="name">removedRegions</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='LocationListener']/method[@name='localyticsDidUpdateLocation']/parameter[@name='p0']" name="name">location</attr>
+
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='LocationListener']/method[@name='localyticsDidTriggerRegions']/parameter[@name='p0']" name="name">regions</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='LocationListener']/method[@name='localyticsDidTriggerRegions']/parameter[@name='p1']" name="name">regionEvent</attr>
+
+<!--     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionDidOpen']" name="argsType">LocalyticsSessionDidOpenEventEventArgs</attr>-->
+<!--     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsXamarin.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
+
+
     
     <!--  need to make public but dont access them -->
      <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getInboxId']" name="visibility">public</attr>

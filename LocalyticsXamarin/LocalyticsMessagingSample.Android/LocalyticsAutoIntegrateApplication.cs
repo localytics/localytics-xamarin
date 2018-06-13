@@ -6,57 +6,64 @@ using Android.Runtime;
 using Android.Support.V4.App;
 
 using LocalyticsXamarin.Android;
+using LocalyticsXamarin.Common;
+using LocalyticsXamarin.Shared;
 
 namespace LocalyticsMessagingSample.Android
 {
     [Application]
     public class LocalyticsAutoIntegrateApplication : Application
     {
+        public static LocalyticsXamarin.Shared.LocalyticsSDK localyticsXamarin;
 
         public LocalyticsAutoIntegrateApplication(IntPtr handle, JniHandleOwnership ownerShip) : base(handle, ownerShip)
         {
         }
-
         override public void OnCreate()
         {
             base.OnCreate();
+            localyticsXamarin = LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance;
 
 #if DEBUG
-            Localytics.LoggingEnabled = true;
+			localyticsXamarin.LoggingEnabled = true;
 #endif
 			Localytics.SetOption("ll_app_key", "f737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8");
 
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);
 
-            // TODO FIxme
-            //LocalyticsEvents.SubscribeToAll ();
-
-            //// Analytics callbacks
-            //LocalyticsEvents.OnLocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
-            //LocalyticsEvents.OnLocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
-            //LocalyticsEvents.OnLocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
-            //LocalyticsEvents.OnLocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
+			//// Analytics callbacks
+            LocalyticsSDK.LocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
+            LocalyticsSDK.LocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
+            LocalyticsSDK.LocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
+            LocalyticsSDK.LocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
 
             //// Messaging callbacks
-            //LocalyticsEvents.OnLocalyticsDidDismissInAppMessage += LL_OnLocalyticsDidDismissInAppMessage;
-            //LocalyticsEvents.OnLocalyticsDidDisplayInAppMessage += LL_OnLocalyticsDidDisplayInAppMessage;
-            //LocalyticsEvents.OnLocalyticsWillDismissInAppMessage += LL_OnLocalyticsWillDismissInAppMessage;
-            //LocalyticsEvents.OnLocalyticsWillDisplayInAppMessage += LL_OnLocalyticsWillDisplayInAppMessage;
-            //LocalyticsEvents.OnLocalyticsShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
-            //LocalyticsEvents.OnLocalyticsWillShowPushNotification += LL_OnLocalyticsWillShowPushNotification;
-            //LocalyticsEvents.OnLocalyticsShouldShowPlacesPushNotification += LL_OnLocalyticsShouldShowPlacesPushNotification;
-            //LocalyticsEvents.OnLocalyticsWillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
+            LocalyticsSDK.InAppDidDismissEvent += LL_OnLocalyticsDidDismissInAppMessage;
+            LocalyticsSDK.InAppDidDisplayEvent += LL_OnLocalyticsDidDisplayInAppMessage;
+            LocalyticsSDK.InAppWillDismissEvent += LL_OnLocalyticsWillDismissInAppMessage;
+            LocalyticsSDK.InAppWillDisplayDelegate += LL_OnLocalyticsWillDisplayInAppMessage;
+
+            //LocalyticsSDK.OnLocalyticsShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
+            //Localytics.OnLocalyticsShouldShowPlacesPushNotification += LL_OnLocalyticsShouldShowPlacesPushNotification;
+
+            Localytics.WillShowPushNotification += LL_OnLocalyticsWillShowPushNotification;
+            Localytics.WillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
 
             //// Location callbacks
-            //LocalyticsEvents.OnLocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
+            LocalyticsSDK.LocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
             //         // TODO Fix me
-            ////LocalyticsEvents.OnLocalyticsDidTriggerRegions +=
-            //LocalyticsEvents.OnLocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
+            LocalyticsSDK.LocalyticsDidTriggerRegions += (sender, e) => {
+                Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e);
+            };
+            LocalyticsSDK.LocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
         }
 
-        void LL_OnLocalyticsDidTagEvent(string eventName, IDictionary<string, string> attributes, long customerValueIncrease)
+        void LL_OnLocalyticsDidTagEvent(object sender, LocalyticsDidTagEventEventArgs eventArgs)
         {
+            string eventName = eventArgs.EventName;
+            IDictionary<string, string> attributes = eventArgs.Attributes;
+            long customerValueIncrease = eventArgs.CustomerValue;
             if (attributes != null)
             {
                 Console.WriteLine("Did tag event: name: " + eventName + " attributes.Count: " + attributes.Count + " customerValueIncrease: " + customerValueIncrease);
@@ -67,39 +74,40 @@ namespace LocalyticsMessagingSample.Android
             }
         }
 
-        void LL_OnLocalyticsSessionWillClose()
+        void LL_OnLocalyticsSessionWillClose(object sender, EventArgs eventArgs)
         {
             Console.WriteLine("Session will close");
         }
 
-        void LL_OnLocalyticsSessionDidOpen(bool isFirst, bool isUpgrade, bool isResume)
+        void LL_OnLocalyticsSessionDidOpen(object sender, LocalyticsSessionDidOpenEventArgs args)
         {
-            Console.WriteLine("Session did open: isFirst: " + isFirst + " isUpgrade: " + isUpgrade + " isResume: " + isResume);
+            Console.WriteLine("Session did open: isFirst: " + args.First + " isUpgrade: " + args.Upgrade + " isResume: " + args.Resume);
         }
 
-        void LL_OnLocalyticsSessionWillOpen(bool isFirst, bool isUpgrade, bool isResume)
+        void LL_OnLocalyticsSessionWillOpen(object sender, LocalyticsSessionWillOpenEventArgs args)
         {
-            Console.WriteLine("Session will open: isFirst: " + isFirst + " isUpgrade: " + isUpgrade + " isResume: " + isResume);
+            Console.WriteLine("Session will open: isFirst: " + args.First + " isUpgrade: " + args.Upgrade + " isResume: " + args.Resume);
         }
 
-        void LL_OnLocalyticsDidDismissInAppMessage()
+        void LL_OnLocalyticsDidDismissInAppMessage(object sender, InAppDidDismissEventArgs eventArgs)
         {
             Console.WriteLine("DidDismissInAppMessage");
         }
 
-        void LL_OnLocalyticsDidDisplayInAppMessage()
+        void LL_OnLocalyticsDidDisplayInAppMessage(object sender, InAppDidDisplayEventArgs eventArgs)
         {
             Console.WriteLine("DidDisplayInAppMessage");
         }
 
-        void LL_OnLocalyticsWillDismissInAppMessage()
+        void LL_OnLocalyticsWillDismissInAppMessage(object sender, InAppWillDismissEventArgs eventArgs)
         {
             Console.WriteLine("WillDismissInAppMessage");
         }
 
-        void LL_OnLocalyticsWillDisplayInAppMessage()
+        InAppConfiguration LL_OnLocalyticsWillDisplayInAppMessage(InAppCampaign campaign, InAppConfiguration configuration)
         {
             Console.WriteLine("WillDisplayInAppMessage");
+            return configuration;
         }
 
         bool LL_OnLocalyticsShouldShowPushNotification(PushCampaign campaign)
@@ -126,19 +134,19 @@ namespace LocalyticsMessagingSample.Android
             return builder;
         }
 
-        void LL_OnLocalyticsDidUpdateLocation(Location location)
+        void LL_OnLocalyticsDidUpdateLocation(object sender, LocalyticsDidUpdateLocationEventArgs eventArgs)
         {
-            Console.WriteLine("Did update location: " + location);
+            Console.WriteLine("Did update location: " + eventArgs.Location);
         }
 
-        //void LL_OnLocalyticsDidTriggerRegions(IList<Region> regions, LLRegionEvent regionEvent)
-        //{
-        //	Console.WriteLine("Did trigger regions: " + regions + " with event: " + regionEvent);
-        //}
-
-        void LL_OnLocalyticsDidUpdateMonitoredGeofences(IList<CircularRegion> added, IList<CircularRegion> removed)
+        void LL_OnLocalyticsDidTriggerRegions(object sender, LocalyticsDidTriggerRegionsEventArgs eventArgs)
         {
-            Console.WriteLine("Did update monitored geofences. Added: " + added + " and removed: " + removed);
+            Console.WriteLine("Did trigger regions: " + eventArgs.Regions + " with event: " + eventArgs.RegionEvent);
+        }
+
+        void LL_OnLocalyticsDidUpdateMonitoredGeofences(object sender, LocalyticsDidUpdateMonitoredGeofencesEventArgs eventArgs)
+        {
+            Console.WriteLine("Did update monitored geofences. Added: " + eventArgs.AddedRegions + " and removed: " + eventArgs.RemovedRegions);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace LocalyticsMessagingSample.Android
         {
             base.OnResume();
 
-            Localytics.TagScreen("Inbox Detail");
+			LocalyticsAutoIntegrateApplication.localyticsXamarin.TagScreen("Inbox Detail");
         }
     }
 }

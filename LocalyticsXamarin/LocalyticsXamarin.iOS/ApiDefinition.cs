@@ -478,7 +478,6 @@ namespace LocalyticsXamarin.IOS
 		// @required +(void)setLocation:(CLLocationCoordinate2D)location;
 		[Static]
 		[Export("setLocation:")]
-		[Internal]
 		void SetLocation(CLLocationCoordinate2D location);
 
 		// @required +(void)setValue:(id _Nonnull)value forProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
@@ -585,7 +584,6 @@ namespace LocalyticsXamarin.IOS
 		// @required +(void)redirectLoggingToDisk;
 		[Static]
 		[Export("redirectLoggingToDisk")]
-		[Internal]
 		void RedirectLoggingToDisk();
 
 		// @required +(BOOL)isPrivacyOptedOut;
@@ -807,7 +805,7 @@ namespace LocalyticsXamarin.IOS
 		[Static]
 		[Export("setMessagingDelegate:")]
 		[Protected]
-		void SetMessagingDelegatePrivate([NullAllowed] LLMessagingDelegate @delegate);
+		void SetMessagingDelegate([NullAllowed] LLMessagingDelegate @delegate);
 
 		// @required +(BOOL)isInAppAdIdParameterEnabled;
 		[Static]
@@ -824,14 +822,14 @@ namespace LocalyticsXamarin.IOS
 		// @required +(void)setAnalyticsDelegate:(id<LLAnalyticsDelegate> _Nullable)delegate;
 		[Static]
 		[Export("setAnalyticsDelegate:")]
-		[Protected]
-		void SetAnalyticsDelegatePrivate([NullAllowed] LLAnalyticsDelegate @delegate);
+		[Internal]
+		void SetAnalyticsDelegate([NullAllowed] LLAnalyticsDelegate @delegate);
 
 		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate;
 		[Static]
 		[Export("setLocationDelegate:")]
-		[Protected]
-		void SetLocationDelegatePrivate([NullAllowed] LLLocationDelegate @delegate);
+        [Internal]
+		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
 
 		// @required +(void)pauseDataUploading:(BOOL)pause;
 		[Static]
@@ -887,7 +885,6 @@ namespace LocalyticsXamarin.IOS
 		// @required +(void)tagImpressionForPushToInboxCampaign:(LLInboxCampaign * _Nonnull)campaign success:(BOOL)success;
 		[Static]
 		[Export("tagImpressionForPushToInboxCampaign:success:")]
-		[Internal]
 		void TagImpressionForPushToInboxCampaign(LLInboxCampaign campaign, bool success);
 
 		// @required +(void)inboxListItemTapped:(LLInboxCampaign * _Nonnull)campaign;
@@ -940,23 +937,24 @@ namespace LocalyticsXamarin.IOS
 	// @protocol LLAnalyticsDelegate <NSObject>
 	[BaseType(typeof(NSObject))]
 	[Protocol]
+    [Internal]
 	interface LLAnalyticsDelegate
 	{
 		// @optional -(void)localyticsSessionWillOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume;
 		[Export("localyticsSessionWillOpen:isUpgrade:isResume:")]
-		void LocalyticsSessionWillOpen(bool isFirst, bool isUpgrade, bool isResume);
+        void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume);
 
 		// @optional -(void)localyticsSessionDidOpen:(BOOL)isFirst isUpgrade:(BOOL)isUpgrade isResume:(BOOL)isResume;
 		[Export("localyticsSessionDidOpen:isUpgrade:isResume:")]
-		void LocalyticsSessionDidOpen(bool isFirst, bool isUpgrade, bool isResume);
+        void LocalyticsSessionDidOpenHandler(bool isFirst, bool isUpgrade, bool isResume);
 
 		// @optional -(void)localyticsDidTagEvent:(NSString * _Nonnull)eventName attributes:(NSDictionary<NSString *,NSString *> * _Nullable)attributes customerValueIncrease:(NSNumber * _Nullable)customerValueIncrease;
 		[Export("localyticsDidTagEvent:attributes:customerValueIncrease:")]
-		void LocalyticsDidTagEvent(string eventName, [NullAllowed] NSDictionary attributes, NSNumber customerValueIncrease);
+        void LocalyticsDidTagEventHandler(string eventName, [NullAllowed] NSDictionary attributes, NSNumber customerValueIncrease);
 
 		// @optional -(void)localyticsSessionWillClose;
 		[Export("localyticsSessionWillClose")]
-		void LocalyticsSessionWillClose();
+		void LocalyticsSessionWillCloseHandler();
 	}
 
 	// @protocol LLMessagingDelegate <NSObject>

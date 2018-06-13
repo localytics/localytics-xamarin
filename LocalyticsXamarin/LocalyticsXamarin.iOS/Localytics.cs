@@ -24,43 +24,6 @@ namespace LocalyticsXamarin.IOS
             return _instance;
         }
 
-        /* Events ... */
-		public event EventHandler<LocalyticsDidTriggerRegionsEventArgs> LocalyticsDidTriggerRegions
-        {
-            add
-            {
-				LocationListener.LocationDidTriggerRegionsEvent += value;
-            }
-            remove
-            {
-				LocationListener.LocationDidTriggerRegionsEvent -= value;
-            }
-        }
-
-		public event EventHandler<LocalyticsDidUpdateLocationEventArgs> LocalyticsDidUpdateLocation
-        {
-            add
-            {
-				LocationListener.LocationUpdateEvent += value;
-            }
-            remove
-            {
-				LocationListener.LocationUpdateEvent -= value;
-            }
-        }
-
-        public event EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> LocalyticsDidUpdateMonitoredGeofences
-        {
-            add
-            {
-				LocationListener.LocationDidUpdateMonitoredRegionsEvent += value;
-            }
-            remove
-            {
-				LocationListener.LocationDidUpdateMonitoredRegionsEvent -= value;
-            }
-        }
-
 		public static void TagPlacesPushReceived(LLPlacesCampaign campaign)
 		{
 			Localytics.TagPlacesPushReceivedPrivate(campaign);
@@ -172,42 +135,10 @@ namespace LocalyticsXamarin.IOS
 		static LocationListener locationListener = new LocationListener();
 		static Localytics()
 		{
-			LocalyticsPlatformCommon.UpdatePluginVersion();
-			Localytics.SetAnalyticsDelegatePrivate(analyticsListener);
-			Localytics.SetMessagingDelegatePrivate(messagingListener);
-			Localytics.SetLocationDelegatePrivate(locationListener);
-		}
-
-		public class LocalyticsDidTriggerRegionsEventArgs : EventArgs
-		{
-			public LLRegion[] regions;
-			public LLRegionEvent regionEvent;
-
-			public LocalyticsDidTriggerRegionsEventArgs(LLRegion[] regions, LLRegionEvent regionEvent)
-			{
-				this.regions = regions;
-				this.regionEvent = regionEvent;
-			}
-		}
-
-		public class LocalyticsDidUpdateLocationEventArgs : EventArgs
-		{
-			public CLLocation location;
-			public LocalyticsDidUpdateLocationEventArgs(CLLocation location)
-			{
-				this.location = location;
-			}
-		}
-
-		public class LocalyticsDidUpdateMonitoredGeofencesEventArgs : EventArgs
-		{
-			public LLRegion[] addedRegions, removedRegions;
-
-			public LocalyticsDidUpdateMonitoredGeofencesEventArgs(LLRegion[] addedRegions, LLRegion[] removedRegions)
-			{
-				this.addedRegions = addedRegions;
-				this.removedRegions = removedRegions;
-			}
+			LocalyticsSDK.UpdatePluginVersion();
+			Localytics.SetAnalyticsDelegate(analyticsListener);
+			Localytics.SetMessagingDelegate(messagingListener);
+			Localytics.SetLocationDelegate(locationListener);
 		}
 
 		public sealed class LocationListener : LLLocationDelegate
@@ -231,146 +162,33 @@ namespace LocalyticsXamarin.IOS
 			}
 		}
 
-		public class SessionEventArgs : EventArgs
+		internal sealed class AnalyticsListener : LLAnalyticsDelegate
 		{
-			public bool First { get; set; }
-			public bool Upgrade { get; set; }
-			public bool Resume { get; set; }
+            static internal EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen;
+            static internal EventHandler<LocalyticsDidTagEventEventArgs> LocalyticsDidTagEvent;
+            static internal EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen;
+            static internal EventHandler LocalyticsSessionWillClose;
 
-			public SessionEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+			public override void LocalyticsSessionDidOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
 			{
-				First = isFirst;
-				Upgrade = isUpgrade;
-				Resume = isResume;
+                LocalyticsSessionDidOpen?.Invoke(null, new LocalyticsSessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
 			}
 
-			public override string ToString()
+            public override void LocalyticsDidTagEventHandler(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
 			{
-				return string.Format("First:{0} Upgrade:{1} Resume:{2}", First, Upgrade, Resume);
+                LocalyticsDidTagEvent?.Invoke(null, new LocalyticsDidTagEventEventArgs(eventName, attributes, customerValueIncrease?.DoubleValue));
+			}
+
+            public override void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
+			{
+                LocalyticsSessionWillOpen?.Invoke(null, new LocalyticsSessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
+			}
+
+			public override void LocalyticsSessionWillCloseHandler()
+			{
+                LocalyticsSessionWillClose?.Invoke(null, new EventArgs());
 			}
 		}
-
-		public class LocalyticsSessionDidOpenEventArgs : SessionEventArgs
-		{
-			public LocalyticsSessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-				: base(isFirst, isUpgrade, isResume)
-			{
-			}
-		}
-  
-		public class LocalyticsDidTagEventEventArgs : EventArgs
-		{
-			public string EventName { get; set; }
-			public IDictionary Attributes { get; set; }
-			public double? customerValue { get; set; }
-			public LocalyticsDidTagEventEventArgs(string name,
-										  IDictionary attribs,
-										  double? customerValue)
-			{
-				EventName = name;
-				Attributes = attribs;
-				this.customerValue = customerValue;
-			}
-			public override string ToString()
-			{
-				return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, customerValue, Attributes.ToString());
-			}
-		}
-	
-		public class LocalyticsSessionWillOpenEventArgs : SessionEventArgs
-		{
-			public LocalyticsSessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-				: base(isFirst, isUpgrade, isResume)
-			{
-			}
-		}
-
-		public class LocalyticsSessionWillCloseEventArgs : EventArgs
-		{
-			// No Extra Args.
-
-		}
-
-		public event EventHandler<LocalyticsDidTagEventEventArgs> LocalyticsDidTagEvent
-        {
-            add
-            {
-				AnalyticsListener.SessionDidTagEvent += value;
-            }
-            remove
-            {
-				AnalyticsListener.SessionDidTagEvent -= value;
-            }
-        }
-
-        public event EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
-        {
-            add
-            {
-				AnalyticsListener.SessionDidOpenEvent += value;
-            }
-            remove
-            {
-				AnalyticsListener.SessionDidOpenEvent -= value;
-            }
-        }
-
-		public event EventHandler<LocalyticsSessionWillCloseEventArgs> LocalyticsSessionWillClose
-        {
-            add
-            {
-				AnalyticsListener.SessionWillCloseEvent += value;
-            }
-            remove
-            {
-				AnalyticsListener.SessionWillCloseEvent -= value;
-            }
-        }
-
-        public event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
-        {
-            add
-            {
-				AnalyticsListener.SessionWillOpenEvent += value;
-            }
-            remove
-            {
-				AnalyticsListener.SessionWillOpenEvent -= value;
-            }
-        }
-
-		sealed class AnalyticsListener : LLAnalyticsDelegate
-		{
-			static internal EventHandler<LocalyticsSessionDidOpenEventArgs> SessionDidOpenEvent;
-			static internal EventHandler<LocalyticsDidTagEventEventArgs> SessionDidTagEvent;
-			static internal EventHandler<LocalyticsSessionWillOpenEventArgs> SessionWillOpenEvent;
-			static internal EventHandler<LocalyticsSessionWillCloseEventArgs> SessionWillCloseEvent;
-
-			public override void LocalyticsSessionDidOpen(bool isFirst, bool isUpgrade, bool isResume)
-			{
-				SessionDidOpenEvent?.Invoke(null, new LocalyticsSessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
-			}
-
-			public override void LocalyticsDidTagEvent(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
-			{
-				SessionDidTagEvent?.Invoke(null, new LocalyticsDidTagEventEventArgs(eventName, attributes, customerValueIncrease?.DoubleValue));
-			}
-
-			public override void LocalyticsSessionWillOpen(bool isFirst, bool isUpgrade, bool isResume)
-			{
-				SessionWillOpenEvent?.Invoke(null, new LocalyticsSessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
-			}
-
-			public override void LocalyticsSessionWillClose()
-			{
-				SessionWillCloseEvent?.Invoke(null, new LocalyticsSessionWillCloseEventArgs());
-			}
-		}
-
-		public static InAppDidDisplayEventHandler InAppDidDisplayEvent;
-		public static InAppWillDismissEventHandler InAppWillDismissEvent;
-		public static InAppDidDismissEventHandler InAppDidDismissEvent;
-		public static Func<bool> InAppDelaySessionStartMessages;
 
 		public class InboxWillDispayViewControllerEventArgs : EventArgs { } // No Extra Args.
 		public delegate void InboxWillDisplayViewControllerEventHandler(object sender, InboxWillDispayViewControllerEventArgs e);
@@ -386,11 +204,6 @@ namespace LocalyticsXamarin.IOS
 		static public InboxWillDisplayViewControllerEventHandler InboxWillDisplayViewControllerEvent;
 		static public InboxWillDismissViewControllerEventHandler InboxWillDismissViewControllerEvent;
 
-		public static Func<LLInAppCampaign, bool> InAppShouldShow;
-		public static Func<string, bool> ShouldDeepLink;
-		public static Func<LLInAppCampaign, LLInAppConfiguration, LLInAppConfiguration> InAppWillDisplay;
-
-		public static Func<LLPlacesCampaign, bool> PlacesShouldDisplayCampaign;
 		public static Func<UILocalNotification, LLPlacesCampaign, UILocalNotification> PlacesWillDisplayNotification;
 		public static Func<UserNotifications.UNMutableNotificationContent, LLPlacesCampaign, UserNotifications.UNMutableNotificationContent> PlacesWillDisplayNotificationContent;
 
@@ -398,32 +211,32 @@ namespace LocalyticsXamarin.IOS
 		{
 			public override bool LocalyticsShouldShowInAppMessage(LLInAppCampaign campaign)
 			{
-				return InAppShouldShow != null ? InAppShouldShow(campaign) : true;
+                return LocalyticsSDK.InAppShouldShowDelegate != null ? LocalyticsSDK.InAppShouldShowDelegate(campaign) : true;
 			}
 
 			public override bool LocalyticsShouldDelaySessionStartInAppMessages()
 			{
-				return InAppDelaySessionStartMessages == null || InAppDelaySessionStartMessages();
+                return LocalyticsSDK.InAppDelaySessionStartMessagesDelegate == null || LocalyticsSDK.InAppDelaySessionStartMessagesDelegate();
 			}
 
 			public override LLInAppConfiguration LocalyticsWillDisplayInAppMessage(LLInAppCampaign campaign, LLInAppConfiguration configuration)
 			{
-				return InAppWillDisplay != null ? InAppWillDisplay(campaign, configuration) : configuration;
+                return LocalyticsSDK.InAppWillDisplayDelegate != null ? LocalyticsSDK.InAppWillDisplayDelegate(campaign, configuration) : configuration;
 			}
 
 			public override void LocalyticsDidDisplayInAppMessage()
 			{
-				InAppDidDisplayEvent?.Invoke(null, new InAppDidDisplayEventArgs());
+                LocalyticsSDK.InAppDidDisplayEvent?.Invoke(null, new InAppDidDisplayEventArgs());
 			}
 
 			public override void LocalyticsWillDismissInAppMessage()
 			{
-				InAppWillDismissEvent?.Invoke(null, new InAppWillDismissEventArgs());
+                LocalyticsSDK.InAppWillDismissEvent?.Invoke(null, new InAppWillDismissEventArgs());
 			}
 
 			public override void LocalyticsDidDismissInAppMessage()
 			{
-				InAppDidDismissEvent?.Invoke(null, new InAppDidDismissEventArgs());
+                LocalyticsSDK.InAppDidDismissEvent?.Invoke(null, new InAppDidDismissEventArgs());
 			}
 
 			public override void LocalyticsWillDisplayInboxDetailViewController()
@@ -448,7 +261,7 @@ namespace LocalyticsXamarin.IOS
 
 			public override bool LocalyticsShouldDisplayPlacesCampaign(LLPlacesCampaign campaign)
 			{
-				return PlacesShouldDisplayCampaign != null ? PlacesShouldDisplayCampaign(campaign) : true;
+                return LocalyticsSDK.PlacesShouldDisplayCampaignDelegate != null ? LocalyticsSDK.PlacesShouldDisplayCampaignDelegate(campaign) : true;
 			}
 
 			public override UILocalNotification LocalyticsWillDisplayNotification(UILocalNotification notification, LLPlacesCampaign campaign)
@@ -463,7 +276,7 @@ namespace LocalyticsXamarin.IOS
 
 			public override bool LocalyticsShouldDeeplink(Foundation.NSUrl url)
 			{
-				return ShouldDeepLink != null ? ShouldDeepLink(url.AbsoluteString) : true;
+                return LocalyticsSDK.ShouldDeepLinkDelegate != null ? LocalyticsSDK.ShouldDeepLinkDelegate(url.AbsoluteString) : true;
 			}
 		}
 	}

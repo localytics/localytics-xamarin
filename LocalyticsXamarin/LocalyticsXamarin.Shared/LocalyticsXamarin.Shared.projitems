@@ -9,8 +9,7 @@
     <Import_RootNamespace>LocalyticsXamarin.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)LocalyticsPlatform.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)LocalyticsPlatformCommon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LocalyticsSDK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Campaign.cs" />
   </ItemGroup>
