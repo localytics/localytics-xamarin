@@ -3,11 +3,11 @@
     <string name="ll_package_name" translatable="false">com.localytics.android.testapp</string>
 
     <!-- Define your Localytics app key-->
-    <string name="ll_app_key" translatable="false">f737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8</string>
+    <string name="ll_app_key" translatable="false">APPKEY</string>
 
     <!-- Define your Localytics test mode scheme. This value should be amp followed by your app key
     ex. ampYOUR_APP_KEY -->
-    <string name="ll_test_mode_url_scheme" translatable="false">ampf737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8</string>
+    <string name="ll_test_mode_url_scheme" translatable="false">ampAPPKEY</string>
 
     <!-- Toggle the Localytics referral receiver which is used to attribute sessions to
     their installation source -->
@@ -22,7 +22,7 @@
     <bool name="ll_gcm_service_enabled">false</bool>
 
     <!-- Specify the GCM Sender ID which will be used to register for push tokens -->
-    <string name="ll_gcm_sender_id" translatable="false">995606817677</string>
+    <string name="ll_gcm_sender_id" translatable="false">GCMID</string>
 
     <!-- Toggle the Localytics FirebaseInstanceIdService and FirebaseMessagingService, which handle
     incoming requests from FCM. If this value is set to true, then the app must specify the

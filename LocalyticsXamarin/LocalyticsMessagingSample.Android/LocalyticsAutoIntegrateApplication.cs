@@ -27,7 +27,7 @@ namespace LocalyticsMessagingSample.Android
 #if DEBUG
 			localyticsXamarin.LoggingEnabled = true;
 #endif
-			Localytics.SetOption("ll_app_key", "f737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8");
+			Localytics.SetOption("ll_app_key", "APPKEY");
 
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);
@@ -44,15 +44,14 @@ namespace LocalyticsMessagingSample.Android
             LocalyticsSDK.InAppWillDismissEvent += LL_OnLocalyticsWillDismissInAppMessage;
             LocalyticsSDK.InAppWillDisplayDelegate += LL_OnLocalyticsWillDisplayInAppMessage;
 
-            //LocalyticsSDK.OnLocalyticsShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
-            //Localytics.OnLocalyticsShouldShowPlacesPushNotification += LL_OnLocalyticsShouldShowPlacesPushNotification;
+            Localytics.ShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
+            LocalyticsSDK.PlacesShouldDisplayCampaignDelegate += LL_OnLocalyticsShouldShowPlacesPushNotification;
 
             Localytics.WillShowPushNotification += LL_OnLocalyticsWillShowPushNotification;
             Localytics.WillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
 
             //// Location callbacks
             LocalyticsSDK.LocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
-            //         // TODO Fix me
             LocalyticsSDK.LocalyticsDidTriggerRegions += (sender, e) => {
                 Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e);
             };

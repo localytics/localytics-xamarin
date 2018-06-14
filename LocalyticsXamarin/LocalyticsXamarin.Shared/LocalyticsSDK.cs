@@ -806,7 +806,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagImpressionForPushToInboxCampaign((NativeInboxCampaign)campaign, success);
 #else
-			// FIXME Native doesnt support Deeplink Success on Android.
+			// FIXME Native doesnt support Deeplink Success on Android. - request submitted to Native SDK for review.
 			Localytics.TagPushToInboxImpression((NativeInboxCampaign)campaign);
 #endif
         }
