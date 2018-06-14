@@ -19,7 +19,7 @@ using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Shared.LocalyticsXamarinForms))]
 namespace LocalyticsXamarin.Shared
 {
-    public class LocalyticsXamarinForms : LocalyticsSDK, ILocalytics, IPlatform  //    ,ILocalyticsIOS
+    public class LocalyticsXamarinForms : LocalyticsSDK, ILocalytics, IPlatform
 	{
 		bool inappShouldDisplay = true;
 		bool placesShouldDisplay = true;

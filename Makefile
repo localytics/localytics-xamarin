@@ -14,3 +14,22 @@ clean :
 	-cd LocalyticsXamarin/LocalyticsXamarin.Android && make clean
 	-rm -rf LocalyticsXamarin/*/bin LocalyticsXamarin/*/obj build 
 	-rm -rf LocalyticsXamarin/LocalyticsMessagingSample.Android/bin LocalyticsXamarin/LocalyticsMessagingSample.Android/obj
+
+
+release :
+ifneq ($(VER),)
+	-make  clean
+	@echo 
+	@echo Building version $(VER)
+	@cp LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs.org
+	@sed 's/\(assembly:.AssemblyVersion...\)[0-9\.]*/\1'$(VER)'./' LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs.org > LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs
+	@cp LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs.org
+	@sed 's/\(assembly:.AssemblyVersion...\)[0-9\.]*/\1'$(VER)'./' LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs.org > LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs
+	@cp LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs.org
+	@sed 's/\(assembly:.AssemblyVersion...\)[0-9\.]*/\1'$(VER)'./' LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs.org > LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs
+	@cp LocalyticsXamarin/LocalyticsXamarin.NuGet/Localytics.NuGet.nuproj LocalyticsXamarin/LocalyticsXamarin.NuGet/Localytics.NuGet.nuproj.org
+	@cd LocalyticsXamarin/LocalyticsXamarin.NuGet && sed 's/\(\<PackageVersion\>\)[^\<]*\(\<\/PackageVersion\>\)/\1'$(VER)'\2/' Localytics.NuGet.nuproj.org >  Localytics.NuGet.nuproj
+	@rm LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.NuGet/Localytics.NuGet.nuproj.org
+	@cd LocalyticsXamarin/LocalyticsXamarin.NuGet && msbuild /t:Rebuild /p:Configuration=Release
+	echo Publish LocalyticsXamarin/LocalyticsXamarin.NuGet/bin/Release/Localytics.$(VER).nupkg 
+endif
