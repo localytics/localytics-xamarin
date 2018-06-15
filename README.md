@@ -1,47 +1,43 @@
-Localytics Xamarin Component
+Localytics Xamarin SDK
 ---
-This repository contains the element necessary to build the Localytics Xamarin Component (*.xam*).  For instruction on how to use the Component, refer to /component/GettingStarted.md
+This repository contains the open source Xamarin SDK  to build the Localytics Xamarin Nuget package (*.nuget).  For instruction on how to use the Nuget package, refer to [Getting Started](GettingStarted.md)
 
 ## Contents
-* **/components** contains metadata and files for packaging .xam (used by `xamarin-component.exe` when you call `rake`)
-* **/LocalyticsXamarin** contains the entire solution for the libraries and sample applications
-* **/AndroidPatchTest** Android Studio Project that have a module for bridging localytics.jar. It helps generate the c#/JNI bindings for the Listeners.
+* **/Localytics-Android-Latest** contains the latest Android Release that has been bound to the Xamarin SDK.
+* **/Localytics-iOS-Latest** contains the latest iOS Release that has been bound to the Xamarin SDK.
+* **/LocalyticsXamarin** contains the entire solution for the Xamarin SDK and sample applications
+
 
 ## Building the Nuget Package
-You will need Xcode, and Xamarin Studio (with Android API 15) and java 8.Simply call `gradle` to build/install or deploy the nuget package on your custom nuget server
+This and the following sections are for Developers wishing to contribute to the XamarinSDK.
+You will need Xcode, and Xamarin Studio (with Android API 19) and java 8.Simply call make VER=0.0.0 release to build.
+Localytics recommends using the prebuilt nuget package for integrating Localytics in a production app. Instructions can be found at LocalyticsXamarin/LocalyticsXamarin.NuGet/GettingStarted.md
 
 **Build**
 ```
 $ cd LocalyticsXamarin
-$ ./gradlew package
+$ make VER=0.0.0 release
 ```
 
-**Install localy**
+**Install locally**
 ```
-$ cd LocalyticsXamarin
-$ ./gradlew install
+$ copy the built nuget package to an appropriate folder and dd this folder as a nuget source
 ```
-
-**Deploy on your custom nuget server**
-```
-$ cd LocalyticsXamarin
-$ ./gradlew deploy -PurlNugetNexus="http://CustomNugetRepoUrl" -PapiKeyNugetNexus="CustomNugetRepoApiKey
-```
-
-## Building the Xamarin Component
-You will need Xcode, and Xamarin Studio (with Android API 15). Simply call `make` to build the .dll and then `rake` to package the .xam.
-```
-$ make
-...
-$ rake
-```
-Please refer to [Xamarin Component Submission Guide](https://developer.xamarin.com/guides/cross-platform/advanced/submitting_components/component_submission_guide/)
-for more details about `xamarin-component` calls within the Rakefile.
 
 ## Projects in LocalyticsXamarin Solution
 The **/LocalyticsXamarin** folder contain a solution that includes projects for the main libraries and sample/test applications.
 
-1. LocalyticsXamarin Library Projects
+
+### LocalyticsXamarin Library Projects
+
+
+| LocalyticsXamarin SDK     |   |
+|---------------------------|---|
+| LocalyticsXamarin.iOS     | IOS Xamarin SDK Binding project  |
+| LocalyticsXamarin.Android | Android Xamarin SDK Binding project  |
+| LocalyticsXamarin.Shared  | Shared Project with code shared between Android and IOS Binding Project  |
+| LocalyticsXamarin.Common  | Common Project that allows access of Xamarin SDK from a Shared project using dependency service.  |
+
    
   These projects deal with bindings to the respective Localytics native SDK.
   * **LocalyticsXamarin.Android** (Xamarin.Android Library Binding)
@@ -50,17 +46,23 @@ The **/LocalyticsXamarin** folder contain a solution that includes projects for 
   * **LocalyticsXamarin.iOS** for (Xamarin.iOS Unified Library Binding)
     
     This project mainly derived from generating bindings through Objective Sharpie with subsequent tweaks.
-  * **LocalyticsXamarin.iOS-Classic** (Xamarin.iOS Classic Library Binding)
-    
-    This project mainly derived from copying LocalyticsXamarin.iOS and editing namespace.
-
-2. LocalyticsSample Xamarin.Forms Projects
   
+### LocalyticsSample Xamarin.Forms Projects
+  
+  
+| LocalyticsXamarin SDK Sample |  Sample to verify the Xamarin SDK API |
+|------------------------------|---|
+| Android    | Android Platform project  |
+| iOS        | IOS Platform project      |
+| LocalyticsSample | Shared project used by the Android and IOS sample project |
+| LocalyticsMessagingSample.Android | Test Sample for Inbox and android messaging listeners. |
+
+
   This is the main sample/test UI application. It uses DependencyService to call the respective Xamarin.Android or Xamarin.iOS Localytics Library. `ILocalyticsXamarinForms.cs` and its implementations (i.e. `LocalyticsXamarinForms_Android.cs` and `LocalyticsXamarinForms_iOS.cs`) can be useful in other Xamarin.Forms applications. The implementations also demonstrate how to call most of the API functions and Object Conversions.
   * **LocalyticsSample** contains the Xamarin.Forms UI
   * **LocalyticsSample.iOS** deals with native setup, mostly in `AppDelegate.cs` and `Info.plist`
   * **LocalyticsSample.Android** deals with native setup, mostly in `LocalyticsAutoIntegrateApplication.cs`, `MainActivity.cs` and `AndroidManifest.xml`
 
-3. Other Sample and Smoke Test Application
-  * **LocalyticsiOSClassicTest** was used to smoke test the LocalyticsXamarin.iOS-Classic Builds
+### Other Sample and Smoke Test Application
+ 
   * **LocalyticsMessagingSample.Android** is an Xamarin.Android application used to test Android Push and InApp Messaging. Currently, InApp messaging most likely won't work in Xamarin.Forms, which does not support Fragments. This project requires the `Xamarin.GooglePlayServices.Gcm` Package.

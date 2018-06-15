@@ -1,11 +1,175 @@
 # Getting Started with Localytics in Xamarin
 ---
-This Xamarin Component simplifies the process of integrating Localytics into Xamarin iOS, Android and Forms projects.
+This Xamarin Nuget simplifies the process of integrating Localytics into Xamarin iOS, Android and Forms projects.
 
 The steps to integrate Localytics with this component mirrors the native Localytics SDK, so the following docs for the respective platforms maybe helpful:
 
 * [iOS Localytics Docs](http://docs.localytics.com/dev/ios.html)
 * [Android Localytics Docs](http://docs.localytics.com/dev/android.html)
+
+
+## Getting Started
+
+### Install the SDK
+1. Download the latest version of the Nuget package from [here](https://downloads.localytics.com/SDKs/Xamarin/Localytics-Xamarin-Latest.zip).
+2. Add a Nuget Package source in Visual Studio Preferences called localytics that points to the folder with the downloaded package.
+3. In Projects where you want to use Localytic SDK 
+4. Integrating to each of your projects
+	* Expand Packages folder in your platform Project
+	* Add a Package
+	* Select localytics as the package sources
+	* Pick the latest version of localytics
+	* Repeat the step for each platform (Android and iOS)
+	
+## Package Names
+
+* LocalyticsXamarin.iOS - API's available for using in the iOS platform from the Native SDK [iOS Localytics Docs](http://docs.localytics.com/dev/ios.html)
+* LocalyticsXamarin.Android - API's available for use on the Android platform [Android Localytics Docs](http://docs.localytics.com/dev/android.html)
+* LocalyticsXamarin.Shared - Platform specific API's that have been bridged to work from a Shared library project.
+* LocalyticsXamarin.Common - class available on Both iOS and Android using .net dependencies only. The Interfaces are the same across platforms offering similar functionality.
+
+## Xamarin Forms and Dependency Service
+LocalyticsXamarin.Common.ILocalytics interface is implemented using XamarinForms and can be available to a project using XamarinDependency Service.
+
+Add a file to each of your platform with the following contents
+
+    using System;
+    using LocalyticsXamarin.Common;
+    [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsXamarin.Shared.LocalyticsXamarinForms))]
+    namespace LocalyticsXamarin.Shared
+    {
+    public class LocalyticsXamarinForms : LocalyticsSDK, ILocalytics, IPlatform
+	    {
+	    }
+    }
+
+Use the API in common modules using the interface
+```
+    ILocalytics localytics = DependencyService.Get<ILocalytics>();
+```
+
+* Non forms classes can use the same interface using
+```
+    ILocalytics localytics = LocalyticsSDK.SharedInstance;
+``` 
+
+## API Summary
+
+API's follow c# naming conventions and are translation of the API on the native platform.
+
+### Common APIs
+
+| API                    | Description  |
+|------------------------|------|
+| OpenSession  | Opens a session. Multiple calls are coallesed.  |
+| CloseSession | Open Sessions are marked with a pending close. Sessions are extended if there is localytics activity before expiry of Session timer |
+| Upload| uploads any data stored on the device by the localytics SDK. Essential to do this early, to ensure upload completes before app is suspended.|
+| PauseDataUploading | all data upload is deferred until it is resumed. Calls to the upload API dont perform any action. When data upload is resumed, all locally stored data is immediately uploaded. |
+| TagEvent | Tag an event |
+| TagPurchased | A standard event to tag a single item purchase event (after the action has occurred) |
+| TagAddedToCart | A standard event to tag the addition of a single item to a cart (after the action has occurred) |
+| TagStartedCheckout | A standard event to tag the start of the checkout process (after the action has occurred) |
+| TagCompletedCheckout | A standard event to tag the conclusions of the checkout process (after the action has occurred) |
+| TagContentViewed | A standard event to tag the viewing of content (after the action has occurred) |
+| TagSearched | A standard event to tag a search event (after the action has occurred) |
+| TagShared | A standard event to tag a share event (after the action has occurred) |
+| TagContentRated | A standard event to tag the rating of content (after the action has occurred) |
+| TagCustomerRegistered | A standard event to tag the registration of a user (after the action has occurred) |
+| TagCustomerLoggedIn | A standard event to tag the logging in of a user (after the action has occurred) |
+| TagCustomerLoggedOut | A standard event to tag the logging out of a user (after the action has occurred) |
+| TagInvited | A standard event to tag the invitation of a user (after the action has occured) |
+| TagScreen | Allows tagging the flow of screens encountered during the session. |
+| SetCustomDimension | Sets the value of custom dimension which is user defined data. Customer sensitive data should be hashed or encrypted |
+| GetCustomDimension |Gets the custom value for a given dimension. Must not be called from the main thread. |
+| SetIdentifier | Sets the value of a custom identifier |
+| GetIdentifier | Gets the identifier value for a given identifier. Must not be called form the main thread. |
+| CustomerId | property representing a customer Id. Recommended to use SetCustomerId. privacy sensitive data should be hashed or encyrpted |
+| SetCustomerId | set customer Id and privacy status automically.|
+| SetProfileAttribute | Attribute values can be long, string, Array of long or Array of String |
+| AddProfileAttribute | Adds values to a profile attribute that is a set |
+| RemoveProfileAttribute | Removes values from a profile attribute that is a set |
+| IncrementProfileAttribute | Increment the value of a profile attribute. |
+| DecrementProfileAttribute | Decrement the value of a profile attribute. |
+| DeleteProfileAttribute | Delete a profile attribute |
+| SetCustomerEmail | Convenience method to set a customer's email |
+| SetCustomerFirstName | Convenience method to set a customer's first name |
+| SetCustomerLastName | Convenience method to set a customer's last name |
+| SetCustomerFullName | Convenience method to set a customer's full name |
+| SetOptions | Customize the behavior of the SDK by setting custom values for various options.|
+| SetOption | Customize the behavior of the SDK by setting custom value for various options.|
+| LoggingEnabled |property that controls if the localytics SDK emits logging information. |
+| OptedOut | control collection of user data. |
+| PrivacyOptedOut | Opts out of data collection and requests a Delete data request to be submitting to the cloud service, |
+| InstallId | An Installtion Identifier |
+| LibraryVersion | version of the Localytics SDK |
+| TestModeEnabled | Controls the Test Mode charactertistics of the Localytics SDK |
+| InAppAdIdParameterEnabled | ADID parameter is added to In-App call to action URLs |
+| TriggerPlacesNotificationForCampaignId | Trigger a places notification for the given campaign id and regionId |
+| InboxAdIdParameterEnabled | ADID parameter is added to Inbox call to action URLs |
+| InAppMessageDismissButtonLocation | location of the dismiss button on an In-App msg |
+| SetInAppMessageDismissButtonHidden | dismiss button hidden state on an In-App message |
+| TriggerInAppMessage | Trigger an In-App message |
+| TriggerInAppMessagesForSessionStart | Trigger campaigns as if a Session Start event had just occurred. |
+| DismissCurrentInAppMessage | Dismiss a currently displayed In-App message. |
+| InboxCampaigns | an array of all Inbox campaigns that are enabled and can be displayed |
+| AllInboxCampaigns | an array of all Inbox campaigns that are enabled. |
+| RefreshInboxCampaigns | Refresh inbox campaigns from the Localytics server that are enabled and can be displayed. |
+| RefreshAllInboxCampaigns | Refresh inbox campaigns from the Localytics server that are enabled. |
+| TagImpression | A standard event to tag an In-App impression. |
+| SetInboxCampaign | Set an Inbox campaign as read. |
+| InboxListItemTapped | Tell the Localytics SDK that an Inbox campaign was tapped in the list view.  |
+| InboxCampaignsUnreadCount | count of unread inbox messages |
+| SetLocationMonitoringEnabled | Enable or disable location monitoring for geofence monitoring | 
+| PushTokenInfo | return a string version of Push Token on all platforms.| 
+
+### Events
+
+Events are available as static events in the LocalyticsSDK class in the Localytics.Shared namespace.
+
+Event Args are Platform Specific, but they have the same field members. Future Versions of the SDK will provide a common interface to better enable code sharing across platforms.
+
+| Event Name                    | Args | Description  |
+|------------------------|---|---|
+| LocalyticsDidTagEvent | LocalyticsDidTagEventEventArgs | fired when an analytics event is tagged |
+| LocalyticsSessionWillClose | None | When Session is closed. |
+| LocalyticsSessionDidOpen | LocalyticsSessionDidOpenEventArgs | when Session is opened. |
+| LocalyticsSessionWillOpenEventArgs | when session will be opened |
+| LocalyticsDidTriggerRegions | LocalyticsDidTriggerRegionsEventArgs | |
+| LocalyticsDidUpdateLocation | LocalyticsDidUpdateLocationEventArgs |
+| LocalyticsDidUpdateMonitoredGeofences | LocalyticsDidUpdateMonitoredGeofencesEventArgs |
+| InAppDidDisplayEvent | |
+| InAppWillDismissEvent | |
+| InAppDidDismissEvent | |
+
+### Delegates
+
+| Event Name                    | Args | Return | Description  |
+| InAppDelaySessionStartMessagesDelegate | None | bool | Delay display of Session Start InApps to allow for launch screen and other page transitions including login to complete |
+| InAppShouldShowDelegate | InAppCamaign | bool | Determines if an InApp Should be displayed. Default is true, when a delegate is not specified |
+| ShouldDeepLinkDelegate | string (absolute url) | bool | Used to determine if the absolute url specified as a string should be displayed by Localytics SDK |
+| InAppWillDisplayDelegate | InAppCampaign, InAppConfiguration | InAppConfiguration | Modified InAppConfiguration that is to be used to display the InApp specified by InAppCampaign. |
+| PlacesShouldDisplayCampaignDelegate | PlacesCampaign | bool | Determines if a Places Campaign Should be Displayed |
+
+
+### Android Versions
+
+| Field |    |
+|-------|-------------|
+| Minimum Android Version | API Level 19 |
+| Target Android Version  | API Level 27 |
+| Target Framework        | Android 8.1 Oreo |
+
+### IOS Versions
+| Field |    |
+|-------|-------------|
+| Deployment Target | 8.0 |
+| CoreLocation | Required for Location Services |
+
+
+### Known Issues
+* LoggingEnabled may not return the current status of the Logger.
+* Event Args are defined in Platform specific name spaces and dont provide a suitable Common fields.
+
 
 ## Xamarin.iOS
 ---
@@ -39,21 +203,20 @@ public class AppDelegate : UIApplicationDelegate
 
 ### Usage
 ---
-All native iOS Library (v3.5.x) calls are available including `LLInAppMessageDismissButtonLocation`, `LLProfileScope`, `LLAnalyticsDelegate` and `LLMessagingDelegate`. For details about each functionality, please refer to documentations for the native API.
-
-Anywhere in your application, you can use the Localytics API by calling the class methods/accessors of `Localytics`. Here's a sample of some of the calls.
+Anywhere in your application, you can use the Localytics API by calling the class methods/accessors of `Localytics` or `LocalyticsSDK`. Here's a sample of some of the calls.
 
 ```
-Localytics.SessionTimeoutInterval = 10;
-Localytics.CustomerId = "Sample Customer";
-Localytics.SetProfileAttribute ((NSString)("Sample Attribute"), "83", LLProfileScope.Organization);
+    LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
+    Localytics.SessionTimeoutInterval = 10;
+    localytics.CustomerId = "Sample Customer";
 
-Localytics.AddProfileAttributesToSet(new NSObject[] { (NSNumber)(222), (NSString)("333") }, "Sample Set", LLProfileScope.Application);
+    localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);
+    localytics.AddProfileAttributesToSet("Sample Set", LocalyticsXamarin.Common.XFLLProfileScope.Organization, new long[] { 321, 654 });
 
-Localytics.TagEvent ("Test Event");
-Localytics.TagScreen ("Test Screen");
+    localytics.TagEvent("Test Event");
+    localytics.TagScreen("Test Screen");
 
-Localytics.Upload ();
+    localytics.Upload();
 ```
 
 The above only demonstrate the syntax of calling the Xamarin.iOS API.  For more information about how to use Localytics, please refer to [iOS Localytics Docs](http://docs.localytics.com/dev/ios.html).
@@ -82,44 +245,12 @@ The above only demonstrate the syntax of calling the Xamarin.iOS API.  For more 
   }
   ```
 
-3. Add ATS exception
-
-  Add the following NSAppTransportSecurity exception to unblock HTTP use for some in app and push creatives.
-
-  ```
-  <key>NSAppTransportSecurity</key>
-  <dict>
-      <key>NSExceptionDomains</key>
-      <dict>
-          <key>public.localytics.s3.amazonaws.com</key>
-          <dict>
-              <key>NSExceptionAllowsInsecureHTTPLoads</key>
-              <true/>
-          </dict>
-          <key>pushapi.localytics.com</key>
-          <dict>
-              <key>NSExceptionAllowsInsecureHTTPLoads</key>
-              <true/>
-          </dict>
-      </dict>
-  </dict>
-  ```
-
-For more information on setting up Push Notification, please refer to [Localytics Push Messaging for iOS](http://docs.localytics.com/dev/ios.html#push-messaging-ios)
-
-### Analytics and Messaging Listeners
----
-1. Subclass and override functions for `LLAnalyticsDelegate` and `LLMessagingDelegate`. Refer to `LocalyticsAnalyticsListener_iOS.cs` and `LocalyticsMessagingListener_iOS.cs` in LocalyticsSample.iOS.
-2. Add instance of the subclass through `Localytics.AddAnalyticsDelegate(delegate)` `Localytics.AddMessagingDelegate(delegate)`
-
-
-
 
 ## Xamarin.Android
 ---
-In order to use the Xamarin.Android API in a source file, you will need to add the namespace `LocalyticsXamarin.Android`. Before calling anything else on the Localytics API, you will need:
+In order to use the Xamarin.Android API in a source file, you will need to add the namespace `LocalyticsXamarin.Android` and `LocalyticsXamarin.Shared`. Before calling anything else on the Localytics API, you will need:
 
-1. call `RegisterActivityLifecycleCallbacks` within your custom `Application` class
+1. call one of the Integrate methods `Integrate` or `AutoIntegrate` within your custom `Application` class
   
   ```
   using LocalyticsXamarin.Android;
@@ -140,8 +271,8 @@ In order to use the Xamarin.Android API in a source file, you will need to add t
           Localytics.LoggingEnabled = true;
           #endif
 
-          // RegisterActivityLifecycleCallbacks to auto integrate Localytics
-          RegisterActivityLifecycleCallbacks (new LocalyticsActivityLifecycleCallbacks (this));
+          // Auto Integrate Localytics
+          Localytics.AutoIntegrate (this));
 
       }
   }
@@ -161,24 +292,27 @@ In order to use the Xamarin.Android API in a source file, you will need to add t
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   ```
+3.  Configure required parameters using localytics.xml or through setting options
+	a. Add a localytics.xml in Resources/values. For a sample refer [here](https://github.com/localytics/localytics-xamarin/blob/feature/sdk5.1-android/LocalyticsXamarin/Android/Resources/values/localytics.xml) 
 
 ### Usage
 ---
 Most native Android Library (v3.5.x) calls are available. However, `AnalyticsListener` and `MessagingListener` are currently not available. For details about each functionality, please refer to documentations for the native API.
 
-Anywhere in your application, you can use the Localytics API by calling the class methods/accessors of `Localytics`. Here's a sample of some of the calls.
+Anywhere in your application, you can use the Localytics API by calling the class methods/accessors of `Localytics` or instance methods of `LocalyticsSDK`. Here's a sample of some of the calls.
 
 ```
-Localytics.SessionTimeoutInterval = 10;
-Localytics.CustomerId = "Sample Customer";
+            LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
+            Localytics.SessionTimeoutInterval = 10;
+            localytics.CustomerId = "Sample Customer";
 
-Localytics.SetProfileAttribute ("Sample Attribute", 83, Localytics.ProfileScope.Organization);
-Localytics.AddProfileAttributesToSet("Sample Set", new long[] { 321,654}, Localytics.ProfileScope.Application);
+            localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);
+            localytics.AddProfileAttributesToSet("Sample Set", LocalyticsXamarin.Common.XFLLProfileScope.Organization, new long[] { 321, 654 });
 
-Localytics.TagEvent ("Test Event");
-Localytics.TagScreen ("Test Screen");
+            localytics.TagEvent("Test Event");
+            localytics.TagScreen("Test Screen");
 
-Localytics.Upload ();
+            localytics.Upload();
 ```
 
 The above only demonstrate the syntax of calling the Xamarin.Android API.  For more information about how to use Localytics, please refer to [Android Localytics Docs](http://docs.localytics.com/dev/android.html).
@@ -230,44 +364,3 @@ The above only demonstrate the syntax of calling the Xamarin.Android API.  For m
 
 The LocalyticsMessagingSample.Android sample project will further illustrate the above.
 
-
-### Analytics and Messaging Listeners
----
-
-After initializing the SDK, call the following the subscribe to all SDK events:
-
-```
-LocalyticsEvents.SubscribeToAll ();
-```
-
-You can then add delegates to events:
-
-```
-LocalyticsEvents.OnLocalyticsSessionDidOpen += Some_Function;
-```
-
-Below are all the delegate and corresponding event names:
-
-```
-public delegate void LocalyticsDidTagEvent(string eventName, IDictionary<string, string> attributes, long customerValueIncrease);
-public delegate void LocalyticsSessionDidOpen(bool isFirst, bool isUpgrade, bool isResume);
-public delegate void LocalyticsSessionWillClose();
-public delegate void LocalyticsSessionWillOpen(bool isFirst, bool isUpgrade, bool isResume);
-
-public delegate void LocalyticsDidDismissInAppMessage();
-public delegate void LocalyticsDidDisplayInAppMessage();
-public delegate void LocalyticsWillDismissInAppMessage();
-public delegate void LocalyticsWillDisplayInAppMessage();
-
-public static event LocalyticsDidTagEvent OnLocalyticsDidTagEvent;
-public static event LocalyticsSessionDidOpen OnLocalyticsSessionDidOpen;
-public static event LocalyticsSessionWillClose OnLocalyticsSessionWillClose;
-public static event LocalyticsSessionWillOpen OnLocalyticsSessionWillOpen;
-
-public static event LocalyticsDidDismissInAppMessage OnLocalyticsDidDismissInAppMessage;
-public static event LocalyticsDidDisplayInAppMessage OnLocalyticsDidDisplayInAppMessage;
-public static event LocalyticsWillDismissInAppMessage OnLocalyticsWillDismissInAppMessage;
-public static event LocalyticsWillDisplayInAppMessage OnLocalyticsWillDisplayInAppMessage;
-```
-
-The LocalyticsMessagingSample.Android sample project will further illustrate the above.
