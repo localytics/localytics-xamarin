@@ -35,6 +35,7 @@ using NativeInAppConfiguration = LocalyticsXamarin.Android.InAppConfiguration;
 
 namespace LocalyticsXamarin.Shared
 {
+
 #if __IOS__
 
     public class SessionEventArgs : EventArgs
@@ -56,9 +57,9 @@ namespace LocalyticsXamarin.Shared
         }
     }
 
-    public class LocalyticsSessionDidOpenEventArgs : SessionEventArgs
+    public class SessionDidOpenEventArgs : SessionEventArgs, LocalyticsSessionDidOpenEventArgs
     {
-        public LocalyticsSessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+        public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
             : base(isFirst, isUpgrade, isResume)
         {
         }
@@ -141,36 +142,36 @@ namespace LocalyticsXamarin.Shared
         {
             add
             {
-                #if __IOS__
+#if __IOS__
                 IOS.Localytics.AnalyticsListener
 #else
                 Localytics.SharedInstance()
-                #endif
+#endif
                           .LocalyticsSessionWillClose += value;
             }
             remove
             {
-                #if __IOS__
+#if __IOS__
                 IOS.Localytics.AnalyticsListener
 #else
                 Localytics.SharedInstance()
-                #endif
+#endif
                           .LocalyticsSessionWillClose -= value;
             }
         }
 
 
         public static event EventHandler
-        #if __IOS__
+#if __IOS__
         <LocalyticsDidTagEventEventArgs>
-        #else
+#else
         <global::LocalyticsXamarin.Android.LocalyticsDidTagEventEventArgs>
 #endif
          LocalyticsDidTagEvent
-       {
+        {
             add
             {
-                #if __IOS__
+#if __IOS__
                 IOS.Localytics.AnalyticsListener
 #else
                 Localytics.SharedInstance()
@@ -179,7 +180,7 @@ namespace LocalyticsXamarin.Shared
             }
             remove
             {
-                #if __IOS__
+#if __IOS__
                 IOS.Localytics.AnalyticsListener
 #else
                 Localytics.SharedInstance()
@@ -189,132 +190,158 @@ namespace LocalyticsXamarin.Shared
         }
 
         #if __IOS__
+#else
 
-        public static event EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
+#endif        
+        public static event EventHandler
+//#if __IOS__
+        <LocalyticsSessionDidOpenEventArgs> 
+//#else
+//        <global::LocalyticsXamarin.Android.SessionDidOpenEventArgs>
+//#endif
+            LocalyticsSessionDidOpen
         {
             add
             {
-                IOS.Localytics.AnalyticsListener.LocalyticsSessionDidOpen += value;
+#if __IOS__
+                Localytics.AnalyticsListener
+#else
+                Localytics.SharedInstance()
+#endif
+                          .SessionDidOpen += (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
             remove
             {
-                IOS.Localytics.AnalyticsListener.LocalyticsSessionDidOpen -= value;
+#if __IOS__
+                Localytics.AnalyticsListener
+#else
+                Localytics.SharedInstance()
+#endif
+                          .SessionDidOpen -= (o, args) =>
+                {
+                    value(o, args);
+                };
             }
         }
 
-        public static event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
+
+
+
+        public static event
+#if __IOS__
+        EventHandler<LocalyticsSessionWillOpenEventArgs> 
+#else
+        EventHandler<global::LocalyticsXamarin.Android.LocalyticsSessionWillOpenEventArgs>
+#endif
+        LocalyticsSessionWillOpen
         {
             add
             {
-                IOS.Localytics.AnalyticsListener.LocalyticsSessionWillOpen += value;
+#if __IOS__
+                Localytics.AnalyticsListener
+#else
+                Localytics.SharedInstance()
+#endif
+                .LocalyticsSessionWillOpen += value;
             }
             remove
             {
-                IOS.Localytics.AnalyticsListener.LocalyticsSessionWillOpen -= value;
+#if __IOS__
+                Localytics.AnalyticsListener
+#else
+                Localytics.SharedInstance()
+#endif
+                .LocalyticsSessionWillOpen -= value;
             }
         }
 
         /* Events ... */
-        public static event EventHandler<LocalyticsDidTriggerRegionsEventArgs> LocalyticsDidTriggerRegions
-        {
-            add
-            {
-                IOS.Localytics.LocationListener.LocationDidTriggerRegionsEvent += value;
-            }
-            remove
-            {
-                IOS.Localytics.LocationListener.LocationDidTriggerRegionsEvent -= value;
-            }
-        }
-
-        public static event EventHandler<LocalyticsDidUpdateLocationEventArgs> LocalyticsDidUpdateLocation
-        {
-            add
-            {
-                IOS.Localytics.LocationListener.LocationUpdateEvent += value;
-            }
-            remove
-            {
-                IOS.Localytics.LocationListener.LocationUpdateEvent -= value;
-            }
-        }
-
-        public static event EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> LocalyticsDidUpdateMonitoredGeofences
-        {
-            add
-            {
-                IOS.Localytics.LocationListener.LocationDidUpdateMonitoredRegionsEvent += value;
-            }
-            remove
-            {
-                IOS.Localytics.LocationListener.LocationDidUpdateMonitoredRegionsEvent -= value;
-            }
-        }
+        public static event
+#if __IOS__
+        EventHandler<LocalyticsDidTriggerRegionsEventArgs> 
 #else
-
-
-        public static event EventHandler<global::LocalyticsXamarin.Android.LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
-        {
-            add
-            {
-                Localytics.SharedInstance().LocalyticsSessionDidOpen += value;
-            }
-            remove
-            {
-                Localytics.SharedInstance().LocalyticsSessionDidOpen -= value;
-            }
-        }
-
-
-        public static event EventHandler<global::LocalyticsXamarin.Android.LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
-        {
-            add
-            {
-                Localytics.SharedInstance().LocalyticsSessionWillOpen += value;
-            }
-            remove
-            {
-                Localytics.SharedInstance().LocalyticsSessionWillOpen -= value;
-            }
-        }
-        public static event EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidTriggerRegionsEventArgs> LocalyticsDidTriggerRegions
-        {
-            add
-            {
-                Localytics.SharedInstance().LocalyticsDidTriggerRegions += value;
-            }
-            remove
-            {
-                Localytics.SharedInstance().LocalyticsDidTriggerRegions -= value;
-            }
-        }
-
-        public static event EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs> LocalyticsDidUpdateLocation
-        {
-            add
-            {
-                Localytics.SharedInstance().LocalyticsDidUpdateLocation += value;
-            }
-            remove
-            {
-                Localytics.SharedInstance().LocalyticsDidUpdateLocation -= value;
-            }
-        }
-
-        public static event EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateMonitoredGeofencesEventArgs> LocalyticsDidUpdateMonitoredGeofences
-        {
-            add
-            {
-                Localytics.SharedInstance().LocalyticsDidUpdateMonitoredGeofences += value;
-            }
-            remove
-            {
-                Localytics.SharedInstance().LocalyticsDidUpdateMonitoredGeofences -= value;
-            }
-        }
-
+        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidTriggerRegionsEventArgs>
 #endif
+        LocalyticsDidTriggerRegions
+        {
+            add
+            {
+#if __IOS__
+                Localytics
+#else
+                Localytics.SharedInstance()
+#endif
+                  .LocalyticsDidTriggerRegions += value;
+            }
+            remove
+            {
+#if __IOS__
+                Localytics
+#else
+                Localytics.SharedInstance()
+#endif
+                          .LocalyticsDidTriggerRegions -= value;
+            }
+        }
 
+        public static event
+#if __IOS__
+        EventHandler<LocalyticsDidUpdateLocationEventArgs> 
+#else
+        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs>
+#endif
+        LocalyticsDidUpdateLocation
+        {
+            add
+            {
+#if __IOS__
+                Localytics
+#else
+                Localytics.SharedInstance()
+#endif
+                          .LocalyticsDidUpdateLocation += value;
+            }
+            remove
+            {
+#if __IOS__
+                Localytics
+#else
+                Localytics.SharedInstance()
+#endif
+                          .LocalyticsDidUpdateLocation -= value;
+            }
+        }
+
+        public static event
+#if __IOS__
+        EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> 
+#else
+        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateMonitoredGeofencesEventArgs>
+#endif
+        LocalyticsDidUpdateMonitoredGeofences
+        {
+            add
+            {
+#if __IOS__
+                Localytics
+#else
+                Localytics.SharedInstance()
+#endif
+                          .LocalyticsDidUpdateMonitoredGeofences += value;
+            }
+            remove
+            {
+#if __IOS__
+                Localytics
+#else
+                Localytics.SharedInstance()
+#endif
+                .LocalyticsDidUpdateMonitoredGeofences -= value;
+            }
+        }
 
         static LocalyticsSDK _instance;
         public static LocalyticsSDK SharedInstance
@@ -336,7 +363,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString(versionString), new Foundation.NSString("plugin_library")));
 #else
-			LocalyticsXamarin.Android.ConstantsHelper.UpdatePluginVersion(versionString);
+            LocalyticsXamarin.Android.ConstantsHelper.UpdatePluginVersion(versionString);
 #endif
         }
         public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation
@@ -377,7 +404,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 Localytics.TagEvent(eventName, attributes.ToNSDictionary());
 #else
-				Localytics.TagEvent(eventName, attributes);
+                Localytics.TagEvent(eventName, attributes);
 #endif
             }
             else
@@ -385,7 +412,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
 #else
-				Localytics.TagEvent(eventName, attributes, customerValueIncrease.Value);
+                Localytics.TagEvent(eventName, attributes, customerValueIncrease.Value);
 #endif
             }
         }
@@ -400,7 +427,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.SetCustomDimension(value, dimension);
 #else
-			Localytics.SetCustomDimension((int)dimension, value);
+            Localytics.SetCustomDimension((int)dimension, value);
 #endif
         }
 
@@ -409,7 +436,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             return Localytics.GetCustomDimension(dimension);
 #else
-			return Localytics.GetCustomDimension((int)dimension);
+            return Localytics.GetCustomDimension((int)dimension);
 #endif
         }
 
@@ -462,7 +489,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 return Localytics.PushTokenInfo;
 #else
-				return Localytics.PushRegistrationId;
+                return Localytics.PushRegistrationId;
 #endif
             }
         }
@@ -474,14 +501,14 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 Localytics.TriggerInAppMessageInternal(triggerName);
 #else
-				Localytics.TriggerInAppMessage(triggerName);
+                Localytics.TriggerInAppMessage(triggerName);
 #endif
                 return;
             }
 #if __IOS__
             Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
 #else
-			Localytics.TriggerInAppMessage(triggerName, attributes);
+            Localytics.TriggerInAppMessage(triggerName, attributes);
 #endif
         }
 
@@ -570,7 +597,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagPurchased(itemName, itemId, itemType, price, attributes.ToNSDictionary());
 #else
-			Localytics.TagPurchased(itemName, itemId, itemType, price, attributes);
+            Localytics.TagPurchased(itemName, itemId, itemType, price, attributes);
 #endif
         }
 
@@ -579,7 +606,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, attributes.ToNSDictionary());
 #else
-			Localytics.TagAddedToCart(itemName, itemId, itemType, new NativeNumber(itemPrice.Value), attributes);
+            Localytics.TagAddedToCart(itemName, itemId, itemType, new NativeNumber(itemPrice.Value), attributes);
 #endif
         }
 
@@ -588,7 +615,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagStartedCheckout(totalPrice, itemCount, attributes.ToNSDictionary());
 #else
-			Localytics.TagStartedCheckout(new Java.Lang.Long(totalPrice.Value), new Java.Lang.Long(itemCount.Value), attributes);
+            Localytics.TagStartedCheckout(new Java.Lang.Long(totalPrice.Value), new Java.Lang.Long(itemCount.Value), attributes);
 #endif
         }
 
@@ -607,7 +634,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagCompletedCheckout(price, count, attributes.ToNSDictionary());
 #else
-			Localytics.TagCompletedCheckout(price, count, attributes);
+            Localytics.TagCompletedCheckout(price, count, attributes);
 #endif
         }
 
@@ -616,7 +643,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagContentViewed(contentName, contentId, contentType, attributes.ToNSDictionary());
 #else
-			Localytics.TagContentViewed(contentName, contentId, contentType, attributes);
+            Localytics.TagContentViewed(contentName, contentId, contentType, attributes);
 #endif
         }
 
@@ -630,7 +657,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagSearched(queryText, contentType, count, attributes.ToNSDictionary());
 #else
-			Localytics.TagSearched(queryText, contentType, count, attributes);
+            Localytics.TagSearched(queryText, contentType, count, attributes);
 #endif
         }
 
@@ -639,7 +666,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagShared(contentName, contentId, contentType, methodName, attributes.ToNSDictionary());
 #else
-			Localytics.TagShared(contentName, contentId, contentType, methodName, attributes);
+            Localytics.TagShared(contentName, contentId, contentType, methodName, attributes);
 #endif
         }
 
@@ -653,7 +680,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes.ToNSDictionary());
 #else
-			Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes);
+            Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes);
 #endif
         }
 
@@ -662,8 +689,8 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagCustomerRegistered(customerProps, methodName, attributes.ToNSDictionary());
 #else
-			var cust = Convertor.toCustomer(customerProps);
-			Localytics.TagCustomerRegistered(cust, methodName, attributes);
+            var cust = Convertor.toCustomer(customerProps);
+            Localytics.TagCustomerRegistered(cust, methodName, attributes);
 #endif
         }
 
@@ -672,8 +699,8 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagCustomerLoggedIn(customerProps, methodName, attributes.ToNSDictionary());
 #else
-			var cust = Convertor.toCustomer(customerProps);
-			Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
+            var cust = Convertor.toCustomer(customerProps);
+            Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
 #endif
         }
 
@@ -682,7 +709,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagCustomerLoggedOut(attributes.ToNSDictionary());
 #else
-			Localytics.TagCustomerLoggedOut(attributes);
+            Localytics.TagCustomerLoggedOut(attributes);
 #endif
         }
 
@@ -691,7 +718,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagInvited(methodName, attributes.ToNSDictionary());
 #else
-			Localytics.TagInvited(methodName, attributes);
+            Localytics.TagInvited(methodName, attributes);
 #endif
         }
 
@@ -708,8 +735,8 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.SetInAppMessageDismissButtonHidden(hidden);
 #else
-			// View.INVISBLE or 4 hides  it.
-			Localytics.SetInAppMessageDismissButtonVisibility(hidden ? 4 : 1);
+            // View.INVISBLE or 4 hides  it.
+            Localytics.SetInAppMessageDismissButtonVisibility(hidden ? 4 : 1);
 #endif
         }
 
@@ -739,7 +766,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             options.ToNSDictionary()
 #else
-			Convertor.ToGenericDictionary(options)
+            Convertor.ToGenericDictionary(options)
 #endif
             );
         }
@@ -781,18 +808,18 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), customAction);
 #else
-			if ("click".Equals(customAction, StringComparison.InvariantCultureIgnoreCase))
-			{
-				Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), NativeImpressionType.Click);
-			}
-			else if ("dismiss".Equals(customAction, StringComparison.InvariantCultureIgnoreCase))
-			{
-				Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), Localytics.ImpressionType.Dismiss);
-			}
-			else
-			{
-				Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), customAction);
-			}
+            if ("click".Equals(customAction, StringComparison.InvariantCultureIgnoreCase))
+            {
+                Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), NativeImpressionType.Click);
+            }
+            else if ("dismiss".Equals(customAction, StringComparison.InvariantCultureIgnoreCase))
+            {
+                Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), Localytics.ImpressionType.Dismiss);
+            }
+            else
+            {
+                Localytics.TagInboxImpression((NativeInboxCampaign)campaign.Handle(), customAction);
+            }
 #endif
         }
 
@@ -806,8 +833,8 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TagImpressionForPushToInboxCampaign((NativeInboxCampaign)campaign, success);
 #else
-			// FIXME Native doesnt support Deeplink Success on Android. - request submitted to Native SDK for review.
-			Localytics.TagPushToInboxImpression((NativeInboxCampaign)campaign);
+            // FIXME Native doesnt support Deeplink Success on Android. - request submitted to Native SDK for review.
+            Localytics.TagPushToInboxImpression((NativeInboxCampaign)campaign);
 #endif
         }
 
@@ -833,7 +860,7 @@ namespace LocalyticsXamarin.Shared
                 Localytics.TagPlacesPushOpened(campaign, identifier);
             }
 #else
-			Localytics.TagPlacesPushOpened(campaign, identifier);
+            Localytics.TagPlacesPushOpened(campaign, identifier);
 #endif
         }
 
@@ -847,7 +874,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.TriggerPlacesNotification((nint)campaignId, regionId);
 #else
-			Localytics.TriggerPlacesNotification(campaignId, regionId);
+            Localytics.TriggerPlacesNotification(campaignId, regionId);
 #endif
         }
 
@@ -857,27 +884,27 @@ namespace LocalyticsXamarin.Shared
             Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
         }
 #else
-		private sealed class InboxRefreshImplementation
-		{
-			Action<IInboxCampaign[]> callback = null;
-			LocalyticsXamarin.Android.InboxRefreshImplementationPlatform listener = new LocalyticsXamarin.Android.InboxRefreshImplementationPlatform();
-			public void SetCallback(Action<IInboxCampaign[]> inboxCampaignsDelegate)
-			{
-				callback = inboxCampaignsDelegate;
-				listener.SetCallback(handleCallback);
-			}
-			public void handleCallback(NativeInboxCampaign[] campaigns)
-			{
-				callback(InboxCampaign.From(campaigns));
-			}
-		}
-		InboxRefreshImplementation inboxAllRefreshListener = new InboxRefreshImplementation();
-		InboxRefreshImplementation inboxRefreshListener = new InboxRefreshImplementation();
+        private sealed class InboxRefreshImplementation
+        {
+            Action<IInboxCampaign[]> callback = null;
+            LocalyticsXamarin.Android.InboxRefreshImplementationPlatform listener = new LocalyticsXamarin.Android.InboxRefreshImplementationPlatform();
+            public void SetCallback(Action<IInboxCampaign[]> inboxCampaignsDelegate)
+            {
+                callback = inboxCampaignsDelegate;
+                listener.SetCallback(handleCallback);
+            }
+            public void handleCallback(NativeInboxCampaign[] campaigns)
+            {
+                callback(InboxCampaign.From(campaigns));
+            }
+        }
+        InboxRefreshImplementation inboxAllRefreshListener = new InboxRefreshImplementation();
+        InboxRefreshImplementation inboxRefreshListener = new InboxRefreshImplementation();
 
-		public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
-		{
-			inboxAllRefreshListener.SetCallback(inboxCampaignsDelegate);
-		}
+        public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
+        {
+            inboxAllRefreshListener.SetCallback(inboxCampaignsDelegate);
+        }
 #endif
 
         public void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
@@ -885,7 +912,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
 #else
-			inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
+            inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
         }
 
@@ -897,19 +924,19 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 Localytics.SetProfileAttribute(NSObject.FromObject(value), attribute, Utils.ToLLProfileScope(scope));
 #else
-				if (value is long || value is int)
-				{
-					Localytics.SetProfileAttribute(attribute, Convert.ToInt64(value), Utils.ToLLProfileScope(scope));
-				}
-				else if (value is DateTime)
-				{
-					DateTime dateTime = (DateTime)value;
-					Localytics.SetProfileAttribute(attribute, new Java.Util.Date(dateTime.Ticks), Utils.ToLLProfileScope(scope));
-				}
-				else
-				{
-					Localytics.SetProfileAttribute(attribute, value.ToString(), Utils.ToLLProfileScope(scope));
-				}
+                if (value is long || value is int)
+                {
+                    Localytics.SetProfileAttribute(attribute, Convert.ToInt64(value), Utils.ToLLProfileScope(scope));
+                }
+                else if (value is DateTime)
+                {
+                    DateTime dateTime = (DateTime)value;
+                    Localytics.SetProfileAttribute(attribute, new Java.Util.Date(dateTime.Ticks), Utils.ToLLProfileScope(scope));
+                }
+                else
+                {
+                    Localytics.SetProfileAttribute(attribute, value.ToString(), Utils.ToLLProfileScope(scope));
+                }
 #endif
             }
             else
@@ -917,24 +944,24 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 Localytics.SetProfileAttribute(Convertor.ToArray(values), attribute, Utils.ToLLProfileScope(scope));
 #else
-				object value = values[0];
-				if (value is long || value is int)
-				{
-					Localytics.SetProfileAttribute(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
-				}
-				else if (value is DateTime)
-				{
-					Localytics.SetProfileAttribute(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-				}
-				else if (value is string || value is Java.Lang.String)
-				{
-					Localytics.SetProfileAttribute(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
-				}
-				else
-				{
-					Debug.WriteLine("Unknown Object Type " + value.GetType());
-					throw new ArgumentException("SetProfileAttribute- Unknown Array Object Type " + value.GetType());
-				}
+                object value = values[0];
+                if (value is long || value is int)
+                {
+                    Localytics.SetProfileAttribute(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+                }
+                else if (value is DateTime)
+                {
+                    Localytics.SetProfileAttribute(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+                }
+                else if (value is string || value is Java.Lang.String)
+                {
+                    Localytics.SetProfileAttribute(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+                }
+                else
+                {
+                    Debug.WriteLine("Unknown Object Type " + value.GetType());
+                    throw new ArgumentException("SetProfileAttribute- Unknown Array Object Type " + value.GetType());
+                }
 #endif
             }
         }
@@ -945,24 +972,24 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.AddProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
 #else
-			object value = values[0];
-			if (value is long || value is int)
-			{
-				Localytics.AddProfileAttributesToSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
-			}
-			else if (value is DateTime)
-			{
-				Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-			}
-			else if (value is string || value is Java.Lang.String)
-			{
-				Localytics.AddProfileAttributesToSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
-			}
-			else
-			{
-				Debug.WriteLine("Unknown Object Type " + value.GetType());
-				throw new ArgumentException("AddProfileAttribute:2-Unknown Array Object Type " + value.GetType());
-			}
+            object value = values[0];
+            if (value is long || value is int)
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is DateTime)
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is string || value is Java.Lang.String)
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else
+            {
+                Debug.WriteLine("Unknown Object Type " + value.GetType());
+                throw new ArgumentException("AddProfileAttribute:2-Unknown Array Object Type " + value.GetType());
+            }
 #endif
         }
 
@@ -971,24 +998,24 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.RemoveProfileAttributes(attribute, Utils.ToLLProfileScope(scope), values);
 #else
-			object value = values[0];
-			if (value is long || value is int)
-			{
-				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
-			}
-			else if (value is DateTime)
-			{
-				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
-			}
-			else if (value is string || value is Java.Lang.String)
-			{
-				Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
-			}
-			else
-			{
-				Debug.WriteLine("Unknown Object Type " + value.GetType());
-				throw new ArgumentException("RemoveProfileAttributeUnknown Array Object Type " + value.GetType());
-			}
+            object value = values[0];
+            if (value is long || value is int)
+            {
+                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is DateTime)
+            {
+                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is string || value is Java.Lang.String)
+            {
+                Localytics.RemoveProfileAttributesFromSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else
+            {
+                Debug.WriteLine("Unknown Object Type " + value.GetType());
+                throw new ArgumentException("RemoveProfileAttributeUnknown Array Object Type " + value.GetType());
+            }
 #endif
         }
 
@@ -997,7 +1024,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
 #else
-			Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
+            Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
 #endif
         }
 
@@ -1006,7 +1033,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
 #else
-			Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
+            Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
 #endif
         }
 
@@ -1015,7 +1042,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
 #else
-			Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
+            Localytics.DeleteProfileAttribute(attribute, Utils.ToLLProfileScope(scope));
 #endif
         }
 

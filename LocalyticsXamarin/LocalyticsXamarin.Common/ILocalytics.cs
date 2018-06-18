@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 namespace LocalyticsXamarin.Common
 {
+    // To accomodate need to change c
+    public interface LocalyticsSessionDidOpenEventArgs
+    {
+        bool First { get; }
+        bool Upgrade { get; }
+        bool Resume { get; }
+    }
     public class InAppEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDisplayEventArgs : EventArgs { } // No Extra Args.
     public class InAppWillDismissEventArgs : EventArgs { } // No Extra Args.

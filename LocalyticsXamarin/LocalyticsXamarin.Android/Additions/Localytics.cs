@@ -13,6 +13,10 @@ using LocalyticsXamarin.Common;
 
 namespace LocalyticsXamarin.Android
 {
+    public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
+        {
+
+        }
     public partial class Localytics
 	{
 		static Localytics()
