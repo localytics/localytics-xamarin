@@ -14,6 +14,7 @@ using Firebase.Messaging;
 using Firebase.Iid;
 using Android.Util;
 using Android.Gms.Common;
+using LocalyticsXamarin.Shared;
 
 namespace LocalyticsSample.Android
 {
@@ -32,11 +33,25 @@ namespace LocalyticsSample.Android
 
 			Localytics.SetOption("ll_gcm_sender_id", "GCMID");
             //Localytics.RegisterPush();
+            localytics.Set
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
+            LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
+            Localytics.SessionTimeoutInterval = 10;
+            localytics.CustomerId = "Sample Customer";
+
+            localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);
+            localytics.AddProfileAttributesToSet("Sample Set", LocalyticsXamarin.Common.XFLLProfileScope.Organization, new long[] { 321, 654 });
+
+            localytics.TagEvent("Test Event");
+            localytics.TagScreen("Test Screen");
+
+            localytics.Upload();
+
             LoadApplication(new App());
         }
+
 
         protected override void OnNewIntent(Intent intent)
         {
