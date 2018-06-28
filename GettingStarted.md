@@ -14,12 +14,11 @@ The steps to integrate Localytics with this component mirrors the native Localyt
 1. Download the latest version of the Nuget package from [here](https://downloads.localytics.com/SDKs/Xamarin/Localytics-Xamarin-Latest.zip).
 2. Add a Nuget Package source in Visual Studio Preferences called localytics that points to the folder with the downloaded package.
 3. In Projects where you want to use Localytic SDK 
-4. Integrating to each of your projects
-	* Expand Packages folder in your platform Project
-	* Add a Package
-	* Select localytics as the package sources
+	* Expand Packages folder
+	* Add a Package ![Add Package Menu](/images/AddPackage.png)
+	* Select localytics as the package sources ![Add Package Dialog](/images/AddPackageDialog.png)
 	* Pick the latest version of localytics
-	* Repeat the step for each platform (Android and iOS)
+	* Repeat the step for each platform (Android and iOS) ![Solution Window](/images/AddPackageDialog.png)
 	
 ## Package Names
 
@@ -133,17 +132,48 @@ Event Args are Platform Specific, but they have the same field members. Future V
 | LocalyticsDidTagEvent | LocalyticsDidTagEventEventArgs | fired when an analytics event is tagged |
 | LocalyticsSessionWillClose | None | When Session is closed. |
 | LocalyticsSessionDidOpen | LocalyticsSessionDidOpenEventArgs | when Session is opened. |
-| LocalyticsSessionWillOpenEventArgs | when session will be opened |
-| LocalyticsDidTriggerRegions | LocalyticsDidTriggerRegionsEventArgs | |
-| LocalyticsDidUpdateLocation | LocalyticsDidUpdateLocationEventArgs |
-| LocalyticsDidUpdateMonitoredGeofences | LocalyticsDidUpdateMonitoredGeofencesEventArgs |
-| InAppDidDisplayEvent | |
-| InAppWillDismissEvent | |
-| InAppDidDismissEvent | |
+| LocalyticsSessionWillOpen | LocalyticsSessionWillOpenEventArgs | when session will be opened |
+| LocalyticsDidTriggerRegions | LocalyticsDidTriggerRegionsEventArgs | when a Geo fence is triggered for a region |
+| LocalyticsDidUpdateLocation | LocalyticsDidUpdateLocationEventArgs | when a new location update is received. |
+| LocalyticsDidUpdateMonitoredGeofences | LocalyticsDidUpdateMonitoredGeofencesEventArgs | when geofences that are being monitored are changed due to change in campaign or a significant location change |
+| InAppDidDisplayEvent | InAppDidDisplayEventArgs | when an In-App is displayed |
+| InAppWillDismissEvent | InAppWillDismissEventArgs | when an In-App will be dismissed |
+| InAppDidDismissEvent | InAppDidDismissEventArgs | when an In-App is Ddsmissed |
+
+#### Event Args
+##### LocalyticsDidTagEventEventArgs
+	EventName - string identifying the type of the event.
+	Attributes - a dictionary identifying the attributes attached to the event
+	CustomerValue - a nullable double that identifies any provided customer value when tagging the event
+
+##### LocalyticsSessionDidOpenEventArgs
+	isFirst - bool identifying if this is the first session
+	isUpgrade - bool identifying if this session open is following an upgrade
+	isResume - bool identifying if this is a session that's being resumed.
+	
+##### LocalyticsSessionWillOpenEventArgs
+   Provides same as properties as LocalyticsSessionDidOpenEventArgs
+
+##### LocalyticsDidTriggerRegionsEventArgs
+	Regions providing an array of regions and is of type LLRegion[].
+	RegionEvent of type LLRegionEvent identifying the trigger event type 'Enter' or 'Exit'.
+	
+##### LocalyticsDidUpdateLocationEventArgs
+	iOS 
+		Location - CLLocation type which reports the current location.
+		
+##### LocalyticsDidUpdateMonitoredGeofencesEventArgs
+   AddedRegions and RemovedRegions are additional properites. They are both of type LLRegion[].
+   AddedRegions provides the array of new regions added.
+   RemovedRegions provides an array of regions that were removed from monitoring.
+   
+##### InAppDidDisplayEventArgs, InAppWillDismissEventArgs, InAppDidDismissEventArgs
+  These dont define any additional properties other than those in EventArgs and are placeholders for future to minimize signature changes.
 
 ### Delegates
 
-| Event Name                    | Args | Return | Description  |
+| Delegate Name | Args | Return | Description  |
+|---------------|------|--------|--------------|
 | InAppDelaySessionStartMessagesDelegate | None | bool | Delay display of Session Start InApps to allow for launch screen and other page transitions including login to complete |
 | InAppShouldShowDelegate | InAppCamaign | bool | Determines if an InApp Should be displayed. Default is true, when a delegate is not specified |
 | ShouldDeepLinkDelegate | string (absolute url) | bool | Used to determine if the absolute url specified as a string should be displayed by Localytics SDK |
@@ -244,8 +274,15 @@ The above only demonstrate the syntax of calling the Xamarin.iOS API.  For more 
       [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
   }
   ```
-
-
+3. Receiving Notification in the forground
+  when the application is in the foreground, DidReceiveRemoteNotification override in the Application is invoked when a notification is received.
+  ```
+  NSDictionary apsDict = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
+  // apsDict[new NSString("alert")]  returns the message.
+  // Present the notification using a UIAlert.
+  ``` 
+  WillFinishLaunching or FinishedLaunching override provide the dictionary when the notification was received in the background.
+  
 ## Xamarin.Android
 ---
 In order to use the Xamarin.Android API in a source file, you will need to add the namespace `LocalyticsXamarin.Android` and `LocalyticsXamarin.Shared`. Before calling anything else on the Localytics API, you will need:
@@ -321,46 +358,14 @@ The above only demonstrate the syntax of calling the Xamarin.Android API.  For m
 ### Push & In-App Messaging
 ---
 
-1. Modify AndroidManifest.xml
-
-  * Push permissions above the `application` tag.
-
-    ```
-    <uses-permission
-        android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission
-        android:name="YOUR-PACKAGE-NAME.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="YOUR-PACKAGE-NAME.permission.C2D_MESSAGE" />
-    ```
-
-  * Add `PushReciever` inside the `application` tag.
-
-    ```
-    <receiver
-        android:name="com.localytics.android.PushReceiver"
-        android:permission="com.google.android.c2dm.permission.SEND" >
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <category android:name="YOUR-PACKAGE-NAME" />
-        </intent-filter>
-    </receiver>
-    ```
-
-  * Add PushTrackingActivity within the `application` tag.
-
-    ```
-    <activity android:name="com.localytics.android.PushTrackingActivity"/>
-    ```
-
-2. Register for Push in the main activity
-
-  ```
-  Localytics.RegisterPush("YOUR_GCM_PROJECT_NUMBER");
-  ```
-
-3. If not already, the main activity should extend `FragmentActivity`.
-
-The LocalyticsMessagingSample.Android sample project will further illustrate the above.
-
+1. Play Services Availability
+  Check for Play Services Availability as described in [FCM Notifications Walkthrough](https://docs.microsoft.com/en-us/xamarin/android/data-cloud/google-messaging/remote-notifications-with-fcm)
+  
+2. Push implementation
+ Either the [Xamarin instructions](https://docs.microsoft.com/en-us/xamarin/android/data-cloud/google-messaging/) or the Localytics Native SDK [Push Integration] (https://docs.localytics.com/dev/android.html#push-messaging-android) can be used to integrate push.
+ 
+3. Android Manifest changes
+  Xamarin has limited support for manifest merging. The changes are best done directly in AndoidManifest.xml
+  
+4. Sample 
+The LocalyticsMessagingSample.Android sample project outlines one way to integrate push.
