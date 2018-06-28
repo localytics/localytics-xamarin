@@ -60,7 +60,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
-		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
 	<key>NSAppTransportSecurity</key>

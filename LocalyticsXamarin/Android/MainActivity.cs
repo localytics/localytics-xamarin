@@ -33,21 +33,18 @@ namespace LocalyticsSample.Android
 
 			Localytics.SetOption("ll_gcm_sender_id", "995606817677");
             //Localytics.RegisterPush();
-            localytics.Set
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
-            LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
-            Localytics.SessionTimeoutInterval = 10;
-            localytics.CustomerId = "Sample Customer";
-
-            localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);
-            localytics.AddProfileAttributesToSet("Sample Set", LocalyticsXamarin.Common.XFLLProfileScope.Organization, new long[] { 321, 654 });
-
-            localytics.TagEvent("Test Event");
-            localytics.TagScreen("Test Screen");
-
-            localytics.Upload();
+            // Sample Code for Docs.
+            //LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
+            //localytics.SetOption("ll_session_timeout_seconds", 10);
+            //localytics.CustomerId = "Sample Customer";
+            //localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);
+            //localytics.AddProfileAttribute("Sample Set", LocalyticsXamarin.Common.XFLLProfileScope.Organization, new long[] { 321, 654 });
+            //localytics.TagEvent("Test Event");
+            //localytics.TagScreen("Test Screen");
+            //localytics.Upload();
 
             LoadApplication(new App());
         }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using LocalyticsXamarin.Common;
 
 #if __IOS__
 using Foundation;
@@ -15,6 +14,8 @@ using Android.Runtime;
 
 using LocalyticsXamarin.Android;
 #endif
+using LocalyticsXamarin.Common;
+
 
 #if __IOS__
 using NativeNumber = Foundation.NSNumber;
@@ -38,59 +39,15 @@ namespace LocalyticsXamarin.Shared
 
 #if __IOS__
 
-    public class SessionEventArgs : EventArgs
-    {
-        public bool First { get; set; }
-        public bool Upgrade { get; set; }
-        public bool Resume { get; set; }
 
-        public SessionEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-        {
-            First = isFirst;
-            Upgrade = isUpgrade;
-            Resume = isResume;
-        }
 
-        public override string ToString()
-        {
-            return string.Format("First:{0} Upgrade:{1} Resume:{2}", First, Upgrade, Resume);
-        }
-    }
-
-    public class SessionDidOpenEventArgs : SessionEventArgs, LocalyticsSessionDidOpenEventArgs
-    {
-        public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-            : base(isFirst, isUpgrade, isResume)
-        {
-        }
-    }
-
-    public class LocalyticsDidTagEventEventArgs : EventArgs
-    {
-        public string EventName { get; set; }
-        public System.Collections.IDictionary Attributes { get; set; }
-        public double? CustomerValue { get; set; }
-        public LocalyticsDidTagEventEventArgs(string name,
-                                      System.Collections.IDictionary attribs,
-                                      double? customerValue)
-        {
-            EventName = name;
-            Attributes = attribs;
-            CustomerValue = customerValue;
-        }
-        public override string ToString()
-        {
-            return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, CustomerValue, Attributes.ToString());
-        }
-    }
-
-    public class LocalyticsSessionWillOpenEventArgs : SessionEventArgs
-    {
-        public LocalyticsSessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-            : base(isFirst, isUpgrade, isResume)
-        {
-        }
-    }
+    //public class SessionDidOpenEventArgs : SessionEventArgs, LocalyticsSessionDidOpenEventArgs
+    //{
+    //    public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+    //        : base(isFirst, isUpgrade, isResume)
+    //    {
+    //    }
+    //}
 
 
     public class LocalyticsDidTriggerRegionsEventArgs : EventArgs
@@ -145,9 +102,9 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 IOS.Localytics.AnalyticsListener
 #else
-                Localytics.SharedInstance()
+                Android.Localytics.SharedInstance()
 #endif
-                          .LocalyticsSessionWillClose += value;
+                          .SessionWillClose += value;
             }
             remove
             {
@@ -156,18 +113,12 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                          .LocalyticsSessionWillClose -= value;
+                          .SessionWillClose -= value;
             }
         }
 
 
-        public static event EventHandler
-#if __IOS__
-        <LocalyticsDidTagEventEventArgs>
-#else
-        <global::LocalyticsXamarin.Android.LocalyticsDidTagEventEventArgs>
-#endif
-         LocalyticsDidTagEvent
+        public static event EventHandler<LocalyticsDidTagEventEventArgs> LocalyticsDidTagEvent
         {
             add
             {
@@ -176,7 +127,10 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                   .LocalyticsDidTagEvent += value;
+                          .DidTagEvent += (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
             remove
             {
@@ -185,21 +139,18 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                   .LocalyticsDidTagEvent -= value;
+                          .DidTagEvent -= (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
         }
 
-        #if __IOS__
+#if __IOS__
 #else
 
-#endif        
-        public static event EventHandler
-//#if __IOS__
-        <LocalyticsSessionDidOpenEventArgs> 
-//#else
-//        <global::LocalyticsXamarin.Android.SessionDidOpenEventArgs>
-//#endif
-            LocalyticsSessionDidOpen
+#endif
+        public static event EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
         {
             add
             {
@@ -230,13 +181,7 @@ namespace LocalyticsXamarin.Shared
 
 
 
-        public static event
-#if __IOS__
-        EventHandler<LocalyticsSessionWillOpenEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsSessionWillOpenEventArgs>
-#endif
-        LocalyticsSessionWillOpen
+        public static event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
         {
             add
             {
@@ -245,7 +190,10 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                .LocalyticsSessionWillOpen += value;
+                          .SessionWillOpen += (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
             remove
             {
@@ -254,17 +202,20 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                .LocalyticsSessionWillOpen -= value;
+                          .SessionWillOpen -= (o, args) =>
+                {
+                    value(o, args);
+                };
             }
         }
 
         /* Events ... */
         public static event
-#if __IOS__
-        EventHandler<LocalyticsDidTriggerRegionsEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidTriggerRegionsEventArgs>
-#endif
+        //#if __IOS__
+        EventHandler<LocalyticsDidTriggerRegionsEventArgs>
+        //#else
+        //        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidTriggerRegionsEventArgs>
+        //#endif
         LocalyticsDidTriggerRegions
         {
             add
@@ -288,11 +239,11 @@ namespace LocalyticsXamarin.Shared
         }
 
         public static event
-#if __IOS__
-        EventHandler<LocalyticsDidUpdateLocationEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs>
-#endif
+        //#if __IOS__
+        EventHandler<LocalyticsDidUpdateLocationEventArgs>
+        //#else
+        //        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs>
+        //#endif
         LocalyticsDidUpdateLocation
         {
             add
@@ -380,7 +331,7 @@ namespace LocalyticsXamarin.Shared
 
         public void OpenSession()
         {
-            Localytics.OpenSession();
+            LocalyticsSDK.SharedInstance.OpenSession();
         }
 
         public void CloseSession()
@@ -397,7 +348,7 @@ namespace LocalyticsXamarin.Shared
         {
             if (attributes == null && customerValueIncrease == null)
             {
-                Localytics.TagEvent(eventName);
+                Localytics.TagEvent(eventName, null);
             }
             else if (customerValueIncrease == null && attributes != null)
             {
@@ -1046,7 +997,7 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
-#region Platform specific code
+        #region Platform specific code
         //#pragma region Platform Specific API's
 #if __IOS__
         public void AddProfileAttributes(string attribute, LLProfileScope scope, params NSDate[] values)
@@ -1060,6 +1011,6 @@ namespace LocalyticsXamarin.Shared
         }
 
 #endif
-#endregion
+        #endregion
     }
 }

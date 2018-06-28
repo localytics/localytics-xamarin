@@ -11,6 +11,20 @@ namespace LocalyticsXamarin.Common
         bool Upgrade { get; }
         bool Resume { get; }
     }
+
+    public interface LocalyticsSessionWillOpenEventArgs
+    {
+        bool First { get; }
+        bool Upgrade { get; }
+        bool Resume { get; }
+    }
+
+    public interface LocalyticsDidTagEventEventArgs
+    {
+        
+    }
+
+
     public class InAppEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDisplayEventArgs : EventArgs { } // No Extra Args.
     public class InAppWillDismissEventArgs : EventArgs { } // No Extra Args.

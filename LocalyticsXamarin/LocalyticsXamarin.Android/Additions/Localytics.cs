@@ -14,9 +14,16 @@ using LocalyticsXamarin.Common;
 namespace LocalyticsXamarin.Android
 {
     public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
-        {
+    { }
 
-        }
+    public partial class SessionWillOpenEventArgs : global::System.EventArgs, LocalyticsSessionWillOpenEventArgs
+    { }
+
+    public partial class DidTagEventEventArgs : global::System.EventArgs, LocalyticsDidTagEventEventArgs
+    { }
+
+    //public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
+
     public partial class Localytics
 	{
 		static Localytics()
@@ -28,7 +35,7 @@ namespace LocalyticsXamarin.Android
 		static Localytics _instance;
 
 		[MethodImpl(MethodImplOptions.Synchronized)]
-		internal static Localytics SharedInstance()
+        public static Localytics SharedInstance()
 		{
 			if (_instance == null) {
 				_instance = new Localytics();
