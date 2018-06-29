@@ -21,7 +21,9 @@ namespace LocalyticsXamarin.Common
 
     public interface LocalyticsDidTagEventEventArgs
     {
-        
+        string EventName { get; }
+        IDictionary<string, string> Attributes { get; }
+        double? CustomerValue { get; }
     }
 
 

@@ -20,7 +20,13 @@ namespace LocalyticsXamarin.Android
     { }
 
     public partial class DidTagEventEventArgs : global::System.EventArgs, LocalyticsDidTagEventEventArgs
-    { }
+    { 
+        public double? CustomerValue {
+            get {
+                return CustomerValueLong;
+            }
+        }
+    }
 
     //public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
 

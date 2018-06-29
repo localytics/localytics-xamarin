@@ -207,14 +207,21 @@ namespace LocalyticsXamarin.IOS
             public class DidTagEventEventArgs : EventArgs, LocalyticsDidTagEventEventArgs
             {
                 public string EventName { get; set; }
-                public System.Collections.IDictionary Attributes { get; set; }
+                public IDictionary<string, string> Attributes { get; set; }
                 public double? CustomerValue { get; set; }
                 public DidTagEventEventArgs(string name,
-                                              System.Collections.IDictionary attribs,
+                                              IDictionary attribs,
                                               double? customerValue)
                 {
                     EventName = name;
-                    Attributes = attribs;
+
+                    var dictionary = new Dictionary<string, string>();
+                    foreach (var key in attribs.Keys)
+                    {
+                        dictionary.Add(key.ToString(), attribs[key].ToString());
+                    }
+                    Attributes = dictionary;
+
                     CustomerValue = customerValue;
                 }
                 public override string ToString()
