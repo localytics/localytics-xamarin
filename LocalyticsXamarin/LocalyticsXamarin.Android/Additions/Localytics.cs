@@ -14,9 +14,20 @@ using LocalyticsXamarin.Common;
 namespace LocalyticsXamarin.Android
 {
     public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
-        {
+    { }
 
+    public partial class SessionWillOpenEventArgs : global::System.EventArgs, LocalyticsSessionWillOpenEventArgs
+    { }
+
+    public partial class DidTagEventEventArgs : global::System.EventArgs, LocalyticsDidTagEventEventArgs
+    { 
+        public double? CustomerValue {
+            get {
+                return CustomerValueLong;
+            }
         }
+    }
+
     public partial class Localytics
 	{
 		static Localytics()

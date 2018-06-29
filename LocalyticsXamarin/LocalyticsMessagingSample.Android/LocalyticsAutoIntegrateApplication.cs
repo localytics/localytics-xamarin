@@ -62,7 +62,7 @@ namespace LocalyticsMessagingSample.Android
         {
             string eventName = eventArgs.EventName;
             IDictionary<string, string> attributes = eventArgs.Attributes;
-            long customerValueIncrease = eventArgs.CustomerValue;
+            double? customerValueIncrease = eventArgs.CustomerValue;
             if (attributes != null)
             {
                 Console.WriteLine("Did tag event: name: " + eventName + " attributes.Count: " + attributes.Count + " customerValueIncrease: " + customerValueIncrease);

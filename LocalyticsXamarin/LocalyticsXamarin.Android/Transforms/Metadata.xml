@@ -112,7 +112,7 @@
     <!-- Event Args ... -->
     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p0']" name="name">eventName</attr>
     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p1']" name="name">attributes</attr>
-    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p2']" name="name">customerValue</attr>
+    <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']/parameter[@name='p2']" name="name">customerValueLong</attr>
  
     
     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionDidOpen']/parameter[@name='p0']" name="name">first</attr>

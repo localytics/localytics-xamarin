@@ -65,12 +65,12 @@ namespace LocalyticsXamarin.Shared
         }
     }
 
-    public class LocalyticsDidTagEventEventArgs : EventArgs
+    public class DidTagEventEventArgs : EventArgs
     {
         public string EventName { get; set; }
         public System.Collections.IDictionary Attributes { get; set; }
         public double? CustomerValue { get; set; }
-        public LocalyticsDidTagEventEventArgs(string name,
+        public DidTagEventEventArgs(string name,
                                       System.Collections.IDictionary attribs,
                                       double? customerValue)
         {
@@ -84,9 +84,9 @@ namespace LocalyticsXamarin.Shared
         }
     }
 
-    public class LocalyticsSessionWillOpenEventArgs : SessionEventArgs
+    public class SessionWillOpenEventArgs : SessionEventArgs
     {
-        public LocalyticsSessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+        public SessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
             : base(isFirst, isUpgrade, isResume)
         {
         }
