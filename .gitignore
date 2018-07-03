@@ -31,3 +31,5 @@ LocalyticsXamarin/packages
 *.nuspec
 LocalyticsXamarin/dist
 .vscode
+LocalyticsXamarin/.vs/**
+LocalyticsXamarin/packages/**

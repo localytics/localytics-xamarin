@@ -15,4 +15,15 @@
   - An optional "bitfield" attribute marks the enum type with [Flags].
   - For Java interfaces, use "jni-interface" attribute instead of "jni-class" attribute.
   -->
+<!-- Cant Map as it's a string.
+    <mapping jni-class="com/localytics/android/Localytics$ProfileScope" clr-enum-type="LocalyticsXamarin.Android.ProfileScope">
+        <field jni-name="ORGANIZATION" clr-name="AValue" value="org" />
+        <field jni-name="APPLICATION" clr-name="AnotherValue" value="app" />
+    </mapping>
+-->
+<!--        <mapping jni-class="com/localytics/android/Localytics$InAppMessageDismissButtonLocation" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation">
+        <field jni-name="LEFT" clr-name="Left" value="0" />
+        <field jni-name="RIGHT" clr-name="Right" value="1" />
+    </mapping>-->
+
 </enum-field-mappings>

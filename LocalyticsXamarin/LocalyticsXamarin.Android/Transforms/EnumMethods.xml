@@ -15,4 +15,13 @@
   - To change the type of the return value, use "return" as the parameter name.
   - The parameter names will be p0, p1, ... unless you provide JavaDoc file in the project.
   -->
+<!-- Cant map as it's a string    
+    <mapping jni-class="com/localytics/android/Localytics">
+        <method jni-name="addProfileAttributesToSet" parameter="P3" clr-enum-type="LocalyticsXamarin.Android.ProfileScope" />
+    </mapping>
+ -->
+<!--    <mapping jni-class="com/localytics/android/Localytics">
+        <method jni-name="getInAppMessageDismissButtonLocation" parameter="return" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation" />
+        <method jni-name="setInAppMessageDismissButtonLocation" parameter="p0" clr-enum-type="LocalyticsXamarin.Android.InAppMessageDismissButtonLocation" />
+    </mapping>-->
 </enum-method-mappings>

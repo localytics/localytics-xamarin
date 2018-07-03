@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using ObjCRuntime;
 
-namespace LocalyticsXamarin.iOS
+namespace LocalyticsXamarin.IOS
 {
 	[Native]
 	public enum LLInAppMessageDismissButtonLocation : ulong
@@ -23,5 +23,30 @@ namespace LocalyticsXamarin.iOS
 		Enter,
 		Exit
 	}
+
+    [Native]
+    public enum LLInAppMessageType : long
+    {
+        Top,
+        Bottom,
+        Center,
+        Full
+    }
+
+    [Native]
+    public enum LLImpressionType : long
+    {
+        Click,
+        Dismiss
+    }
+
+    [Native]
+    public enum CampaignType : long
+    {
+        InApp,
+        Push,
+        Inbox,
+        Places
+    }
 }
 

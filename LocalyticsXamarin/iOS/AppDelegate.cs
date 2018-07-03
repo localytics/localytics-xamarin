@@ -1,59 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 using Foundation;
 using UIKit;
 
-using LocalyticsXamarin.iOS;
+using LocalyticsSample.Shared;
+using LocalyticsXamarin.IOS;
+using System.Diagnostics;
 
-namespace LocalyticsSample.iOS
+namespace LocalyticsSample.IOS
 {
+    
 	[Register ("AppDelegate")]
-	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+	public class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
 	{
-		private LocalyticsAnalyticsListener_iOS analyticsListener;
-		private LocalyticsMessagingListener_iOS messagingListener;
-
-		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
+		public override bool FinishedLaunching (UIApplication uiApplication, NSDictionary launchOptions)
 		{
-			analyticsListener = new LocalyticsAnalyticsListener_iOS ();
-			messagingListener = new LocalyticsMessagingListener_iOS ();
+			global::Xamarin.Forms.Forms.Init();
 
-			Localytics.SetAnalyticsDelegate (analyticsListener);
-			Localytics.SetMessagingDelegate (messagingListener);
+            // Code for starting up the Xamarin Test Cloud Agent
+#if ENABLE_TEST_CLOUD
+            Xamarin.Calabash.Start();
+#endif
 
-			#if DEBUG
-			Localytics.SetLoggingEnabled(true);
-			#endif
+            LoadApplication(new App());
 
-			// Localytics Auto Integrate
-			Localytics.AutoIntegrate ("YOUR_LOCALYTICS_APP_KEY", options != null? options : new NSDictionary());
+			// Localytics Integrate
+			Localytics.LoggingEnabled = true;
+			Localytics.Integrate ("APPKEY", launchOptions ?? new NSDictionary());
 
 			// Register for remote notifications
-			if (UIDevice.CurrentDevice.CheckSystemVersion (8, 0)) {
 				var pushSettings = UIUserNotificationSettings.GetSettingsForTypes (
 					UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound,
 					new NSSet ());
 
 				UIApplication.SharedApplication.RegisterUserNotificationSettings (pushSettings);
 				UIApplication.SharedApplication.RegisterForRemoteNotifications ();
-			} else {
-				UIRemoteNotificationType notificationTypes = UIRemoteNotificationType.Alert | UIRemoteNotificationType.Badge | UIRemoteNotificationType.Sound;
-				UIApplication.SharedApplication.RegisterForRemoteNotificationTypes (notificationTypes);
-			}
 
-			global::Xamarin.Forms.Forms.Init ();
-
-			// Code for starting up the Xamarin Test Cloud Agent
-			#if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
-			#endif
-
-			LoadApplication (new App ());
-
-			return base.FinishedLaunching (app, options);
+			return base.FinishedLaunching (uiApplication, launchOptions);
 		}
+
+		public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+			Console.WriteLine("Push Token Registered " + deviceToken.DebugDescription);
+			Localytics.SetPushToken(deviceToken);
+        }
+
+		public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
+		{
+			Console.WriteLine("Failed to Register for Notifications " + error);
+		}      
 	}
 }
-
