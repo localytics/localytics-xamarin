@@ -13,11 +13,11 @@ The steps to integrate Localytics with this component mirrors the native Localyt
 ### Install the SDK
 1. Download the latest version of the Nuget package from [here](https://downloads.localytics.com/SDKs/Xamarin/Localytics-Xamarin-Latest.zip).
 2. Add a Nuget Package source in Visual Studio Preferences called localytics that points to the folder with the downloaded package.
-3. In Projects where you want to use Localytic SDK 
+3. In Projects that need to be integrated with Localytics Xamarin SDK
 	* Expand Packages folder
 	* Add a Package ![Add Package Menu](/images/AddPackage.png)
 	* Select localytics as the package sources ![Add Package Dialog](/images/AddPackageDialog.png)
-	* Pick the latest version of localytics
+	* Pick the latest version of LocalyticsXamarin nuget package
 	* Repeat the step for each platform (Android and iOS) ![Solution Window](/images/AddPackageDialog.png)
 	
 ## Package Names
