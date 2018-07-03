@@ -1,4 +1,4 @@
-MONOXBUILD=/Library/Frameworks/Mono.framework/Commands/xbuild
+MONOXBUILD=/Library/Frameworks/Mono.framework/Commands/msbuild
 
 all : bin/Release/LocalyticsXamarin.iOS.dll
 
