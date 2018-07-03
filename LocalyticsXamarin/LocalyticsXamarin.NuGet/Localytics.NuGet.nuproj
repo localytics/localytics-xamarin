@@ -2,11 +2,11 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.props" Condition="Exists('$(NuGetAuthoringPath)\NuGet.Packaging.Authoring.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3D21B247-4672-466E-9F96-616FC955F033}</ProjectGuid>
-    <Description>Localytics</Description>
-    <PackageId>Localytics</PackageId>
+    <Description>Localytics Xamarin SDK for Android and iOS</Description>
+    <PackageId>LocalyticsXamarin</PackageId>
     <PackageVersion>5.1.2</PackageVersion>
     <Authors>Localytics</Authors>
     <DevelopmentDependency>false</DevelopmentDependency>
@@ -16,6 +16,11 @@
     <UsePartialTypes>false</UsePartialTypes>
     <AssemblyName>Localytics.NuGet</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Owners>Localytics</Owners>
+    <Copyright>Char Software</Copyright>
+    <PackageTags>Localytics Xamarin iOS Android</PackageTags>
+    <Title>Localytics Xamarin SDK</Title>
+    <PackageProjectUrl>https://github.com/localytics/localytics-xamarin</PackageProjectUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
