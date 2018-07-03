@@ -18,7 +18,7 @@ The steps to integrate Localytics with this component mirrors the native Localyt
 	* Add a Package ![Add Package Menu](/images/AddPackage.png)
 	* Select localytics as the package sources ![Add Package Dialog](/images/AddPackageDialog.png)
 	* Pick the latest version of LocalyticsXamarin nuget package
-	* Repeat the step for each platform (Android and iOS) ![Solution Window](/images/AddPackageDialog.png)
+	* Repeat the step for each platform (Android and iOS) ![Solution Window](/images/AfterPackagesAdded.png)
 	
 ## Package Names
 
