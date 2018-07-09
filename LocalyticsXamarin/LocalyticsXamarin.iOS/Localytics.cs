@@ -133,12 +133,14 @@ namespace LocalyticsXamarin.IOS
         static AnalyticsListener analyticsListener = new AnalyticsListener();
         static LocalyticsMessagingListener messagingListener = new LocalyticsMessagingListener();
         static LocalyticsListener localyticsListener = new LocalyticsListener();
+        static LocalyticsCallToActionListener callToActionListener = new LocalyticsCallToActionListener();
         static Localytics()
         {
             LocalyticsSDK.UpdatePluginVersion();
             Localytics.SetAnalyticsDelegate(analyticsListener);
             Localytics.SetMessagingDelegate(messagingListener);
             Localytics.SetLocationDelegate(localyticsListener);
+            Localytics.SetCallToActionDelegate(callToActionListener);
         }
 
         static public EventHandler<LocalyticsDidTriggerRegionsEventArgs> LocalyticsDidTriggerRegions;
@@ -237,7 +239,7 @@ namespace LocalyticsXamarin.IOS
 
             public override void LocalyticsDidTagEventHandler(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
             {
-                LocalyticsDidTagEvent?.Invoke(null, new LocalyticsDidTagEventEventArgs(eventName, attributes, customerValueIncrease?.DoubleValue));
+                DidTagEvent?.Invoke(null, new DidTagEventEventArgs(eventName, attributes, customerValueIncrease?.LongValue));
             }
 
             public override void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
@@ -260,10 +262,10 @@ namespace LocalyticsXamarin.IOS
         public class InboxDidDismissViewControllerEventArgs : EventArgs { } // No Extra Args.
         public delegate void InboxDidDismissViewControllerEventHandler(object sender, InboxDidDismissViewControllerEventArgs e);
 
-        static public InboxDidDismissViewControllerEventHandler InboxDidDismissViewControllerEvent;
-        static public InboxDidDisplayViewControllerEventHandler InboxDidDisplayViewControllerEvent;
-        static public InboxWillDisplayViewControllerEventHandler InboxWillDisplayViewControllerEvent;
-        static public InboxWillDismissViewControllerEventHandler InboxWillDismissViewControllerEvent;
+        public static InboxDidDismissViewControllerEventHandler InboxDidDismissViewControllerEvent;
+        public static InboxDidDisplayViewControllerEventHandler InboxDidDisplayViewControllerEvent;
+        public static InboxWillDisplayViewControllerEventHandler InboxWillDisplayViewControllerEvent;
+        public static InboxWillDismissViewControllerEventHandler InboxWillDismissViewControllerEvent;
 
         public static Func<UILocalNotification, LLPlacesCampaign, UILocalNotification> PlacesWillDisplayNotification;
         public static Func<UserNotifications.UNMutableNotificationContent, LLPlacesCampaign, UserNotifications.UNMutableNotificationContent> PlacesWillDisplayNotificationContent;
@@ -338,6 +340,57 @@ namespace LocalyticsXamarin.IOS
             public override bool LocalyticsShouldDeeplink(Foundation.NSUrl url)
             {
                 return LocalyticsSDK.ShouldDeepLinkDelegate != null ? LocalyticsSDK.ShouldDeepLinkDelegate(url.AbsoluteString) : true;
+            }
+        }
+
+        public class DidOptOutEventArgs : EventArgs, LocalyticsDidOptOutEventArgs
+        {
+            public bool OptOut { get; set; }
+            public ICampaignBase Campaign { get; set; }
+
+            public DidOptOutEventArgs(bool optOut, LLCampaignBase campaign)
+            {
+                this.OptOut = optOut;
+                this.Campaign = (LocalyticsXamarin.Common.ICampaignBase) campaign;
+            }
+        }
+
+        public static Func<LLCampaignBase, bool> ShouldPromptForLocationWhenInUsePermission;
+        public static Func<LLCampaignBase, bool> ShouldPromptForLocationAlwaysPermission;
+        public static Func<LLCampaignBase, bool> ShouldPromptForNotificationPermission;
+
+
+        public sealed class LocalyticsCallToActionListener : LLCallToActionDelegate
+        {
+            public override void LocalyticsDidOptOut(bool optOut, LLCampaignBase campaign)
+            {
+                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, campaign));
+            }
+
+            public override void LocalyticsDidPrivacyOptOut(bool optOut, LLCampaignBase campaign)
+            {
+                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, campaign));
+            }
+
+            public override bool LocalyticsShouldDeeplink(NSUrl url, LLCampaignBase campaign)
+            {
+                return LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null ?
+                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, (LocalyticsXamarin.Common.ICampaignBase) campaign) : true;
+            }
+
+            public override bool LocalyticsShouldPromptForLocationAlwaysPermissions(LLCampaignBase campaign)
+            {
+                return ShouldPromptForLocationAlwaysPermission == null || ShouldPromptForLocationAlwaysPermission(campaign);
+            }
+
+            public override bool LocalyticsShouldPromptForLocationWhenInUsePermissions(LLCampaignBase campaign)
+            {
+                return ShouldPromptForLocationWhenInUsePermission == null || ShouldPromptForLocationWhenInUsePermission(campaign);
+            }
+
+            public override bool LocalyticsShouldPromptForNotificationPermissions(LLCampaignBase campaign)
+            {
+                return ShouldPromptForNotificationPermission == null || ShouldPromptForNotificationPermission(campaign);
             }
         }
     }

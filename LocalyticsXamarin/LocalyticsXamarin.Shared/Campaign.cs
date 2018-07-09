@@ -50,8 +50,9 @@ namespace LocalyticsXamarin.Shared
  "\n\t ThumnmailUrl:{6}" +
 "\n\t TitleText:{7}" +
  "\n\t IsPushToInboxCampaign:{8}" +
- "\n\t CampaignId:{9}" +
- "\n\t HasCreative:{10}" +
+ "\n\t IsDeleted:{9}" +
+ "\n\t CampaignId:{10}" +
+ "\n\t HasCreative:{11}" +
 								 "\n\t SortOrder:{11}"
 
 									, this.Read
@@ -63,6 +64,7 @@ namespace LocalyticsXamarin.Shared
 								 , this.ThumbnailUrl ?? ""
 								 , this.TitleText ?? ""
 								 , this.IsPushToInboxCampaign
+                                 , this.IsDeleted
 								 , this.CampaignId
 								 , this.HasCreative
 								 , this.SortOrder);
@@ -90,6 +92,8 @@ namespace LocalyticsXamarin.Shared
 
 		public bool IsPushToInboxCampaign => campaign.IsPushToInboxCampaign;
 
+        public bool IsDeleted => campaign.IsDeleted;
+
 		public double ReceivedDate => campaign.ReceivedDate;
 
 		public string ThumbnailUrl => campaign.ThumbnailUrl?.AbsoluteString;
@@ -115,6 +119,8 @@ namespace LocalyticsXamarin.Shared
 		public bool HasCreative => campaign.HasCreative;
 
 		public bool IsPushToInboxCampaign => campaign.IsPushToInboxCampaign;
+
+        public bool IsDeleted => campaign.IsDeleted;
 
 		// Platform Specific double vs Date
 		public double ReceivedDate => campaign.ReceivedDate.Time / 1000;

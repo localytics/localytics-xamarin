@@ -129,6 +129,7 @@ namespace LocalyticsXamarin.Shared
 #endif
     public class LocalyticsSDK : ILocalytics
     {
+        //Messaging Listener functions
         public static EventHandler<InAppDidDisplayEventArgs> InAppDidDisplayEvent;
         public static EventHandler<InAppWillDismissEventArgs> InAppWillDismissEvent;
         public static EventHandler<InAppDidDismissEventArgs> InAppDidDismissEvent;
@@ -137,6 +138,12 @@ namespace LocalyticsXamarin.Shared
         public static Func<string, bool> ShouldDeepLinkDelegate;
         public static Func<NativeInAppCampaign, NativeInAppConfiguration, NativeInAppConfiguration> InAppWillDisplayDelegate;
         public static Func<NativePlacesCampaign, bool> PlacesShouldDisplayCampaignDelegate;
+
+        //CallToAction Listener delegates
+        public static Func<string, ICampaignBase, bool> CallToActionShouldDeepLinkDelegate;
+        public static EventHandler<LocalyticsXamarin.Common.LocalyticsDidOptOutEventArgs> DidOptOut;
+        public static EventHandler<LocalyticsXamarin.Common.LocalyticsDidOptOutEventArgs> DidPrivacyOptOut;
+
 
         public static event EventHandler LocalyticsSessionWillClose
         {
@@ -363,7 +370,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString(versionString), new Foundation.NSString("plugin_library")));
 #else
-            LocalyticsXamarin.Android.ConstantsHelper.UpdatePluginVersion(versionString);
+            Localytics.SetOption("plugin_library", versionString);
 #endif
         }
         public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation
@@ -574,6 +581,11 @@ namespace LocalyticsXamarin.Shared
             return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.AllInboxCampaigns);
         }
 
+        public IInboxCampaign[] DisplayableInboxCampaigns()
+        {
+            return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.DisplayableInboxCampaigns);
+        }
+
 
         public bool InAppAdIdParameterEnabled
         {
@@ -743,6 +755,11 @@ namespace LocalyticsXamarin.Shared
         public void SetInboxCampaign(IInboxCampaign campaign, bool read)
         {
             Localytics.SetInboxCampaignRead((NativeInboxCampaign)campaign.Handle(), read);
+        }
+
+        public void DeleteInboxCampaign(IInboxCampaign campaign)
+        {
+            Localytics.DeleteInboxCampaign((NativeInboxCampaign)campaign.Handle());
         }
 
         public void InboxListItemTapped(IInboxCampaign campaign)

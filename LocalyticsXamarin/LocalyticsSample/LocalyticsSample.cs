@@ -189,7 +189,7 @@ namespace LocalyticsSample.Shared
             localytics.LoggingEnabled = false;
             Task.Run(() =>
             {
-                var campaigns = localytics.InboxCampaigns();
+                var campaigns = localytics.DisplayableInboxCampaigns();
                 foreach (IInboxCampaign campaign in campaigns)
                 {
                     if (firstInboxCampaign == null)
@@ -202,6 +202,7 @@ namespace LocalyticsSample.Shared
                 localytics.LoggingEnabled = false;
                 localytics.InboxListItemTapped(firstInboxCampaign);
                 localytics.TagImpression(firstInboxCampaign, "custom");
+                localytics.DeleteInboxCampaign(firstInboxCampaign);
             });
 
 

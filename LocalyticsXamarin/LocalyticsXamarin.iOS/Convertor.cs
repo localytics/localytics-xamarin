@@ -250,6 +250,7 @@ namespace LocalyticsXamarin.IOS
 		//        { "receivedDate", campaign.ReceivedDate },
 		//        { "deepLinkURL", campaign.DeepLinkURL.ToString() },
 		//        { "isPushToInboxCampaign", campaign.IsPushToInboxCampaign }
+        //        { "isDeleted", campaign.IsDeleted }
 		//    };
 		//}
 
