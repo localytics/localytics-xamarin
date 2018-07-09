@@ -26,11 +26,16 @@ namespace LocalyticsXamarin.Common
         double? CustomerValue { get; }
     }
 
-
     public class InAppEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDisplayEventArgs : EventArgs { } // No Extra Args.
     public class InAppWillDismissEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDismissEventArgs : EventArgs { } // No Extra Args.
+
+    public interface LocalyticsDidOptOutEventArgs
+    {
+        bool OptOut { get; }
+        ICampaignBase Campaign { get; }
+    }
 
     public enum XFLLInAppMessageDismissButtonLocation : ulong
     {
@@ -109,6 +114,7 @@ namespace LocalyticsXamarin.Common
         string SummaryText { get; }
         bool HasCreative { get; }
         bool IsPushToInboxCampaign { get; }
+        bool IsDeleted { get; }
 
         //NSTimeInterval
         double ReceivedDate { get; }
@@ -200,13 +206,16 @@ namespace LocalyticsXamarin.Common
 
         void DismissCurrentInAppMessage();
 
+        [Obsolete("InboxCampaigns is deprecated, please use DisplayableInboxCampaigns instead.")]
         IInboxCampaign[] InboxCampaigns();
+        IInboxCampaign[] DisplayableInboxCampaigns();
         IInboxCampaign[] AllInboxCampaigns();
         void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate);
         void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxAllCampaignsDelegate);
         void TagImpression(IInboxCampaign campaign, string customAction);
         void SetInboxCampaign(IInboxCampaign campaign, bool read);
         void InboxListItemTapped(IInboxCampaign campaign);
+        void DeleteInboxCampaign(IInboxCampaign campaign);
 
         long InboxCampaignsUnreadCount();
 

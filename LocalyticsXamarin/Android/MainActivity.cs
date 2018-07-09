@@ -31,7 +31,6 @@ namespace LocalyticsSample.Android
                 StartService(intent);
             }
 
-			Localytics.SetOption("ll_gcm_sender_id", "995606817677");
             //Localytics.RegisterPush();
 
             global::Xamarin.Forms.Forms.Init(this, bundle);

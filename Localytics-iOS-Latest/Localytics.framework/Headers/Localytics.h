@@ -32,10 +32,11 @@
 #import <Localytics/LLInAppConfiguration.h>
 
 @protocol LLMessagingDelegate;
+@protocol LLCallToActionDelegate;
 @protocol LLLocationDelegate;
 
 @class UNMutableNotificationContent;
-#define LOCALYTICS_LIBRARY_VERSION      @"5.1.0" //iOS version
+#define LOCALYTICS_LIBRARY_VERSION      @"5.2.0" //iOS version
 
 #else
 
@@ -933,10 +934,17 @@
 
  @Version SDK3.7.0
  */
-+ (nonnull NSArray<LLInboxCampaign *> *)inboxCampaigns;
++ (nonnull NSArray<LLInboxCampaign *> *)inboxCampaigns __attribute__((deprecated("inboxCampaigns has been deprecated, please use displayableInboxCampaigns")));
+
+/** Returns an array of all Inbox campaigns that are enabled and can be displayed.
+ @return an array of LLInboxCampaign objects
+ 
+ @Version SDK5.2.0
+ */
++ (nonnull NSArray<LLInboxCampaign *> *)displayableInboxCampaigns;
 
 /** Returns an array of all Inbox campaigns that are enabled. The return value will include Inbox
- campaigns with no listing title, and thus no visible UI element.
+ campaigns with no listing title, and thus no visible UI element as well as deleted Inbox campaigns.
  @return an array of LLInboxCampaign objects
 
  @Version SDK4.4.0
@@ -951,7 +959,7 @@
 + (void)refreshInboxCampaigns:(nonnull void (^)(NSArray<LLInboxCampaign *> * _Nullable inboxCampaigns))completionBlock;
 
 /** Refresh inbox campaigns from the Localytics server that are enabled. The return value will
- include Inbox campaigns with no listing title, and thus no visible UI element.
+ include Inbox campaigns with no listing title, and thus no visible UI element as well as deleted Inbox campaigns.
  @param completionBlock the block invoked with refresh is complete
 
  @Version SDK4.4.0
@@ -967,6 +975,15 @@
  @Version SDK4.4.0
  */
 + (void)setInboxCampaign:(nonnull LLInboxCampaign *)campaign asRead:(BOOL)read;
+
+/** Set an Inbox campaign as deleted. Deleted Inbox campaigns will not be returned from
+ the list of visible inbox campaigns.
+ @param campaign an LLInboxCampaign that should be deleted
+ @see [LLInboxCampaign class]
+ 
+ @Version SDK5.2.0
+ */
++ (void)deleteInboxCampaign:(nonnull LLInboxCampaign *)campaign;
 
 /** Get the count of unread inbox messages
  @return the count of unread inbox messages
@@ -1142,13 +1159,20 @@
  */
 
 /** Set a Messaging delegate
- @param delegate An object that implements the LLMessagingDelegate and is called
- when an In-App message will display, did display, will hide, and did hide.
+ @param delegate An object that implements the LLMessagingDelegate.
  @see LLMessagingDelegate
 
  @Version SDK4.0
  */
 + (void)setMessagingDelegate:(nullable id<LLMessagingDelegate>)delegate;
+
+/** Set a CallToAction delegate
+ @param delegate An object that implements the LLCallToActionDelegate.
+ @see LLCallToActionDelegate
+ 
+ @Version SDK4.0
+ */
++ (void)setCallToActionDelegate:(nullable id<LLCallToActionDelegate>)delegate;
 
 /** Returns whether the ADID parameter is added to In-App call to action URLs
  This call is not garaunteed to return the correct result as the call to setInAppAdidParameterEnabled
@@ -1432,13 +1456,13 @@
 
  * @Version SDK5.0
  */
-- (BOOL)localyticsShouldDeeplink:(nonnull NSURL *)url;
+- (BOOL)localyticsShouldDeeplink:(nonnull NSURL *)url __attribute__((deprecated("localyticsShouldDeeplink in the LLMessagingDelegate has been deprecated, please use localyticsShouldDeeplink in the LLCallToActionDelegate instead")));
 
 @end
 
 
 /**
- * A protocol used to reveive location updates.
+ * A protocol used to receive location updates.
 
  * @Version SDK4.0
  */
@@ -1476,4 +1500,60 @@
 
 @end
 
+/**
+ * A protocol used to receive information about Call To Actions triggered by Localytics campaigns.
+ 
+ * @Version SDK5.0
+ */
+@protocol LLCallToActionDelegate <NSObject>
+@optional
+
+/**
+ * @param url The URL that was triggered inside a Localytics call to action from any
+ *            messaging (Push, Places, In-App or Inbox) campaign
+ * @param campaign The campaign that triggered this deeplink (in the case of push, this will be nil).
+ * @return The decision to allow Localytics to handle the deeplink
+ */
+- (BOOL)localyticsShouldDeeplink:(nonnull NSURL *)url campaign:(nullable LLCampaignBase *)campaign;
+/**
+ * Callback to indicate that a user has triggered an privacy opt in or opt out using the Javascript
+ * API provided in a Localytics In-App or Inbox message.
+ *
+ * @param optOut The result of the call to action indicating that the user opted in (false) or out (true).
+ * @param campaign The campaign which triggered the opt in/out call.
+ */
+- (void)localyticsDidOptOut:(BOOL)optedOut campaign:(nonnull LLCampaignBase *)campaign;
+/**
+ * Callback to indicate that a user has triggered an opt in or opt out using the Javascript
+ * API provided in a Localytics In-App or Inbox message.
+ *
+ * @param optOut The result of the call to action indicating that the user opted in (false) or out (true).
+ * @param campaign The campaign which triggered the privacy opt in/out call.
+ */
+- (void)localyticsDidPrivacyOptOut:(BOOL)privacyOptedOut campaign:(nonnull LLCampaignBase *)campaign;
+/**
+ * Callback to indicate that a user has triggered a location when in use permission prompt using the Javascript
+ * API provided in a Localytics In-App or Inbox message.
+ *
+ * @param campaign The campaign which triggered the location when in use permission prompt.
+ * @return boolean indicating if Localytics should proceed. Returning false will prevent the location prompt.
+ */
+- (BOOL)localyticsShouldPromptForLocationWhenInUsePermissions:(nonnull LLCampaignBase *)campaign;
+/**
+ * Callback to indicate that a user has triggered a location always permission prompt using the Javascript
+ * API provided in a Localytics In-App or Inbox message.
+ *
+ * @param campaign The campaign which triggered the location always permission prompt.
+ * @return boolean indicating if Localytics should proceed. Returning false will prevent the location prompt.
+ */
+- (BOOL)localyticsShouldPromptForLocationAlwaysPermissions:(nonnull LLCampaignBase *)campaign;
+/**
+ * Callback to indicate that a user has triggered a notification permission prompt using the Javascript
+ * API provided in a Localytics In-App or Inbox message.
+ *
+ * @param campaign The campaign which triggered the notification permission prompt.
+ * @return boolean indicating if Localytics should proceed. Returning false will prevent the location prompt.
+ */
+- (BOOL)localyticsShouldPromptForNotificationPermissions:(nonnull LLCampaignBase *)campaign;
+@end
 #endif

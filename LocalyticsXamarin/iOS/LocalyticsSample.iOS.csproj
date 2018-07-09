@@ -27,6 +27,7 @@
     <MtouchI18n>
     </MtouchI18n>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <MtouchFastDev>true</MtouchFastDev>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>

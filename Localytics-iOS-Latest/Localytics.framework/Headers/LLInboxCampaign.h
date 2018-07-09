@@ -68,4 +68,11 @@
  */
 @property (nonatomic, assign, readonly) BOOL isPushToInboxCampaign;
 
+/**
+ * True if this inbox campaign has been deleted.
+ */
+@property (nonatomic, assign, getter=isDeleted, readonly) BOOL deleted;
+
+- (void)delete;
+
 @end

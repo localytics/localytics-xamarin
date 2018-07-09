@@ -22,7 +22,7 @@
     <bool name="ll_gcm_service_enabled">false</bool>
 
     <!-- Specify the GCM Sender ID which will be used to register for push tokens -->
-    <string name="ll_gcm_sender_id" translatable="false">GCMID</string>
+    <string name="ll_gcm_sender_id" translatable="false">995606817677</string>
 
     <!-- Toggle the Localytics FirebaseInstanceIdService and FirebaseMessagingService, which handle
     incoming requests from FCM. If this value is set to true, then the app must specify the
