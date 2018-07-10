@@ -148,6 +148,16 @@ namespace LocalyticsXamarin.Common
         string AttachmentURL { get; }
     }
 
+    public interface ILLCustomer 
+    {
+        string CustomerId { get; set; }
+        string FirstName { get; set; }
+        string LastName { get; set; }
+        string FullName { get; set; }
+        string EmailAddress { get; set; }
+        object ToNativeCustomer();
+    }
+
     public interface ILocalytics
     {
         void OpenSession();
@@ -167,8 +177,12 @@ namespace LocalyticsXamarin.Common
         void TagSearched(string queryText, string contentType, Int64? resultCount, IDictionary<string, string> attributes);
         void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes);
         void TagContentRated(string contentName, string contentId, string contentType, Int64? rating, IDictionary<string, string> attributes);
+        [Obsolete("TagCustomerRegistered with a dictionary has been deprecated, please use the variant with ILLCustomer instead")]
         void TagCustomerRegistered(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
+        [Obsolete("TagCustomerLoggedIn with a dictionary has been deprecated, please use the variant with ILLCustomer instead")]
         void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
+        void TagCustomerRegistered(ILLCustomer customer, string methodName, IDictionary<string, string> attributes);
+        void TagCustomerLoggedIn(ILLCustomer customer, string methodName, IDictionary<string, string> attributes);
         void TagCustomerLoggedOut(IDictionary<string, string> attributes);
         void TagInvited(string methodName, IDictionary<string, string> attributes);
 

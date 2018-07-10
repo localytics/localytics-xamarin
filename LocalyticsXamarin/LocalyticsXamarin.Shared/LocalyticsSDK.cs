@@ -706,6 +706,15 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
+        public void TagCustomerRegistered(ILLCustomer customer, string methodName, IDictionary<string, string> attributes) 
+        {
+#if __IOS__
+            Localytics.TagCustomerRegistered((LLCustomer) customer.ToNativeCustomer(), methodName, attributes.ToNSDictionary());
+#else
+            Localytics.TagCustomerRegistered((LocalyticsXamarin.Android.Customer) customer.ToNativeCustomer(), methodName, attributes);
+#endif
+        }
+
         public void TagCustomerLoggedIn(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
         {
 #if __IOS__
@@ -713,6 +722,14 @@ namespace LocalyticsXamarin.Shared
 #else
             var cust = Convertor.toCustomer(customerProps);
             Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
+#endif
+        }
+
+        public void TagCustomerLoggedIn(ILLCustomer customer, string methodName, IDictionary<string, string> attributes) {
+#if __IOS__
+            Localytics.TagCustomerLoggedIn((LLCustomer) customer.ToNativeCustomer(), methodName, attributes.ToNSDictionary());
+#else
+            Localytics.TagCustomerLoggedIn((LocalyticsXamarin.Android.Customer) customer.ToNativeCustomer(), methodName, attributes);
 #endif
         }
 

@@ -53,9 +53,19 @@ namespace LocalyticsXamarin.IOS
             Localytics.TagCustomerRegisteredPrivate(customer, methodName, attributes);
         }
 
+        public static void TagCustomerRegistered(LLCustomer customer, string methodName, NSDictionary attributes)
+        {
+            Localytics.TagCustomerRegisteredPrivate(customer, methodName, attributes);
+        }
+
         public static void TagCustomerLoggedIn(IDictionary<string, object> customerProps, string methodName, NSDictionary attributes)
         {
             var customer = Convertor.toCustomer(customerProps);
+            Localytics.TagCustomerLoggedInPrivate(customer, methodName, attributes);
+        }
+
+        public static void TagCustomerLoggedIn(LLCustomer customer, string methodName, NSDictionary attributes)
+        {
             Localytics.TagCustomerLoggedInPrivate(customer, methodName, attributes);
         }
 
