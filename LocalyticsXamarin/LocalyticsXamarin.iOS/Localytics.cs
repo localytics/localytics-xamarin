@@ -344,18 +344,6 @@ namespace LocalyticsXamarin.IOS
             }
         }
 
-        public class DidOptOutEventArgs : EventArgs, LocalyticsDidOptOutEventArgs
-        {
-            public bool OptOut { get; set; }
-            public ICampaignBase Campaign { get; set; }
-
-            public DidOptOutEventArgs(bool optOut, LLCampaignBase campaign)
-            {
-                this.OptOut = optOut;
-                this.Campaign = (LocalyticsXamarin.Common.ICampaignBase) campaign;
-            }
-        }
-
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationWhenInUsePermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationAlwaysPermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForNotificationPermission;
@@ -365,18 +353,18 @@ namespace LocalyticsXamarin.IOS
         {
             public override void LocalyticsDidOptOut(bool optOut, LLCampaignBase campaign)
             {
-                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, campaign));
+                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Utils.CampaignFrom(campaign)));
             }
 
             public override void LocalyticsDidPrivacyOptOut(bool optOut, LLCampaignBase campaign)
             {
-                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, campaign));
+                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Utils.CampaignFrom(campaign)));
             }
 
             public override bool LocalyticsShouldDeeplink(NSUrl url, LLCampaignBase campaign)
             {
                 return LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null ?
-                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, (LocalyticsXamarin.Common.ICampaignBase) campaign) : true;
+                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, Utils.CampaignFrom(campaign)) : true;
             }
 
             public override bool LocalyticsShouldPromptForLocationAlwaysPermissions(LLCampaignBase campaign)

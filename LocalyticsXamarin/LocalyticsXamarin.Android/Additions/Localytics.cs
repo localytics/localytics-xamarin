@@ -28,18 +28,6 @@ namespace LocalyticsXamarin.Android
         }
     }
 
-    public partial class DidOptOutEventArgs : global::System.EventArgs, LocalyticsXamarin.Common.LocalyticsDidOptOutEventArgs
-    {
-        public bool OptOut { get; set; }
-        public ICampaignBase Campaign { get; set; }
-
-        public DidOptOutEventArgs(bool optOut, LocalyticsXamarin.Android.Campaign campaign)
-        {
-            this.OptOut = optOut;
-            this.Campaign = (LocalyticsXamarin.Common.ICampaignBase)campaign;
-        }
-    }
-
     //public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
 
     public partial class Localytics
@@ -194,7 +182,7 @@ namespace LocalyticsXamarin.Android
             {
                 var __h = LocalyticsSDK.CallToActionShouldDeepLinkDelegate;
                 if (__h != null)
-                    return __h(p0, (LocalyticsXamarin.Common.ICampaignBase) p1);
+                    return __h(p0, Utils.CampaignFrom(p1));
                 return true;
             }
 
@@ -202,14 +190,14 @@ namespace LocalyticsXamarin.Android
             {
                 var __h = LocalyticsSDK.DidOptOut;
                 if (__h != null)
-                    __h(null, new DidOptOutEventArgs(p0, p1));
+                    __h(null, new DidOptOutEventArgs(p0, Utils.CampaignFrom(p1)));
             }
 
             public void LocalyticsDidPrivacyOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
             {
                 var __h = LocalyticsSDK.DidPrivacyOptOut;
                 if (__h != null)
-                    __h(null, new DidOptOutEventArgs(p0, p1));
+                    __h(null, new DidOptOutEventArgs(p0, Utils.CampaignFrom(p1)));
             }
 
             public bool LocalyticsShouldPromptForLocationPermissions(LocalyticsXamarin.Android.Campaign p0)
