@@ -117,6 +117,9 @@
                      <Button Text="Dismiss Button Right" Clicked="OnDismissButtonRight" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
                  </StackLayout>
 
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                     <Button Text="Delete First Inbox Campaign" Clicked="OnDelete" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                 </StackLayout>
 <!--                     
                  <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
                      <Button Text="TestMode On" IsEnabled="true" Clicked="OnTestMode" BorderWidth="2" BorderColor="Black"/>
