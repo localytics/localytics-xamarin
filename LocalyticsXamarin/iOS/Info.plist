@@ -74,6 +74,10 @@
 	<string>LocalyticsSample</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We just want to know where you are!</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We just want to know where you are!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We just want to know where you are!</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
