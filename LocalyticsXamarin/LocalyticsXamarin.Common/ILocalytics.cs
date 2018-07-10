@@ -31,10 +31,17 @@ namespace LocalyticsXamarin.Common
     public class InAppWillDismissEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDismissEventArgs : EventArgs { } // No Extra Args.
 
-    public interface LocalyticsDidOptOutEventArgs
+
+    public class DidOptOutEventArgs : EventArgs
     {
-        bool OptOut { get; }
-        ICampaignBase Campaign { get; }
+        public bool OptOut { get; set; }
+        public ICampaignBase Campaign { get; set; }
+
+        public DidOptOutEventArgs(bool optOut, ICampaignBase campaign)
+        {
+            this.OptOut = optOut;
+            this.Campaign = campaign;
+        }
     }
 
     public enum XFLLInAppMessageDismissButtonLocation : ulong
@@ -92,10 +99,9 @@ namespace LocalyticsXamarin.Common
 
     public interface IInAppCampaign : IWebViewCampaign
     {
-        int ImpressionType { get; }
         bool IsResponsive { get; }
         //nfloat
-        float AspectRatop { get; }
+        float AspectRatio { get; }
         //nfloat
         float Offset { get; }
         //nfloat 
@@ -103,6 +109,7 @@ namespace LocalyticsXamarin.Common
 
         bool DismissButtonHidden { get; }
         XFLLInAppMessageDismissButtonLocation DismissButtonLocation { get; }
+
     }
 
     public interface IInboxCampaign : IWebViewCampaign
@@ -124,6 +131,21 @@ namespace LocalyticsXamarin.Common
         long SortOrder { get; }
         //NSUrl DeepLinkURL 
         string DeepLinkURL { get; }
+    }
+
+    public interface IPlacesCampaign : ICampaignBase
+    {
+        object Handle();
+
+        string Message { get; }
+
+        string SoundFilename { get; }
+
+        //LLRegion Region { get; }
+
+        //LLRegionEvent Event { get; }
+
+        string AttachmentURL { get; }
     }
 
     public interface ILocalytics

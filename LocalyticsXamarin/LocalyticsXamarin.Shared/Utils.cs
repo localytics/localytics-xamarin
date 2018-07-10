@@ -4,11 +4,13 @@ using LocalyticsXamarin.Common;
 using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.IOS.LLInAppMessageDismissButtonLocation;
 using NativeProfileScope = LocalyticsXamarin.IOS.LLProfileScope;
 using NativeImpressionType = LocalyticsXamarin.IOS.LLImpressionType;
+using NativeBaseCampaign = LocalyticsXamarin.IOS.LLCampaignBase;
 #else
 using LocalyticsXamarin.Android;
 using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
 using NativeProfileScope = LocalyticsXamarin.Android.Localytics.ProfileScope;
 using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
+using NativeBaseCampaign = LocalyticsXamarin.Android.Campaign;
 #endif
 namespace LocalyticsXamarin.Shared
 {
@@ -76,5 +78,49 @@ namespace LocalyticsXamarin.Shared
 			}
 			return null;
 		}
+
+        public static ICampaignBase CampaignFrom(NativeBaseCampaign campaign)
+        {
+
+#if __IOS__
+            if (campaign is LocalyticsXamarin.IOS.LLInboxCampaign) 
+            {
+                return new XFInboxCampaign((LocalyticsXamarin.IOS.LLInboxCampaign) campaign);
+            } 
+            else if (campaign is LocalyticsXamarin.IOS.LLInAppCampaign) 
+            {
+                return new XFInAppCampaign((LocalyticsXamarin.IOS.LLInAppCampaign) campaign);
+            } 
+            else if (campaign is LocalyticsXamarin.IOS.LLPlacesCampaign) 
+            {
+                return new XFPlacesCampaign((LocalyticsXamarin.IOS.LLPlacesCampaign) campaign);
+            } 
+            else 
+            {
+                return null;
+            }
+#else
+            if (campaign is LocalyticsXamarin.Android.InboxCampaign)
+            {
+                return new XFInboxCampaign((LocalyticsXamarin.Android.InboxCampaign) campaign);
+            }
+            else if (campaign is LocalyticsXamarin.Android.InAppCampaign)
+            {
+                return new XFInAppCampaign((LocalyticsXamarin.Android.InAppCampaign) campaign);
+            }
+            else if (campaign is LocalyticsXamarin.Android.PlacesCampaign)
+            {
+                return new XFPlacesCampaign((LocalyticsXamarin.Android.PlacesCampaign) campaign);
+            }
+            else if (campaign is LocalyticsXamarin.Android.PushCampaign)
+            {
+                return new XFPushCampaign((LocalyticsXamarin.Android.PushCampaign) campaign);
+            }
+            else
+            {
+                return null;
+            }
+#endif
+        }
 	}
 }

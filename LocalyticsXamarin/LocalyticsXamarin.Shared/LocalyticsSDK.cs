@@ -141,8 +141,8 @@ namespace LocalyticsXamarin.Shared
 
         //CallToAction Listener delegates
         public static Func<string, ICampaignBase, bool> CallToActionShouldDeepLinkDelegate;
-        public static EventHandler<LocalyticsXamarin.Common.LocalyticsDidOptOutEventArgs> DidOptOut;
-        public static EventHandler<LocalyticsXamarin.Common.LocalyticsDidOptOutEventArgs> DidPrivacyOptOut;
+        public static EventHandler<DidOptOutEventArgs> DidOptOut;
+        public static EventHandler<DidOptOutEventArgs> DidPrivacyOptOut;
 
 
         public static event EventHandler LocalyticsSessionWillClose
@@ -573,17 +573,17 @@ namespace LocalyticsXamarin.Shared
 
         public IInboxCampaign[] InboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.InboxCampaigns);
+            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.InboxCampaigns);
         }
 
         public IInboxCampaign[] AllInboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.AllInboxCampaigns);
+            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.AllInboxCampaigns);
         }
 
         public IInboxCampaign[] DisplayableInboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.DisplayableInboxCampaigns);
+            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.DisplayableInboxCampaigns);
         }
 
 
@@ -898,7 +898,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
         public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
         {
-            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
+            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(XFInboxCampaign.From(x)));
         }
 #else
         private sealed class InboxRefreshImplementation
@@ -912,7 +912,7 @@ namespace LocalyticsXamarin.Shared
             }
             public void handleCallback(NativeInboxCampaign[] campaigns)
             {
-                callback(InboxCampaign.From(campaigns));
+                callback(XFInboxCampaign.From(campaigns));
             }
         }
         InboxRefreshImplementation inboxAllRefreshListener = new InboxRefreshImplementation();
@@ -927,7 +927,7 @@ namespace LocalyticsXamarin.Shared
         public void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
         {
 #if __IOS__
-            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
+            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(XFInboxCampaign.From(x)));
 #else
             inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
