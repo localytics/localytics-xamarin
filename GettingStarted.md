@@ -121,6 +121,22 @@ All API's are a translation of the API's available to native platforms and follo
 | SetLocationMonitoringEnabled | Enable or disable location monitoring for geofence monitoring | 
 | PushTokenInfo | return a string version of Push Token on all platforms.| 
 
+### Dictionaries
+
+#### Customer Properties Dictionary
+The Customer Properties is passed an IDictionary.
+In a future release Localytics Xamarin SDK will support an interface to allow for code completion and refactoring.
+
+| Dictionary Key Name    | Value Description  |
+|------------------------|-------|
+| customerId | Customer Id |
+| firstName  | First Name of the customer |
+| lastName   | Last Name of the customer  |
+| fullName   | Full Name of the customer  |
+| emailAddress | Email Address of the customer |
+
+This Dictionary is to be passed to TagCustomerLoggedIn and TagCustomerRegistered API.
+
 ### Events
 
 Events are available as static events in the LocalyticsSDK class in the Localytics.Shared namespace.
