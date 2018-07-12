@@ -124,7 +124,8 @@ All API's are a translation of the API's available to native platforms and follo
 ### Dictionaries
 
 #### Customer Properties Dictionary
-The Customer Properties is passed a IDictionary in this release future release will support an interface to allow for code completion and refactoring.
+The Customer Properties is passed an IDictionary.
+In a future release Localytics Xamarin SDK will support an interface to allow for code completion and refactoring.
 
 | Dictionary Key Name    | Value Description  |
 |------------------------|-------|
