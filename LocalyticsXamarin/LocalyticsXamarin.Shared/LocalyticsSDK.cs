@@ -706,7 +706,7 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
-        public void TagCustomerRegistered(ILLCustomer customer, string methodName, IDictionary<string, string> attributes) 
+        public void TagCustomerRegistered(IXLCustomer customer, string methodName, IDictionary<string, string> attributes) 
         {
 #if __IOS__
             Localytics.TagCustomerRegistered((LLCustomer) customer.ToNativeCustomer(), methodName, attributes.ToNSDictionary());
@@ -725,7 +725,7 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
-        public void TagCustomerLoggedIn(ILLCustomer customer, string methodName, IDictionary<string, string> attributes) {
+        public void TagCustomerLoggedIn(IXLCustomer customer, string methodName, IDictionary<string, string> attributes) {
 #if __IOS__
             Localytics.TagCustomerLoggedIn((LLCustomer) customer.ToNativeCustomer(), methodName, attributes.ToNSDictionary());
 #else

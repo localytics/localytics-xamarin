@@ -9,7 +9,7 @@ using LocalyticsXamarin.Android;
 
 namespace LocalyticsXamarin.Shared
 {
-    public partial class Customer : LocalyticsXamarin.Common.ILLCustomer
+    public partial class Customer : LocalyticsXamarin.Common.IXLCustomer
     {
         //NativeCustomer customer;
         string customerId;
@@ -37,7 +37,7 @@ namespace LocalyticsXamarin.Shared
 
         public string EmailAddress { get => emailAddress; set { emailAddress = value; } }
 
-        object ILLCustomer.ToNativeCustomer()
+        object IXLCustomer.ToNativeCustomer()
         {
 #if __IOS__
             return LLCustomer.CustomerWithBlock((LLCustomerBuilder builder) =>
