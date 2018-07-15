@@ -345,10 +345,14 @@ In order to use the Xamarin.Android API in a source file, you will need to add t
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   ```
+
+   Manifest merging is not supported with Xamarin. 
+   Therefore, all AndroidManifest.xml entries need to be made manually. 
+   Follow instructions for [manual integration](https://docs.localytics.com/dev/android.html#manual-integration-android)
+
 3.  Configure required parameters using localytics.xml or through setting options
-	a. Add a localytics.xml in Resources/values. For a sample refer [here](https://github.com/localytics/localytics-xamarin/blob/feature/sdk5.1-android/LocalyticsXamarin/Android/Resources/values/localytics.xml)
-	
-	* Manifest merging is not an option with Xamarin. Therefore, follow instructions for [manual integration](https://docs.localytics.com/dev/android.html#manual-integration-android)
+	* Add a localytics.xml in Resources/values. For a sample refer [here](LocalyticsXamarin/Android/Resources/values/localytics.xml)
+        
 
 ### Usage
 ---
