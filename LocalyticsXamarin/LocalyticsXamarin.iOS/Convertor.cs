@@ -250,6 +250,7 @@ namespace LocalyticsXamarin.IOS
 		//        { "receivedDate", campaign.ReceivedDate },
 		//        { "deepLinkURL", campaign.DeepLinkURL.ToString() },
 		//        { "isPushToInboxCampaign", campaign.IsPushToInboxCampaign }
+        //        { "isDeleted", campaign.IsDeleted }
 		//    };
 		//}
 
@@ -285,7 +286,7 @@ namespace LocalyticsXamarin.IOS
 				{ "aspectRatio", campaign.AspectRatio },
 				{ "offset", (ulong)campaign.Offset },
 				{ "backgroundAlpha", campaign.BackgroundAlpha },
-				{ "dismissButtonHidden", campaign.GetInAppMessageDismissButtonHidden() },
+                { "dismissButtonHidden", campaign.DismissButtonHidden },
 				{ "dismissButtonLocation", campaign.DismissButtonLocation() }
 			};
 		}

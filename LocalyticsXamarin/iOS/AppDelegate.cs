@@ -26,7 +26,7 @@ namespace LocalyticsSample.IOS
 
 			// Localytics Integrate
 			Localytics.LoggingEnabled = true;
-			Localytics.Integrate ("APPKEY", launchOptions ?? new NSDictionary());
+            Localytics.Integrate ("APPKEY", launchOptions ?? new NSDictionary());
 
 			// Register for remote notifications
 				var pushSettings = UIUserNotificationSettings.GetSettingsForTypes (

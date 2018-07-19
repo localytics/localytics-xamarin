@@ -36,6 +36,8 @@
  * - Full creative display, override tableView:didSelectRowAtIndexPath:, Note: You must also handle
  *   setting the LLInboxCampaign to be read and checking the existense of the creativeUrl property of
  *   the LLInboxCampaign object.
+ * - Implement delete using a swipe action @see property enableSwipeDelete or in the navigation bar from
+ *   the detail view @see property enableDetailViewDelete
  *
  * @see LLInboxDetailViewController
  */
@@ -64,6 +66,16 @@
  * Flag indicating whether a UIActivityIndicatorView should be shown will campaigns are loading.
  */
 @property (nonatomic, assign) BOOL showsActivityIndicatorView;
+
+/**
+ * Flag indicating whether delete should be implemented as a swipe action on the list view
+ */
+@property (nonatomic, assign) BOOL enableSwipeDelete;
+
+/**
+ * Flag indicating whether delete should be implemented as a navigation item on the detail view controller.
+ */
+@property (nonatomic, assign) BOOL enableDetailViewDelete;
 
 /**
  * Flag indicating whether thumbnail images are automatically downloaded and loading into LLInboxThumbnailCell.

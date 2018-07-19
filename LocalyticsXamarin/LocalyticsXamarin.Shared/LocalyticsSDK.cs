@@ -86,6 +86,7 @@ namespace LocalyticsXamarin.Shared
 #endif
     public class LocalyticsSDK : ILocalytics
     {
+        //Messaging Listener functions
         public static EventHandler<InAppDidDisplayEventArgs> InAppDidDisplayEvent;
         public static EventHandler<InAppWillDismissEventArgs> InAppWillDismissEvent;
         public static EventHandler<InAppDidDismissEventArgs> InAppDidDismissEvent;
@@ -94,6 +95,12 @@ namespace LocalyticsXamarin.Shared
         public static Func<string, bool> ShouldDeepLinkDelegate;
         public static Func<NativeInAppCampaign, NativeInAppConfiguration, NativeInAppConfiguration> InAppWillDisplayDelegate;
         public static Func<NativePlacesCampaign, bool> PlacesShouldDisplayCampaignDelegate;
+
+        //CallToAction Listener delegates
+        public static Func<string, ICampaignBase, bool> CallToActionShouldDeepLinkDelegate;
+        public static EventHandler<DidOptOutEventArgs> DidOptOut;
+        public static EventHandler<DidOptOutEventArgs> DidPrivacyOptOut;
+
 
         public static event EventHandler LocalyticsSessionWillClose
         {
@@ -314,7 +321,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
             Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString(versionString), new Foundation.NSString("plugin_library")));
 #else
-            LocalyticsXamarin.Android.ConstantsHelper.UpdatePluginVersion(versionString);
+            Localytics.SetOption("plugin_library", versionString);
 #endif
         }
         public XFLLInAppMessageDismissButtonLocation InAppMessageDismissButtonLocation
@@ -331,7 +338,7 @@ namespace LocalyticsXamarin.Shared
 
         public void OpenSession()
         {
-            LocalyticsSDK.SharedInstance.OpenSession();
+            Localytics.OpenSession();
         }
 
         public void CloseSession()
@@ -517,12 +524,17 @@ namespace LocalyticsXamarin.Shared
 
         public IInboxCampaign[] InboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.InboxCampaigns);
+            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.InboxCampaigns);
         }
 
         public IInboxCampaign[] AllInboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.InboxCampaign.From(Localytics.AllInboxCampaigns);
+            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.AllInboxCampaigns);
+        }
+
+        public IInboxCampaign[] DisplayableInboxCampaigns()
+        {
+            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.DisplayableInboxCampaigns);
         }
 
 
@@ -645,6 +657,15 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
+        public void TagCustomerRegistered(IXLCustomer customer, string methodName, IDictionary<string, string> attributes) 
+        {
+#if __IOS__
+            Localytics.TagCustomerRegistered((LLCustomer) customer.ToNativeCustomer(), methodName, attributes.ToNSDictionary());
+#else
+            Localytics.TagCustomerRegistered((LocalyticsXamarin.Android.Customer) customer.ToNativeCustomer(), methodName, attributes);
+#endif
+        }
+
         public void TagCustomerLoggedIn(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
         {
 #if __IOS__
@@ -652,6 +673,14 @@ namespace LocalyticsXamarin.Shared
 #else
             var cust = Convertor.toCustomer(customerProps);
             Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
+#endif
+        }
+
+        public void TagCustomerLoggedIn(IXLCustomer customer, string methodName, IDictionary<string, string> attributes) {
+#if __IOS__
+            Localytics.TagCustomerLoggedIn((LLCustomer) customer.ToNativeCustomer(), methodName, attributes.ToNSDictionary());
+#else
+            Localytics.TagCustomerLoggedIn((LocalyticsXamarin.Android.Customer) customer.ToNativeCustomer(), methodName, attributes);
 #endif
         }
 
@@ -694,6 +723,11 @@ namespace LocalyticsXamarin.Shared
         public void SetInboxCampaign(IInboxCampaign campaign, bool read)
         {
             Localytics.SetInboxCampaignRead((NativeInboxCampaign)campaign.Handle(), read);
+        }
+
+        public void DeleteInboxCampaign(IInboxCampaign campaign)
+        {
+            Localytics.DeleteInboxCampaign((NativeInboxCampaign)campaign.Handle());
         }
 
         public void InboxListItemTapped(IInboxCampaign campaign)
@@ -832,7 +866,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
         public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
         {
-            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
+            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(XFInboxCampaign.From(x)));
         }
 #else
         private sealed class InboxRefreshImplementation
@@ -846,7 +880,7 @@ namespace LocalyticsXamarin.Shared
             }
             public void handleCallback(NativeInboxCampaign[] campaigns)
             {
-                callback(InboxCampaign.From(campaigns));
+                callback(XFInboxCampaign.From(campaigns));
             }
         }
         InboxRefreshImplementation inboxAllRefreshListener = new InboxRefreshImplementation();
@@ -861,7 +895,7 @@ namespace LocalyticsXamarin.Shared
         public void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
         {
 #if __IOS__
-            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(InboxCampaign.From(x)));
+            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(XFInboxCampaign.From(x)));
 #else
             inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
@@ -997,7 +1031,7 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
-        #region Platform specific code
+#region Platform specific code
         //#pragma region Platform Specific API's
 #if __IOS__
         public void AddProfileAttributes(string attribute, LLProfileScope scope, params NSDate[] values)
@@ -1011,6 +1045,6 @@ namespace LocalyticsXamarin.Shared
         }
 
 #endif
-        #endregion
+#endregion
     }
 }

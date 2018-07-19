@@ -141,6 +141,20 @@ namespace LocalyticsSample.Shared
 		{
 			RefreshInfo();
 		}
+
+        void OnDelete(object sender, System.EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                var campaigns = localytics.DisplayableInboxCampaigns();
+                foreach (IInboxCampaign campaign in campaigns)
+                {
+                    localytics.DeleteInboxCampaign(campaign);
+                    break;
+                }
+            });
+        }
+
 		ILocalytics localytics;
 
 		void RefreshBackgroundProperties(int delay = 0)

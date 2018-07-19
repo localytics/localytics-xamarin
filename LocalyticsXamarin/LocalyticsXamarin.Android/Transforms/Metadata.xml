@@ -66,6 +66,7 @@
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setMessagingListener']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setAnalyticsListener']" name="visibility">internal</attr>   
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLocationListener']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCallToActionListener']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerId']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getCustomerId']" name="visibility">internal</attr>
 
@@ -83,7 +84,9 @@
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getInboxCampaigns']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getInboxCampaignsUnreadCount']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getAllInboxCampaigns']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getDisplayableInboxCampaigns']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setInboxCampaignRead']" name="visibility">internal</attr>
+    <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='deleteInboxCampaign']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLoggingEnabled']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isLoggingEnabled']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isOptedOut']" name="visibility">internal</attr>
@@ -137,9 +140,7 @@
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']" name="managedName">DidTagEvent</attr>
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']" name="managedName">SessionWillOpen</attr>
 
-    
-<!--     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsXamarin.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
-
+    <!--     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsXamarin.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
 
     
     <!--  need to make public but dont access them -->
@@ -238,5 +239,6 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'UploadThread')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Utils')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'VideoEnabledWebChromeClient')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CallToActionListenerAdapter')]" />
  
 </metadata>

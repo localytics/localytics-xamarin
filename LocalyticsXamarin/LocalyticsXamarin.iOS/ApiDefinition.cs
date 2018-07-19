@@ -129,6 +129,10 @@ namespace LocalyticsXamarin.IOS
 		// @property (readonly, assign, nonatomic) BOOL isPushToInboxCampaign;
 		[Export("isPushToInboxCampaign")]
 		bool IsPushToInboxCampaign { get; }
+
+        // @property(nonatomic, assign, getter= isDeleted, readonly) BOOL deleted;
+        [Export("isDeleted")]
+        bool IsDeleted { get; }
 	}
 
 	// @interface LLPlacesCampaign : LLCampaignBase
@@ -190,16 +194,16 @@ namespace LocalyticsXamarin.IOS
 
 		// @property (readonly, getter = isDismissButtonHidden, assign, nonatomic) BOOL dismissButtonHidden;
 		[Export("dismissButtonHidden")]
-		bool GetInAppMessageDismissButtonHidden();
-		//bool DismissButtonHidden { [Bind("isDismissButtonHidden")] get; }
+		//bool GetInAppMessageDismissButtonHidden();
+		bool DismissButtonHidden { [Bind("isDismissButtonHidden")] get; }
 
 		// @property (readonly, assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;
 		[Export("dismissButtonLocation", ArgumentSemantic.Assign)]
 		LLInAppMessageDismissButtonLocation DismissButtonLocation();
 
-		//// @property (readonly, copy, nonatomic) NSString * _Nonnull eventName;
-		//[Export ("eventName")]
-		//string EventName { get; }
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull eventName;
+		[Export ("eventName")]
+		string EventName { get; }
 		//      DismissButtonLocation
 		//// @property (readonly, copy, nonatomic) NSDictionary * _Nullable eventAttributes;
 		//[NullAllowed, Export ("eventAttributes", ArgumentSemantic.Copy)]
@@ -307,10 +311,18 @@ namespace LocalyticsXamarin.IOS
 		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
 		UIView CreativeLoadErrorView { get; set; }
 
-		// -(LLInboxCampaign * _Nullable)campaignForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
-		[Export("campaignForRowAtIndexPath:")]
-		[return: NullAllowed]
-		LLInboxCampaign CampaignForRowAtIndexPath(NSIndexPath indexPath);
+        // @property(nonatomic, assign) BOOL enableSwipeDelete;
+        [Export("enableSwipeDelete:", ArgumentSemantic.Assign)]
+        bool EnableSwipeDelete { get; set; }
+
+        // @property(nonatomic, assign) BOOL enableDetailViewDelete;
+        [Export("enableDetailViewDelete:", ArgumentSemantic.Assign)]
+        bool EnableDetailViewDelete { get; set; }
+
+        // -(LLInboxCampaign * _Nullable)campaignForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+        [Export("campaignForRowAtIndexPath:")]
+        [return: NullAllowed]
+        LLInboxCampaign CampaignForRowAtIndexPath(NSIndexPath indexPath);
 	}
 
 	// @interface Localytics : NSObject
@@ -698,6 +710,12 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		void SetInboxCampaignRead(LLInboxCampaign campaign, bool read);
 
+        // @required +(void)deleteInboxCampaign:(LLInboxCampaign * _Nonnull)campaign;
+        [Static]
+        [Export("deleteInboxCampaign:")]
+        [Internal]
+        void DeleteInboxCampaign(LLInboxCampaign campaign);
+
 		// @required +(NSInteger)inboxCampaignsUnreadCount;
 		[Static]
 		[Export("inboxCampaignsUnreadCount")]
@@ -831,6 +849,12 @@ namespace LocalyticsXamarin.IOS
         [Internal]
 		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
 
+        // @required +(void)setCallToActionDelegate:(id<LLCallToActionDelegate> _Nullable)delegate;
+        [Static]
+        [Export("setCallToActionDelegate:")]
+        [Internal]
+        void SetCallToActionDelegate([NullAllowed] LLCallToActionDelegate @delegate);
+
 		// @required +(void)pauseDataUploading:(BOOL)pause;
 		[Static]
 		[Export("pauseDataUploading:")]
@@ -863,6 +887,12 @@ namespace LocalyticsXamarin.IOS
 		[Export("allInboxCampaigns")]
 		[Internal]
 		LLInboxCampaign[] AllInboxCampaigns { get; }
+
+        // @required +(NSArray<LLInboxCampaign *> * _Nonnull)displayableInboxCampaigns;
+        [Static]
+        [Export("displayableInboxCampaigns")]
+        [Internal]
+        LLInboxCampaign[] DisplayableInboxCampaigns { get; }
 
 		// @required +(void)refreshAllInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
 		[Static]
@@ -1039,6 +1069,37 @@ namespace LocalyticsXamarin.IOS
 		void LocalyticsDidTriggerRegions(LLRegion[] regions, LLRegionEvent @event);
 	}
 
+    // @protocol LLAnalyticsDelegate <NSObject>
+    [BaseType(typeof(NSObject))]
+    [Protocol]
+    [Model]
+    interface LLCallToActionDelegate
+    {
+        //- (BOOL) localyticsShouldDeeplink:(nonnull NSURL *)url campaign:(nullable LLCampaignBase *)campaign;
+        [Export("localyticsShouldDeeplink:campaign:")]
+        bool LocalyticsShouldDeeplink(NSUrl url, LLCampaignBase campaign);
+
+        //- (void) localyticsDidOptOut:(BOOL) optedOut campaign:(nonnull LLCampaignBase *)campaign;
+        [Export("localyticsDidOptOut:campaign:")]
+        void LocalyticsDidOptOut(bool optOut, LLCampaignBase campaign);
+
+        //- (void) localyticsDidPrivacyOptOut:(BOOL) optedOut campaign:(nonnull LLCampaignBase *)campaign;
+        [Export("localyticsDidPrivacyOptOut:campaign:")]
+        void LocalyticsDidPrivacyOptOut(bool optOut, LLCampaignBase campaign);
+
+        //- (void) localyticsShouldPromptForLocationWhenInUsePermissions:(nonnull LLCampaignBase *)campaign;
+        [Export("localyticsShouldPromptForLocationWhenInUsePermissions:")]
+        bool LocalyticsShouldPromptForLocationWhenInUsePermissions(LLCampaignBase campaign);
+
+        //- (void) localyticsShouldPromptForLocationAlwaysPermissions:(nonnull LLCampaignBase *)campaign;
+        [Export("localyticsShouldPromptForLocationAlwaysPermissions:")]
+        bool LocalyticsShouldPromptForLocationAlwaysPermissions(LLCampaignBase campaign);
+
+        //- (void) localyticsShouldPromptForNotificationPermissions:(nonnull LLCampaignBase *)campaign;
+        [Export("localyticsShouldPromptForNotificationPermissions:")]
+        bool LocalyticsShouldPromptForNotificationPermissions(LLCampaignBase campaign);
+    }
+
 	// @interface LLInAppConfiguration : NSObject
 	[BaseType(typeof(NSObject))]
 	public interface LLInAppConfiguration
@@ -1099,5 +1160,9 @@ namespace LocalyticsXamarin.IOS
 		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
 		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
 		UIView CreativeLoadErrorView { get; set; }
+
+        // @property(nonatomic, assign) BOOL deleteInNavBar;
+        [Export("deleteInNaveBar", ArgumentSemantic.Assign)]
+        bool DeleteInNaveBar { get; set; }
 	}
 }

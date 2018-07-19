@@ -27,7 +27,7 @@ namespace LocalyticsMessagingSample.Android
 #if DEBUG
 			localyticsXamarin.LoggingEnabled = true;
 #endif
-			Localytics.SetOption("ll_app_key", "APPKEY");
+            Localytics.SetOption("ll_app_key", "YOUR_APP_KEY");
 
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);
