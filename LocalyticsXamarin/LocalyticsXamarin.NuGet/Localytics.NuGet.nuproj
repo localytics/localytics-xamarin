@@ -7,7 +7,7 @@
     <ProjectGuid>{3D21B247-4672-466E-9F96-616FC955F033}</ProjectGuid>
     <Description>Localytics Xamarin SDK for Android and iOS</Description>
     <PackageId>LocalyticsXamarin</PackageId>
-    <PackageVersion>5.1.2</PackageVersion>
+    <PackageVersion>0.0.0</PackageVersion>
     <Authors>Localytics</Authors>
     <DevelopmentDependency>false</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -17,7 +17,7 @@
     <AssemblyName>Localytics.NuGet</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Owners>Localytics</Owners>
-    <Copyright>Char Software</Copyright>
+    <Copyright>Localytics/Open Source</Copyright>
     <PackageTags>Localytics Xamarin iOS Android</PackageTags>
     <Title>Localytics Xamarin SDK</Title>
     <PackageProjectUrl>https://github.com/localytics/localytics-xamarin</PackageProjectUrl>

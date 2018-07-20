@@ -244,7 +244,7 @@ namespace LocalyticsXamarin.IOS
 
             public override void LocalyticsSessionDidOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                LocalyticsSessionDidOpen?.Invoke(null, new LocalyticsSessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
+                SessionDidOpen?.Invoke(null, new SessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsDidTagEventHandler(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
@@ -254,12 +254,12 @@ namespace LocalyticsXamarin.IOS
 
             public override void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                LocalyticsSessionWillOpen?.Invoke(null, new LocalyticsSessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
+                SessionWillOpen?.Invoke(null, new SessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsSessionWillCloseHandler()
             {
-                LocalyticsSessionWillClose?.Invoke(null, new EventArgs());
+                SessionWillClose?.Invoke(null, new EventArgs());
             }
         }
 

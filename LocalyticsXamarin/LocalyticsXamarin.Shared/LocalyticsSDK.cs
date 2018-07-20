@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using LocalyticsXamarin.Common;
 
 #if __IOS__
 using Foundation;
@@ -15,6 +14,8 @@ using Android.Runtime;
 
 using LocalyticsXamarin.Android;
 #endif
+using LocalyticsXamarin.Common;
+
 
 #if __IOS__
 using NativeNumber = Foundation.NSNumber;
@@ -152,9 +153,9 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
                 IOS.Localytics.AnalyticsListener
 #else
-                Localytics.SharedInstance()
+                Android.Localytics.SharedInstance()
 #endif
-                          .LocalyticsSessionWillClose += value;
+                          .SessionWillClose += value;
             }
             remove
             {
@@ -163,18 +164,12 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                          .LocalyticsSessionWillClose -= value;
+                          .SessionWillClose -= value;
             }
         }
 
 
-        public static event EventHandler
-#if __IOS__
-        <LocalyticsDidTagEventEventArgs>
-#else
-        <global::LocalyticsXamarin.Android.LocalyticsDidTagEventEventArgs>
-#endif
-         LocalyticsDidTagEvent
+        public static event EventHandler<LocalyticsDidTagEventEventArgs> LocalyticsDidTagEvent
         {
             add
             {
@@ -183,7 +178,10 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                   .LocalyticsDidTagEvent += value;
+                          .DidTagEvent += (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
             remove
             {
@@ -192,21 +190,14 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                   .LocalyticsDidTagEvent -= value;
+                          .DidTagEvent -= (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
         }
 
-        #if __IOS__
-#else
-
-#endif        
-        public static event EventHandler
-//#if __IOS__
-        <LocalyticsSessionDidOpenEventArgs> 
-//#else
-//        <global::LocalyticsXamarin.Android.SessionDidOpenEventArgs>
-//#endif
-            LocalyticsSessionDidOpen
+        public static event EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
         {
             add
             {
@@ -237,13 +228,7 @@ namespace LocalyticsXamarin.Shared
 
 
 
-        public static event
-#if __IOS__
-        EventHandler<LocalyticsSessionWillOpenEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsSessionWillOpenEventArgs>
-#endif
-        LocalyticsSessionWillOpen
+        public static event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
         {
             add
             {
@@ -252,7 +237,10 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                .LocalyticsSessionWillOpen += value;
+                          .SessionWillOpen += (o, args) =>
+                          {
+                              value(o, args);
+                          };
             }
             remove
             {
@@ -261,18 +249,15 @@ namespace LocalyticsXamarin.Shared
 #else
                 Localytics.SharedInstance()
 #endif
-                .LocalyticsSessionWillOpen -= value;
+                          .SessionWillOpen -= (o, args) =>
+                {
+                    value(o, args);
+                };
             }
         }
 
         /* Events ... */
-        public static event
-#if __IOS__
-        EventHandler<LocalyticsDidTriggerRegionsEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidTriggerRegionsEventArgs>
-#endif
-        LocalyticsDidTriggerRegions
+        public static event EventHandler<LocalyticsDidTriggerRegionsEventArgs> LocalyticsDidTriggerRegions
         {
             add
             {
@@ -294,13 +279,7 @@ namespace LocalyticsXamarin.Shared
             }
         }
 
-        public static event
-#if __IOS__
-        EventHandler<LocalyticsDidUpdateLocationEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs>
-#endif
-        LocalyticsDidUpdateLocation
+        public static event EventHandler<LocalyticsDidUpdateLocationEventArgs>  LocalyticsDidUpdateLocation
         {
             add
             {

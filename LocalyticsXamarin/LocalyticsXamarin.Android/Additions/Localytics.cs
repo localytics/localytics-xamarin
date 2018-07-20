@@ -28,18 +28,6 @@ namespace LocalyticsXamarin.Android
         }
     }
 
-    public partial class DidOptOutEventArgs : global::System.EventArgs, LocalyticsXamarin.Common.LocalyticsDidOptOutEventArgs
-    {
-        public bool OptOut { get; set; }
-        public ICampaignBase Campaign { get; set; }
-
-        public DidOptOutEventArgs(bool optOut, LocalyticsXamarin.Android.Campaign campaign)
-        {
-            this.OptOut = optOut;
-            this.Campaign = (LocalyticsXamarin.Common.ICampaignBase)campaign;
-        }
-    }
-
     public partial class Localytics
 	{
 		static Localytics()
