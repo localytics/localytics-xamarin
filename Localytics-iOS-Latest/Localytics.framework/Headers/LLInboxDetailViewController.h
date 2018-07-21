@@ -40,4 +40,9 @@
  */
 @property (nonatomic, strong, nullable) UIView *creativeLoadErrorView;
 
+/**
+ * Flag indicating whether delete should be implemented as a navigation item on the detail view controller.
+ */
+@property (nonatomic, assign) BOOL deleteInNavBar;
+
 @end

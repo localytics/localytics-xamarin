@@ -54,14 +54,14 @@ Use the API in common modules using the interface
 
 ## API Summary
 
-All API's are a translation of the API's available to native platforms and follow the C# naming convention.
+API's follow c# naming conventions and are translation of the API on the native platform.
 
 ### Common APIs
 
 | API                    | Description  |
 |------------------------|------|
-| OpenSession  | Opens a session. Multiple calls are coalesced.  |
-| CloseSession | Any open session is marked with a pending close. Sessions are officially closed if the following call to open session occurs after the expiration of the session timeout. |
+| OpenSession  | Opens a session. Multiple calls are coallesed.  |
+| CloseSession | Open Sessions are marked with a pending close. Sessions are extended if there is localytics activity before expiry of Session timer |
 | Upload| uploads any data stored on the device by the localytics SDK. Essential to do this early, to ensure upload completes before app is suspended.|
 | PauseDataUploading | all data upload is deferred until it is resumed. Calls to the upload API dont perform any action. When data upload is resumed, all locally stored data is immediately uploaded. |
 | TagEvent | Tag an event |
@@ -98,7 +98,7 @@ All API's are a translation of the API's available to native platforms and follo
 | SetOption | Customize the behavior of the SDK by setting custom value for various options.|
 | LoggingEnabled |property that controls if the localytics SDK emits logging information. |
 | OptedOut | control collection of user data. |
-| PrivacyOptedOut | Opts out of data collection and requests a Delete data request to be submitted to the Localytics backend. |
+| PrivacyOptedOut | Opts out of data collection and requests a Delete data request to be submitting to the cloud service. |
 | InstallId | An Installtion Identifier |
 | LibraryVersion | version of the Localytics SDK |
 | TestModeEnabled | Controls the Test Mode charactertistics of the Localytics SDK |
@@ -192,7 +192,7 @@ Event Args are Platform Specific, but they have the same field members. Future V
 |---------------|------|--------|--------------|
 | InAppDelaySessionStartMessagesDelegate | None | bool | Delay display of Session Start InApps to allow for launch screen and other page transitions including login to complete |
 | InAppShouldShowDelegate | InAppCamaign | bool | Determines if an InApp Should be displayed. Default is true, when a delegate is not specified |
-| ShouldDeepLinkDelegate | string (absolute url) | bool | Used to determine if the Localytics SDK should navigate to the absolute url specified as a string. |
+| ShouldDeepLinkDelegate | string (absolute url) | bool | Used to determine if the absolute url specified as a string should be displayed by Localytics SDK |
 | InAppWillDisplayDelegate | InAppCampaign, InAppConfiguration | InAppConfiguration | Modified InAppConfiguration that is to be used to display the InApp specified by InAppCampaign. |
 | PlacesShouldDisplayCampaignDelegate | PlacesCampaign | bool | Determines if a Places Campaign Should be Displayed |
 

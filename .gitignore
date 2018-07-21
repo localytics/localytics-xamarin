@@ -8,6 +8,7 @@
 *.pfx
 .idea
 
+*/.vs/*
 */bin/*
 */obj/*
 */*/bin/*

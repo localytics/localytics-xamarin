@@ -4,10 +4,43 @@ using System.Collections.Generic;
 
 namespace LocalyticsXamarin.Common
 {
+    public interface LocalyticsSessionDidOpenEventArgs
+    {
+        bool First { get; }
+        bool Upgrade { get; }
+        bool Resume { get; }
+    }
+
+    public interface LocalyticsSessionWillOpenEventArgs
+    {
+        bool First { get; }
+        bool Upgrade { get; }
+        bool Resume { get; }
+    }
+
+    public interface LocalyticsDidTagEventEventArgs
+    {
+        string EventName { get; }
+        IDictionary<string, string> Attributes { get; }
+        double? CustomerValue { get; }
+    }
+
     public class InAppEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDisplayEventArgs : EventArgs { } // No Extra Args.
     public class InAppWillDismissEventArgs : EventArgs { } // No Extra Args.
     public class InAppDidDismissEventArgs : EventArgs { } // No Extra Args.
+
+    public class DidOptOutEventArgs : EventArgs
+    {
+        public bool OptOut { get; set; }
+        public ICampaignBase Campaign { get; set; }
+
+        public DidOptOutEventArgs(bool optOut, ICampaignBase campaign)
+        {
+            this.OptOut = optOut;
+            this.Campaign = campaign;
+        }
+    }
 
     public enum XFLLInAppMessageDismissButtonLocation : ulong
     {
@@ -64,10 +97,9 @@ namespace LocalyticsXamarin.Common
 
     public interface IInAppCampaign : IWebViewCampaign
     {
-        int ImpressionType { get; }
         bool IsResponsive { get; }
         //nfloat
-        float AspectRatop { get; }
+        float AspectRatio { get; }
         //nfloat
         float Offset { get; }
         //nfloat 
@@ -75,6 +107,7 @@ namespace LocalyticsXamarin.Common
 
         bool DismissButtonHidden { get; }
         XFLLInAppMessageDismissButtonLocation DismissButtonLocation { get; }
+
     }
 
     public interface IInboxCampaign : IWebViewCampaign
@@ -86,6 +119,7 @@ namespace LocalyticsXamarin.Common
         string SummaryText { get; }
         bool HasCreative { get; }
         bool IsPushToInboxCampaign { get; }
+        bool IsDeleted { get; }
 
         //NSTimeInterval
         double ReceivedDate { get; }
@@ -95,6 +129,31 @@ namespace LocalyticsXamarin.Common
         long SortOrder { get; }
         //NSUrl DeepLinkURL 
         string DeepLinkURL { get; }
+    }
+
+    public interface IPlacesCampaign : ICampaignBase
+    {
+        object Handle();
+
+        string Message { get; }
+
+        string SoundFilename { get; }
+
+        //LLRegion Region { get; }
+
+        //LLRegionEvent Event { get; }
+
+        string AttachmentURL { get; }
+    }
+
+    public interface IXLCustomer 
+    {
+        string CustomerId { get; set; }
+        string FirstName { get; set; }
+        string LastName { get; set; }
+        string FullName { get; set; }
+        string EmailAddress { get; set; }
+        object ToNativeCustomer();
     }
 
     public interface ILocalytics
@@ -116,8 +175,12 @@ namespace LocalyticsXamarin.Common
         void TagSearched(string queryText, string contentType, Int64? resultCount, IDictionary<string, string> attributes);
         void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes);
         void TagContentRated(string contentName, string contentId, string contentType, Int64? rating, IDictionary<string, string> attributes);
+        [Obsolete("TagCustomerRegistered with a dictionary has been deprecated, please use the variant with IXLCustomer instead")]
         void TagCustomerRegistered(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
+        [Obsolete("TagCustomerLoggedIn with a dictionary has been deprecated, please use the variant with IXLCustomer instead")]
         void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
+        void TagCustomerRegistered(IXLCustomer customer, string methodName, IDictionary<string, string> attributes);
+        void TagCustomerLoggedIn(IXLCustomer customer, string methodName, IDictionary<string, string> attributes);
         void TagCustomerLoggedOut(IDictionary<string, string> attributes);
         void TagInvited(string methodName, IDictionary<string, string> attributes);
 
@@ -177,13 +240,16 @@ namespace LocalyticsXamarin.Common
 
         void DismissCurrentInAppMessage();
 
+        [Obsolete("InboxCampaigns is deprecated, please use DisplayableInboxCampaigns instead.")]
         IInboxCampaign[] InboxCampaigns();
+        IInboxCampaign[] DisplayableInboxCampaigns();
         IInboxCampaign[] AllInboxCampaigns();
         void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate);
         void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxAllCampaignsDelegate);
         void TagImpression(IInboxCampaign campaign, string customAction);
         void SetInboxCampaign(IInboxCampaign campaign, bool read);
         void InboxListItemTapped(IInboxCampaign campaign);
+        void DeleteInboxCampaign(IInboxCampaign campaign);
 
         long InboxCampaignsUnreadCount();
 

@@ -24,7 +24,7 @@ namespace LocalyticsMessagingSample.Android
             SetContentView(Resource.Layout.Inbox);
 
             ListView listView = FindViewById<ListView>(Resource.Id.lv_inbox);
-            InboxListAdapter listAdapter = new InboxListAdapter(this);
+            InboxListAdapter listAdapter = new InboxListAdapter(this, listView);
             listView.Adapter = listAdapter;
             listView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e)
             {

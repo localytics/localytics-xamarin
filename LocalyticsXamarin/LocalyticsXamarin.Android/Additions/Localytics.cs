@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using LocalyticsXamarin.Common;
 using LocalyticsXamarin.Shared;
 using Android.Runtime;
 using Android.Support.V4.App;
@@ -9,16 +10,31 @@ using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
 using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
 using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
 using NativePushCampaign = LocalyticsXamarin.Android.PushCampaign;
-using LocalyticsXamarin.Common;
 
 namespace LocalyticsXamarin.Android
 {
+    public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
+    { }
+
+    public partial class SessionWillOpenEventArgs : global::System.EventArgs, LocalyticsSessionWillOpenEventArgs
+    { }
+
+    public partial class DidTagEventEventArgs : global::System.EventArgs, LocalyticsDidTagEventEventArgs
+    { 
+        public double? CustomerValue {
+            get {
+                return CustomerValueLong;
+            }
+        }
+    }
+
     public partial class Localytics
 	{
 		static Localytics()
 		{
 			LocalyticsSDK.UpdatePluginVersion();
 			Localytics.SetMessagingListener(new IMessagingListenerV2Implementor());
+            Localytics.SetCallToActionListener(new CallToActionListenerImplementor());
 		}
 
 		static Localytics _instance;
@@ -142,6 +158,60 @@ namespace LocalyticsXamarin.Android
                                     LocalyticsSDK.PlacesShouldDisplayCampaignDelegate != null && ShouldShowPushNotification != null &&
                                     LocalyticsSDK.InAppWillDisplayDelegate != null && WillShowPlacesPushNotification != null &&
                     WillShowPushNotification != null;
+            }
+        }
+
+        public static Func<LocalyticsXamarin.Android.Campaign, bool> ShouldPromptForLocationPermission;
+
+        //[global::Android.Runtime.Register("mono/com/localytics/android/CallToActionListenerImplementor")]
+        internal sealed partial class CallToActionListenerImplementor : global::Java.Lang.Object, ICallToActionListener
+        {
+            //object sender;
+
+            public CallToActionListenerImplementor()
+                : base(
+                    global::Android.Runtime.JNIEnv.StartCreateInstance("mono/com/localytics/android/CallToActionListenerImplementor", "()V"),
+                    JniHandleOwnership.TransferLocalRef)
+            {
+                global::Android.Runtime.JNIEnv.FinishCreateInstance(((global::Java.Lang.Object)this).Handle, "()V");
+            }
+
+            public bool LocalyticsShouldDeeplink(string p0, LocalyticsXamarin.Android.Campaign p1)
+            {
+                var __h = LocalyticsSDK.CallToActionShouldDeepLinkDelegate;
+                if (__h != null)
+                    return __h(p0, Utils.CampaignFrom(p1));
+                return true;
+            }
+
+            public void LocalyticsDidOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
+            {
+                var __h = LocalyticsSDK.DidOptOut;
+                if (__h != null)
+                    __h(null, new DidOptOutEventArgs(p0, Utils.CampaignFrom(p1)));
+            }
+
+            public void LocalyticsDidPrivacyOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
+            {
+                var __h = LocalyticsSDK.DidPrivacyOptOut;
+                if (__h != null)
+                    __h(null, new DidOptOutEventArgs(p0, Utils.CampaignFrom(p1)));
+            }
+
+            public bool LocalyticsShouldPromptForLocationPermissions(LocalyticsXamarin.Android.Campaign p0)
+            {
+                var __h = ShouldPromptForLocationPermission;
+                if (__h != null)
+                    return __h(p0);
+                return true;
+            }
+
+            internal static bool __IsEmpty(CallToActionListenerImplementor value)
+            {
+                return LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null
+                                    && LocalyticsSDK.DidOptOut != null
+                                    && LocalyticsSDK.DidPrivacyOptOut != null
+                                    && ShouldPromptForLocationPermission != null;
             }
         }
 
