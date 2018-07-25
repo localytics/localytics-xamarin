@@ -36,64 +36,7 @@ using NativeInAppConfiguration = LocalyticsXamarin.Android.InAppConfiguration;
 
 namespace LocalyticsXamarin.Shared
 {
-
 #if __IOS__
-
-    public class SessionEventArgs : EventArgs
-    {
-        public bool First { get; set; }
-        public bool Upgrade { get; set; }
-        public bool Resume { get; set; }
-
-        public SessionEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-        {
-            First = isFirst;
-            Upgrade = isUpgrade;
-            Resume = isResume;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("First:{0} Upgrade:{1} Resume:{2}", First, Upgrade, Resume);
-        }
-    }
-
-    public class SessionDidOpenEventArgs : SessionEventArgs, LocalyticsSessionDidOpenEventArgs
-    {
-        public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-            : base(isFirst, isUpgrade, isResume)
-        {
-        }
-    }
-
-    public class DidTagEventEventArgs : EventArgs
-    {
-        public string EventName { get; set; }
-        public System.Collections.IDictionary Attributes { get; set; }
-        public double? CustomerValue { get; set; }
-        public DidTagEventEventArgs(string name,
-                                      System.Collections.IDictionary attribs,
-                                      double? customerValue)
-        {
-            EventName = name;
-            Attributes = attribs;
-            CustomerValue = customerValue;
-        }
-        public override string ToString()
-        {
-            return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, CustomerValue, Attributes.ToString());
-        }
-    }
-
-    public class SessionWillOpenEventArgs : SessionEventArgs
-    {
-        public SessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-            : base(isFirst, isUpgrade, isResume)
-        {
-        }
-    }
-
-
     public class LocalyticsDidTriggerRegionsEventArgs : EventArgs
     {
         public LLRegion[] Regions;
@@ -101,8 +44,8 @@ namespace LocalyticsXamarin.Shared
 
         public LocalyticsDidTriggerRegionsEventArgs(LLRegion[] regions, LLRegionEvent regionEvent)
         {
-    this.Regions = regions;
-    this.RegionEvent = regionEvent;
+            this.Regions = regions;
+            this.RegionEvent = regionEvent;
         }
     }
 
@@ -111,7 +54,7 @@ namespace LocalyticsXamarin.Shared
         public CLLocation Location;
         public LocalyticsDidUpdateLocationEventArgs(CLLocation location)
         {
-    this.Location = location;
+            this.Location = location;
         }
     }
 
@@ -125,9 +68,8 @@ namespace LocalyticsXamarin.Shared
             this.RemovedRegions = removedRegions;
         }
     }
-
-
 #endif
+
     public class LocalyticsSDK : ILocalytics
     {
         //Messaging Listener functions
@@ -224,9 +166,6 @@ namespace LocalyticsXamarin.Shared
                 };
             }
         }
-
-
-
 
         public static event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
         {
