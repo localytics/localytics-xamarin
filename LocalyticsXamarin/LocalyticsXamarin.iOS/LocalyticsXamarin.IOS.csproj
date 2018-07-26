@@ -44,6 +44,7 @@
     <Compile Include="Localytics.cs" />
     <Compile Include="Convertor.cs" />
     <Compile Include="ILocalyticsIOS.cs" />
+    <Compile Include="LocalyticsEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" />

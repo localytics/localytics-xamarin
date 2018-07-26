@@ -168,7 +168,7 @@
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='removeProfileAttributesFromSet' and count(parameter)=2]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setProfileAttribute' and count(parameter)=2]" />
 
-    <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BackgroundService')]" />
+<!--    <remove-node path="/api/package[@name='com.localytics.android']/class[@name='BackgroundService']" />-->
 
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AdidAsyncTask')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsHeader')]" />

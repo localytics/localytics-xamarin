@@ -24,6 +24,7 @@ using NativeInboxCampaign = LocalyticsXamarin.IOS.LLInboxCampaign;
 using NativeImpressionType = LocalyticsXamarin.IOS.LLImpressionType;
 using NativePlacesCampaign = LocalyticsXamarin.IOS.LLPlacesCampaign;
 using NativeInAppConfiguration = LocalyticsXamarin.IOS.LLInAppConfiguration;
+using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsXamarin.IOS.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
 #else
 using NativeNumber = Java.Lang.Long;
 using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
@@ -31,47 +32,16 @@ using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
 using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
 using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
 using NativeInAppConfiguration = LocalyticsXamarin.Android.InAppConfiguration;
+using NativeLocalyticsDidUpdateLocationEventArgs = LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs;
+using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsXamarin.Android.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
 #endif
 
 
 namespace LocalyticsXamarin.Shared
 {
-#if __IOS__
-    public class LocalyticsDidTriggerRegionsEventArgs : EventArgs
-    {
-        public LLRegion[] Regions;
-        public LLRegionEvent RegionEvent;
-
-        public LocalyticsDidTriggerRegionsEventArgs(LLRegion[] regions, LLRegionEvent regionEvent)
-        {
-            this.Regions = regions;
-            this.RegionEvent = regionEvent;
-        }
-    }
-
-    public class LocalyticsDidUpdateLocationEventArgs : EventArgs
-    {
-        public CLLocation Location;
-        public LocalyticsDidUpdateLocationEventArgs(CLLocation location)
-        {
-            this.Location = location;
-        }
-    }
-
-    public class LocalyticsDidUpdateMonitoredGeofencesEventArgs : EventArgs
-    {
-        public LLRegion[] AddedRegions, RemovedRegions;
-
-        public LocalyticsDidUpdateMonitoredGeofencesEventArgs(LLRegion[] addedRegions, LLRegion[] removedRegions)
-        {
-            this.AddedRegions = addedRegions;
-            this.RemovedRegions = removedRegions;
-        }
-    }
-#endif
-
     public class LocalyticsSDK : ILocalytics
     {
+        private LocalyticsSDK() {}
         //Messaging Listener functions
         public static EventHandler<InAppDidDisplayEventArgs> InAppDidDisplayEvent;
         public static EventHandler<InAppWillDismissEventArgs> InAppWillDismissEvent;
@@ -240,13 +210,7 @@ namespace LocalyticsXamarin.Shared
             }
         }
 
-        public static event
-#if __IOS__
-        EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> 
-#else
-        EventHandler<global::LocalyticsXamarin.Android.LocalyticsDidUpdateMonitoredGeofencesEventArgs>
-#endif
-        LocalyticsDidUpdateMonitoredGeofences
+        public static event EventHandler<LocalyticsDidUpdateMonitoredGeofencesEventArgs> LocalyticsDidUpdateMonitoredGeofences
         {
             add
             {
@@ -491,17 +455,17 @@ namespace LocalyticsXamarin.Shared
 
         public IInboxCampaign[] InboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.InboxCampaigns);
+            return Convertor.From(Localytics.InboxCampaigns);
         }
 
         public IInboxCampaign[] AllInboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.AllInboxCampaigns);
+            return Convertor.From(Localytics.AllInboxCampaigns);
         }
 
         public IInboxCampaign[] DisplayableInboxCampaigns()
         {
-            return LocalyticsXamarin.Shared.XFInboxCampaign.From(Localytics.DisplayableInboxCampaigns);
+            return Convertor.From(Localytics.DisplayableInboxCampaigns);
         }
 
 
@@ -833,7 +797,7 @@ namespace LocalyticsXamarin.Shared
 #if __IOS__
         public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
         {
-            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(XFInboxCampaign.From(x)));
+            Localytics.RefreshAllInboxCampaigns(x => inboxCampaignsDelegate(Convertor.From(x)));
         }
 #else
         private sealed class InboxRefreshImplementation
@@ -847,7 +811,7 @@ namespace LocalyticsXamarin.Shared
             }
             public void handleCallback(NativeInboxCampaign[] campaigns)
             {
-                callback(XFInboxCampaign.From(campaigns));
+                callback(Convertor.From(campaigns));
             }
         }
         InboxRefreshImplementation inboxAllRefreshListener = new InboxRefreshImplementation();
@@ -862,7 +826,7 @@ namespace LocalyticsXamarin.Shared
         public void RefreshInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDelegate)
         {
 #if __IOS__
-            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(XFInboxCampaign.From(x)));
+            Localytics.RefreshInboxCampaigns(x => inboxCampaignsDelegate(Convertor.From(x)));
 #else
             inboxRefreshListener.SetCallback(inboxCampaignsDelegate);
 #endif
