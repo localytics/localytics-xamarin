@@ -180,7 +180,7 @@ namespace LocalyticsXamarin.Android
             {
                 var __h = LocalyticsSDK.CallToActionShouldDeepLinkDelegate;
                 if (__h != null)
-                    return __h(p0, Utils.CampaignFrom(p1));
+                    return __h(p0, Convertor.CampaignFrom(p1));
                 return true;
             }
 
@@ -188,14 +188,14 @@ namespace LocalyticsXamarin.Android
             {
                 var __h = LocalyticsSDK.DidOptOut;
                 if (__h != null)
-                    __h(null, new DidOptOutEventArgs(p0, Utils.CampaignFrom(p1)));
+                    __h(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
             }
 
             public void LocalyticsDidPrivacyOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
             {
                 var __h = LocalyticsSDK.DidPrivacyOptOut;
                 if (__h != null)
-                    __h(null, new DidOptOutEventArgs(p0, Utils.CampaignFrom(p1)));
+                    __h(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
             }
 
             public bool LocalyticsShouldPromptForLocationPermissions(LocalyticsXamarin.Android.Campaign p0)

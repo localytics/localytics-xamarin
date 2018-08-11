@@ -362,18 +362,18 @@ namespace LocalyticsXamarin.IOS
         {
             public override void LocalyticsDidOptOut(bool optOut, LLCampaignBase campaign)
             {
-                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Utils.CampaignFrom(campaign)));
+                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Convertor.CampaignFrom(campaign)));
             }
 
             public override void LocalyticsDidPrivacyOptOut(bool optOut, LLCampaignBase campaign)
             {
-                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Utils.CampaignFrom(campaign)));
+                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Convertor.CampaignFrom(campaign)));
             }
 
             public override bool LocalyticsShouldDeeplink(NSUrl url, LLCampaignBase campaign)
             {
                 return LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null ?
-                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, Utils.CampaignFrom(campaign)) : true;
+                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, Convertor.CampaignFrom(campaign)) : true;
             }
 
             public override bool LocalyticsShouldPromptForLocationAlwaysPermissions(LLCampaignBase campaign)

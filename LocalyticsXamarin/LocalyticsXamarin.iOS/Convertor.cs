@@ -3,6 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Foundation;
+
+using NativeInboxCampaign = LocalyticsXamarin.IOS.LLInboxCampaign;
+using NativeInAppCampaign = LocalyticsXamarin.IOS.LLInAppCampaign;
+using NativePlacesCampaign = LocalyticsXamarin.IOS.LLPlacesCampaign;
+using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.IOS.LLInAppMessageDismissButtonLocation;
+using NativeBaseCampaign = LocalyticsXamarin.IOS.LLCampaignBase;
+
+using LocalyticsXamarin.Common;
+using LocalyticsXamarin.Shared;
+
 namespace LocalyticsXamarin.IOS
 {
 	public static class Convertor
@@ -325,5 +335,37 @@ namespace LocalyticsXamarin.IOS
 			}
 			return configuration;
 		}
+        internal static IInboxCampaign[] From(NativeInboxCampaign[] inboxCampaigns)
+        {
+
+            IInboxCampaign[] campaigns = new XFInboxCampaign[inboxCampaigns.Length];
+            int i = 0;
+            foreach (var item in inboxCampaigns)
+            {
+                campaigns[i] = new XFInboxCampaign(item);
+                i += 1;
+            }
+            //Debug.WriteLine("campaigns {0} => {1}", inboxCampaigns.Length, campaigns.Length);
+            return campaigns;
+        }
+        internal static ICampaignBase CampaignFrom(NativeBaseCampaign campaign)
+        {
+            if (campaign is LocalyticsXamarin.IOS.LLInboxCampaign)
+            {
+                return new XFInboxCampaign((LocalyticsXamarin.IOS.LLInboxCampaign)campaign);
+            }
+            else if (campaign is LocalyticsXamarin.IOS.LLInAppCampaign)
+            {
+                return new XFInAppCampaign((LocalyticsXamarin.IOS.LLInAppCampaign)campaign);
+            }
+            else if (campaign is LocalyticsXamarin.IOS.LLPlacesCampaign)
+            {
+                return new XFPlacesCampaign((LocalyticsXamarin.IOS.LLPlacesCampaign)campaign);
+            }
+            else
+            {
+                return null;
+            }
+        }
 	}
 }

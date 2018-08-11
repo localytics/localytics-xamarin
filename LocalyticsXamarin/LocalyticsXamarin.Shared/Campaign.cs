@@ -16,36 +16,8 @@ using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localy
 namespace LocalyticsXamarin.Shared
 {
 
-    public class XFInboxCampaign : LocalyticsXamarin.Common.IInboxCampaign
+    internal class XFInboxCampaign : LocalyticsXamarin.Common.IInboxCampaign
     {
-#if __IOS__
-        public static IInboxCampaign[] From(NativeInboxCampaign[] inboxCampaigns)
-        {
-
-            IInboxCampaign[] campaigns = new XFInboxCampaign[inboxCampaigns.Length];
-            int i = 0;
-            foreach (var item in inboxCampaigns)
-            {
-                campaigns[i] = new XFInboxCampaign(item);
-                i += 1;
-            }
-            //Debug.WriteLine("campaigns {0} => {1}", inboxCampaigns.Length, campaigns.Length);
-            return campaigns;
-        }
-#else
-        public static IInboxCampaign[] From(IList<NativeInboxCampaign> inboxCampaigns)
-        {
-            IInboxCampaign[] campaigns = new XFInboxCampaign[inboxCampaigns.Count];
-            int i = 0;
-            foreach (var item in inboxCampaigns)
-            {
-                campaigns[i] = new XFInboxCampaign(item);
-                i += 1;
-            }
-            return campaigns;
-        }
-#endif
-
         public override string ToString()
         {
             return string.Format("\t Read:{0}" +
