@@ -118,6 +118,7 @@
     <Compile Include="Convertor.cs" />
     <Compile Include="ILocalyticsAndroid.cs" />
     <Compile Include="LocalyticsHelper.cs" />
+    <Compile Include="XFPushCampaign.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />

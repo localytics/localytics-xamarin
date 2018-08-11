@@ -43,4 +43,8 @@ namespace LocalyticsXamarin.Common
         /// <value>Gets the customer value(Optional).</value>
         double? CustomerValue { get; }
     }
-}
+
+    public delegate void LocalyticsDidTagDelegate(object sender, LocalyticsDidTagEventEventArgs eventArgs);
+    public delegate void LocalyticsSessionDidOpenDelegate(object sender, LocalyticsSessionDidOpenEventArgs eventArgs);
+    public delegate void LocalyticsSessionWillOpenDelegate(object sender, LocalyticsSessionWillOpenEventArgs eventArgs);
+ }

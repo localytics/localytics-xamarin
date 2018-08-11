@@ -68,6 +68,17 @@ namespace LocalyticsXamarin.Android
 			return builder.Build();
         }
 
+        public static Customer toCustomer(IXLCustomer customer)
+        {
+            Customer.Builder builder = new Customer.Builder();
+            builder.SetCustomerId(customer.CustomerId);
+            builder.SetEmailAddress(customer.EmailAddress);
+            builder.SetFirstName(customer.FirstName);
+            builder.SetFullName(customer.FullName);
+            builder.SetLastName(customer.LastName);
+            return builder.Build();  
+        }
+
 		public static IDictionary<string, Java.Lang.Object> ToGenericDictionary(IDictionary<string, object> source) {
 			if (source == null)
 			{

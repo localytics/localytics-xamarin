@@ -242,6 +242,18 @@ namespace LocalyticsXamarin.IOS
 			return customer;
 		}
 
+        public static LLCustomer toCustomer(IXLCustomer customer)
+        {
+            return LLCustomer.CustomerWithBlock((LLCustomerBuilder builder) =>
+            {
+                builder.CustomerId = customer.CustomerId;
+                builder.EmailAddress = customer.EmailAddress;
+                builder.FirstName = customer.FirstName;
+                builder.FullName = customer.FullName;
+                builder.LastName = customer.LastName;
+            });
+        }
+
 		//    internal static IDictionary<string, object> ToDictionary(this LLInboxCampaign campaign)
 		//    {
 		//        return new Dictionary<string, object>
@@ -277,7 +289,7 @@ namespace LocalyticsXamarin.IOS
 				{ "region", campaign.Region },
 				{ "event", (ulong)campaign.Event },
 				{ "category", campaign.Category },
-				{ "attachmentURL", campaign.AttachmentURL },
+                { "attachmentURL", campaign.AttachmentUrl },
 				{ "attachmentURL", campaign.AttachmentType }
 			};
 		}
@@ -296,8 +308,8 @@ namespace LocalyticsXamarin.IOS
 				{ "aspectRatio", campaign.AspectRatio },
 				{ "offset", (ulong)campaign.Offset },
 				{ "backgroundAlpha", campaign.BackgroundAlpha },
-                { "dismissButtonHidden", campaign.DismissButtonHidden },
-				{ "dismissButtonLocation", campaign.DismissButtonLocation() }
+                { "dismissButtonHidden", campaign.IsDismissButtonHidden },
+                { "dismissButtonLocation", campaign.DismissButtonLocation }
 			};
 		}
 

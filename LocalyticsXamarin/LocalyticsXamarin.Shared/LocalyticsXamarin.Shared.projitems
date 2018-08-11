@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)LocalyticsSDK.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Campaign.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Customer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)LocalyticsXamarinForms.cs" />

@@ -171,20 +171,18 @@ namespace LocalyticsXamarin.Common
     /// <summary>
     /// Customer.
     /// </summary>
-    public interface IXLCustomer 
+    public interface IXLCustomer
     {
         /// <value>The customer identifier.</value>
-        string CustomerId { get; set; }
+        string CustomerId { get; }
         /// <value>The first name.</value>
-        string FirstName { get; set; }
+        string FirstName { get; }
         /// <value>The last name.</value>
-        string LastName { get; set; }
+        string LastName { get; }
         /// <value>The full name.</value>
-        string FullName { get; set; }
+        string FullName { get; }
         /// <value>The email address.</value>
-        string EmailAddress { get; set; }
-        /// <returns>The native object for Internal Use only Shall be removed without notice.</returns>
-        object ToNativeCustomer();
+        string EmailAddress { get; }
     }
 
     /// <summary>
@@ -192,6 +190,19 @@ namespace LocalyticsXamarin.Common
     /// </summary>
     public interface ILocalytics
     {
+        /// <summary>
+        /// Did tag event occurs when localytics API to tag a event is invoked..
+        /// </summary>
+        event LocalyticsDidTagDelegate DidTagEvent;
+        /// <summary>
+        /// Event is triggered if a Localytics Session is Opened.
+        /// </summary>
+        event LocalyticsSessionDidOpenDelegate SessionDidOpen;
+        /// <summary>
+        /// Event is triggered if a Localytics Session will be Opened.
+        /// </summary>
+        event LocalyticsSessionWillOpenDelegate SessionWillOpen;
+
         /// <summary>
         /// Opens a session. Multiple calls are coallesed.
         /// </summary>
