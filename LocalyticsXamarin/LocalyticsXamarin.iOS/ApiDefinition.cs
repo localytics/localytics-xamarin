@@ -161,7 +161,7 @@ namespace LocalyticsXamarin.IOS
 
 		// @property (readonly, copy, nonatomic) NSString * _Nullable attachmentURL;
 		[NullAllowed, Export("attachmentURL")]
-		string AttachmentURL { get; }
+        string AttachmentUrl { get; }
 
 		// @property (readonly, copy, nonatomic) NSString * _Nullable attachmentType;
 		[NullAllowed, Export("attachmentType")]
@@ -195,11 +195,11 @@ namespace LocalyticsXamarin.IOS
 		// @property (readonly, getter = isDismissButtonHidden, assign, nonatomic) BOOL dismissButtonHidden;
 		[Export("dismissButtonHidden")]
 		//bool GetInAppMessageDismissButtonHidden();
-		bool DismissButtonHidden { [Bind("isDismissButtonHidden")] get; }
+        bool IsDismissButtonHidden { [Bind("isDismissButtonHidden")] get; }
 
 		// @property (readonly, assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;
 		[Export("dismissButtonLocation", ArgumentSemantic.Assign)]
-		LLInAppMessageDismissButtonLocation DismissButtonLocation();
+        LLInAppMessageDismissButtonLocation DismissButtonLocation { get; }
 
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull eventName;
 		[Export ("eventName")]
