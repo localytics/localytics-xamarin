@@ -75,11 +75,6 @@ namespace LocalyticsXamarin.Shared
 
         public void RegisterEvents()
         {
-            //Localytics myInstance = Localytics.SharedInstance();
-#if __IOS__
-            Localytics.PlacesWillDisplayNotification = PlacesWillDisplayNotification;
-            Localytics.PlacesWillDisplayNotificationContent = PlacesWillDisplayNotificationContent;
-#endif
             LocalyticsSDK.InAppShouldShowDelegate = InAppShouldShowHandler;
             LocalyticsSDK.ShouldDeepLinkDelegate = ShouldDeepLinkHandler;
 
@@ -154,6 +149,8 @@ namespace LocalyticsXamarin.Shared
             };
 
 #if __IOS__
+            Localytics.PlacesWillDisplayNotification = PlacesWillDisplayNotification;
+            Localytics.PlacesWillDisplayNotificationContent = PlacesWillDisplayNotificationContent;
             Localytics.ShouldPromptForLocationWhenInUsePermission = (LLCampaignBase campaign) => {
                 Console.WriteLine("XamarinEvent LocalyticsShouldPromptForLocationWhenInUsePermission " + campaign);
                 return true;

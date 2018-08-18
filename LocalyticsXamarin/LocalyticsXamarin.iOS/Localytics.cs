@@ -174,13 +174,12 @@ namespace LocalyticsXamarin.IOS
             }
         }
 
+        internal EventHandler<LocalyticsSessionDidOpenEventArgs> SessionDidOpen;
+        internal EventHandler<LocalyticsDidTagEventEventArgs> DidTagEvent;
+        internal EventHandler<LocalyticsSessionWillOpenEventArgs> SessionWillOpen;
+        internal EventHandler SessionWillClose;
         internal sealed class AnalyticsListener : LLAnalyticsDelegate
         {
-            static internal EventHandler<LocalyticsSessionDidOpenEventArgs> SessionDidOpen;
-            static internal EventHandler<LocalyticsDidTagEventEventArgs> DidTagEvent;
-            static internal EventHandler<LocalyticsSessionWillOpenEventArgs> SessionWillOpen;
-            static internal EventHandler SessionWillClose;
-
             internal class SessionEventArgs : EventArgs
             {
                 public bool First { get; set; }
@@ -244,22 +243,22 @@ namespace LocalyticsXamarin.IOS
 
             public override void LocalyticsSessionDidOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                SessionDidOpen?.Invoke(null, new SessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
+                SharedInstance().SessionDidOpen?.Invoke(null, new SessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsDidTagEventHandler(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
             {
-                DidTagEvent?.Invoke(null, new DidTagEventEventArgs(eventName, attributes, customerValueIncrease?.LongValue));
+                SharedInstance().DidTagEvent?.Invoke(null, new DidTagEventEventArgs(eventName, attributes, customerValueIncrease?.LongValue));
             }
 
             public override void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                SessionWillOpen?.Invoke(null, new SessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
+                SharedInstance().SessionWillOpen?.Invoke(null, new SessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsSessionWillCloseHandler()
             {
-                SessionWillClose?.Invoke(null, new EventArgs());
+                SharedInstance().SessionWillClose?.Invoke(null, new EventArgs());
             }
         }
 

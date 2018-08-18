@@ -36,6 +36,7 @@
     <None Include="packages.config" />
     <Compile Include="InAppEventArgs.cs" />
     <Compile Include="DidOptOutEventArgs.cs" />
+    <Compile Include="Customer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
