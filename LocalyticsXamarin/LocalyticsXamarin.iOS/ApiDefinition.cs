@@ -312,11 +312,11 @@ namespace LocalyticsXamarin.IOS
 		UIView CreativeLoadErrorView { get; set; }
 
         // @property(nonatomic, assign) BOOL enableSwipeDelete;
-        [Export("enableSwipeDelete:", ArgumentSemantic.Assign)]
+        [Export("enableSwipeDelete", ArgumentSemantic.Assign)]
         bool EnableSwipeDelete { get; set; }
 
         // @property(nonatomic, assign) BOOL enableDetailViewDelete;
-        [Export("enableDetailViewDelete:", ArgumentSemantic.Assign)]
+        [Export("enableDetailViewDelete", ArgumentSemantic.Assign)]
         bool EnableDetailViewDelete { get; set; }
 
         // -(LLInboxCampaign * _Nullable)campaignForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
