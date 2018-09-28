@@ -264,7 +264,7 @@ namespace LocalyticsXamarin.Shared
         internal static void UpdatePluginVersion()
         {
             var ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            string versionString = string.Format("XAMARIN_{0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
+            string versionString = string.Format("Xamarin_{0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
             Console.WriteLine("Version is {0}", versionString);
 #if __IOS__
     Localytics.SetOptions(Foundation.NSDictionary.FromObjectAndKey(new Foundation.NSString(versionString), new Foundation.NSString("plugin_library")));
