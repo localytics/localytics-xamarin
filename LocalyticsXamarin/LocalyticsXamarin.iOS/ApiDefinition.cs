@@ -358,8 +358,8 @@ namespace LocalyticsXamarin.IOS
 		[Export("upload")]
 		void Upload();
 
-		// @required +(void)tagEvent:(NSString * _Nonnull)eventName;
-		[Static]
+        // @required +(void)tagEvent:(NSString * _Nonnull)eventName;
+        [Static]
 		[Export("tagEvent:")]
 		[Internal]
 		void TagEvent(string eventName);
@@ -480,15 +480,15 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		string GetIdentifier(string identifier);
 
-		// @required +(NSString * _Nullable)customerId;
-		// @required +(void)setCustomerId:(NSString * _Nullable)customerId;
-		[Static]
-		[NullAllowed, Export("customerId")]
-		[Internal]
-		string CustomerId { get; set; }
+        // @required +(NSString * _Nullable)customerId;
+        // @required +(void)setCustomerId:(NSString * _Nullable)customerId;
+        [Static]
+        [NullAllowed, Export("customerId")]
+        [Internal]
+        string CustomerId { get; set; }
 
-		// @required +(void)setLocation:(CLLocationCoordinate2D)location;
-		[Static]
+        // @required +(void)setLocation:(CLLocationCoordinate2D)location;
+        [Static]
 		[Export("setLocation:")]
 		void SetLocation(CLLocationCoordinate2D location);
 
@@ -962,10 +962,10 @@ namespace LocalyticsXamarin.IOS
 		[Export("setInboxAdIdParameterEnabled:")]
 		[Internal]
 		void AppendAdidToInboxUrls(bool enabled);
-	}
+    }
 
-	// @protocol LLAnalyticsDelegate <NSObject>
-	[BaseType(typeof(NSObject))]
+    // @protocol LLAnalyticsDelegate <NSObject>
+    [BaseType(typeof(NSObject))]
 	[Protocol]
     [Internal]
 	interface LLAnalyticsDelegate
@@ -1098,10 +1098,26 @@ namespace LocalyticsXamarin.IOS
         //- (void) localyticsShouldPromptForNotificationPermissions:(nonnull LLCampaignBase *)campaign;
         [Export("localyticsShouldPromptForNotificationPermissions:")]
         bool LocalyticsShouldPromptForNotificationPermissions(LLCampaignBase campaign);
+
+        // @optional -(BOOL)localyticsShouldDeeplinkToSettings:(LLCampaignBase *)campaign __attribute__((availability(ios, introduced=8_0)));
+        [iOS(8, 0)]
+        [Export("localyticsShouldDeeplinkToSettings:")]
+        bool LocalyticsShouldDeeplinkToSettings(LLCampaignBase campaign);
+
+        //// @optional -(void)requestAlwaysAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
+        //[iOS(8, 0)]
+        //[Export("requestAlwaysAuthorization:")]
+        //void RequestAlwaysAuthorization(CLLocationManager locationManager);
+
+        //// @optional -(void)requestWhenInUseAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
+        //[iOS(8, 0)]
+        //[Export("requestWhenInUseAuthorization:")]
+        //void RequestWhenInUseAuthorization(CLLocationManager locationManager);
+
     }
 
-	// @interface LLInAppConfiguration : NSObject
-	[BaseType(typeof(NSObject))]
+    // @interface LLInAppConfiguration : NSObject
+    [BaseType(typeof(NSObject))]
 	public interface LLInAppConfiguration
 	{
 		// @property (assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using LocalyticsXamarin.Shared;
 using LocalyticsXamarin.Common;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace LocalyticsXamarin.IOS
 {
@@ -356,6 +358,7 @@ namespace LocalyticsXamarin.IOS
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationAlwaysPermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForNotificationPermission;
 
+        public static Func<LLCampaignBase, bool> ShouldDeepLinkToSettings;
 
         public sealed class LocalyticsCallToActionListener : LLCallToActionDelegate
         {
@@ -389,6 +392,19 @@ namespace LocalyticsXamarin.IOS
             {
                 return ShouldPromptForNotificationPermission == null || ShouldPromptForNotificationPermission(campaign);
             }
+
+            public override bool LocalyticsShouldDeeplinkToSettings(LLCampaignBase campaign)
+            {
+                return ShouldDeepLinkToSettings == null || ShouldDeepLinkToSettings(campaign);
+            }
+            // These are useful only from Native. Made a mistake but not providing a seperate Listener Like a LocationAuthorizationListener.
+            //public override void RequestAlwaysAuthorization(CLLocationManager locationManager)
+            //{
+            //    // NOt supported.
+            //}
+            //void RequestWhenInUseAuthorization(CLLocationManager locationManager)
+            //{
+            //}
         }
     }
 }
