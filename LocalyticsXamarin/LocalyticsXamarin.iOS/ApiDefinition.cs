@@ -161,7 +161,7 @@ namespace LocalyticsXamarin.IOS
 
 		// @property (readonly, copy, nonatomic) NSString * _Nullable attachmentURL;
 		[NullAllowed, Export("attachmentURL")]
-        string AttachmentUrl { get; }
+		string AttachmentURL { get; }
 
 		// @property (readonly, copy, nonatomic) NSString * _Nullable attachmentType;
 		[NullAllowed, Export("attachmentType")]
@@ -195,11 +195,11 @@ namespace LocalyticsXamarin.IOS
 		// @property (readonly, getter = isDismissButtonHidden, assign, nonatomic) BOOL dismissButtonHidden;
 		[Export("dismissButtonHidden")]
 		//bool GetInAppMessageDismissButtonHidden();
-        bool IsDismissButtonHidden { [Bind("isDismissButtonHidden")] get; }
+		bool DismissButtonHidden { [Bind("isDismissButtonHidden")] get; }
 
 		// @property (readonly, assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;
 		[Export("dismissButtonLocation", ArgumentSemantic.Assign)]
-        LLInAppMessageDismissButtonLocation DismissButtonLocation { get; }
+		LLInAppMessageDismissButtonLocation DismissButtonLocation();
 
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull eventName;
 		[Export ("eventName")]
@@ -271,6 +271,14 @@ namespace LocalyticsXamarin.IOS
 		[Export("showsActivityIndicatorView")]
 		bool ShowsActivityIndicatorView { get; set; }
 
+	        // @property(nonatomic, assign) BOOL enableSwipeDelete;
+	        [Export("enableSwipeDelete:", ArgumentSemantic.Assign)]
+	        bool EnableSwipeDelete { get; set; }
+
+	        // @property(nonatomic, assign) BOOL enableDetailViewDelete;
+	        [Export("enableDetailViewDelete:", ArgumentSemantic.Assign)]
+	        bool EnableDetailViewDelete { get; set; }
+
 		// @property (assign, nonatomic) BOOL downloadsThumbnails;
 		[Export("downloadsThumbnails")]
 		bool DownloadsThumbnails { get; set; }
@@ -311,22 +319,31 @@ namespace LocalyticsXamarin.IOS
 		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
 		UIView CreativeLoadErrorView { get; set; }
 
-        // @property(nonatomic, assign) BOOL enableSwipeDelete;
-        [Export("enableSwipeDelete", ArgumentSemantic.Assign)]
-        bool EnableSwipeDelete { get; set; }
-
-        // @property(nonatomic, assign) BOOL enableDetailViewDelete;
-        [Export("enableDetailViewDelete", ArgumentSemantic.Assign)]
-        bool EnableDetailViewDelete { get; set; }
-
         // -(LLInboxCampaign * _Nullable)campaignForRowAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
         [Export("campaignForRowAtIndexPath:")]
         [return: NullAllowed]
         LLInboxCampaign CampaignForRowAtIndexPath(NSIndexPath indexPath);
 	}
 
-    // @interface LLInAppConfiguration : NSObject
-    [BaseType(typeof(NSObject))]
+	// @interface LLInboxDetailViewController : UIViewController
+	[BaseType(typeof(UIViewController))]
+	public interface LLInboxDetailViewController
+	{
+		// @property (readonly, nonatomic, strong) LLInboxCampaign * _Nonnull campaign;
+		[Export("campaign", ArgumentSemantic.Strong)]
+		LLInboxCampaign Campaign { get; }
+
+		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
+		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
+		UIView CreativeLoadErrorView { get; set; }
+
+        // @property(nonatomic, assign) BOOL deleteInNavBar;
+        [Export("deleteInNaveBar", ArgumentSemantic.Assign)]
+        bool DeleteInNaveBar { get; set; }
+	}
+
+	// @interface LLInAppConfiguration : NSObject
+	[BaseType(typeof(NSObject))]
 	public interface LLInAppConfiguration
 	{
 		// @property (assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;
@@ -374,23 +391,6 @@ namespace LocalyticsXamarin.IOS
 		void SetDismissButtonImageWithName(string imageName);
 	}
 
-	// @interface LLInboxDetailViewController : UIViewController
-	[BaseType(typeof(UIViewController))]
-	public interface LLInboxDetailViewController
-	{
-		// @property (readonly, nonatomic, strong) LLInboxCampaign * _Nonnull campaign;
-		[Export("campaign", ArgumentSemantic.Strong)]
-		LLInboxCampaign Campaign { get; }
-
-		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
-		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
-		UIView CreativeLoadErrorView { get; set; }
-
-        // @property(nonatomic, assign) BOOL deleteInNavBar;
-        [Export("deleteInNaveBar", ArgumentSemantic.Assign)]
-        bool DeleteInNaveBar { get; set; }
-	}
-
 	// @interface Localytics : NSObject
 	[BaseType(typeof(NSObject), Name = "Localytics")]
 	partial interface Localytics
@@ -424,8 +424,13 @@ namespace LocalyticsXamarin.IOS
 		[Export("upload")]
 		void Upload();
 
-        // @required +(void)tagEvent:(NSString * _Nonnull)eventName;
-        [Static]
+		// @required +(void)pauseDataUploading:(BOOL)pause;
+		[Static]
+		[Export("pauseDataUploading:")]
+		void PauseDataUploading(bool pause);
+
+		// @required +(void)tagEvent:(NSString * _Nonnull)eventName;
+		[Static]
 		[Export("tagEvent:")]
 		[Internal]
 		void TagEvent(string eventName);
@@ -546,17 +551,18 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		string GetIdentifier(string identifier);
 
-        // @required +(NSString * _Nullable)customerId;
-        // @required +(void)setCustomerId:(NSString * _Nullable)customerId;
-        [Static]
-        [NullAllowed, Export("customerId")]
-        [Internal]
-        string CustomerId { get; set; }
+		// @required +(void)setCustomerId:(NSString * _Nullable)customerId privacyOptedOut:(BOOL)optedOut;
+		[Static]
+		[Export("setCustomerId:privacyOptedOut:")]
+		[Internal]
+		void SetCustomerIdWithPrivacyOptedOut([NullAllowed] string customerId, bool optedOut);
 
-        // @required +(void)setLocation:(CLLocationCoordinate2D)location;
-        [Static]
-		[Export("setLocation:")]
-		void SetLocation(CLLocationCoordinate2D location);
+		// @required +(NSString * _Nullable)customerId;
+		// @required +(void)setCustomerId:(NSString * _Nullable)customerId;
+		[Static]
+		[NullAllowed, Export("customerId")]
+		[Internal]
+		string CustomerId { get; set; }
 
 		// @required +(void)setValue:(id _Nonnull)value forProfileAttribute:(NSString * _Nonnull)attribute withScope:(LLProfileScope)scope;
 		[Static]
@@ -648,21 +654,39 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		void SetCustomerFullName([NullAllowed] string fullName);
 
-		// @required +(NSString * _Nullable)pushToken;
+		// @required +(void)setOptions:(NSDictionary<NSString *,NSObject *> * _Nullable)options;
 		[Static]
-		[Export("pushToken")]
-		[Internal]
-		string PushToken();
+		[Export("setOptions:")]
+		void SetOptions([NullAllowed] NSDictionary options);
 
-		// @required +(void)setPushToken:(NSData * _Nullable)pushToken;
+		// @required +(BOOL)isLoggingEnabled;
 		[Static]
-		[Export("setPushToken:")]
-		void SetPushToken([NullAllowed] NSData pushToken);
+		[Export("isLoggingEnabled")]
+		[Protected]
+		bool IsLoggingEnabledPrivate { get; }
+
+		// @required +(void)setLoggingEnabled:(BOOL)loggingEnabled;
+		[Static]
+		[Export("setLoggingEnabled:")]
+		[Protected]
+		void SetLoggingEnabledPrivate(bool loggingEnabled);
 
 		// @required +(void)redirectLoggingToDisk;
 		[Static]
 		[Export("redirectLoggingToDisk")]
 		void RedirectLoggingToDisk();
+
+		// @required +(BOOL)isOptedOut;
+		[Static]
+		[Export("isOptedOut")]
+		[Internal]
+		bool IsOptedOut { get; }
+
+		// @required +(void)setOptedOut:(BOOL)optedOut;
+		[Static]
+		[Export("setOptedOut:")]
+		[Internal]
+		void SetOptedOut(bool optedOut);
 
 		// @required +(BOOL)isPrivacyOptedOut;
 		[Static]
@@ -675,6 +699,59 @@ namespace LocalyticsXamarin.IOS
 		[Export("setPrivacyOptedOut:")]
 		[Protected]
 		void SetPrivacyOptedOutPrivate(bool optedOut);
+
+		// @required +(NSString * _Nullable)installId;
+		[Static]
+		[NullAllowed, Export("installId")]
+		//string InstallId();
+		[Internal]
+		string InstallId { get; }
+
+		// @required +(NSString * _Nonnull)libraryVersion;
+		[Static]
+		[Export("libraryVersion")]
+		[Internal]
+		string LibraryVersion { get; }
+
+		// @required +(NSString * _Nullable)appKey;
+		[Static]
+		[NullAllowed, Export("appKey")]
+		[Internal]
+		string AppKey { get; }
+
+		// @required +(BOOL)isTestModeEnabled;
+		[Static]
+		[Export("isTestModeEnabled")]
+		[Protected]
+		bool IsTestModeEnabled { get; }
+
+		// @required +(void)setTestModeEnabled:(BOOL)enabled;
+		[Static]
+		[Export("setTestModeEnabled:")]
+		[Protected]
+		void SetTestModeEnabled(bool enabled);
+
+		// @required +(void)setAnalyticsDelegate:(id<LLAnalyticsDelegate> _Nullable)delegate;
+		[Static]
+		[Export("setAnalyticsDelegate:")]
+		[Internal]
+		void SetAnalyticsDelegate([NullAllowed] LLAnalyticsDelegate @delegate);
+
+		// @required +(void)setLocation:(CLLocationCoordinate2D)location;
+		[Static]
+		[Export("setLocation:")]
+		void SetLocation(CLLocationCoordinate2D location);
+
+		// @required +(NSString * _Nullable)pushToken;
+		[Static]
+		[Export("pushToken")]
+		[Internal]
+		string PushToken();
+
+		// @required +(void)setPushToken:(NSData * _Nullable)pushToken;
+		[Static]
+		[Export("setPushToken:")]
+		void SetPushToken([NullAllowed] NSData pushToken);
 
 		// @required +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo;
 		[Static]
@@ -752,11 +829,27 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		void TriggerInAppMessage(string triggerName, NSDictionary attributes);
 
+		// @required +(void)triggerInAppMessagesForSessionStart;
+		[Static]
+		[Export("triggerInAppMessagesForSessionStart")]
+		[Internal]
+		void TriggerInAppMessagesForSessionStart();
+
 		// @required +(void)dismissCurrentInAppMessage;
 		[Static]
 		[Export("dismissCurrentInAppMessage")]
 		[Internal]
 		void DismissCurrentInAppMessage();
+
+		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
+		[Static]
+		[Export("tagImpressionForInAppCampaign:withType:")]
+		void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
+
+		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
+		[Static]
+		[Export("tagImpressionForInAppCampaign:withCustomAction:")]
+		void TagInAppImpression(LLInAppCampaign campaign, string customAction);
 
 		// @required +(NSArray<LLInboxCampaign *> * _Nonnull)inboxCampaigns;
 		[Static]
@@ -764,11 +857,29 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		LLInboxCampaign[] InboxCampaigns { get; }
 
+        // @required +(NSArray<LLInboxCampaign *> * _Nonnull)displayableInboxCampaigns;
+        [Static]
+        [Export("displayableInboxCampaigns")]
+        [Internal]
+        LLInboxCampaign[] DisplayableInboxCampaigns { get; }
+
+		// @required +(NSArray<LLInboxCampaign *> * _Nonnull)allInboxCampaigns;
+		[Static]
+		[Export("allInboxCampaigns")]
+		[Internal]
+		LLInboxCampaign[] AllInboxCampaigns { get; }
+
 		// @required +(void)refreshInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
 		[Static]
 		[Export("refreshInboxCampaigns:")]
 		[Internal]
 		void RefreshInboxCampaigns(Action<LLInboxCampaign[]> completionBlock);
+
+		// @required +(void)refreshAllInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
+		[Static]
+		[Export("refreshAllInboxCampaigns:")]
+		[Internal]
+		void RefreshAllInboxCampaigns(Action<LLInboxCampaign[]> completionBlock);
 
 		// @required +(void)setInboxCampaign:(LLInboxCampaign * _Nonnull)campaign asRead:(BOOL)read;
 		[Static]
@@ -793,179 +904,6 @@ namespace LocalyticsXamarin.IOS
 		[Export("inboxDetailViewControllerForCampaign:")]
 		LLInboxDetailViewController InboxDetailViewControllerForCampaign(LLInboxCampaign campaign);
 
-		// @required +(void)setLocationMonitoringEnabled:(BOOL)enabled;
-		[Static]
-		[Export("setLocationMonitoringEnabled:")]
-		void SetLocationMonitoringEnabled(bool enabled);
-
-		// @required +(NSArray<LLRegion *> * _Nonnull)geofencesToMonitor:(CLLocationCoordinate2D)currentCoordinate;
-		[Static]
-		[Export("geofencesToMonitor:")]
-		LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate);
-
-		// @required +(void)triggerRegion:(CLRegion * _Nonnull)region withEvent:(LLRegionEvent)event atLocation:(CLLocation * _Nullable)location;
-		[Static]
-		[Export("triggerRegion:withEvent:atLocation:")]
-		void TriggerRegion(CLRegion region, LLRegionEvent regionEvent, CLLocation location);
-
-		// @required +(void)triggerRegions:(NSArray<CLRegion *> * _Nonnull)regions withEvent:(LLRegionEvent)event atLocation:(CLLocation * _Nullable)location;
-		[Static]
-		[Export("triggerRegions:withEvent:atLocation:")]
-		void TriggerRegions(CLRegion[] regions, LLRegionEvent regionEvent, CLLocation location);
-
-		// @required +(void)setOptions:(NSDictionary<NSString *,NSObject *> * _Nullable)options;
-		[Static]
-		[Export("setOptions:")]
-		void SetOptions([NullAllowed] NSDictionary options);
-
-		// @required +(BOOL)isLoggingEnabled;
-		[Static]
-		[Export("isLoggingEnabled")]
-		[Protected]
-		bool IsLoggingEnabledPrivate { get; }
-
-		// @required +(void)setLoggingEnabled:(BOOL)loggingEnabled;
-		[Static]
-		[Export("setLoggingEnabled:")]
-		[Protected]
-		void SetLoggingEnabledPrivate(bool loggingEnabled);
-
-		/*
-         //+(BOOL)isCollectingAdvertisingIdentifier;
-        [Static]
-        [Export ("isCollectingAdvertisingIdentifier")]
-        bool IsCollectingAdvertisingIdentifier { get; }
-
-        // +(void)setCollectAdvertisingIdentifier:(BOOL)collectAdvertisingIdentifier;
-        [Static]
-        [Export ("setCollectAdvertisingIdentifier:")]
-        void SetCollectAdvertisingIdentifier (bool collectAdvertisingIdentifier);
-
-        */
-		// @required +(BOOL)isOptedOut;
-		[Static]
-		[Export("isOptedOut")]
-		[Internal]
-		bool IsOptedOut { get; }
-
-		// @required +(void)setOptedOut:(BOOL)optedOut;
-		[Static]
-		[Export("setOptedOut:")]
-		[Internal]
-		void SetOptedOut(bool optedOut);
-
-		// @required +(BOOL)isTestModeEnabled;
-		[Static]
-		[Export("isTestModeEnabled")]
-		[Protected]
-		bool IsTestModeEnabled { get; }
-
-		// @required +(void)setTestModeEnabled:(BOOL)enabled;
-		[Static]
-		[Export("setTestModeEnabled:")]
-		[Protected]
-		void SetTestModeEnabled(bool enabled);
-
-		// @required +(NSString * _Nullable)installId;
-		[Static]
-		[NullAllowed, Export("installId")]
-		//string InstallId();
-		[Internal]
-		string InstallId { get; }
-
-		// @required +(NSString * _Nonnull)libraryVersion;
-		[Static]
-		[Export("libraryVersion")]
-		[Internal]
-		string LibraryVersion { get; }
-
-		// @required +(NSString * _Nullable)appKey;
-		[Static]
-		[NullAllowed, Export("appKey")]
-		[Internal]
-		string AppKey { get; }
-
-		// @required +(void)setMessagingDelegate:(id<LLMessagingDelegate> _Nullable)delegate;
-		[Static]
-		[Export("setMessagingDelegate:")]
-		[Protected]
-		void SetMessagingDelegate([NullAllowed] LLMessagingDelegate @delegate);
-
-		// @required +(BOOL)isInAppAdIdParameterEnabled;
-		[Static]
-		[Export("isInAppAdIdParameterEnabled")]
-		[Internal]
-		bool IsAdidAppendedToInAppUrls { get; }
-
-		// @required +(void)setInAppAdIdParameterEnabled:(BOOL)enabled;
-		[Static]
-		[Export("setInAppAdIdParameterEnabled:")]
-		[Internal]
-		void AppendAdidToInAppUrls(bool enabled);
-
-		// @required +(void)setAnalyticsDelegate:(id<LLAnalyticsDelegate> _Nullable)delegate;
-		[Static]
-		[Export("setAnalyticsDelegate:")]
-		[Internal]
-		void SetAnalyticsDelegate([NullAllowed] LLAnalyticsDelegate @delegate);
-
-		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate;
-		[Static]
-		[Export("setLocationDelegate:")]
-        [Internal]
-		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
-
-        // @required +(void)setCallToActionDelegate:(id<LLCallToActionDelegate> _Nullable)delegate;
-        [Static]
-        [Export("setCallToActionDelegate:")]
-        [Internal]
-        void SetCallToActionDelegate([NullAllowed] LLCallToActionDelegate @delegate);
-
-		// @required +(void)pauseDataUploading:(BOOL)pause;
-		[Static]
-		[Export("pauseDataUploading:")]
-		void PauseDataUploading(bool pause);
-
-		// @required +(void)setCustomerId:(NSString * _Nullable)customerId privacyOptedOut:(BOOL)optedOut;
-		[Static]
-		[Export("setCustomerId:privacyOptedOut:")]
-		[Internal]
-		void SetCustomerIdWithPrivacyOptedOut([NullAllowed] string customerId, bool optedOut);
-
-		// @required +(void)triggerInAppMessagesForSessionStart;
-		[Static]
-		[Export("triggerInAppMessagesForSessionStart")]
-		[Internal]
-		void TriggerInAppMessagesForSessionStart();
-
-		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
-		[Static]
-		[Export("tagImpressionForInAppCampaign:withType:")]
-		void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
-
-		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
-		[Static]
-		[Export("tagImpressionForInAppCampaign:withCustomAction:")]
-		void TagInAppImpression(LLInAppCampaign campaign, string customAction);
-
-		// @required +(NSArray<LLInboxCampaign *> * _Nonnull)allInboxCampaigns;
-		[Static]
-		[Export("allInboxCampaigns")]
-		[Internal]
-		LLInboxCampaign[] AllInboxCampaigns { get; }
-
-        // @required +(NSArray<LLInboxCampaign *> * _Nonnull)displayableInboxCampaigns;
-        [Static]
-        [Export("displayableInboxCampaigns")]
-        [Internal]
-        LLInboxCampaign[] DisplayableInboxCampaigns { get; }
-
-		// @required +(void)refreshAllInboxCampaigns:(void (^ _Nonnull)(NSArray<LLInboxCampaign *> * _Nullable))completionBlock;
-		[Static]
-		[Export("refreshAllInboxCampaigns:")]
-		[Internal]
-		void RefreshAllInboxCampaigns(Action<LLInboxCampaign[]> completionBlock);
-
 		// @required +(void)tagImpressionForInboxCampaign:(LLInboxCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
 		[Static]
 		[Export("tagImpressionForInboxCampaign:withType:")]
@@ -989,6 +927,38 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		void InboxListItemTapped(LLInboxCampaign campaign);
 
+		// @required +(void)setLocationMonitoringEnabled:(BOOL)enabled;
+		[Static]
+		[Export("setLocationMonitoringEnabled:")]
+		void SetLocationMonitoringEnabled(bool enabled);
+
+		// @required +(NSArray<LLRegion *> * _Nonnull)geofencesToMonitor:(CLLocationCoordinate2D)currentCoordinate;
+		[Static]
+		[Export("geofencesToMonitor:")]
+		LLRegion[] GeofencesToMonitor(CLLocationCoordinate2D currentCoordinate);
+
+		// @required +(void)triggerRegion:(CLRegion * _Nonnull)region withEvent:(LLRegionEvent)event atLocation:(CLLocation * _Nullable)location;
+		[Static]
+		[Export("triggerRegion:withEvent:atLocation:")]
+		void TriggerRegion(CLRegion region, LLRegionEvent regionEvent, CLLocation location);
+
+		// @required +(void)triggerRegions:(NSArray<CLRegion *> * _Nonnull)regions withEvent:(LLRegionEvent)event atLocation:(CLLocation * _Nullable)location;
+		[Static]
+		[Export("triggerRegions:withEvent:atLocation:")]
+		void TriggerRegions(CLRegion[] regions, LLRegionEvent regionEvent, CLLocation location);
+
+		/*
+         //+(BOOL)isCollectingAdvertisingIdentifier;
+        [Static]
+        [Export ("isCollectingAdvertisingIdentifier")]
+        bool IsCollectingAdvertisingIdentifier { get; }
+
+        // +(void)setCollectAdvertisingIdentifier:(BOOL)collectAdvertisingIdentifier;
+        [Static]
+        [Export ("setCollectAdvertisingIdentifier:")]
+        void SetCollectAdvertisingIdentifier (bool collectAdvertisingIdentifier);
+
+        */
 		// @required +(void)tagPlacesPushReceived:(LLPlacesCampaign * _Nonnull)campaign;
 		[Static]
 		[Export("tagPlacesPushReceived:")]
@@ -1007,15 +977,34 @@ namespace LocalyticsXamarin.IOS
 		[Protected]
 		void TagPlacesPushOpenedPrivate(LLPlacesCampaign campaign, string identifier);
 
-		// @required +(void)triggerPlacesNotificationForCampaign:(LLPlacesCampaign * _Nonnull)campaign;
-		[Static]
-		[Export("triggerPlacesNotificationForCampaign:")]
-		void TriggerPlacesNotification(LLPlacesCampaign campaign);
-
 		// @required +(void)triggerPlacesNotificationForCampaignId:(NSInteger)campaignId regionIdentifier:(NSString * _Nonnull)regionId;
 		[Static]
 		[Export("triggerPlacesNotificationForCampaignId:regionIdentifier:")]
 		void TriggerPlacesNotification(nint campaignId, string regionId);
+
+		// @required +(void)setMessagingDelegate:(id<LLMessagingDelegate> _Nullable)delegate;
+		[Static]
+		[Export("setMessagingDelegate:")]
+		[Protected]
+		void SetMessagingDelegate([NullAllowed] LLMessagingDelegate @delegate);
+
+        // @required +(void)setCallToActionDelegate:(id<LLCallToActionDelegate> _Nullable)delegate;
+        [Static]
+        [Export("setCallToActionDelegate:")]
+        [Internal]
+        void SetCallToActionDelegate([NullAllowed] LLCallToActionDelegate @delegate);
+
+		// @required +(BOOL)isInAppAdIdParameterEnabled;
+		[Static]
+		[Export("isInAppAdIdParameterEnabled")]
+		[Internal]
+		bool IsAdidAppendedToInAppUrls { get; }
+
+		// @required +(void)setInAppAdIdParameterEnabled:(BOOL)enabled;
+		[Static]
+		[Export("setInAppAdIdParameterEnabled:")]
+		[Internal]
+		void AppendAdidToInAppUrls(bool enabled);
 
 		// @required +(BOOL)isInboxAdIdParameterEnabled;
 		[Static]
@@ -1028,10 +1017,17 @@ namespace LocalyticsXamarin.IOS
 		[Export("setInboxAdIdParameterEnabled:")]
 		[Internal]
 		void AppendAdidToInboxUrls(bool enabled);
-    }
 
-    // @protocol LLAnalyticsDelegate <NSObject>
-    [BaseType(typeof(NSObject))]
+		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate;
+		[Static]
+		[Export("setLocationDelegate:")]
+        [Internal]
+		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
+
+	}
+
+	// @protocol LLAnalyticsDelegate <NSObject>
+	[BaseType(typeof(NSObject))]
 	[Protocol]
     [Internal]
 	interface LLAnalyticsDelegate
@@ -1164,20 +1160,6 @@ namespace LocalyticsXamarin.IOS
         //- (void) localyticsShouldPromptForNotificationPermissions:(nonnull LLCampaignBase *)campaign;
         [Export("localyticsShouldPromptForNotificationPermissions:")]
         bool LocalyticsShouldPromptForNotificationPermissions(LLCampaignBase campaign);
-
-        // @optional -(BOOL)localyticsShouldDeeplinkToSettings:(LLCampaignBase *)campaign __attribute__((availability(ios, introduced=8_0)));
-        [iOS(8, 0)]
-        [Export("localyticsShouldDeeplinkToSettings:")]
-        bool LocalyticsShouldDeeplinkToSettings(LLCampaignBase campaign);
-
-        // @optional -(void)requestAlwaysAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
-        [iOS(8, 0)]
-        [Export("requestAlwaysAuthorization:")]
-        void RequestAlwaysAuthorization(CLLocationManager locationManager);
-
-        // @optional -(void)requestWhenInUseAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
-        [iOS(8, 0)]
-        [Export("requestWhenInUseAuthorization:")]
-        void RequestWhenInUseAuthorization(CLLocationManager locationManager);
     }
+
 }
