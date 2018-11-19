@@ -325,6 +325,72 @@ namespace LocalyticsXamarin.IOS
         LLInboxCampaign CampaignForRowAtIndexPath(NSIndexPath indexPath);
 	}
 
+    // @interface LLInAppConfiguration : NSObject
+    [BaseType(typeof(NSObject))]
+	public interface LLInAppConfiguration
+	{
+		// @property (assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;
+		[Export("dismissButtonLocation", ArgumentSemantic.Assign)]
+		LLInAppMessageDismissButtonLocation DismissButtonLocation { get; set; }
+
+		// @property (nonatomic, strong) UIImage * _Nullable dismissButtonImage;
+		[NullAllowed, Export("dismissButtonImage", ArgumentSemantic.Strong)]
+		UIImage DismissButtonImage { get; set; }
+
+		// @property (assign, nonatomic) BOOL dismissButtonHidden;
+		[Export("dismissButtonHidden")]
+		bool DismissButtonHidden { get; set; }
+
+		// @property (assign, nonatomic) CGFloat aspectRatio;
+		[Export("aspectRatio")]
+		nfloat AspectRatio { get; set; }
+
+		// @property (assign, nonatomic) CGFloat offset;
+		[Export("offset")]
+		nfloat Offset { get; set; }
+
+		// @property (assign, nonatomic) CGFloat backgroundAlpha;
+		[Export("backgroundAlpha")]
+		nfloat BackgroundAlpha { get; set; }
+
+		// -(BOOL)isCenterCampaign;
+		[Export("isCenterCampaign")]
+		bool IsCenterCampaign();
+
+		// -(BOOL)isTopBannerCampaign;
+		[Export("isTopBannerCampaign")]
+		bool IsTopBannerCampaign();
+
+		// -(BOOL)isBottomBannerCampaign;
+		[Export("isBottomBannerCampaign")]
+		bool IsBottomBannerCampaign();
+
+		// -(BOOL)isFullScreenCampaign;
+		[Export("isFullScreenCampaign")]
+		bool IsFullScreenCampaign();
+
+		// -(void)setDismissButtonImageWithName:(NSString * _Nonnull)imageName;
+		[Export("setDismissButtonImageWithName:")]
+		void SetDismissButtonImageWithName(string imageName);
+	}
+
+	// @interface LLInboxDetailViewController : UIViewController
+	[BaseType(typeof(UIViewController))]
+	public interface LLInboxDetailViewController
+	{
+		// @property (readonly, nonatomic, strong) LLInboxCampaign * _Nonnull campaign;
+		[Export("campaign", ArgumentSemantic.Strong)]
+		LLInboxCampaign Campaign { get; }
+
+		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
+		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
+		UIView CreativeLoadErrorView { get; set; }
+
+        // @property(nonatomic, assign) BOOL deleteInNavBar;
+        [Export("deleteInNaveBar", ArgumentSemantic.Assign)]
+        bool DeleteInNaveBar { get; set; }
+	}
+
 	// @interface Localytics : NSObject
 	[BaseType(typeof(NSObject), Name = "Localytics")]
 	partial interface Localytics
@@ -1104,81 +1170,14 @@ namespace LocalyticsXamarin.IOS
         [Export("localyticsShouldDeeplinkToSettings:")]
         bool LocalyticsShouldDeeplinkToSettings(LLCampaignBase campaign);
 
-        //// @optional -(void)requestAlwaysAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
-        //[iOS(8, 0)]
-        //[Export("requestAlwaysAuthorization:")]
-        //void RequestAlwaysAuthorization(CLLocationManager locationManager);
+        // @optional -(void)requestAlwaysAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
+        [iOS(8, 0)]
+        [Export("requestAlwaysAuthorization:")]
+        void RequestAlwaysAuthorization(CLLocationManager locationManager);
 
-        //// @optional -(void)requestWhenInUseAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
-        //[iOS(8, 0)]
-        //[Export("requestWhenInUseAuthorization:")]
-        //void RequestWhenInUseAuthorization(CLLocationManager locationManager);
-
+        // @optional -(void)requestWhenInUseAuthorization:(CLLocationManager * _Nonnull)locationManager __attribute__((availability(ios, introduced=8_0)));
+        [iOS(8, 0)]
+        [Export("requestWhenInUseAuthorization:")]
+        void RequestWhenInUseAuthorization(CLLocationManager locationManager);
     }
-
-    // @interface LLInAppConfiguration : NSObject
-    [BaseType(typeof(NSObject))]
-	public interface LLInAppConfiguration
-	{
-		// @property (assign, nonatomic) LLInAppMessageDismissButtonLocation dismissButtonLocation;
-		[Export("dismissButtonLocation", ArgumentSemantic.Assign)]
-		LLInAppMessageDismissButtonLocation DismissButtonLocation { get; set; }
-
-		// @property (nonatomic, strong) UIImage * _Nullable dismissButtonImage;
-		[NullAllowed, Export("dismissButtonImage", ArgumentSemantic.Strong)]
-		UIImage DismissButtonImage { get; set; }
-
-		// @property (assign, nonatomic) BOOL dismissButtonHidden;
-		[Export("dismissButtonHidden")]
-		bool DismissButtonHidden { get; set; }
-
-		// @property (assign, nonatomic) CGFloat aspectRatio;
-		[Export("aspectRatio")]
-		nfloat AspectRatio { get; set; }
-
-		// @property (assign, nonatomic) CGFloat offset;
-		[Export("offset")]
-		nfloat Offset { get; set; }
-
-		// @property (assign, nonatomic) CGFloat backgroundAlpha;
-		[Export("backgroundAlpha")]
-		nfloat BackgroundAlpha { get; set; }
-
-		// -(BOOL)isCenterCampaign;
-		[Export("isCenterCampaign")]
-		bool IsCenterCampaign();
-
-		// -(BOOL)isTopBannerCampaign;
-		[Export("isTopBannerCampaign")]
-		bool IsTopBannerCampaign();
-
-		// -(BOOL)isBottomBannerCampaign;
-		[Export("isBottomBannerCampaign")]
-		bool IsBottomBannerCampaign();
-
-		// -(BOOL)isFullScreenCampaign;
-		[Export("isFullScreenCampaign")]
-		bool IsFullScreenCampaign();
-
-		// -(void)setDismissButtonImageWithName:(NSString * _Nonnull)imageName;
-		[Export("setDismissButtonImageWithName:")]
-		void SetDismissButtonImageWithName(string imageName);
-	}
-
-	// @interface LLInboxDetailViewController : UIViewController
-	[BaseType(typeof(UIViewController))]
-	public interface LLInboxDetailViewController
-	{
-		// @property (readonly, nonatomic, strong) LLInboxCampaign * _Nonnull campaign;
-		[Export("campaign", ArgumentSemantic.Strong)]
-		LLInboxCampaign Campaign { get; }
-
-		// @property (nonatomic, strong) UIView * _Nullable creativeLoadErrorView;
-		[NullAllowed, Export("creativeLoadErrorView", ArgumentSemantic.Strong)]
-		UIView CreativeLoadErrorView { get; set; }
-
-        // @property(nonatomic, assign) BOOL deleteInNavBar;
-        [Export("deleteInNaveBar", ArgumentSemantic.Assign)]
-        bool DeleteInNaveBar { get; set; }
-	}
 }

@@ -36,7 +36,7 @@
 @protocol LLLocationDelegate;
 
 @class UNMutableNotificationContent;
-#define LOCALYTICS_LIBRARY_VERSION      @"5.3.0" //iOS version
+#define LOCALYTICS_LIBRARY_VERSION      @"5.4.0" //iOS version
 
 #else
 
@@ -1066,12 +1066,12 @@
  
  * @Version SDK5.3
  */
-+ (void)persistLocationMonitoring:(BOOL)persist;
++ (void)persistLocationMonitoring:(BOOL)persist NS_AVAILABLE_IOS(8_0);
 
 /** Retrieve the closest 20 geofences to monitor based on the devices current location. This method
  should be used if you would rather manage location updates and region monitoring instead of
  allowing the Localytics SDK to manage location updates and region monitoring automatically when
- using setLocationMonitoringEnabled. This method should be used in conjunction with triggerRegion:withEvent:
+ using persistLocationMonitoring:withForegroundOnlyCapabilities:. This method should be used in conjunction with triggerRegion:withEvent:
  and triggerRegions:withEvent: to notify the Localytics SDK that regions have been entered or exited.
  @param currentCoordinate The devices current location coordinate
  @see triggerRegion:withEvent:
