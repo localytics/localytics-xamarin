@@ -692,6 +692,16 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		void DismissCurrentInAppMessage();
 
+		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
+		[Static]
+		[Export("tagImpressionForInAppCampaign:withType:")]
+		void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
+
+		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
+		[Static]
+		[Export("tagImpressionForInAppCampaign:withCustomAction:")]
+		void TagInAppImpression(LLInAppCampaign campaign, string customAction);
+
 		// @required +(NSArray<LLInboxCampaign *> * _Nonnull)inboxCampaigns;
 		[Static]
 		[Export("inboxCampaigns")]
@@ -819,6 +829,11 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		string AppKey { get; }
 
+		// @required +(void)triggerPlacesNotificationForCampaignId:(NSInteger)campaignId regionIdentifier:(NSString * _Nonnull)regionId;
+		[Static]
+		[Export("triggerPlacesNotificationForCampaignId:regionIdentifier:")]
+		void TriggerPlacesNotification(nint campaignId, string regionId);
+
 		// @required +(void)setMessagingDelegate:(id<LLMessagingDelegate> _Nullable)delegate;
 		[Static]
 		[Export("setMessagingDelegate:")]
@@ -843,12 +858,6 @@ namespace LocalyticsXamarin.IOS
 		[Internal]
 		void SetAnalyticsDelegate([NullAllowed] LLAnalyticsDelegate @delegate);
 
-		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate;
-		[Static]
-		[Export("setLocationDelegate:")]
-        [Internal]
-		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
-
         // @required +(void)setCallToActionDelegate:(id<LLCallToActionDelegate> _Nullable)delegate;
         [Static]
         [Export("setCallToActionDelegate:")]
@@ -871,16 +880,6 @@ namespace LocalyticsXamarin.IOS
 		[Export("triggerInAppMessagesForSessionStart")]
 		[Internal]
 		void TriggerInAppMessagesForSessionStart();
-
-		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withType:(LLImpressionType)impressionType;
-		[Static]
-		[Export("tagImpressionForInAppCampaign:withType:")]
-		void TagInAppImpression(LLInAppCampaign campaign, LLImpressionType impressionType);
-
-		// @required +(void)tagImpressionForInAppCampaign:(LLInAppCampaign * _Nonnull)campaign withCustomAction:(NSString * _Nonnull)customAction;
-		[Static]
-		[Export("tagImpressionForInAppCampaign:withCustomAction:")]
-		void TagInAppImpression(LLInAppCampaign campaign, string customAction);
 
 		// @required +(NSArray<LLInboxCampaign *> * _Nonnull)allInboxCampaigns;
 		[Static]
@@ -941,16 +940,6 @@ namespace LocalyticsXamarin.IOS
 		[Protected]
 		void TagPlacesPushOpenedPrivate(LLPlacesCampaign campaign, string identifier);
 
-		// @required +(void)triggerPlacesNotificationForCampaign:(LLPlacesCampaign * _Nonnull)campaign;
-		[Static]
-		[Export("triggerPlacesNotificationForCampaign:")]
-		void TriggerPlacesNotification(LLPlacesCampaign campaign);
-
-		// @required +(void)triggerPlacesNotificationForCampaignId:(NSInteger)campaignId regionIdentifier:(NSString * _Nonnull)regionId;
-		[Static]
-		[Export("triggerPlacesNotificationForCampaignId:regionIdentifier:")]
-		void TriggerPlacesNotification(nint campaignId, string regionId);
-
 		// @required +(BOOL)isInboxAdIdParameterEnabled;
 		[Static]
 		[Export("isInboxAdIdParameterEnabled")]
@@ -962,6 +951,13 @@ namespace LocalyticsXamarin.IOS
 		[Export("setInboxAdIdParameterEnabled:")]
 		[Internal]
 		void AppendAdidToInboxUrls(bool enabled);
+
+		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate;
+		[Static]
+		[Export("setLocationDelegate:")]
+        [Internal]
+		void SetLocationDelegate([NullAllowed] LLLocationDelegate @delegate);
+
 	}
 
 	// @protocol LLAnalyticsDelegate <NSObject>
