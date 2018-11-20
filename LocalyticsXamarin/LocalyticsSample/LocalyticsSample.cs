@@ -89,16 +89,11 @@ namespace LocalyticsSample.Shared
             localytics.TagSearched("query", "type", 5, new Dictionary<string, string>());
             localytics.TagShared("name", "id", "type", "method", new Dictionary<string, string>());
             localytics.TagContentRated("name", "id", "type", 1, new Dictionary<string, string>());
-            localytics.TagCustomerRegistered(new Dictionary<string, object>() {
-                {"customerId", "1234"},
-                {"firstName", "Anand"},
-                {"lastName", "B"},
-                {"fullName", "A B"},
-                {"emailAddress", "ab@localytics.com"}
-            }, "method", new Dictionary<string, string>());
-            localytics.TagCustomerLoggedIn(new Dictionary<string, object> {
-                {"customerId", "1234"}
-            }, null, null);
+            LocalyticsXamarin.Shared.Customer customer = new LocalyticsXamarin.Shared.Customer("!234", "John", "Appleseed", "John Appleseed", "jappleseed@localytics.com");
+
+            localytics.TagCustomerRegistered(customer, "method", new Dictionary<string, string>());
+
+            localytics.TagCustomerLoggedIn(customer, null, null);
             localytics.TagInvited("invited With no attribs", null);
             localytics.TagInvited("method", new Dictionary<string, string>());
             var dictTagInvited = new Dictionary<string, string>();
@@ -204,8 +199,6 @@ namespace LocalyticsSample.Shared
                 localytics.TagImpression(firstInboxCampaign, "custom");
                 localytics.DeleteInboxCampaign(firstInboxCampaign);
             });
-
-
 
             //localytics.TagImpressionForInAppCampaign(null, "custom");
             //         localytics.TagImpressionForPushToInboxCampaign(null, true);

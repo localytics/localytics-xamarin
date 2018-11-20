@@ -94,19 +94,22 @@ namespace LocalyticsXamarin.Shared
             };
 
             // Analytics Events
-            LocalyticsSDK.LocalyticsSessionDidOpen += (sender, e) =>
+            LocalyticsSDK.SharedInstance.SessionDidOpen += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionDidOpenEvent: " + e);
             };
-            LocalyticsSDK.LocalyticsDidTagEvent += (sender, e) =>
+
+            LocalyticsSDK.SharedInstance.DidTagEvent += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionDidTagEvent: " + e);
             };
+
             LocalyticsSDK.LocalyticsSessionWillClose += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionWillCloseEvent: " + e);
             };
-            LocalyticsSDK.LocalyticsSessionWillOpen += (sender, e) =>
+
+            LocalyticsSDK.SharedInstance.SessionWillOpen += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionWillOpenEvent: " + e);
             };

@@ -33,9 +33,9 @@ namespace LocalyticsMessagingSample.Android
             Localytics.SetLocationMonitoringEnabled(true);
 
 			//// Analytics callbacks
-            LocalyticsSDK.LocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
-            LocalyticsSDK.LocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
-            LocalyticsSDK.LocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
+            LocalyticsSDK.SharedInstance.DidTagEvent += LL_OnLocalyticsDidTagEvent;
+            LocalyticsSDK.SharedInstance.SessionWillOpen += LL_OnLocalyticsSessionWillOpen;
+            LocalyticsSDK.SharedInstance.SessionDidOpen += LL_OnLocalyticsSessionDidOpen;
             LocalyticsSDK.LocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
 
             //// Messaging callbacks

@@ -357,8 +357,9 @@ namespace LocalyticsXamarin.IOS
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationWhenInUsePermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationAlwaysPermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForNotificationPermission;
-
         public static Func<LLCampaignBase, bool> ShouldDeepLinkToSettings;
+        public static Action<CLLocationManager> RequestAlwaysAuthorization;
+        public static Action<CLLocationManager> RequestWhenInUseAuthorization;
 
         public sealed class LocalyticsCallToActionListener : LLCallToActionDelegate
         {
@@ -397,14 +398,18 @@ namespace LocalyticsXamarin.IOS
             {
                 return ShouldDeepLinkToSettings == null || ShouldDeepLinkToSettings(campaign);
             }
-            // These are useful only from Native. Made a mistake but not providing a seperate Listener Like a LocationAuthorizationListener.
-            //public override void RequestAlwaysAuthorization(CLLocationManager locationManager)
-            //{
-            //    // NOt supported.
-            //}
-            //void RequestWhenInUseAuthorization(CLLocationManager locationManager)
-            //{
-            //}
+            public override void RequestAlwaysAuthorizationFromApp(CLLocationManager locationManager)
+            {
+                if (RequestAlwaysAuthorization != null) {
+                    RequestAlwaysAuthorization(locationManager);
+                }
+            }
+            public override void RequestWhenInUseAuthorizationFromApp(CLLocationManager locationManager)
+            {
+                if (RequestWhenInUseAuthorization != null) {
+                    RequestWhenInUseAuthorization(locationManager);
+                }
+            }
         }
     }
 }

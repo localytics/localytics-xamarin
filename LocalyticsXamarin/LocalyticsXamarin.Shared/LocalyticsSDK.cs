@@ -94,14 +94,14 @@ namespace LocalyticsXamarin.Shared
         {
             add
             {
-                Localytics.SharedInstance().DidTagEvent += (o, args) =>
-            {
-                value(o, args);
-            };
+                LocalyticsSDK.SharedInstance.DidTagEvent += (o, args) =>
+                {
+                    value(o, args);
+                };
             }
             remove
             {
-                Localytics.SharedInstance().DidTagEvent -= (o, args) =>
+                LocalyticsSDK.SharedInstance.DidTagEvent -= (o, args) =>
                           {
                               value(o, args);
                           };
@@ -126,19 +126,19 @@ namespace LocalyticsXamarin.Shared
             }
         }
 
-        [Obsolete]
+        [Obsolete("Use SessionDidOpen event member of the SharedInstance instead.")]
         public static event EventHandler<LocalyticsSessionDidOpenEventArgs> LocalyticsSessionDidOpen
         {
             add
             {
-                Localytics.SharedInstance().SessionDidOpen += (o, args) =>
+                LocalyticsSDK.SharedInstance.SessionDidOpen += (o, args) =>
                           {
                               value(o, args);
                           };
             }
             remove
             {
-                Localytics.SharedInstance().SessionDidOpen -= (o, args) =>
+                LocalyticsSDK.SharedInstance.SessionDidOpen -= (o, args) =>
                 {
                     value(o, args);
                 };
@@ -163,19 +163,19 @@ namespace LocalyticsXamarin.Shared
             }
         }
 
-        [Obsolete]
+        [Obsolete("Use SessionWillOpen event member of the SharedInstance instead.")]
         public static event EventHandler<LocalyticsSessionWillOpenEventArgs> LocalyticsSessionWillOpen
         {
             add
             {
-                Localytics.SharedInstance().SessionWillOpen += (o, args) =>
+                LocalyticsSDK.SharedInstance.SessionWillOpen += (o, args) =>
                           {
                               value(o, args);
                           };
             }
             remove
             {
-                Localytics.SharedInstance().SessionWillOpen -= (o, args) =>
+                LocalyticsSDK.SharedInstance.SessionWillOpen -= (o, args) =>
                 {
                     value(o, args);
                 };
