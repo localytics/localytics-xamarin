@@ -34,7 +34,7 @@ namespace LocalyticsXamarin.Android
 		{
 			LocalyticsSDK.UpdatePluginVersion();
 			Localytics.SetMessagingListener(new IMessagingListenerV2Implementor());
-            Localytics.SetCallToActionListener(new CallToActionListenerImplementor());
+            Localytics.SetCallToActionListener(new CTAListenerImplementation());
 		}
 
 		static Localytics _instance;
@@ -55,8 +55,6 @@ namespace LocalyticsXamarin.Android
         [global::Android.Runtime.Register("mono/com/localytics/android/MessagingListenerV2Implementor")]
         internal sealed partial class IMessagingListenerV2Implementor : global::Java.Lang.Object, IMessagingListenerV2
         {
-            //object sender;
-
             public IMessagingListenerV2Implementor()
                 : base(
                     global::Android.Runtime.JNIEnv.StartCreateInstance("mono/com/localytics/android/MessagingListenerV2Implementor", "()V"),
@@ -162,58 +160,47 @@ namespace LocalyticsXamarin.Android
         }
 
         public static Func<LocalyticsXamarin.Android.Campaign, bool> ShouldPromptForLocationPermission;
+        public static Func<global::Android.Content.Intent, LocalyticsXamarin.Android.Campaign, bool> DeeplinkToSettings;
 
-        //[global::Android.Runtime.Register("mono/com/localytics/android/CallToActionListenerImplementor")]
-        internal sealed partial class CallToActionListenerImplementor : global::Java.Lang.Object, ICallToActionListener
+        public class CTAListenerImplementation : LocalyticsXamarin.Android.CallToActionListenerAdapterV2
         {
-            //object sender;
-
-            public CallToActionListenerImplementor()
-                : base(
-                    global::Android.Runtime.JNIEnv.StartCreateInstance("mono/com/localytics/android/CallToActionListenerImplementor", "()V"),
-                    JniHandleOwnership.TransferLocalRef)
+            public override bool LocalyticsShouldDeeplink(string p0, LocalyticsXamarin.Android.Campaign p1)
             {
-                global::Android.Runtime.JNIEnv.FinishCreateInstance(((global::Java.Lang.Object)this).Handle, "()V");
+                if (LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null) {
+                    return LocalyticsSDK.CallToActionShouldDeepLinkDelegate(p0, Convertor.CampaignFrom(p1));
+                }
+                return true;
+            }
+            public override void LocalyticsDidOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
+            {
+                if (LocalyticsSDK.DidOptOut != null) {
+                    LocalyticsSDK.DidOptOut(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
+                }
             }
 
-            public bool LocalyticsShouldDeeplink(string p0, LocalyticsXamarin.Android.Campaign p1)
+            public override void LocalyticsDidPrivacyOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
             {
-                var __h = LocalyticsSDK.CallToActionShouldDeepLinkDelegate;
-                if (__h != null)
-                    return __h(p0, Convertor.CampaignFrom(p1));
+                if (LocalyticsSDK.DidPrivacyOptOut != null) {
+                    LocalyticsSDK.DidPrivacyOptOut(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
+                }
+            }
+
+            public override bool LocalyticsShouldPromptForLocationPermissions(LocalyticsXamarin.Android.Campaign p0)
+            {
+                if (ShouldPromptForLocationPermission!=null) {
+                    ShouldPromptForLocationPermission(p0);
+                }
                 return true;
             }
 
-            public void LocalyticsDidOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
+            public override bool LocalyticsShouldDeeplinkToSettings(global::Android.Content.Intent p0, LocalyticsXamarin.Android.Campaign p1)
             {
-                var __h = LocalyticsSDK.DidOptOut;
-                if (__h != null)
-                    __h(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
-            }
-
-            public void LocalyticsDidPrivacyOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
-            {
-                var __h = LocalyticsSDK.DidPrivacyOptOut;
-                if (__h != null)
-                    __h(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
-            }
-
-            public bool LocalyticsShouldPromptForLocationPermissions(LocalyticsXamarin.Android.Campaign p0)
-            {
-                var __h = ShouldPromptForLocationPermission;
-                if (__h != null)
-                    return __h(p0);
+                if (DeeplinkToSettings != null)
+                {
+                    return DeeplinkToSettings(p0, p1);
+                }
                 return true;
-            }
-
-            internal static bool __IsEmpty(CallToActionListenerImplementor value)
-            {
-                return LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null
-                                    && LocalyticsSDK.DidOptOut != null
-                                    && LocalyticsSDK.DidPrivacyOptOut != null
-                                    && ShouldPromptForLocationPermission != null;
             }
         }
-
 	}
 }

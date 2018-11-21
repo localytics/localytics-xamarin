@@ -56,6 +56,18 @@ namespace LocalyticsMessagingSample.Android
                 Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e);
             };
             LocalyticsSDK.LocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
+        
+            Localytics.ShouldPromptForLocationPermission += (arg) => {
+                Console.WriteLine("XamarinEvent ShouldPromptForLocationPermission " + arg);
+                return true;
+            };
+
+            Localytics.DeeplinkToSettings += (i, c) =>
+            {
+                Console.WriteLine("XamarinEvent ShouldPromptForLocationPermission " + i + c);
+                return true;
+            };
+
         }
 
         void LL_OnLocalyticsDidTagEvent(object sender, LocalyticsDidTagEventEventArgs eventArgs)

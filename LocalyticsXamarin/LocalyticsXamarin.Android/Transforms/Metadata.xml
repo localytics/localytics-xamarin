@@ -139,7 +139,7 @@
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="managedName">SessionWillClose</attr>
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']" name="managedName">DidTagEvent</attr>
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']" name="managedName">SessionWillOpen</attr>
-
+     
     <!--     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsXamarin.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
 
     
@@ -154,7 +154,7 @@
     
      <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'LocationChangedListener')]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BuildConfig')]" />
-
+    
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics.Log']" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='addProfileAttributesToSet' and count(parameter)=2]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='decrementProfileAttribute' and count(parameter)=2]" />
@@ -190,8 +190,6 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BaseProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'BaseProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BootReceiver')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CallToActionListenerAdapterV2')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CallToActionListenerAdapter')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Creative')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'DatapointHelper')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'FirebaseService')]" />
