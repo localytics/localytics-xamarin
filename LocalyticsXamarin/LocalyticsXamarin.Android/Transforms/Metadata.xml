@@ -205,12 +205,12 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppMessagesAdapter')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppResponse')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'InboxDetailCallback')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxDetailSupportFragment')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxErrorImage')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxListItem')]" />
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxDetailSupportFragment')]" />-->
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxErrorImage')]" />-->
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxListItem')]" />-->
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxManager')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxWebViewController')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JavaScriptClient')]" />
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxWebViewController')]" />-->
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JavaScriptClient')]" />-->
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JsonHelper')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JsonObjects')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JsonTokenizer')]" />

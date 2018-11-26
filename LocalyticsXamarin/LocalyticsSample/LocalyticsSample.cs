@@ -115,8 +115,8 @@ namespace LocalyticsSample.Shared
 
             try
             {
-                localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333 });
-                localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, new string[] { "234", "345" });
+                localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222, 333 );
+                localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, "234", "345" );
             }
             catch (System.Exception ex)
             {
