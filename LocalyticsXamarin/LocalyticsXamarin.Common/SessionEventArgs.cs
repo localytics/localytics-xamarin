@@ -17,32 +17,90 @@ namespace LocalyticsXamarin.Common
 
     }
 
+    public class SessionEventArgs : EventArgs
+    {
+        public bool First { get; private set; }
+        public bool Upgrade { get; private set; }
+        public bool Resume { get; private set; }
+
+        public SessionEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+        {
+            First = isFirst;
+            Upgrade = isUpgrade;
+            Resume = isResume;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("First:{0} Upgrade:{1} Resume:{2}", First, Upgrade, Resume);
+        }
+    }
+
     /// <summary>
     /// Localytics session did open event arguments.
     /// </summary>
-    public interface LocalyticsSessionDidOpenEventArgs : ILocalyticsSessionOpenEventArgs
+    public class LocalyticsSessionDidOpenEventArgs : SessionEventArgs, ILocalyticsSessionOpenEventArgs
     {
+        public LocalyticsSessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+            : base(isFirst, isUpgrade, isResume)
+        {
+        }
     }
 
     /// <summary>
     /// Localytics session will open event arguments.
     /// </summary>
-    public interface LocalyticsSessionWillOpenEventArgs : ILocalyticsSessionOpenEventArgs
+    public class LocalyticsSessionWillOpenEventArgs : SessionEventArgs, ILocalyticsSessionOpenEventArgs
     {
+        public LocalyticsSessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
+                    : base(isFirst, isUpgrade, isResume)
+        {
+        }
     }
 
     /// <summary>
     /// Localytics did tag event event arguments.
     /// </summary>
-    public interface LocalyticsDidTagEventEventArgs //: EventArgs
+    public class LocalyticsDidTagEventEventArgs : EventArgs
     {
         /// <value>Gets the Event name</value>
-        string EventName { get; }
+        public string EventName { get; private set; }
         /// <value>Gets the attributes.</value>
-        IDictionary<string, string> Attributes { get; }
+        public IDictionary<string, string> Attributes { get; private set; }
         /// <value>Gets the customer value(Optional).</value>
-        double? CustomerValue { get; }
+        public double? CustomerValue { get; private set; }
+
+        public static LocalyticsDidTagEventEventArgs CreateUsingDictionary(string name,
+                                              System.Collections.IDictionary attribs, double? value)
+        {
+            var dictionary = new Dictionary<string, string>();
+            foreach (var key in attribs.Keys)
+            {
+                dictionary.Add(key.ToString(), attribs[key].ToString());
+            }
+            return new LocalyticsDidTagEventEventArgs(name, value, dictionary);
+        }
+        public LocalyticsDidTagEventEventArgs(string name, double? value,
+                                              IDictionary<string, string> attribs
+                                              )
+        {
+            EventName = name;
+            Attributes = attribs;
+            CustomerValue = value;
+        }
+
+        public override string ToString()
+        {
+            if (Attributes == null)
+            {
+                return string.Format("EventName:{0} customerValue:{1} Attributes:(null)", EventName, CustomerValue);
+            }
+            else {
+                return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, CustomerValue, Attributes.ToString());
+            }
+        }
     }
+
 
     public delegate void LocalyticsDidTagDelegate(object sender, LocalyticsDidTagEventEventArgs eventArgs);
     public delegate void LocalyticsSessionDidOpenDelegate(object sender, LocalyticsSessionDidOpenEventArgs eventArgs);

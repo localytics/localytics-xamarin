@@ -77,14 +77,14 @@ namespace LocalyticsXamarin.Shared
             {
                 Localytics.SharedInstance().DidTagEvent += (o, args) =>
                 {
-                    value(o, args);
+                    value(o, new LocalyticsDidTagEventEventArgs(args.EventName, args.CustomerValue, args.Attributes));
                 };
             }
             remove
             {
                 Localytics.SharedInstance().DidTagEvent -= (o, args) =>
                 {
-                    value(o, args);
+                    value(o, new LocalyticsDidTagEventEventArgs(args.EventName, args.CustomerValue, args.Attributes));
                 };
             }
         }
@@ -102,9 +102,9 @@ namespace LocalyticsXamarin.Shared
             remove
             {
                 LocalyticsSDK.SharedInstance.DidTagEvent -= (o, args) =>
-                          {
-                              value(o, args);
-                          };
+                {
+                    value(o, args);
+                };
             }
         }
 
@@ -114,14 +114,14 @@ namespace LocalyticsXamarin.Shared
             {
                 Localytics.SharedInstance().SessionDidOpen += (o, args) =>
                 {
-                    value(o, args);
+                    value(o, new LocalyticsSessionDidOpenEventArgs(args.First, args.Upgrade, args.Resume));
                 };
             }
             remove
             {
                 Localytics.SharedInstance().SessionDidOpen -= (o, args) =>
                 {
-                    value(o, args);
+                    value(o, new LocalyticsSessionDidOpenEventArgs(args.First, args.Upgrade, args.Resume));
                 };
             }
         }
@@ -132,9 +132,9 @@ namespace LocalyticsXamarin.Shared
             add
             {
                 LocalyticsSDK.SharedInstance.SessionDidOpen += (o, args) =>
-                          {
-                              value(o, args);
-                          };
+                {
+                  value(o, args);
+                };
             }
             remove
             {
@@ -151,14 +151,14 @@ namespace LocalyticsXamarin.Shared
             {
                 Localytics.SharedInstance().SessionWillOpen += (o, args) =>
                 {
-                    value(o, args);
+                    value(o, new LocalyticsSessionWillOpenEventArgs(args.First, args.Upgrade, args.Resume));
                 };
             }
             remove
             {
                 Localytics.SharedInstance().SessionWillOpen -= (o, args) =>
                 {
-                    value(o, args);
+                    value(o, new LocalyticsSessionWillOpenEventArgs(args.First, args.Upgrade, args.Resume));
                 };
             }
         }
@@ -169,9 +169,9 @@ namespace LocalyticsXamarin.Shared
             add
             {
                 LocalyticsSDK.SharedInstance.SessionWillOpen += (o, args) =>
-                          {
-                              value(o, args);
-                          };
+                {
+                  value(o, args);
+                };
             }
             remove
             {
@@ -916,6 +916,13 @@ public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDele
             {
                 Localytics.AddProfileAttributesToSet(attribute, Convertor.ToLongArray(values), Utils.ToLLProfileScope(scope));
             }
+            else if (value is long[] ) {
+                Localytics.AddProfileAttributesToSet(attribute, value as long[], Utils.ToLLProfileScope(scope));
+            }
+            else if (value is int[])
+            {
+                Localytics.AddProfileAttributesToSet(attribute, Array.ConvertAll<int, long>(value as int[], Convert.ToInt64), Utils.ToLLProfileScope(scope));
+            }
             else if (value is DateTime)
             {
                 Localytics.AddProfileAttributesToSet(attribute, Convertor.ToJavaDateArray(values), Utils.ToLLProfileScope(scope));
@@ -923,6 +930,10 @@ public void RefreshAllInboxCampaigns(Action<IInboxCampaign[]> inboxCampaignsDele
             else if (value is string || value is Java.Lang.String)
             {
                 Localytics.AddProfileAttributesToSet(attribute, Convertor.ToStringArray(values), Utils.ToLLProfileScope(scope));
+            }
+            else if (value is string[])
+            {
+                Localytics.AddProfileAttributesToSet(attribute, value as string[], Utils.ToLLProfileScope(scope));
             }
             else
             {

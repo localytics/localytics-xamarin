@@ -113,21 +113,18 @@ namespace LocalyticsSample.Shared
             localytics.SetProfileAttribute("Ticker", XFLLProfileScope.Application, "CHAR", "LCTS");
 
 
-            try
-            {
-                localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222, 333 );
-                localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, "234", "345" );
-            }
-            catch (System.Exception ex)
-            {
-                Debug.WriteLine("Potential Upgrade Issue : AddProfileAttribute evaluate " + ex.Message + "\n" + ex.StackTrace);
-            }
 
+            localytics.AddProfileAttribute("Lucky numbers Set Int", XFLLProfileScope.Application, new int[] { 2221, 3331 } );
+            localytics.AddProfileAttribute("Lucky numbers Set Long", XFLLProfileScope.Application, new long[] { 2222, 3332 });
+            localytics.AddProfileAttribute("Lucky String Set", XFLLProfileScope.Application, new string[] { "2342", "3452" });
+            localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, "234", "345");
             localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222, 333);
             localytics.AddProfileAttribute("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc");
             localytics.RemoveProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222);
+            localytics.SetProfileAttribute("Age", XFLLProfileScope.Application, 32);
             localytics.IncrementProfileAttribute(1, "Age");
-            localytics.IncrementProfileAttribute(1, "MyAge");
+            localytics.IncrementProfileAttribute(1, "Age");
+            localytics.SetProfileAttribute("Age", XFLLProfileScope.Organization, 32);
             localytics.DecrementProfileAttribute(2, "Age", XFLLProfileScope.Organization);
 
             // Need Data based Profile tests
@@ -135,7 +132,7 @@ namespace LocalyticsSample.Shared
 
             localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", XFLLProfileScope.Application);
 
-            localytics.SetCustomerEmail("XamarinFormIOS Email");
+            localytics.SetCustomerEmail("XamarinFormIOSEmail@localytics.com");
             localytics.SetCustomerFirstName("XamarinFormIOS FirstName");
             localytics.SetCustomerLastName("XamarinFormIOS LastName");
             localytics.SetCustomerFullName("XamarinFormIOS Full Name");

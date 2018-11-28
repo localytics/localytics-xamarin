@@ -182,80 +182,20 @@ namespace LocalyticsXamarin.IOS
         internal EventHandler SessionWillClose;
         internal sealed class AnalyticsListener : LLAnalyticsDelegate
         {
-            internal class SessionEventArgs : EventArgs
-            {
-                public bool First { get; set; }
-                public bool Upgrade { get; set; }
-                public bool Resume { get; set; }
-
-                public SessionEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-                {
-                    First = isFirst;
-                    Upgrade = isUpgrade;
-                    Resume = isResume;
-                }
-
-                public override string ToString()
-                {
-                    return string.Format("First:{0} Upgrade:{1} Resume:{2}", First, Upgrade, Resume);
-                }
-            }
-
-            internal class SessionDidOpenEventArgs : SessionEventArgs, LocalyticsSessionDidOpenEventArgs
-            {
-                public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-                    : base(isFirst, isUpgrade, isResume)
-                {
-                }
-            }
-
-            internal class SessionWillOpenEventArgs : SessionEventArgs, LocalyticsSessionWillOpenEventArgs
-            {
-                public SessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-                    : base(isFirst, isUpgrade, isResume)
-                {
-                }
-            }
-
-            public class DidTagEventEventArgs : EventArgs, LocalyticsDidTagEventEventArgs
-            {
-                public string EventName { get; set; }
-                public IDictionary<string, string> Attributes { get; set; }
-                public double? CustomerValue { get; set; }
-                public DidTagEventEventArgs(string name,
-                                              IDictionary attribs,
-                                              double? customerValue)
-                {
-                    EventName = name;
-
-                    var dictionary = new Dictionary<string, string>();
-                    foreach (var key in attribs.Keys)
-                    {
-                        dictionary.Add(key.ToString(), attribs[key].ToString());
-                    }
-                    Attributes = dictionary;
-
-                    CustomerValue = customerValue;
-                }
-                public override string ToString()
-                {
-                    return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, CustomerValue, Attributes.ToString());
-                }
-            }
 
             public override void LocalyticsSessionDidOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                SharedInstance().SessionDidOpen?.Invoke(null, new SessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
+                SharedInstance().SessionDidOpen?.Invoke(null, new LocalyticsSessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsDidTagEventHandler(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
             {
-                SharedInstance().DidTagEvent?.Invoke(null, new DidTagEventEventArgs(eventName, attributes, customerValueIncrease?.LongValue));
+                SharedInstance().DidTagEvent?.Invoke(null, LocalyticsDidTagEventEventArgs.CreateUsingDictionary(eventName, attributes, customerValueIncrease?.LongValue));
             }
 
             public override void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                SharedInstance().SessionWillOpen?.Invoke(null, new SessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
+                SharedInstance().SessionWillOpen?.Invoke(null, new LocalyticsSessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsSessionWillCloseHandler()

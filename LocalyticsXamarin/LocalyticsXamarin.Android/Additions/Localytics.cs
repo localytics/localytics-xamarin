@@ -13,13 +13,7 @@ using NativePushCampaign = LocalyticsXamarin.Android.PushCampaign;
 
 namespace LocalyticsXamarin.Android
 {
-    public partial class SessionDidOpenEventArgs : global::System.EventArgs, LocalyticsSessionDidOpenEventArgs
-    { }
-
-    public partial class SessionWillOpenEventArgs : global::System.EventArgs, LocalyticsSessionWillOpenEventArgs
-    { }
-
-    public partial class DidTagEventEventArgs : global::System.EventArgs, LocalyticsDidTagEventEventArgs
+    public partial class DidTagEventEventArgs
     { 
         public double? CustomerValue {
             get {
