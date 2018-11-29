@@ -89,16 +89,11 @@ namespace LocalyticsSample.Shared
             localytics.TagSearched("query", "type", 5, new Dictionary<string, string>());
             localytics.TagShared("name", "id", "type", "method", new Dictionary<string, string>());
             localytics.TagContentRated("name", "id", "type", 1, new Dictionary<string, string>());
-            localytics.TagCustomerRegistered(new Dictionary<string, object>() {
-                {"customerId", "1234"},
-                {"firstName", "Anand"},
-                {"lastName", "B"},
-                {"fullName", "A B"},
-                {"emailAddress", "ab@localytics.com"}
-            }, "method", new Dictionary<string, string>());
-            localytics.TagCustomerLoggedIn(new Dictionary<string, object> {
-                {"customerId", "1234"}
-            }, null, null);
+            LocalyticsXamarin.Shared.Customer customer = new LocalyticsXamarin.Shared.Customer("!234", "John", "Appleseed", "John Appleseed", "jappleseed@localytics.com");
+
+            localytics.TagCustomerRegistered(customer, "method", new Dictionary<string, string>());
+
+            localytics.TagCustomerLoggedIn(customer, null, null);
             localytics.TagInvited("invited With no attribs", null);
             localytics.TagInvited("method", new Dictionary<string, string>());
             var dictTagInvited = new Dictionary<string, string>();
@@ -118,21 +113,18 @@ namespace LocalyticsSample.Shared
             localytics.SetProfileAttribute("Ticker", XFLLProfileScope.Application, "CHAR", "LCTS");
 
 
-            try
-            {
-                localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, new long[] { 222, 333 });
-                localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, new string[] { "234", "345" });
-            }
-            catch (System.Exception ex)
-            {
-                Debug.WriteLine("Potential Upgrade Issue : AddProfileAttribute evaluate " + ex.Message + "\n" + ex.StackTrace);
-            }
 
+            localytics.AddProfileAttribute("Lucky numbers Set Int", XFLLProfileScope.Application, new int[] { 2221, 3331 } );
+            localytics.AddProfileAttribute("Lucky numbers Set Long", XFLLProfileScope.Application, new long[] { 2222, 3332 });
+            localytics.AddProfileAttribute("Lucky String Set", XFLLProfileScope.Application, new string[] { "2342", "3452" });
+            localytics.AddProfileAttribute("Lucky String", XFLLProfileScope.Application, "234", "345");
             localytics.AddProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222, 333);
             localytics.AddProfileAttribute("Lucky Strings Mixed", XFLLProfileScope.Application, "222", "333", "abc");
             localytics.RemoveProfileAttribute("Lucky numbers", XFLLProfileScope.Application, 222);
+            localytics.SetProfileAttribute("Age", XFLLProfileScope.Application, 32);
             localytics.IncrementProfileAttribute(1, "Age");
-            localytics.IncrementProfileAttribute(1, "MyAge");
+            localytics.IncrementProfileAttribute(1, "Age");
+            localytics.SetProfileAttribute("Age", XFLLProfileScope.Organization, 32);
             localytics.DecrementProfileAttribute(2, "Age", XFLLProfileScope.Organization);
 
             // Need Data based Profile tests
@@ -140,7 +132,7 @@ namespace LocalyticsSample.Shared
 
             localytics.DeleteProfileAttribute("TestDeleteProfileAttribute", XFLLProfileScope.Application);
 
-            localytics.SetCustomerEmail("XamarinFormIOS Email");
+            localytics.SetCustomerEmail("XamarinFormIOSEmail@localytics.com");
             localytics.SetCustomerFirstName("XamarinFormIOS FirstName");
             localytics.SetCustomerLastName("XamarinFormIOS LastName");
             localytics.SetCustomerFullName("XamarinFormIOS Full Name");
@@ -204,8 +196,6 @@ namespace LocalyticsSample.Shared
                 localytics.TagImpression(firstInboxCampaign, "custom");
                 localytics.DeleteInboxCampaign(firstInboxCampaign);
             });
-
-
 
             //localytics.TagImpressionForInAppCampaign(null, "custom");
             //         localytics.TagImpressionForPushToInboxCampaign(null, true);

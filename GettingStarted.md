@@ -124,8 +124,8 @@ API's follow c# naming conventions and are translation of the API on the native 
 ### Dictionaries
 
 #### Customer Properties Dictionary
-The Customer Properties is passed an IDictionary.
-In a future release Localytics Xamarin SDK will support an interface to allow for code completion and refactoring.
+Upgrade to using Customer class from the LocalyticsXamarin.Shared to get full C# type support. 
+Passing in Customer Properties as a IDictionary is available for backward compatibility. 
 
 | Dictionary Key Name    | Value Description  |
 |------------------------|-------|
@@ -135,13 +135,13 @@ In a future release Localytics Xamarin SDK will support an interface to allow fo
 | fullName   | Full Name of the customer  |
 | emailAddress | Email Address of the customer |
 
-This Dictionary is to be passed to TagCustomerLoggedIn and TagCustomerRegistered API.
+This Dictionary can be passed to TagCustomerLoggedIn and TagCustomerRegistered API.
 
 ### Events
 
 Events are available as static events in the LocalyticsSDK class in the Localytics.Shared namespace.
 
-Event Args are Platform Specific, but they have the same field members. Future Versions of the SDK will provide a common interface to better enable code sharing across platforms.
+Event Args for events common to both android and ios share an interface and can be implemented in a Shared PCL project.
 
 | Event Name                    | Args | Description  |
 |------------------------|---|---|
@@ -155,6 +155,14 @@ Event Args are Platform Specific, but they have the same field members. Future V
 | InAppDidDisplayEvent | InAppDidDisplayEventArgs | when an In-App is displayed |
 | InAppWillDismissEvent | InAppWillDismissEventArgs | when an In-App will be dismissed |
 | InAppDidDismissEvent | InAppDidDismissEventArgs | when an In-App is Ddsmissed |
+
+#### IOS Specific Events
+
+| Event Name                    | Args | Description  |
+|------------------------|---|---|
+| RequestAlwaysAuthorization | CLLocationManager | Action that is invoked when a request for Always Authorization for Location is necessary. |
+| RequestWhenInUseAuthorization | CLLocationManager | Action that is invoked when a request for When In Use Authorization for Location is necessary. |
+
 
 #### Event Args
 ##### LocalyticsDidTagEventEventArgs
@@ -185,6 +193,11 @@ Event Args are Platform Specific, but they have the same field members. Future V
    
 ##### InAppDidDisplayEventArgs, InAppWillDismissEventArgs, InAppDidDismissEventArgs
   These dont define any additional properties other than those in EventArgs and are placeholders for future to minimize signature changes.
+  
+##### DidOptOutEventArgs
+  The properties are 
+  	* Current OptOut status (bool)
+  	* Campaign
 
 ### Delegates
 
@@ -195,27 +208,34 @@ Event Args are Platform Specific, but they have the same field members. Future V
 | ShouldDeepLinkDelegate | string (absolute url) | bool | Used to determine if the absolute url specified as a string should be displayed by Localytics SDK |
 | InAppWillDisplayDelegate | InAppCampaign, InAppConfiguration | InAppConfiguration | Modified InAppConfiguration that is to be used to display the InApp specified by InAppCampaign. |
 | PlacesShouldDisplayCampaignDelegate | PlacesCampaign | bool | Determines if a Places Campaign Should be Displayed |
-
+| LocalyticsShouldDeeplink | deeplink (url string), Campaign| bool | Determines if Localytics should deeplink. When false, Application handles any necessary deep link url. |
+| LocalyticsShouldPromptForLocationPermissions | Campaign | bool | Determines if there should be a delegate/event to request Permissions for Location, Notifications etc... |
+| LocalyticsShouldDeeplinkToSettings | Intent, Campaign | bool | Determines if the Localytics SDK should deeplink to system settings |
 
 ### Android Versions
 
-| Field |    |
+| Type  |  Version    |
 |-------|-------------|
-| Minimum Android Version | API Level 19 |
-| Target Android Version  | API Level 27 |
-| Target Framework        | Android 8.1 Oreo |
+| Minimum Android Version | API Level 17 |
+| Target Android Version  | API Level 28 |
+| Target Framework        | Android 9.0 |
 
 ### IOS Versions
-| Field |    |
-|-------|-------------|
-| Deployment Target | 8.0 |
-| CoreLocation | Required for Location Services |
+* Minimum Deployment Target is IOS 8.0
+* CoreLocation - Required for Location Services; Requires implementing the request for Location Permissions in the App
 
 
 ### Known Issues
 * LoggingEnabled may not return the current status of the Logger.
-* Event Args are defined in Platform specific name spaces and dont provide a suitable Common fields.
 
+### Change Log
+* 5.4.0 - Based on Native SDK 5.4.0 for Android and iOS. 
+	* Location Services (including Foreground Places support) requires App to request permissions.
+	* AddProfileAttribute supports Arrays or params list.
+	* Fixed Assembly version for the Common Module to match the release version.
+	* Plugin Version now reads Xamarin_<version>
+* 5.2.0 - Source only release in github repo. Support for Native SDK 5.2
+* 5.1.2 - Native SDK 5.1
 
 ## Xamarin.iOS
 ---

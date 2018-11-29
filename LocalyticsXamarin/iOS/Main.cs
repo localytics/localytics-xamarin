@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace LocalyticsSample.iOS
+namespace LocalyticsSample.IOS
 {
 	public class Application
 	{

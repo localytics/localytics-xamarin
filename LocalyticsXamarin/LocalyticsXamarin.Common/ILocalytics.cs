@@ -191,19 +191,6 @@ namespace LocalyticsXamarin.Common
     public interface ILocalytics
     {
         /// <summary>
-        /// Did tag event occurs when localytics API to tag a event is invoked..
-        /// </summary>
-        event LocalyticsDidTagDelegate DidTagEvent;
-        /// <summary>
-        /// Event is triggered if a Localytics Session is Opened.
-        /// </summary>
-        event LocalyticsSessionDidOpenDelegate SessionDidOpen;
-        /// <summary>
-        /// Event is triggered if a Localytics Session will be Opened.
-        /// </summary>
-        event LocalyticsSessionWillOpenDelegate SessionWillOpen;
-
-        /// <summary>
         /// Opens a session. Multiple calls are coallesed.
         /// </summary>
         void OpenSession();

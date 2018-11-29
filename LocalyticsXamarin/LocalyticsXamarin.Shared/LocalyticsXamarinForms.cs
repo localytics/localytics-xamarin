@@ -98,14 +98,17 @@ namespace LocalyticsXamarin.Shared
             {
                 Console.WriteLine("XamarinEvent SessionDidOpenEvent: " + e);
             };
+
             LocalyticsSDK.LocalyticsDidTagEvent += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionDidTagEvent: " + e);
             };
+
             LocalyticsSDK.LocalyticsSessionWillClose += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionWillCloseEvent: " + e);
             };
+
             LocalyticsSDK.LocalyticsSessionWillOpen += (sender, e) =>
             {
                 Console.WriteLine("XamarinEvent SessionWillOpenEvent: " + e);
@@ -163,6 +166,10 @@ namespace LocalyticsXamarin.Shared
 
             Localytics.ShouldPromptForNotificationPermission = (LLCampaignBase campaign) => {
                 Console.WriteLine("XamarinEvent LocalyticsShouldPromptForNotificationPermission " + campaign);
+                return true;
+            };
+            Localytics.ShouldDeepLinkToSettings = (LLCampaignBase campaign) => {
+                Console.WriteLine("XamarinEvent ShouldDeepLinkToSettings " + campaign);
                 return true;
             };
 #else
