@@ -24,18 +24,18 @@ namespace LocalyticsMessagingSample.Android
             base.OnCreate();
             localyticsXamarin = LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance;
 
+            Localytics.SetOption("ll_app_key", "f737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8");
 #if DEBUG
-			localyticsXamarin.LoggingEnabled = true;
+            localyticsXamarin.LoggingEnabled = true;
 #endif
-            Localytics.SetOption("ll_app_key", "YOUR_APP_KEY");
 
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);
 
 			//// Analytics callbacks
-            LocalyticsSDK.SharedInstance.DidTagEvent += LL_OnLocalyticsDidTagEvent;
-            LocalyticsSDK.SharedInstance.SessionWillOpen += LL_OnLocalyticsSessionWillOpen;
-            LocalyticsSDK.SharedInstance.SessionDidOpen += LL_OnLocalyticsSessionDidOpen;
+            LocalyticsSDK.LocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
+            LocalyticsSDK.LocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
+            LocalyticsSDK.LocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
             LocalyticsSDK.LocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
 
             //// Messaging callbacks
