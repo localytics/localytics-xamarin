@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Java.Util;
+using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
+using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
+using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
+using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
+using NativeBaseCampaign = LocalyticsXamarin.Android.Campaign;
+
+using LocalyticsXamarin.Common;
+using LocalyticsXamarin.Shared;
 
 namespace LocalyticsXamarin.Android
 {
@@ -58,6 +66,17 @@ namespace LocalyticsXamarin.Android
 				builder.SetEmailAddress((string)customerProps[@"emailAddress"]);
             }
 			return builder.Build();
+        }
+
+        public static Customer toCustomer(IXLCustomer customer)
+        {
+            Customer.Builder builder = new Customer.Builder();
+            builder.SetCustomerId(customer.CustomerId);
+            builder.SetEmailAddress(customer.EmailAddress);
+            builder.SetFirstName(customer.FirstName);
+            builder.SetFullName(customer.FullName);
+            builder.SetLastName(customer.LastName);
+            return builder.Build();  
         }
 
 		public static IDictionary<string, Java.Lang.Object> ToGenericDictionary(IDictionary<string, object> source) {
@@ -117,6 +136,40 @@ namespace LocalyticsXamarin.Android
 		public static string[] ToStringArray(object[] source)
         {
             return Array.ConvertAll<object, string>(source, x => x.ToString());
+        }
+        public static IInboxCampaign[] From(IList<NativeInboxCampaign> inboxCampaigns)
+        {
+            IInboxCampaign[] campaigns = new XFInboxCampaign[inboxCampaigns.Count];
+            int i = 0;
+            foreach (var item in inboxCampaigns)
+            {
+                campaigns[i] = new XFInboxCampaign(item);
+                i += 1;
+            }
+            return campaigns;
+        }
+        public static ICampaignBase CampaignFrom(NativeBaseCampaign campaign)
+        {
+            if (campaign is LocalyticsXamarin.Android.InboxCampaign)
+            {
+                return new XFInboxCampaign((LocalyticsXamarin.Android.InboxCampaign)campaign);
+            }
+            else if (campaign is LocalyticsXamarin.Android.InAppCampaign)
+            {
+                return new XFInAppCampaign((LocalyticsXamarin.Android.InAppCampaign)campaign);
+            }
+            else if (campaign is LocalyticsXamarin.Android.PlacesCampaign)
+            {
+                return new XFPlacesCampaign((LocalyticsXamarin.Android.PlacesCampaign)campaign);
+            }
+            else if (campaign is LocalyticsXamarin.Android.PushCampaign)
+            {
+                return new XFPushCampaign((LocalyticsXamarin.Android.PushCampaign)campaign);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

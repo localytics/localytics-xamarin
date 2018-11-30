@@ -24,10 +24,10 @@ namespace LocalyticsMessagingSample.Android
             base.OnCreate();
             localyticsXamarin = LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance;
 
+            Localytics.SetOption("ll_app_key", "f737ce58a68aea90b4c79fc-0bc951b0-b42b-11e3-429f-00a426b17dd8");
 #if DEBUG
-			localyticsXamarin.LoggingEnabled = true;
+            localyticsXamarin.LoggingEnabled = true;
 #endif
-            Localytics.SetOption("ll_app_key", "YOUR_APP_KEY");
 
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);
@@ -56,6 +56,18 @@ namespace LocalyticsMessagingSample.Android
                 Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e);
             };
             LocalyticsSDK.LocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
+        
+            Localytics.ShouldPromptForLocationPermission += (arg) => {
+                Console.WriteLine("XamarinEvent ShouldPromptForLocationPermission " + arg);
+                return true;
+            };
+
+            Localytics.DeeplinkToSettings += (i, c) =>
+            {
+                Console.WriteLine("XamarinEvent ShouldPromptForLocationPermission " + i + c);
+                return true;
+            };
+
         }
 
         void LL_OnLocalyticsDidTagEvent(object sender, LocalyticsDidTagEventEventArgs eventArgs)

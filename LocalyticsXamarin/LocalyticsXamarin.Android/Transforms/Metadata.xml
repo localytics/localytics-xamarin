@@ -139,41 +139,49 @@
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="managedName">SessionWillClose</attr>
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']" name="managedName">DidTagEvent</attr>
      <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']" name="managedName">SessionWillOpen</attr>
-
+     
     <!--     <attr path="/api/package[@name='com.localytics.android']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsXamarin.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
 
     
     <!--  need to make public but dont access them -->
-     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getInboxId']" name="visibility">public</attr>
-     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getPtiId']" name="visibility">public</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getThumbnailUri']" name="visibility">public</attr>
-     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getCreativeUri']" name="visibility">public</attr>
-     <attr path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getLocalThumbnailUri']" name="visibility">public</attr>
 
-    <!--  Private Classes here -->
+    <!--  Private Classes and methods here -->
+     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getInboxId']" />
+     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getCreativeUri']" />
+     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getLocalThumbnailUri']" />
+     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='InboxCampaign']/method[@name='getPtiId']" />
+    
      <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'LocationChangedListener')]" />
-     <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'ICreativeDownloadTask')]" />
-   <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'CreativeManager.')]" />
-    <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'PushManager.')]" />
-    <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'StreamingGeofenceDownloader.')]" />
-    <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'Utils.')]" />
-    <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocationManager')]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BuildConfig')]" />
-    <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CreativeManager')]" />
-
+    
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics.Log']" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='addProfileAttributesToSet' and count(parameter)=2]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='decrementProfileAttribute' and count(parameter)=2]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='incrementProfileAttribute' and count(parameter)=2]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='removeProfileAttributesFromSet' and count(parameter)=2]" />
     <remove-node path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setProfileAttribute' and count(parameter)=2]" />
+    
+    
+    <!--
+    non public class and interfaces
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CreativeDownloadTaskFactory')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CreativeDownloadTask')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CreativeFileUtils')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CreativeManager')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'ICreativeDownloadTaskCallback')]" />    
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppCreativeJson')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxListItemContainer')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'LocationChangedListener')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'PlayServicesUtils')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MarketingWebViewManager')]" />
+-->
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'CreativeManager.LastDownloadedCallback')]" />
 
-    <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BackgroundService')]" />
-
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsListener')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AdidAsyncTask')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsHeader')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsHandler')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsListenerAdapter')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'AnalyticsUploader')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BaseHandler')]" />
@@ -182,34 +190,45 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BaseProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'BaseProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'BootReceiver')]" />
-<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Constants')]" />-->
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Creative')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'DatapointHelper')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'FirebaseService')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'FirebaseTokenService')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'FrequencyCappingEngine')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'GcmReceiver')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'GcmReceiver')]" />    
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'ICreativeDownloadTask')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppCampaignJson')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'InAppDialogCallback')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppDialogFragment')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppLivePreviewTask')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppManager')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppMessagesAdapter')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InAppResponse')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxDetailSupportFragment')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxErrorImage')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxListItem')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'InboxDetailCallback')]" />
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxDetailSupportFragment')]" />-->
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxErrorImage')]" />-->
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxListItem')]" />-->
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxManager')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxWebViewController')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JavaScriptClient')]" />
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'InboxWebViewController')]" />-->
+<!--<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JavaScriptClient')]" />-->
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JsonHelper')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JsonObjects')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'JsonTokenizer')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ListenersSet')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocalyticsActivityLifecycleCallbacks')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocalyticsConfiguration')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'LocalyticsConsumer')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'LocalyticsDelegate')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocalyticsFunction')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocalyticsManager')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocalyticsPredicate')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocalyticsSupplier')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocationHandler')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocationManager')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocationProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'LocationUpdateReceiver')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MainThreadHandler')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'ManifestListener')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ManifestHandler')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ManifestProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ManifestUtil')]" />
@@ -226,19 +245,22 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ProfilesHandler')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ProfilesProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ProfilesUploader')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'PushManager')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'PushManager')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ReferralReceiver')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ReferralUploader')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'StreamingGeofenceDownloader')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'SDK')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'StreamingGeofenceDownloader')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'TelephonyManagerUtils')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'TestModeButton')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'TestModeListView')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'TestModeListViewListener')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'TestModeUtilities')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'ThumbnailManager')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'UnreadIndicatorView')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'UploadListener')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'UploadThread')]" />
+<remove-node path="/api/package[@name='com.localytics.android']/interface[contains(@name,'UploadThreadListener')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'Utils')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'VideoEnabledWebChromeClient')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'CallToActionListenerAdapter')]" />
- 
+    
 </metadata>

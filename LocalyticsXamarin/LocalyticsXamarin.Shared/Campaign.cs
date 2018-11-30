@@ -16,53 +16,25 @@ using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localy
 namespace LocalyticsXamarin.Shared
 {
 
-    public class XFInboxCampaign : LocalyticsXamarin.Common.IInboxCampaign
+    internal class XFInboxCampaign : LocalyticsXamarin.Common.IInboxCampaign
     {
-#if __IOS__
-        public static IInboxCampaign[] From(NativeInboxCampaign[] inboxCampaigns)
-        {
-
-            IInboxCampaign[] campaigns = new XFInboxCampaign[inboxCampaigns.Length];
-            int i = 0;
-            foreach (var item in inboxCampaigns)
-            {
-                campaigns[i] = new XFInboxCampaign(item);
-                i += 1;
-            }
-            //Debug.WriteLine("campaigns {0} => {1}", inboxCampaigns.Length, campaigns.Length);
-            return campaigns;
-        }
-#else
-        public static IInboxCampaign[] From(IList<NativeInboxCampaign> inboxCampaigns)
-        {
-            IInboxCampaign[] campaigns = new XFInboxCampaign[inboxCampaigns.Count];
-            int i = 0;
-            foreach (var item in inboxCampaigns)
-            {
-                campaigns[i] = new XFInboxCampaign(item);
-                i += 1;
-            }
-            return campaigns;
-        }
-#endif
-
         public override string ToString()
         {
             return string.Format("\t Read:{0}" +
-                          "\n\t ReceivedDate:{1}" +
-                          "\n\t CreativeFilePath:{2}" +
-                          "\n\t DeepLinkURL:{3}" +
-"\n\t Name:{4}" +
-"\n\t SummaryText:{5}" +
- "\n\t ThumnmailUrl:{6}" +
-"\n\t TitleText:{7}" +
- "\n\t IsPushToInboxCampaign:{8}" +
- "\n\t IsDeleted:{9}" +
- "\n\t CampaignId:{10}" +
- "\n\t HasCreative:{11}" +
+                                "\n\t ReceivedDate:{1}" +
+                                "\n\t CreativeFilePath:{2}" +
+                                "\n\t DeepLinkURL:{3}" +
+                                "\n\t Name:{4}" +
+                                "\n\t SummaryText:{5}" +
+                                "\n\t ThumnmailUrl:{6}" +
+                                "\n\t TitleText:{7}" +
+                                "\n\t IsPushToInboxCampaign:{8}" +
+                                "\n\t IsDeleted:{9}" +
+                                "\n\t CampaignId:{10}" +
+                                "\n\t HasCreative:{11}" +
                                  "\n\t SortOrder:{11}"
 
-                                    , this.Read
+                                 , this.Read
                                  , this.ReceivedDate
                                  , this.CreativeFilePath ?? ""
                                  , this.DeepLinkURL ?? ""
@@ -150,7 +122,7 @@ namespace LocalyticsXamarin.Shared
 #endif
     }
 
-    public class XFInAppCampaign : LocalyticsXamarin.Common.IInAppCampaign
+    internal class XFInAppCampaign : LocalyticsXamarin.Common.IInAppCampaign
     {
 
         public override string ToString()
@@ -217,22 +189,11 @@ namespace LocalyticsXamarin.Shared
         true;
 #endif
 
-        public NativeInAppMessageDismissButtonLocation DismissButtonLocation =>
-#if __IOS__
-        campaign.DismissButtonLocation();
-#else
-        campaign.DismissButtonLocation;
-#endif
+        public NativeInAppMessageDismissButtonLocation DismissButtonLocation => campaign.DismissButtonLocation;
 
-#if __IOS__
-        public bool DismissButtonHidden => campaign.DismissButtonHidden;
-#else
         public bool DismissButtonHidden => campaign.IsDismissButtonHidden;
-#endif
 
         public string EventName => campaign.EventName;
-
-        //public IDictionary<string, string> EventAttributes => campaign.EventAttributes;
 
         public string CreativeFilePath =>
 #if __IOS__
@@ -246,15 +207,10 @@ namespace LocalyticsXamarin.Shared
         public string Name => campaign.Name;
 
         XFLLInAppMessageDismissButtonLocation IInAppCampaign.DismissButtonLocation =>
-#if __IOS__
-            Utils.ToXFLLInAppMessageDismissButtonLocation(campaign.DismissButtonLocation());
-#else
             Utils.ToXFLLInAppMessageDismissButtonLocation(campaign.DismissButtonLocation);
-#endif
-        //public IDictionary<string, string> Attributes => throw new NotImplementedException()
     }
 
-    public class XFPlacesCampaign : LocalyticsXamarin.Common.IPlacesCampaign
+    internal class XFPlacesCampaign : LocalyticsXamarin.Common.IPlacesCampaign
     {
 
         public override string ToString()
@@ -312,59 +268,8 @@ namespace LocalyticsXamarin.Shared
 
         public string SoundFilename => campaign.SoundFilename;
 
-        public string AttachmentURL =>
-#if __IOS__
-            campaign.AttachmentURL;
-#else
-            campaign.AttachmentUrl;
-#endif
-
-        //public IDictionary<string, string> Attributes => throw new NotImplementedException()
-    }
-
-#if !__IOS__
-    public class XFPushCampaign : ICampaignBase
-    {
-        LocalyticsXamarin.Android.PushCampaign campaign;
-
-        public XFPushCampaign(LocalyticsXamarin.Android.PushCampaign campaign)
-        {
-            this.campaign = campaign;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("\t CampaignId:{0}" +
-                          "\n\t Name:{1}" +
-                          "\n\t Message:{2}" +
-                          "\n\t SoundFile:{3}" +
-                          "\n\t AttachmentUrl:{4}" +
-                          "\n\t Title:{5}"
-                                 , this.CampaignId
-                                 , this.Name
-                                 , this.Message ?? ""
-                                 , this.SoundFilename ?? ""
-                                 , this.AttachmentURL ?? ""
-                                 , this.Title ?? ""
-                                 );
-
-        }
-
-        public long CampaignId => campaign.CampaignId;
-
-        public string Name => campaign.Name;
-
-        public string Message => campaign.Message;
-
-        public string Title => campaign.Title;
-
-        public string SoundFilename => campaign.SoundFilename;
-
         public string AttachmentURL => campaign.AttachmentUrl;
-
-        //public IDictionary<string, string> Attributes => throw new NotImplementedException()
-    }
-#endif
+        }
 }
 
 

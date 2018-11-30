@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsXamarin.Android",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsXamarin.iOS", "LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj", "{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsSample.iOS", "iOS\LocalyticsSample.iOS.csproj", "{E7C583A9-10C1-4776-AD86-7E0821F86989}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsSample.IOS", "iOS\LocalyticsSample.iOS.csproj", "{E7C583A9-10C1-4776-AD86-7E0821F86989}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsSample", "LocalyticsSample\LocalyticsSample.csproj", "{E291B500-93AB-423A-874D-29DB2CA50526}"
 EndProject

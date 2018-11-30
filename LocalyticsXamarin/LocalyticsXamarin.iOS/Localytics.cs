@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using LocalyticsXamarin.Shared;
 using LocalyticsXamarin.Common;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace LocalyticsXamarin.IOS
 {
@@ -174,92 +176,31 @@ namespace LocalyticsXamarin.IOS
             }
         }
 
+        internal EventHandler<LocalyticsSessionDidOpenEventArgs> SessionDidOpen;
+        internal EventHandler<LocalyticsDidTagEventEventArgs> DidTagEvent;
+        internal EventHandler<LocalyticsSessionWillOpenEventArgs> SessionWillOpen;
+        internal EventHandler SessionWillClose;
         internal sealed class AnalyticsListener : LLAnalyticsDelegate
         {
-            static internal EventHandler<LocalyticsSessionDidOpenEventArgs> SessionDidOpen;
-            static internal EventHandler<LocalyticsDidTagEventEventArgs> DidTagEvent;
-            static internal EventHandler<LocalyticsSessionWillOpenEventArgs> SessionWillOpen;
-            static internal EventHandler SessionWillClose;
-
-            internal class SessionEventArgs : EventArgs
-            {
-                public bool First { get; set; }
-                public bool Upgrade { get; set; }
-                public bool Resume { get; set; }
-
-                public SessionEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-                {
-                    First = isFirst;
-                    Upgrade = isUpgrade;
-                    Resume = isResume;
-                }
-
-                public override string ToString()
-                {
-                    return string.Format("First:{0} Upgrade:{1} Resume:{2}", First, Upgrade, Resume);
-                }
-            }
-
-            internal class SessionDidOpenEventArgs : SessionEventArgs, LocalyticsSessionDidOpenEventArgs
-            {
-                public SessionDidOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-                    : base(isFirst, isUpgrade, isResume)
-                {
-                }
-            }
-
-            internal class SessionWillOpenEventArgs : SessionEventArgs, LocalyticsSessionWillOpenEventArgs
-            {
-                public SessionWillOpenEventArgs(bool isFirst, bool isUpgrade, bool isResume)
-                    : base(isFirst, isUpgrade, isResume)
-                {
-                }
-            }
-
-            public class DidTagEventEventArgs : EventArgs, LocalyticsDidTagEventEventArgs
-            {
-                public string EventName { get; set; }
-                public IDictionary<string, string> Attributes { get; set; }
-                public double? CustomerValue { get; set; }
-                public DidTagEventEventArgs(string name,
-                                              IDictionary attribs,
-                                              double? customerValue)
-                {
-                    EventName = name;
-
-                    var dictionary = new Dictionary<string, string>();
-                    foreach (var key in attribs.Keys)
-                    {
-                        dictionary.Add(key.ToString(), attribs[key].ToString());
-                    }
-                    Attributes = dictionary;
-
-                    CustomerValue = customerValue;
-                }
-                public override string ToString()
-                {
-                    return string.Format("EventName:{0} customerValue:{1} Attributes:{2}", EventName, CustomerValue, Attributes.ToString());
-                }
-            }
 
             public override void LocalyticsSessionDidOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                SessionDidOpen?.Invoke(null, new SessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
+                SharedInstance().SessionDidOpen?.Invoke(null, new LocalyticsSessionDidOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsDidTagEventHandler(string eventName, Foundation.NSDictionary attributes, Foundation.NSNumber customerValueIncrease)
             {
-                DidTagEvent?.Invoke(null, new DidTagEventEventArgs(eventName, attributes, customerValueIncrease?.LongValue));
+                SharedInstance().DidTagEvent?.Invoke(null, LocalyticsDidTagEventEventArgs.CreateUsingDictionary(eventName, attributes, customerValueIncrease?.LongValue));
             }
 
             public override void LocalyticsSessionWillOpenHandler(bool isFirst, bool isUpgrade, bool isResume)
             {
-                SessionWillOpen?.Invoke(null, new SessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
+                SharedInstance().SessionWillOpen?.Invoke(null, new LocalyticsSessionWillOpenEventArgs(isFirst, isUpgrade, isResume));
             }
 
             public override void LocalyticsSessionWillCloseHandler()
             {
-                SessionWillClose?.Invoke(null, new EventArgs());
+                SharedInstance().SessionWillClose?.Invoke(null, new EventArgs());
             }
         }
 
@@ -356,24 +297,26 @@ namespace LocalyticsXamarin.IOS
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationWhenInUsePermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationAlwaysPermission;
         public static Func<LLCampaignBase, bool> ShouldPromptForNotificationPermission;
-
+        public static Func<LLCampaignBase, bool> ShouldDeepLinkToSettings;
+        public static Action<CLLocationManager> RequestAlwaysAuthorization;
+        public static Action<CLLocationManager> RequestWhenInUseAuthorization;
 
         public sealed class LocalyticsCallToActionListener : LLCallToActionDelegate
         {
             public override void LocalyticsDidOptOut(bool optOut, LLCampaignBase campaign)
             {
-                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Utils.CampaignFrom(campaign)));
+                LocalyticsSDK.DidOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Convertor.CampaignFrom(campaign)));
             }
 
             public override void LocalyticsDidPrivacyOptOut(bool optOut, LLCampaignBase campaign)
             {
-                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Utils.CampaignFrom(campaign)));
+                LocalyticsSDK.DidPrivacyOptOut?.Invoke(null, new DidOptOutEventArgs(optOut, Convertor.CampaignFrom(campaign)));
             }
 
             public override bool LocalyticsShouldDeeplink(NSUrl url, LLCampaignBase campaign)
             {
                 return LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null ?
-                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, Utils.CampaignFrom(campaign)) : true;
+                                    LocalyticsSDK.CallToActionShouldDeepLinkDelegate(url.AbsoluteString, Convertor.CampaignFrom(campaign)) : true;
             }
 
             public override bool LocalyticsShouldPromptForLocationAlwaysPermissions(LLCampaignBase campaign)
@@ -389,6 +332,23 @@ namespace LocalyticsXamarin.IOS
             public override bool LocalyticsShouldPromptForNotificationPermissions(LLCampaignBase campaign)
             {
                 return ShouldPromptForNotificationPermission == null || ShouldPromptForNotificationPermission(campaign);
+            }
+
+            public override bool LocalyticsShouldDeeplinkToSettings(LLCampaignBase campaign)
+            {
+                return ShouldDeepLinkToSettings == null || ShouldDeepLinkToSettings(campaign);
+            }
+            public override void RequestAlwaysAuthorizationFromApp(CLLocationManager locationManager)
+            {
+                if (RequestAlwaysAuthorization != null) {
+                    RequestAlwaysAuthorization(locationManager);
+                }
+            }
+            public override void RequestWhenInUseAuthorizationFromApp(CLLocationManager locationManager)
+            {
+                if (RequestWhenInUseAuthorization != null) {
+                    RequestWhenInUseAuthorization(locationManager);
+                }
             }
         }
     }

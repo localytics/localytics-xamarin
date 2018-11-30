@@ -28,6 +28,13 @@
 @property (nonatomic, assign) CGFloat offset;
 /** The transparency of the background behind the In-App msg. Must be between 0 and 1. Relevant for center and full-screen In-App messages */
 @property (nonatomic, assign) CGFloat backgroundAlpha;
+/** AutoHide Home Screen Indicator */
+@property (nonatomic, assign) BOOL autoHideHomeScreenIndicator;
+/** The screen area covered by the In-app.
+    NO - Within Safe Area
+    YES - Covers Entire Screen and html needs to handle notch and screen curvature.
+ */
+@property (nonatomic, assign) BOOL notchFullScreen;
 
 /** Returns whether this is a center In-App message.
  @return YES if this is a center In-App message, NO otherwise
