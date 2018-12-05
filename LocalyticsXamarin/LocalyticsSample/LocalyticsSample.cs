@@ -89,7 +89,7 @@ namespace LocalyticsSample.Shared
             localytics.TagSearched("query", "type", 5, new Dictionary<string, string>());
             localytics.TagShared("name", "id", "type", "method", new Dictionary<string, string>());
             localytics.TagContentRated("name", "id", "type", 1, new Dictionary<string, string>());
-            LocalyticsXamarin.Shared.Customer customer = new LocalyticsXamarin.Shared.Customer("!234", "John", "Appleseed", "John Appleseed", "jappleseed@localytics.com");
+            Customer customer = new Customer("!234", "John", "Appleseed", "John Appleseed", "jappleseed@localytics.com");
 
             localytics.TagCustomerRegistered(customer, "method", new Dictionary<string, string>());
 
