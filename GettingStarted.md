@@ -229,10 +229,12 @@ Event Args for events common to both android and ios share an interface and can 
 * LoggingEnabled may not return the current status of the Logger.
 
 ### Change Log
-* 5.4.0 - Based on Native SDK 5.4.0 for Android and iOS. 
+* 5.4.0 - Xamarin Service Release [Requires Xamarin.iOS 12.2.1.11 or later]
+	* Based on Native SDK 5.4.0 for Android and iOS. 
 	* Location Services (including Foreground Places support) requires App to request permissions.
 	* AddProfileAttribute supports Arrays or params list.
 	* Fixed Assembly version for the Common Module to match the release version.
+	* Supports WKWebView for iOS that requires Xamarin.iOS 12.2.1.11 or later.
 	* Plugin Version now reads Xamarin_<version>
 * 5.2.0 - Source only release in github repo. Support for Native SDK 5.2
 * 5.1.2 - Native SDK 5.1
@@ -256,7 +258,7 @@ public class AppDelegate : UIApplicationDelegate
         ...
 
         // Localytics Auto Integrate with App Key
-        Localytics.AutoIntegrate ("xxxxxxxxxxxxxxx-xxxxxxx-xxxxx-xxxx-xxxx-xxxxxxxxxxx", launchOptions != null? launchOptions : new NSDictionary());
+        Localytics.AutoIntegrate ("xxxxxxxxxxxxxxx-xxxxxxx-xxxxx-xxxx-xxxx-xxxxxxxxxxx", null, launchOptions != null? launchOptions : new NSDictionary());
 
         ...
 
