@@ -56,51 +56,6 @@
     <Content Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
       <Link>LocalyticsXamarinForms.cs</Link>
     </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLCampaignBase.h">
-      <Link>Localytics.framework\Headers\LLCampaignBase.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLCustomer.h">
-      <Link>Localytics.framework\Headers\LLCustomer.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLGeofence.h">
-      <Link>Localytics.framework\Headers\LLGeofence.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInAppCampaign.h">
-      <Link>Localytics.framework\Headers\LLInAppCampaign.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInAppConfiguration.h">
-      <Link>Localytics.framework\Headers\LLInAppConfiguration.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInboxCampaign.h">
-      <Link>Localytics.framework\Headers\LLInboxCampaign.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInboxDetailViewController.h">
-      <Link>Localytics.framework\Headers\LLInboxDetailViewController.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLInboxViewController.h">
-      <Link>Localytics.framework\Headers\LLInboxViewController.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLPlacesCampaign.h">
-      <Link>Localytics.framework\Headers\LLPlacesCampaign.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLRegion.h">
-      <Link>Localytics.framework\Headers\LLRegion.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LLWebViewCampaign.h">
-      <Link>Localytics.framework\Headers\LLWebViewCampaign.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\Localytics-Framework.h">
-      <Link>Localytics.framework\Headers\Localytics-Framework.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\Localytics.h">
-      <Link>Localytics.framework\Headers\Localytics.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\Headers\LocalyticsTypes.h">
-      <Link>Localytics.framework\Headers\LocalyticsTypes.h</Link>
-    </Content>
-    <Content Include="..\..\Localytics-iOS-Latest\Localytics.framework\PrivateHeaders\LLPushToInboxCampaignJson.h">
-      <Link>Localytics.framework\PrivateHeaders\LLPushToInboxCampaignJson.h</Link>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageFile Include="..\..\Localytics-iOS-Latest\Localytics.framework\Modules\module.modulemap">

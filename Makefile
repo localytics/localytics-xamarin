@@ -36,5 +36,5 @@ ifneq ($(VER),)
 	@cd LocalyticsXamarin/iOS && msbuild /t:Rebuild /p:Configuration=Release 
 #Build NUget Package
 	@cd LocalyticsXamarin/LocalyticsXamarin.NuGet && msbuild /t:Rebuild /p:Configuration=Release 
-	@echo Publish LocalyticsXamarin/LocalyticsXamarin.NuGet/bin/Release/Localytics.$(VER).nupkg 
+	@echo Publish LocalyticsXamarin/LocalyticsXamarin.NuGet/bin/Release/LocalyticsXamarin.$(VER).nupkg 
 endif

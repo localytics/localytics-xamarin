@@ -1,8 +1,7 @@
 ﻿using System;
 using LocalyticsXamarin.Common;
-using LocalyticsXamarin.Shared;
 
-namespace LocalyticsXamarin.Shared
+namespace LocalyticsXamarin.Common
 {
     public class Customer : LocalyticsXamarin.Common.IXLCustomer
     {
