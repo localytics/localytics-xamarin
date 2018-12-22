@@ -411,3 +411,41 @@ The above only demonstrate the syntax of calling the Xamarin.Android API.  For m
   
 4. Sample 
 The LocalyticsMessagingSample.Android sample project outlines one way to integrate push.
+
+#### GCM Push Integration
+
+1. Dependencies Installation
+	1. Add the Nuget Package Xamarin.GooglePlayServices.Gcm
+	2. Add the following files to your Android project
+		1. GCMListenerService.cs
+		2. InstanceIdListenerService.cs
+		3. RegistrationIntentService.cs
+2. The following conventions are used in subsequent sections. Replace with appropriate text
+    1. YOUR-APP-KEY - Refers to the Application Key
+    2. YOUR-PACKAGE-NAME - The Application Package Name
+    3. GCM_ID - GCM Project Identifier
+3. Replace call to Localytics.AutoIntegrate with the following.
+```
+LocalyticsXamarin.Shared.RegistrationIntentService.AutoIntegrationWithGCMRegisteration("GCM_ID", "YOUR-PACKAGE-NAME", "YOUR-APP-KEY", this);
+```
+Make sure that the above call occurs whenever the application is launched whether in foreground or background for proper Push tracking.
+4. Modify the AndroidManifest.xml to include the following snippet within the application
+```
+<receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND"> 			<intent-filter> 				<action android:name="com.google.android.c2dm.intent.RECEIVE" /> 				<action android:name="com.google.android.c2dm.intent.REGISTRATION" /> 				<category android:name=“YOUR-PACKAGE-NAME” /> 			</intent-filter>
+</receiver>
+<activity android:name="com.localytics.android.PushTrackingActivity" android:exported="true" />
+```
+4. Match the following options in localytics.xml. These should be the same as the ones defined in RegistrationIntentService.cs
+	1. ll_gcm_push_services_enabled  - false
+	2. ll_fcm_push_services_enabled - false
+	3. ll_gcm_sender_id - GCM_ID
+	4. ll_push_tracking_activity_enabled - true
+	4. ll_default_push_channel_id - localytics_default
+	5. ll_default_push_channel_name - Default
+
+5. Setup an Intent Filter in the MainActivity to process test messages by placing the following class above the MainActivity class declartion.
+```
+[IntentFilter(new[] { Intent.ActionView }, Categories = new[] {Intent.ActionView, Intent.CategoryDefault, Intent.CategoryBrowsable }, DataScheme = "ampYOUR-APP-KEY")]
+```
+6. Fix the PackageName to be used in class MyGcmListenerService Replace all instances of <strong>YOUR-PACKAGE-NAME<strong>
+
