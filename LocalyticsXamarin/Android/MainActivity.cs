@@ -10,8 +10,6 @@ using Android.OS;
 
 using LocalyticsXamarin.Android;
 using LocalyticsSample.Shared;
-using Firebase.Messaging;
-using Firebase.Iid;
 using Android.Util;
 using Android.Gms.Common;
 using LocalyticsXamarin.Shared;
