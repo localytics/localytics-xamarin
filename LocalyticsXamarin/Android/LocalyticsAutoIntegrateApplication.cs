@@ -21,7 +21,8 @@ namespace LocalyticsSample.Android
             var localytics = LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance;
 			localytics.LoggingEnabled = true;
 #endif
-
+    
+            LocalyticsXamarin.Shared.RegistrationIntentService.AutoIntegrationWithGCMRegisteration("GCM_ID", "YOUR-PACKAGE-NAME", "YOUR-APP-KEY", this);
             Localytics.AutoIntegrate(this);
 
         }

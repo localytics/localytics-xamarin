@@ -3,7 +3,7 @@ using Android.App;
 using Android.Content;
 using Android.Gms.Iid;
 
-namespace LocalyticsSample.Android
+namespace LocalyticsXamarin.Shared
 {
 	[Service(Exported = false), IntentFilter(new[] { "com.google.android.gms.iid.InstanceID" })]
 	public class InstanceIdListenerService
