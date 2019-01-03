@@ -440,8 +440,8 @@ Make sure that the above call occurs whenever the application is launched whethe
 	2. ll_fcm_push_services_enabled - false
 	3. ll_gcm_sender_id - GCM_ID
 	4. ll_push_tracking_activity_enabled - true
-	4. ll_default_push_channel_id - localytics_default
-	5. ll_default_push_channel_name - Default
+	5. ll_default_push_channel_id - localytics_default
+	6. ll_default_push_channel_name - Default
 
 5. Setup an Intent Filter in the MainActivity to process test messages by placing the following class above the MainActivity class declartion.
 ```
