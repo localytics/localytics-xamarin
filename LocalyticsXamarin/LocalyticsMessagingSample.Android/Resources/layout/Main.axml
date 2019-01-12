@@ -28,4 +28,43 @@
         android:text="Start Places"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/testMode"
+        android:text="Test Mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <TextView android:id="@+id/eventNameLabel" android:minHeight="25px"
+                  android:minWidth="90px"
+                  android:enabled="false"
+                  android:text="Event Name:" 
+                  android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                  android:layout_weight=".25"
+                  />
+        <EditText
+            android:minHeight="25px"
+            android:minWidth="240px"
+            android:enabled="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="inappcfgnone"
+            android:id="@+id/eventNameTV"
+        android:layout_weight=".75"/>
+        </LinearLayout>
+        
+        <Button
+        android:id="@+id/tagEventWithNameButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TagEvent With Event Name" />
+    
+
 </LinearLayout>

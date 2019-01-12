@@ -32,42 +32,75 @@ namespace LocalyticsMessagingSample.Android
             Localytics.AutoIntegrate(this);
             Localytics.SetLocationMonitoringEnabled(true);
 
-			//// Analytics callbacks
+			// Analytics callbacks
             LocalyticsSDK.LocalyticsDidTagEvent += LL_OnLocalyticsDidTagEvent;
             LocalyticsSDK.LocalyticsSessionWillOpen += LL_OnLocalyticsSessionWillOpen;
             LocalyticsSDK.LocalyticsSessionDidOpen += LL_OnLocalyticsSessionDidOpen;
             LocalyticsSDK.LocalyticsSessionWillClose += LL_OnLocalyticsSessionWillClose;
 
-            //// Messaging callbacks
+            // Messaging callbacks
+            LocalyticsSDK.InAppDelaySessionStartMessagesDelegate = LocalyticsSDK_InAppDelaySessionStartMessagesDelegate; ;
+            LocalyticsSDK.InAppShouldShowDelegate = LocalyticsSDK_InAppShouldShowDelegate;
+
             LocalyticsSDK.InAppDidDismissEvent += LL_OnLocalyticsDidDismissInAppMessage;
-            LocalyticsSDK.InAppDidDisplayEvent += LL_OnLocalyticsDidDisplayInAppMessage;
             LocalyticsSDK.InAppWillDismissEvent += LL_OnLocalyticsWillDismissInAppMessage;
-            LocalyticsSDK.InAppWillDisplayDelegate += LL_OnLocalyticsWillDisplayInAppMessage;
+            LocalyticsSDK.InAppDidDisplayEvent += LL_OnLocalyticsDidDisplayInAppMessage;
+            LocalyticsSDK.InAppWillDisplayDelegate = LL_OnLocalyticsWillDisplayInAppMessage;
+
+
+            LocalyticsSDK.PlacesShouldDisplayCampaignDelegate = LL_OnLocalyticsShouldShowPlacesPushNotification;
+            Localytics.WillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
 
             Localytics.ShouldShowPushNotification += LL_OnLocalyticsShouldShowPushNotification;
-            LocalyticsSDK.PlacesShouldDisplayCampaignDelegate += LL_OnLocalyticsShouldShowPlacesPushNotification;
-
             Localytics.WillShowPushNotification += LL_OnLocalyticsWillShowPushNotification;
-            Localytics.WillShowPlacesPushNotification += LL_OnLocalyticsWillShowPlacesPushNotification;
 
             //// Location callbacks
             LocalyticsSDK.LocalyticsDidUpdateLocation += LL_OnLocalyticsDidUpdateLocation;
-            LocalyticsSDK.LocalyticsDidTriggerRegions += (sender, e) => {
-                Console.WriteLine("XamarinEvent LocalyticsDidTriggerRegions " + e);
-            };
+            LocalyticsSDK.LocalyticsDidTriggerRegions += LocalyticsSDK_LocalyticsDidTriggerRegions;
             LocalyticsSDK.LocalyticsDidUpdateMonitoredGeofences += LL_OnLocalyticsDidUpdateMonitoredGeofences;
         
-            Localytics.ShouldPromptForLocationPermission += (arg) => {
-                Console.WriteLine("XamarinEvent ShouldPromptForLocationPermission " + arg);
-                return true;
-            };
+            Localytics.ShouldPromptForLocationPermission += Localytics_ShouldPromptForLocationPermission;
 
-            Localytics.DeeplinkToSettings += (i, c) =>
-            {
-                Console.WriteLine("XamarinEvent ShouldPromptForLocationPermission " + i + c);
-                return true;
-            };
+            LocalyticsSDK.ShouldDeepLinkDelegate += LocalyticsSDK_ShouldDeepLinkDelegate;
 
+            Localytics.DeeplinkToSettings += Localytics_DeeplinkToSettings;
+
+            LocalyticsSDK.SharedInstance.OpenSession();
+        }
+
+        void LocalyticsSDK_LocalyticsDidTriggerRegions(object sender, LocalyticsDidTriggerRegionsEventArgs e)
+        {
+            Console.WriteLine("XamarinCallback: LocalyticsDidTriggerRegions " + e);
+        }
+
+        bool Localytics_ShouldPromptForLocationPermission(Campaign arg)
+        {
+            Console.WriteLine("XamarinCallback: ShouldPromptForLocationPermission " + arg);
+            return true;
+        }
+
+        bool LocalyticsSDK_ShouldDeepLinkDelegate(string deepLink)
+        {
+            Console.WriteLine("XamarinCallback: Request to deeplink to url {0}", deepLink);
+            return true;
+        }
+
+        bool Localytics_DeeplinkToSettings(object intent, Campaign campaign)
+        {
+            Console.WriteLine("XamarinCallback: ShouldPromptForLocationPermission {0} campaign = {1}", intent , campaign);
+            return true;
+        }
+
+        bool LocalyticsSDK_InAppShouldShowDelegate(InAppCampaign arg)
+        {
+            Console.WriteLine("XamarinCallback: Should Show InApp {0}", arg);
+            return true;
+        }
+
+        bool LocalyticsSDK_InAppDelaySessionStartMessagesDelegate()
+        {
+            Console.WriteLine("XamarinCallback: Delay InApp Session Start. Not Delayed");
+            return false;
         }
 
         void LL_OnLocalyticsDidTagEvent(object sender, LocalyticsDidTagEventEventArgs eventArgs)
@@ -77,87 +110,87 @@ namespace LocalyticsMessagingSample.Android
             double? customerValueIncrease = eventArgs.CustomerValue;
             if (attributes != null)
             {
-                Console.WriteLine("Did tag event: name: " + eventName + " attributes.Count: " + attributes.Count + " customerValueIncrease: " + customerValueIncrease);
+                Console.WriteLine("XamarinCallback: Did tag event: name: " + eventName + " attributes.Count: " + attributes.Count + " customerValueIncrease: " + customerValueIncrease);
             }
             else
             {
-                Console.WriteLine("Did tag event: name: " + eventName + " attributes.Count: " + 0 + " customerValueIncrease: " + customerValueIncrease);
+                Console.WriteLine("XamarinCallback: Did tag event: name: " + eventName + " attributes.Count: " + 0 + " customerValueIncrease: " + customerValueIncrease);
             }
         }
 
         void LL_OnLocalyticsSessionWillClose(object sender, EventArgs eventArgs)
         {
-            Console.WriteLine("Session will close");
+            Console.WriteLine("XamarinCallback: Session will close");
         }
 
         void LL_OnLocalyticsSessionDidOpen(object sender, LocalyticsSessionDidOpenEventArgs args)
         {
-            Console.WriteLine("Session did open: isFirst: " + args.First + " isUpgrade: " + args.Upgrade + " isResume: " + args.Resume);
+            Console.WriteLine("XamarinCallback: Session did open: isFirst: " + args.First + " isUpgrade: " + args.Upgrade + " isResume: " + args.Resume);
         }
 
         void LL_OnLocalyticsSessionWillOpen(object sender, LocalyticsSessionWillOpenEventArgs args)
         {
-            Console.WriteLine("Session will open: isFirst: " + args.First + " isUpgrade: " + args.Upgrade + " isResume: " + args.Resume);
+            Console.WriteLine("XamarinCallback: Session will open: isFirst: " + args.First + " isUpgrade: " + args.Upgrade + " isResume: " + args.Resume);
         }
 
         void LL_OnLocalyticsDidDismissInAppMessage(object sender, InAppDidDismissEventArgs eventArgs)
         {
-            Console.WriteLine("DidDismissInAppMessage");
+            Console.WriteLine("XamarinCallback: DidDismissInAppMessage");
         }
 
         void LL_OnLocalyticsDidDisplayInAppMessage(object sender, InAppDidDisplayEventArgs eventArgs)
         {
-            Console.WriteLine("DidDisplayInAppMessage");
+            Console.WriteLine("XamarinCallback: DidDisplayInAppMessage");
         }
 
         void LL_OnLocalyticsWillDismissInAppMessage(object sender, InAppWillDismissEventArgs eventArgs)
         {
-            Console.WriteLine("WillDismissInAppMessage");
+            Console.WriteLine("XamarinCallback: WillDismissInAppMessage");
         }
 
         InAppConfiguration LL_OnLocalyticsWillDisplayInAppMessage(InAppCampaign campaign, InAppConfiguration configuration)
         {
-            Console.WriteLine("WillDisplayInAppMessage");
+            Console.WriteLine("XamarinCallback: WillDisplayInAppMessage");
             return configuration;
         }
 
         bool LL_OnLocalyticsShouldShowPushNotification(PushCampaign campaign)
         {
-            Console.WriteLine("Should show push notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
+            Console.WriteLine("XamarinCallback: Should show push notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
             return true;
         }
 
         NotificationCompat.Builder LL_OnLocalyticsWillShowPushNotification(NotificationCompat.Builder builder, PushCampaign campaign)
         {
-            Console.WriteLine("Will show push notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
+            Console.WriteLine("XamarinCallback: Will show push notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
             return builder;
         }
 
         bool LL_OnLocalyticsShouldShowPlacesPushNotification(PlacesCampaign campaign)
         {
-            Console.WriteLine("Should show places notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
+            Console.WriteLine("XamarinCallback: Should show places notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
             return true;
         }
 
         NotificationCompat.Builder LL_OnLocalyticsWillShowPlacesPushNotification(NotificationCompat.Builder builder, PlacesCampaign campaign)
         {
-            Console.WriteLine("Will show places push notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
+            Console.WriteLine("XamarinCallback: Will show places push notification. Name: " + campaign.Name + ". Campaign Id: " + campaign.CampaignId + ". Message: " + campaign.Message);
             return builder;
         }
 
         void LL_OnLocalyticsDidUpdateLocation(object sender, LocalyticsDidUpdateLocationEventArgs eventArgs)
         {
-            Console.WriteLine("Did update location: " + eventArgs.Location);
+            Console.WriteLine("XamarinCallback: Did update location: " + eventArgs.Location);
         }
 
         void LL_OnLocalyticsDidTriggerRegions(object sender, LocalyticsDidTriggerRegionsEventArgs eventArgs)
         {
-            Console.WriteLine("Did trigger regions: " + eventArgs.Regions + " with event: " + eventArgs.RegionEvent);
+            Console.WriteLine("XamarinCallback: Did trigger regions: " + eventArgs.Regions + " with event: " + eventArgs.RegionEvent);
         }
 
         void LL_OnLocalyticsDidUpdateMonitoredGeofences(object sender, LocalyticsDidUpdateMonitoredGeofencesEventArgs eventArgs)
         {
-            Console.WriteLine("Did update monitored geofences. Added: " + eventArgs.AddedRegions + " and removed: " + eventArgs.RemovedRegions);
+            Console.WriteLine("XamarinCallback: Did update monitored geofences. Added: " + eventArgs.AddedRegions + " and removed: " + eventArgs.RemovedRegions);
         }
     }
 }
