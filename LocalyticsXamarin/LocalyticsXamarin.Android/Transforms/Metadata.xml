@@ -238,7 +238,6 @@
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MarketingProvider')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MarketingWebView')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MessagingListenerBroker')]" />
-<remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MessagingListenerV2Adapter')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'MigrationDatabaseHelper')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'NotificationAction')]" />
 <remove-node path="/api/package[@name='com.localytics.android']/class[contains(@name,'PlacesManager')]" />

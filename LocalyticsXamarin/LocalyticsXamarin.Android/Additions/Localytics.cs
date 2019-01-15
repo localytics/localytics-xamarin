@@ -27,7 +27,7 @@ namespace LocalyticsXamarin.Android
 		static Localytics()
 		{
 			LocalyticsSDK.UpdatePluginVersion();
-			Localytics.SetMessagingListener(new IMessagingListenerV2Implementor());
+			Localytics.SetMessagingListener(new MessagingListenerImplementation());
             Localytics.SetCallToActionListener(new CTAListenerImplementation());
 		}
 
@@ -46,40 +46,31 @@ namespace LocalyticsXamarin.Android
         public static Func<NotificationCompat.Builder, NativePlacesCampaign, NotificationCompat.Builder> WillShowPlacesPushNotification;
         public static Func<NotificationCompat.Builder, NativePushCampaign, NotificationCompat.Builder> WillShowPushNotification;
 
-        [global::Android.Runtime.Register("mono/com/localytics/android/MessagingListenerV2Implementor")]
-        internal sealed partial class IMessagingListenerV2Implementor : global::Java.Lang.Object, IMessagingListenerV2
-        {
-            public IMessagingListenerV2Implementor()
-                : base(
-                    global::Android.Runtime.JNIEnv.StartCreateInstance("mono/com/localytics/android/MessagingListenerV2Implementor", "()V"),
-                    JniHandleOwnership.TransferLocalRef)
-            {
-                global::Android.Runtime.JNIEnv.FinishCreateInstance(((global::Java.Lang.Object)this).Handle, "()V");
-                //this.sender = sender;
-            }
 
-            public void LocalyticsDidDisplayInAppMessage()
+        internal sealed class MessagingListenerImplementation : MessagingListenerV2Adapter
+        {
+            public override void LocalyticsDidDisplayInAppMessage()
             {
                 var __h = LocalyticsSDK.InAppDidDisplayEvent;
                 if (__h != null)
                     __h(null, new InAppDidDisplayEventArgs());
             }
 
-            public void LocalyticsWillDismissInAppMessage()
+            public override void LocalyticsWillDismissInAppMessage()
             {
                 var __h = LocalyticsSDK.InAppWillDismissEvent;
                 if (__h != null)
                     __h(null, new InAppWillDismissEventArgs());
             }
 
-            public void LocalyticsDidDismissInAppMessage()
+            public override void LocalyticsDidDismissInAppMessage()
             {
                 var __h = LocalyticsSDK.InAppDidDismissEvent;
                 if (__h != null)
                     __h(null, new InAppDidDismissEventArgs());
             }
 
-            public bool LocalyticsShouldDeeplink(string p0)
+            public override bool LocalyticsShouldDeeplink(string p0)
             {
                 var __h = LocalyticsSDK.ShouldDeepLinkDelegate;
                 if (__h != null)
@@ -87,15 +78,16 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public bool LocalyticsShouldDelaySessionStartInAppMessages()
+            public override bool LocalyticsShouldDelaySessionStartInAppMessages()
             {
                 var __h = LocalyticsSDK.InAppDelaySessionStartMessagesDelegate;
+                // By Default we should not delay. i.e., when no delegate is defined.
                 if (__h != null)
                     return __h();
-                return true;
+                return false; // Dont Delay Session start.
             }
 
-            public bool LocalyticsShouldShowInAppMessage(global::LocalyticsXamarin.Android.InAppCampaign p0)
+            public override bool LocalyticsShouldShowInAppMessage(global::LocalyticsXamarin.Android.InAppCampaign p0)
             {
                 var __h = LocalyticsSDK.InAppShouldShowDelegate;
                 if (__h != null)
@@ -103,7 +95,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public bool LocalyticsShouldShowPlacesPushNotification(global::LocalyticsXamarin.Android.PlacesCampaign p0)
+            public override bool LocalyticsShouldShowPlacesPushNotification(Android.PlacesCampaign p0)
             {
                 var __h = LocalyticsSDK.PlacesShouldDisplayCampaignDelegate;
                 if (__h != null)
@@ -111,7 +103,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public bool LocalyticsShouldShowPushNotification(global::LocalyticsXamarin.Android.PushCampaign p0)
+            public override bool LocalyticsShouldShowPushNotification(global::LocalyticsXamarin.Android.PushCampaign p0)
             {
                 var __h = ShouldShowPushNotification;
                 if (__h != null)
@@ -119,7 +111,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public global::LocalyticsXamarin.Android.InAppConfiguration LocalyticsWillDisplayInAppMessage(global::LocalyticsXamarin.Android.InAppCampaign p0, global::LocalyticsXamarin.Android.InAppConfiguration p1)
+            public override global::LocalyticsXamarin.Android.InAppConfiguration LocalyticsWillDisplayInAppMessage(global::LocalyticsXamarin.Android.InAppCampaign p0, global::LocalyticsXamarin.Android.InAppConfiguration p1)
             {
                 var __h = LocalyticsSDK.InAppWillDisplayDelegate;
                 if (__h != null)
@@ -127,29 +119,19 @@ namespace LocalyticsXamarin.Android
                 return p1;
             }
 
-            public global::Android.Support.V4.App.NotificationCompat.Builder LocalyticsWillShowPlacesPushNotification(global::Android.Support.V4.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PlacesCampaign p1)
+            public override global::Android.Support.V4.App.NotificationCompat.Builder LocalyticsWillShowPlacesPushNotification(global::Android.Support.V4.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PlacesCampaign p1)
             {
                 var __h = WillShowPlacesPushNotification;
                 if (__h != null)
                     return __h(p0, p1);
                 return p0;
             }
-            public global::Android.Support.V4.App.NotificationCompat.Builder LocalyticsWillShowPushNotification(global::Android.Support.V4.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PushCampaign p1)
+            public override NotificationCompat.Builder LocalyticsWillShowPushNotification(NotificationCompat.Builder p0, Android.PushCampaign p1)
             {
                 var __h = WillShowPushNotification;
                 if (__h != null)
                     return __h(p0, p1);
                 return p0;
-            }
-
-            internal static bool __IsEmpty(IMessagingListenerV2Implementor value)
-            {
-                return LocalyticsSDK.InAppDidDisplayEvent != null && LocalyticsSDK.InAppWillDismissEvent != null &&
-                                    LocalyticsSDK.InAppDidDismissEvent != null && LocalyticsSDK.ShouldDeepLinkDelegate != null &&
-                                    LocalyticsSDK.InAppDelaySessionStartMessagesDelegate != null && LocalyticsSDK.InAppShouldShowDelegate != null &&
-                                    LocalyticsSDK.PlacesShouldDisplayCampaignDelegate != null && ShouldShowPushNotification != null &&
-                                    LocalyticsSDK.InAppWillDisplayDelegate != null && WillShowPlacesPushNotification != null &&
-                    WillShowPushNotification != null;
             }
         }
 

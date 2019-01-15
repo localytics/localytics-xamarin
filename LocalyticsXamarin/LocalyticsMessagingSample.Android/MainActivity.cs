@@ -88,6 +88,19 @@ namespace LocalyticsMessagingSample.Android
                     }
                 }
             };
+
+            Button testModeButton = FindViewById<Button>(Resource.Id.testMode);
+            testModeButton.Click += (object sender, EventArgs e) =>
+            {
+                LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance.TestModeEnabled = true;
+            };
+
+            Button customEventButton = FindViewById<Button>(Resource.Id.tagEventWithNameButton);
+            customEventButton.Click += (object sender, EventArgs e) =>
+            {
+                TextView textView = FindViewById<TextView>(Resource.Id.eventNameTV);
+                LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance.TagEvent(textView.Text);
+            };
         }
 
         protected override void OnResume()
