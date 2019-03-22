@@ -8,7 +8,8 @@ namespace LocalyticsXamarin.Android
 {
     public interface ILocalyticsAndroid
     {
-		void RedirectLoggingToDisk(bool writeExternally, object context);
+        void EnableLiveDeviceLogging();
+        void RedirectLoggingToDisk(bool writeExternally, object context);
 		void TagInAppImpression(NativeInAppCampaign campaign, NativeImpressionType impressionType);
 		void TagInAppImpression(NativeInAppCampaign campaign, string customAction);
 

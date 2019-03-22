@@ -729,11 +729,17 @@ namespace LocalyticsXamarin.IOS
 		[Protected]
 		void SetLoggingEnabledPrivate(bool loggingEnabled);
 
-		// @required +(void)redirectLoggingToDisk __attribute__((availability(ios, introduced=8_0)));
-		[Introduced (PlatformName.iOS, 8, 0)]
+        // @required +(void)enableLiveDeviceLogging __attribute__((availability(ios, introduced=8_0)));
+        [Introduced(PlatformName.iOS, 8, 0)]
+        [Static]
+        [Export("enableLiveDeviceLogging")]
+        void EnableLiveDeviceLogging();
+
+        // @required +(void)redirectLoggingToDisk __attribute__((availability(ios, introduced=8_0)));
+        [Introduced (PlatformName.iOS, 8, 0)]
 		[Static]
 		[Export ("redirectLoggingToDisk")]
-		void RedirectLoggingToDisk ();
+		void RedirectLoggingToDisk();
 
 		// @required +(BOOL)isOptedOut __attribute__((availability(ios, introduced=8_0)));
 		[Introduced (PlatformName.iOS, 8, 0)]
@@ -824,14 +830,21 @@ namespace LocalyticsXamarin.IOS
 		[Export ("setPushToken:")]
 		void SetPushToken ([NullAllowed] NSData pushToken);
 
-		// @required +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo __attribute__((availability(ios, introduced=8_0)));
+		// @required +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo __attribute__((availability(ios, introduced=8_0, deprecated=10_0)));
 		[Introduced (PlatformName.iOS, 8, 0)]
+        [Deprecated (PlatformName.iOS, 10, 0)]
 		[Static]
 		[Export ("handleNotification:")]
 		void HandleNotification (NSDictionary notificationInfo);
 
-		// @required +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo withActionIdentifier:(NSString * _Nullable)identifier __attribute__((availability(ios, introduced=8_0)));
-		[Introduced (PlatformName.iOS, 8, 0)]
+        // @required +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo __attribute__((availability(ios, introduced=10_0)));
+        [Introduced(PlatformName.iOS, 10, 0)]
+        [Static]
+        [Export("handleNotificationReceived:")]
+        void HandleNotificationReceived(NSDictionary notificationInfo);
+
+        // @required +(void)handleNotification:(NSDictionary * _Nonnull)notificationInfo withActionIdentifier:(NSString * _Nullable)identifier __attribute__((availability(ios, introduced=8_0)));
+        [Introduced (PlatformName.iOS, 8, 0)]
 		[Static]
 		[Export ("handleNotification:withActionIdentifier:")]
 		void HandleNotification (NSDictionary notificationInfo, [NullAllowed] string identifier);

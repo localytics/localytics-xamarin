@@ -11,7 +11,8 @@ namespace LocalyticsXamarin.IOS
 		void AddProfileAttributes(string attribute, LLProfileScope scope, params NSDate[] values);
 
 		void RedirectLoggingToDisk();
-		void DidRegisterUserNotificationSettings();
+        void EnableLiveDeviceLogging();
+        void DidRegisterUserNotificationSettings();
 		bool HandleTestModeURL(NSUrl url);
 		void SetInAppMessageDismissButtonImageWithName(string imageName);
 		void SetInAppMessageDismissButtonImage(UIImage image);

@@ -131,7 +131,7 @@ namespace LocalyticsXamarin.Shared
             add
             {
 #if __IOS__
-        Localytics
+                Localytics
 #else
                 Localytics.SharedInstance()
 #endif
@@ -140,7 +140,7 @@ namespace LocalyticsXamarin.Shared
             remove
             {
 #if __IOS__
-        Localytics
+                Localytics
 #else
                 Localytics.SharedInstance()
 #endif
@@ -153,7 +153,7 @@ namespace LocalyticsXamarin.Shared
             add
             {
 #if __IOS__
-        Localytics
+                Localytics
 #else
                 Localytics.SharedInstance()
 #endif
@@ -162,7 +162,7 @@ namespace LocalyticsXamarin.Shared
             remove
             {
 #if __IOS__
-        Localytics
+                Localytics
 #else
                 Localytics.SharedInstance()
 #endif
@@ -175,7 +175,7 @@ namespace LocalyticsXamarin.Shared
             add
             {
 #if __IOS__
-        Localytics
+                Localytics
 #else
                 Localytics.SharedInstance()
 #endif
@@ -184,7 +184,7 @@ namespace LocalyticsXamarin.Shared
             remove
             {
 #if __IOS__
-        Localytics
+                Localytics
 #else
                 Localytics.SharedInstance()
 #endif
@@ -348,7 +348,7 @@ namespace LocalyticsXamarin.Shared
             if (attributes == null)
             {
 #if __IOS__
-        Localytics.TriggerInAppMessageInternal(triggerName);
+                Localytics.TriggerInAppMessageInternal(triggerName);
 #else
                 Localytics.TriggerInAppMessage(triggerName);
 #endif
@@ -376,6 +376,11 @@ namespace LocalyticsXamarin.Shared
             {
                 Localytics.LoggingEnabled = value;
             }
+        }
+
+        public void EnableLiveDeviceLogging()
+        {
+            Localytics.EnableLiveDeviceLogging();
         }
 
         public bool OptedOut

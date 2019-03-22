@@ -47,6 +47,11 @@
                     <Entry Text="Logging " IsEnabled="false"/>
                     <Switch x:Name="Logging" Toggled="LoggingToggled" />
                </StackLayout>
+                
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Button x:Name="EnableLoguana" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnEnableLoguana"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+              
 
                 <StackLayout Orientation="Horizontal" Spacing="3">
                     <Entry Text="Test Mode " IsEnabled="false"/>
