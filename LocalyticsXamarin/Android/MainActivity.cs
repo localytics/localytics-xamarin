@@ -25,14 +25,6 @@ namespace LocalyticsSample.Android
         {
             base.OnCreate(bundle);
 
-			if (IsPlayServicesAvailable())
-            {
-                var intent = new Intent(this, typeof(RegistrationIntentService));
-                StartService(intent);
-            }
-
-            Localytics.SetOption("ll_gcm_sender_id", "GCMID");
-
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             // Sample Code for Docs.
@@ -53,27 +45,6 @@ namespace LocalyticsSample.Android
         {
             base.OnNewIntent(intent);
             this.Intent = intent;
-        }
-
-		public bool IsPlayServicesAvailable()
-        {
-            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
-            if (resultCode != ConnectionResult.Success)
-            {
-                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
-					Console.WriteLine(GoogleApiAvailability.Instance.GetErrorString(resultCode));
-                else
-                {
-					Console.WriteLine("This device is not supported");
-                    Finish();
-                }
-                return false;
-            }
-            else
-            {
-				Console.WriteLine("Google Play Services is available.") ;
-                return true;
-            }
         }
     }
 }

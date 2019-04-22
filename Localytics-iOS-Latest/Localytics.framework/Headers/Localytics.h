@@ -1617,7 +1617,7 @@
  *
  * @Version SDK 5.3
  */
-- (BOOL)localyticsShouldDeeplinkToSettings:(LLCampaignBase *)campaign NS_AVAILABLE_IOS(8_0);
+- (BOOL)localyticsShouldDeeplinkToSettings:(nonnull LLCampaignBase *)campaign NS_AVAILABLE_IOS(8_0);
 
 
 /**
