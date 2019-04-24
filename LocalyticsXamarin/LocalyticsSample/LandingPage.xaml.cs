@@ -244,7 +244,13 @@ namespace LocalyticsSample.Shared
 			localytics.Upload();
 		}
 
-		void OnTagEvent(object sender, EventArgs e)
+        void OnEnableLoguana(object sender, EventArgs e)
+        {
+            localytics.EnableLiveDeviceLogging();
+        }
+
+
+        void OnTagEvent(object sender, EventArgs e)
 		{
 			localytics.TagEvent(eventText.Text);
 		}

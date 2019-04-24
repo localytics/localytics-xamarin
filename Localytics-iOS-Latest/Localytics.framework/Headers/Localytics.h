@@ -30,13 +30,15 @@
 #import <Localytics/LLInboxViewController.h>
 #import <Localytics/LLInboxDetailViewController.h>
 #import <Localytics/LLInAppConfiguration.h>
+#import <Localytics/LLMarketingWebViewHandler.h>
 
 @protocol LLMessagingDelegate;
 @protocol LLCallToActionDelegate;
 @protocol LLLocationDelegate;
 
+@class WKWebViewConfiguration;
 @class UNMutableNotificationContent;
-#define LOCALYTICS_LIBRARY_VERSION      @"5.4.0" //iOS version
+#define LOCALYTICS_LIBRARY_VERSION      @"5.5.0" //iOS version
 
 #else
 
@@ -44,7 +46,11 @@
 
 #endif
 
-@protocol Localytics <JSExport>
+
+@protocol Localytics
+#if TARGET_OS_TV
+<JSExport>
+#endif
 
 #pragma mark - SDK Integration
 /** ---------------------------------------------------------------------------------------
@@ -710,6 +716,13 @@
  */
 + (void)setTestModeEnabled:(BOOL)enabled NS_AVAILABLE_IOS(8_0);
 
+/**
+ Enter live device logging mode.
+ 
+ @Version SDK5.5
+ */
++ (void)enableLiveDeviceLogging NS_AVAILABLE_IOS(8_0);
+
 
 #pragma mark - Analytics Delegate
 /** ---------------------------------------------------------------------------------------
@@ -759,13 +772,24 @@
  */
 + (void)setPushToken:(nullable NSData *)pushToken NS_AVAILABLE_IOS(8_0);
 
-/** Used to record performance data for notifications
+/** Used to record performance data for notifications, both Localytics Push Received and Push Opened.
+ With the introduction of UserNotifications in iOS 10, this method has been deprecated in favor of calling
+ handleNotificationReceived: for push received reporting and didReceiveNotificationResponseWithUserInfo: for push opened reporting.
  @param notificationInfo The dictionary from either didFinishLaunchingWithOptions, didReceiveRemoteNotification,
  or didReceiveLocalNotification should be passed on to this method
 
  @Version SDK4.0
  */
-+ (void)handleNotification:(nonnull NSDictionary *)notificationInfo NS_AVAILABLE_IOS(8_0);
++ (void)handleNotification:(nonnull NSDictionary *)notificationInfo NS_DEPRECATED_IOS(8_0, 10_0);
+
+/** Used to record performance data for notifications
+ @param notificationInfo The dictionary from either didReceiveRemoteNotification,
+ or didReceiveLocalNotification should be passed on to this method
+ 
+ @Version SDK5.5
+ */
++ (void)handleNotificationReceived:(nonnull NSDictionary *)notificationInfo NS_AVAILABLE_IOS(10_0);
+
 
 /** Used to record performance data for notifications with action identifiers
  @param notificationInfo The dictionary from either didFinishLaunchingWithOptions, didReceiveRemoteNotification,
@@ -1045,6 +1069,23 @@
  * @Version SDK4.4.0
  */
 + (void)inboxListItemTapped:(nonnull LLInboxCampaign *)campaign NS_AVAILABLE_IOS(8_0);
+
+/**
+ * FOR LOCALYTICS WRAPPER USE ONLY
+ *
+ * @param webViewConfig The WebViewConfiguration responsible for handling webview events
+ * @param campaign The Inbox campaign that will be displayed
+ 
+ * @Version SDK5.4.1
+ */
++ (void)setupWebViewConfiguration:(nonnull WKWebViewConfiguration *)webViewConfig withCampaign:(nullable LLInboxCampaign *)campaign NS_AVAILABLE_IOS(8_0);
+
+/**
+ * FOR LOCALYTICS WRAPPER USE ONLY
+ *
+ * @Version SDK5.4.1
+ */
++ (LLMarketingWebViewHandler *)marketingWebViewHandler NS_AVAILABLE_IOS(8_0);
 
 #pragma mark - Location
 
@@ -1576,7 +1617,7 @@
  *
  * @Version SDK 5.3
  */
-- (BOOL)localyticsShouldDeeplinkToSettings:(LLCampaignBase *)campaign NS_AVAILABLE_IOS(8_0);
+- (BOOL)localyticsShouldDeeplinkToSettings:(nonnull LLCampaignBase *)campaign NS_AVAILABLE_IOS(8_0);
 
 
 /**

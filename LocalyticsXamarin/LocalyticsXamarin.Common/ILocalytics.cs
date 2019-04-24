@@ -437,6 +437,10 @@ namespace LocalyticsXamarin.Common
         /// <value><c>true</c> if logging enabled; otherwise, <c>false</c>.</value>
         bool LoggingEnabled { get; set; }
         /// <summary>
+        /// Enable Localytics Remote Logging
+        /// </summary>
+        void EnableLiveDeviceLogging();
+        /// <summary>
         /// control collection of user data.
         /// </summary>
         /// <value><c>true</c> if opted out; otherwise, <c>false</c>.</value>

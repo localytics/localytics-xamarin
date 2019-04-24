@@ -89,6 +89,7 @@
     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='deleteInboxCampaign']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setLoggingEnabled']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isLoggingEnabled']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='enableLiveDeviceLogging']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='isOptedOut']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setOptedOut']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setTestModeEnabled']" name="visibility">internal</attr>

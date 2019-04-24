@@ -72,13 +72,18 @@ namespace LocalyticsXamarin.IOS
         }
 
         // Not Recommended because the AppDelegate is implemented as c# callbacks and swizzling is going to have to understand that it's a proxied object.
+        // Xamarin doesnt account for the notification observers registered in the native iOS SDK, so we need to manually register it again.
+
         public static void AutoIntegrate(string appKey, Foundation.NSDictionary localyticsOptions, Foundation.NSDictionary launchOptions)
         {
             Localytics.AutoIntegratePrivate(appKey, localyticsOptions, launchOptions);
+            NSObject notificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidBecomeActiveNotification, (obj) => { });
         }
+
         public static void Integrate(string appKey, Foundation.NSDictionary localyticsOptions)
         {
             Localytics.IntegratePrivate(appKey, localyticsOptions);
+            NSObject notificationObserver = NSNotificationCenter.DefaultCenter.AddObserver(UIApplication.DidBecomeActiveNotification, (obj) => { });
         }
 
         public static void AddProfileAttributes(string attribute, LLProfileScope scope, params object[] values)
