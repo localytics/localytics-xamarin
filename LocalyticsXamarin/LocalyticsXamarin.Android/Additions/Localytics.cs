@@ -46,6 +46,11 @@ namespace LocalyticsXamarin.Android
         public static Func<NotificationCompat.Builder, NativePlacesCampaign, NotificationCompat.Builder> WillShowPlacesPushNotification;
         public static Func<NotificationCompat.Builder, NativePushCampaign, NotificationCompat.Builder> WillShowPushNotification;
 
+        public string getLocalAuthenticationToken()
+        {
+            Localytics.getLocalAuthenticationToken();
+        }
+
         [global::Android.Runtime.Register("mono/com/localytics/android/MessagingListenerV2Implementor")]
         internal sealed partial class IMessagingListenerV2Implementor : global::Java.Lang.Object, IMessagingListenerV2
         {

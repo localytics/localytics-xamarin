@@ -22,6 +22,8 @@ namespace LocalyticsXamarin.Android
 		void TagPlacesPushOpened(NativePlacesCampaign campaign, string identifier);
 		void TriggerPlacesNotificationForCampaign(NativePlacesCampaign campaign);
 
+        string getLocalAuthenticationToken();
+
 		//void setInAppMessageDisplayActivity(Activity activity);
 		//void clearInAppMessageDisplayActivity();
 		//void registerPush();
