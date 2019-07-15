@@ -411,6 +411,15 @@ namespace LocalyticsXamarin.Shared
             get => Localytics.LibraryVersion;
         }
 
+       public string LocalAuthenticationToken
+       {
+#if __IOS__
+            get => "";
+#else
+            get => Localytics.LocalAuthenticationToken;
+#endif
+        }
+
         public string AppKey
         {
             get => Localytics.AppKey;
@@ -944,7 +953,7 @@ namespace LocalyticsXamarin.Shared
 #endif
         }
 
-        #region Platform specific code
+#region Platform specific code
 #if __IOS__
         public void AddProfileAttributes(string attribute, LLProfileScope scope, params NSDate[] values)
         {
@@ -957,6 +966,6 @@ namespace LocalyticsXamarin.Shared
         }
 
 #endif
-        #endregion
+#endregion
     }
 }

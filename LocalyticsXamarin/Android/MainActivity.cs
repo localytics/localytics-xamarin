@@ -28,6 +28,7 @@ namespace LocalyticsSample.Android
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             // Sample Code for Docs.
+
             LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
             localytics.SetOption("ll_session_timeout_seconds", 10);
             localytics.CustomerId = "Sample Customer";

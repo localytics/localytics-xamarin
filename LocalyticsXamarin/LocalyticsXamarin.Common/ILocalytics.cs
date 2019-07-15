@@ -462,6 +462,11 @@ namespace LocalyticsXamarin.Common
         /// <value>The library version.</value>
         string LibraryVersion { get; }
         /// <summary>
+        /// Gets the local authentication token from the Localytics SDK.
+        /// </summary>
+        /// <value>The local authentication token.</value>
+        string LocalAuthenticationToken { get; }
+        /// <summary>
         /// Gets the app key.
         /// </summary>
         /// <value>The app key.</value>
