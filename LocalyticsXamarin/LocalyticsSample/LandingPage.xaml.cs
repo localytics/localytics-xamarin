@@ -206,7 +206,7 @@ namespace LocalyticsSample.Shared
 				string value1 = "CustomerId: " + localytics.CustomerId;
 				string value2 = "InstallId: " + localytics.InstallId;
 				string value3 = "LibraryVersion: " + localytics.LibraryVersion;
-				string value4 = "";
+				string value4 = "LocalAuthenticationToken: " + localytics.LocalAuthenticationToken;
 				string value5 = "";
 				string value6 = "Push Token/RegID: " + localytics.PushTokenInfo;
 				string value7 = "";

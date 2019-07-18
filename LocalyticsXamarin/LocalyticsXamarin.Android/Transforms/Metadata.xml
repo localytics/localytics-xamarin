@@ -69,6 +69,7 @@
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCallToActionListener']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerId']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getCustomerId']" name="visibility">internal</attr>
+     <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='getLocalAuthenticationToken']" name="visibility">internal</attr>
 
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerEmail']" name="visibility">internal</attr>
      <attr path="/api/package[@name='com.localytics.android']/class[@name='Localytics']/method[@name='setCustomerFirstName']" name="visibility">internal</attr>
