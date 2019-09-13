@@ -26,7 +26,8 @@ namespace LocalyticsXamarin.IOS
 			_Strategies.Add(typeof(NSObject), (o) => { return (NSObject)o; });
 			_Strategies.Add(typeof(NSString), (o) => { return (NSString)o; });
 			_Strategies.Add(typeof(NSNumber), (o) => { return (NSNumber)o; });
-			_Strategies.Add(typeof(string), (o) => { return new NSString((string)o); });
+            _Strategies.Add(typeof(NSDate), (o) => { return (NSDate)o; });
+            _Strategies.Add(typeof(string), (o) => { return new NSString((string)o); });
 			_Strategies.Add(typeof(float), (o) => { return new NSNumber((float)o); });
 			_Strategies.Add(typeof(double), (o) => { return new NSNumber((double)o); });
 			//_Strategies.Add(typeof(long), (o) => { return new NSNumber((long)o); });
@@ -37,7 +38,7 @@ namespace LocalyticsXamarin.IOS
 			_Strategies.Add(typeof(Int32), (o) => { return new NSNumber((Int32)o); });
 			_Strategies.Add(typeof(Int64), (o) => { return new NSNumber((Int64)o); });
 			_Strategies.Add(typeof(byte), (o) => { return new NSNumber((byte)o); });
-		}
+        }
 
 		public static NSObject[] ToNSObjects(object[] objects)
 		{
