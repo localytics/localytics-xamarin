@@ -138,6 +138,10 @@ namespace LocalyticsXamarin.IOS
 		// -(void)delete;
 		[Export ("delete")]
 		void Delete ();
+
+        // -(void)setVideoConversionPercentage:(CGFloat)videoConversionPercentage;
+        [Export ("setVideoConversionPercentage")]
+        void SetVideoConversionPercentage(float videoConversionPercentage);
 	}
 
 	// @interface LLPlacesCampaign : LLCampaignBase
@@ -402,6 +406,10 @@ namespace LocalyticsXamarin.IOS
 		// -(void)setDismissButtonImageWithName:(NSString * _Nonnull)imageName;
 		[Export ("setDismissButtonImageWithName:")]
 		void SetDismissButtonImageWithName (string imageName);
+
+        // -(void)setVideoConversionPercentage(CGFloat)videoConversionPercentage);
+        [Export ("setVideoConversionPercentage:")]
+        void SetVideoConversionPercentage(float videoConversionPercentage);
 	}
 
 	// @interface Localytics : NSObject
