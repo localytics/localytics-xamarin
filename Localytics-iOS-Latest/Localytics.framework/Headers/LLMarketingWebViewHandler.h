@@ -19,13 +19,15 @@
 @property (nonatomic, strong, nullable) LLWebViewCampaign *campaign;
 @property (nonatomic, assign) BOOL openCustomURLSchemas;
 @property (nonatomic, assign) BOOL loadUnknownURLSchemas;
+@property (nonatomic, assign) CGFloat videoConversionPercentage;
 @property (nonatomic, assign, getter=isTestModeEnabled) BOOL testModeEnabled;
 @property (nonatomic, weak, nullable) id<LLLocalyticsDelegate> localyticsDelegate;
 
-+ (WKWebViewConfiguration *)webViewConfiguration:(LLWebViewCampaign *)campaign
-                              localyticsDelegate:(id<LLLocalyticsDelegate>)localyticsDelegate
++ (nonnull WKWebViewConfiguration *)webViewConfiguration:(nonnull LLWebViewCampaign *)campaign
+                              localyticsDelegate:(nonnull id<LLLocalyticsDelegate>)localyticsDelegate
                                 andViewportWidth:(CGFloat)viewportWidth
-                                 withViewportFit:(NSString *)viewportFit;
+                                 withViewportFit:(nullable NSString *)viewportFit
+                       videoConversionPercentage:(CGFloat)videoConversionPercentage;
 
 @end
 
