@@ -38,7 +38,7 @@
 
 @class WKWebViewConfiguration;
 @class UNMutableNotificationContent;
-#define LOCALYTICS_LIBRARY_VERSION      @"5.7.0" //iOS version
+#define LOCALYTICS_LIBRARY_VERSION      @"5.8.0" //iOS version
 
 #else
 
