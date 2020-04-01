@@ -27,7 +27,7 @@
     <!-- Toggle the Localytics FirebaseInstanceIdService and FirebaseMessagingService, which handle
     incoming requests from FCM. If this value is set to true, then the app must specify the
     com.google.firebase:firebase-messaging dependency-->
-    <bool name="ll_fcm_push_services_enabled">false</bool>
+    <bool name="ll_fcm_push_services_enabled">true</bool>
 
     <!-- Toggle the Localytics LocationUpdateReceiver and BootReceiver for Places integrations
     If this value is set to true then the app must specify the

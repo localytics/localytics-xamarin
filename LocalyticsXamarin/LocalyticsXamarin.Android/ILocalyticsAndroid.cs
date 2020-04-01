@@ -1,4 +1,9 @@
 ﻿using System;
+using Firebase.Messaging;
+using Firebase.Iid;
+using Android.Util;
+using Android.Gms.Common;
+
 using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
 using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
 using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;

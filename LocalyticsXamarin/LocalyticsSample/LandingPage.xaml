@@ -18,6 +18,10 @@
 
 
                 <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="OptOut " IsEnabled="false" x:Name="msgText"/>
+               </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
                     <Entry Text="OptOut " IsEnabled="false"/>
                     <Switch x:Name="OptOut" Toggled="OptOutToggled" />
                </StackLayout>

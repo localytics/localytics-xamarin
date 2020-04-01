@@ -10,11 +10,11 @@ using Android.OS;
 
 using LocalyticsXamarin.Android;
 using LocalyticsSample.Shared;
-using Firebase.Messaging;
+using LocalyticsXamarin.Shared;
+
+using Android.Gms.Common;
 using Firebase.Iid;
 using Android.Util;
-using Android.Gms.Common;
-using LocalyticsXamarin.Shared;
 
 namespace LocalyticsSample.Android
 {
@@ -24,6 +24,10 @@ namespace LocalyticsSample.Android
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            var refreshedToken = FirebaseInstanceId.Instance.Token;
+            IsPlayServicesAvailable();
+            Log.Debug("FIREBASE", "Refreshed token: " + refreshedToken);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
@@ -46,6 +50,26 @@ namespace LocalyticsSample.Android
         {
             base.OnNewIntent(intent);
             this.Intent = intent;
+        }
+
+        public bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                    Log.Debug("FIREBASE", GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                else
+                {
+                    Finish();
+                }
+                return false;
+            }
+            else
+            {
+                Log.Debug("FIREBASE", "Google Play Services is available.");
+                return true;
+            }
         }
     }
 }
