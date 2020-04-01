@@ -284,13 +284,6 @@ namespace LocalyticsXamarin.Common
         /// <summary>
         /// Tags the customer registered.
         /// </summary>
-        [Obsolete("TagCustomerRegistered with a dictionary has been deprecated, please use the variant with IXLCustomer instead")]
-        void TagCustomerRegistered(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
-        /// <summary>
-        /// Tags the customer logged in.
-        /// </summary>
-         [Obsolete("TagCustomerLoggedIn with a dictionary has been deprecated, please use the variant with IXLCustomer instead")]
-        void TagCustomerLoggedIn(IDictionary<string, object> customer, string methodName, IDictionary<string, string> attributes);
         /// <summary>
         /// A standard event to tag the registration of a user (after the action has occurred)
         /// </summary>
@@ -528,8 +521,6 @@ namespace LocalyticsXamarin.Common
         /// Inboxs campaigns list.
         /// </summary>
         /// <see cref="DisplayableInboxCampaigns"/>
-        [Obsolete("InboxCampaigns is deprecated, please use DisplayableInboxCampaigns instead.")]
-        IInboxCampaign[] InboxCampaigns();
         /// <summary>
         /// Inbox campaigns that are available for display.
         /// </summary>

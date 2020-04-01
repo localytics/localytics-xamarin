@@ -427,14 +427,6 @@ namespace LocalyticsXamarin.Shared
 
         public bool PrivacyOptedOut { get => Localytics.PrivacyOptedOut; set => Localytics.PrivacyOptedOut = value; }
 
-        [Obsolete]
-        public IInboxCampaign[] InboxCampaigns()
-        {
-#pragma warning disable CS0618
-            return Convertor.From(Localytics.InboxCampaigns);
-#pragma warning restore CS0618
-        }
-
         public IInboxCampaign[] AllInboxCampaigns()
         {
             return Convertor.From(Localytics.AllInboxCampaigns);
