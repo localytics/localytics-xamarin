@@ -1117,6 +1117,20 @@ namespace LocalyticsXamarin.IOS
         [Internal]
 		void SetCallToActionDelegate ([NullAllowed] LLCallToActionDelegate @delegate);
 
+		// @required +(void)setInAppAdIdParameterEnabled:(BOOL)enabled __attribute__((availability(ios, introduced=8_0)));	
+		[Introduced(PlatformName.iOS, 8, 0)]
+		[Static]
+		[Export("setInAppAdIdParameterEnabled:")]
+		[Internal]
+		void AppendAdidToInAppUrls(bool enabled);
+
+		// @required +(void)setInboxAdIdParameterEnabled:(BOOL)enabled __attribute__((availability(ios, introduced=8_0)));	
+		[Introduced(PlatformName.iOS, 8, 0)]
+		[Static]
+		[Export("setInboxAdIdParameterEnabled:")]
+		[Internal]
+		void AppendAdidToInboxUrls(bool enabled);
+
 		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate __attribute__((availability(ios, introduced=8_0)));
 		[Introduced (PlatformName.iOS, 8, 0)]
 		[Static]

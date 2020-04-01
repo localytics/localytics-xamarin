@@ -437,6 +437,16 @@ namespace LocalyticsXamarin.Shared
             return Convertor.From(Localytics.DisplayableInboxCampaigns);
         }
 
+        public bool InAppAdIdParameterEnabled
+        {
+            set => Localytics.AppendAdidToInAppUrls(value);
+        }
+
+        public bool InboxAdIdParameterEnabled
+        {
+            set => Localytics.AppendAdidToInboxUrls(value);
+        }
+
         public void TagPurchased(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
         {
             NativeNumber price = null;
