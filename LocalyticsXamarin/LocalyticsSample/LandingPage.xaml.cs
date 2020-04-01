@@ -19,18 +19,6 @@ namespace LocalyticsSample.Shared
 			});
 		}
 
-		void InboxAdidToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
-		{
-			localytics.InboxAdIdParameterEnabled = ((Switch)sender).IsToggled;
-			RefreshBackgroundProperties();
-		}
-
-		void InappAdidToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
-		{
-			localytics.InAppAdIdParameterEnabled = ((Switch)sender).IsToggled;
-			RefreshBackgroundProperties();
-		}
-
 		void OptOutToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
 		{
 			App.localytics.OptedOut = ((Switch)sender).IsToggled;
@@ -169,22 +157,12 @@ namespace LocalyticsSample.Shared
 				var optout = localytics.OptedOut;
 				var testMode = localytics.TestModeEnabled;
 				var logging = localytics.LoggingEnabled;
-				var inboxAdid = localytics.InboxAdIdParameterEnabled;
-				var inappAdid = localytics.InAppAdIdParameterEnabled;
 				Device.BeginInvokeOnMainThread(delegate
 				{
 					this.privacyoptout.Text = privacyOptout.ToString();
 					if (this.OptOut.IsToggled != optout)
 					{
 						this.OptOut.IsToggled = optout;
-					}
-					if (this.InboxAdid.IsToggled != inboxAdid)
-					{
-						this.InboxAdid.IsToggled = inboxAdid;
-					}
-					if (this.InappAdid.IsToggled != inappAdid)
-					{
-						this.InappAdid.IsToggled = inappAdid;
 					}
 					if (this.TestMode.IsToggled != testMode)
 					{

@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.localytics.xamarin.messaging.sample">
-	<uses-sdk android:minSdkVersion="17" />
+	<uses-sdk android:minSdkVersion="21" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="com.localytics.xamarin.messaging.sample.permission.C2D_MESSAGE" />
+	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<permission android:name="com.localytics.xamarin.messaging.sample.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 	<application android:label="LocalyticsMessagingSample.Android">
 		<meta-data android:name="LOCALYTICS_APP_KEY" android:value="YOUR-LOCALYTICS-APP-KEY" />

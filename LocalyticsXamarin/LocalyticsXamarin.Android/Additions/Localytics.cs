@@ -79,14 +79,6 @@ namespace LocalyticsXamarin.Android
                     __h(null, new InAppDidDismissEventArgs());
             }
 
-            public bool LocalyticsShouldDeeplink(string p0)
-            {
-                var __h = LocalyticsSDK.ShouldDeepLinkDelegate;
-                if (__h != null)
-                    return __h(p0);
-                return true;
-            }
-
             public bool LocalyticsShouldDelaySessionStartInAppMessages()
             {
                 var __h = LocalyticsSDK.InAppDelaySessionStartMessagesDelegate;

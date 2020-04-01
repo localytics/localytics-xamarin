@@ -292,11 +292,6 @@ namespace LocalyticsXamarin.IOS
             {
                 return PlacesWillDisplayNotificationContent != null ? PlacesWillDisplayNotificationContent(notification, campaign) : notification;
             }
-
-            public override bool LocalyticsShouldDeeplink(Foundation.NSUrl url)
-            {
-                return LocalyticsSDK.ShouldDeepLinkDelegate != null ? LocalyticsSDK.ShouldDeepLinkDelegate(url.AbsoluteString) : true;
-            }
         }
 
         public static Func<LLCampaignBase, bool> ShouldPromptForLocationWhenInUsePermission;

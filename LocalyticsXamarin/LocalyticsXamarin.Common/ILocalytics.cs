@@ -282,9 +282,6 @@ namespace LocalyticsXamarin.Common
         /// <param name="attributes">Attributes.</param>
         void TagContentRated(string contentName, string contentId, string contentType, Int64? rating, IDictionary<string, string> attributes);
         /// <summary>
-        /// Tags the customer registered.
-        /// </summary>
-        /// <summary>
         /// A standard event to tag the registration of a user (after the action has occurred)
         /// </summary>
         /// <param name="customer">Customer.</param>
@@ -474,11 +471,6 @@ namespace LocalyticsXamarin.Common
         /// </summary>
         /// <value>The push token info.</value>
         string PushTokenInfo { get; }
-        /// <summary>
-        /// Gets or sets a value indicating whether ADID parameter is added to In-App call to action URLs.
-        /// </summary>
-        /// <value><c>true</c> if inapp advertising identifier parameter enabled; otherwise, <c>false</c>.</value>
-        bool InAppAdIdParameterEnabled { get; set; }
 
         /// <summary>
         /// Triggers the places notification for campaign identifier and region identifier.
@@ -486,11 +478,7 @@ namespace LocalyticsXamarin.Common
         /// <param name="campaignId">Campaign identifier.</param>
         /// <param name="regionId">Region identifier.</param>
         void TriggerPlacesNotificationForCampaignId(long campaignId, string regionId);
-        /// <summary>
-        /// Gets or sets a value indicating whether ADID parameter is added to Inbox call to action URLs.
-        /// </summary>
-        /// <value><c>true</c> if inbox ad identifier parameter enabled; otherwise, <c>false</c>.</value>
-        bool InboxAdIdParameterEnabled { get; set; }
+
         /// <summary>
         /// Gets or sets the dismiss button location for inapp messages.
         /// </summary>
@@ -517,10 +505,6 @@ namespace LocalyticsXamarin.Common
         /// Dismisses the currently displayed inapp message.
         /// </summary>
         void DismissCurrentInAppMessage();
-        /// <summary>
-        /// Inboxs campaigns list.
-        /// </summary>
-        /// <see cref="DisplayableInboxCampaigns"/>
         /// <summary>
         /// Inbox campaigns that are available for display.
         /// </summary>

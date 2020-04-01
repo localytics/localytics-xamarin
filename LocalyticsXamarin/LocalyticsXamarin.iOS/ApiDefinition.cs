@@ -1117,39 +1117,11 @@ namespace LocalyticsXamarin.IOS
         [Internal]
 		void SetCallToActionDelegate ([NullAllowed] LLCallToActionDelegate @delegate);
 
-		// @required +(BOOL)isInAppAdIdParameterEnabled __attribute__((availability(ios, introduced=8_0)));
-		[Introduced (PlatformName.iOS, 8, 0)]
-		[Static]
-		[Export ("isInAppAdIdParameterEnabled")]
-		[Internal]
-		bool IsAdidAppendedToInAppUrls { get; }
-
-		// @required +(void)setInAppAdIdParameterEnabled:(BOOL)enabled __attribute__((availability(ios, introduced=8_0)));
-		[Introduced (PlatformName.iOS, 8, 0)]
-		[Static]
-		[Export ("setInAppAdIdParameterEnabled:")]
-		[Internal]
-		void AppendAdidToInAppUrls(bool enabled);
-
-		// @required +(BOOL)isInboxAdIdParameterEnabled __attribute__((availability(ios, introduced=8_0)));
-		[Introduced (PlatformName.iOS, 8, 0)]
-		[Static]
-		[Export ("isInboxAdIdParameterEnabled")]
-		[Internal]
-		bool IsAdidAppendedToInboxUrls { get; }
-
-		// @required +(void)setInboxAdIdParameterEnabled:(BOOL)enabled __attribute__((availability(ios, introduced=8_0)));
-		[Introduced (PlatformName.iOS, 8, 0)]
-		[Static]
-		[Export ("setInboxAdIdParameterEnabled:")]
-		[Internal]
-		void AppendAdidToInboxUrls(bool enabled);
-
 		// @required +(void)setLocationDelegate:(id<LLLocationDelegate> _Nullable)delegate __attribute__((availability(ios, introduced=8_0)));
 		[Introduced (PlatformName.iOS, 8, 0)]
 		[Static]
 		[Export ("setLocationDelegate:")]
-        [Internal]
+        [Internal] 
 		void SetLocationDelegate ([NullAllowed] LLLocationDelegate @delegate);
 
 	}
@@ -1250,11 +1222,6 @@ namespace LocalyticsXamarin.IOS
         [Introduced(PlatformName.iOS, 10, 0)]
 		[Export ("localyticsWillDisplayNotificationContent:forPlacesCampaign:")]
 		UNMutableNotificationContent LocalyticsWillDisplayNotificationContent (UNMutableNotificationContent notification, LLPlacesCampaign campaign);
-
-		// @optional -(BOOL)localyticsShouldDeeplink:(NSURL * _Nonnull)url __attribute__((availability(ios, introduced=8_0))) __attribute__((deprecated("localyticsShouldDeeplink in the LLMessagingDelegate has been deprecated, please use localyticsShouldDeeplink in the LLCallToActionDelegate instead")));
-		[Introduced (PlatformName.iOS, 8, 0)]
-		[Export ("localyticsShouldDeeplink:")]
-		bool LocalyticsShouldDeeplink (NSUrl url);
 	}
 
 	// @protocol LLLocationDelegate <NSObject>
