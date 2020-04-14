@@ -19,6 +19,10 @@ using LocalyticsXamarin.Shared;
 namespace LocalyticsSample.Android
 {
     [Activity(Label = "LocalyticsSample.Android", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [IntentFilter(new[] { Intent.ActionView },
+              Categories = new[] { Intent.CategoryBrowsable, Intent.CategoryDefault },
+              DataScheme = "ampb70c948d304fc756d8b6e63-ecd3437a-a073-11e6-c6e3-008d99911bee",
+              DataHost = "testMode")]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -30,6 +34,8 @@ namespace LocalyticsSample.Android
             // Sample Code for Docs.
 
             LocalyticsSDK localytics = LocalyticsSDK.SharedInstance;
+            Localytics.RegisterPush();
+            
             localytics.SetOption("ll_session_timeout_seconds", 10);
             localytics.CustomerId = "Sample Customer";
             localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);

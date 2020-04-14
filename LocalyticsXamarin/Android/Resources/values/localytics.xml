@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-    <string name="ll_package_name" translatable="false">com.localytics.android.testapp</string>
+    <string name="ll_package_name" translatable="false">com.localytics.xamarin.sample</string>
 
     <!-- Define your Localytics app key-->
-    <string name="ll_app_key" translatable="false">APPKEY</string>
+    <string name="ll_app_key" translatable="false">b70c948d304fc756d8b6e63-ecd3437a-a073-11e6-c6e3-008d99911bee</string>
 
     <!-- Define your Localytics test mode scheme. This value should be amp followed by your app key
     ex. ampYOUR_APP_KEY -->
-    <string name="ll_test_mode_url_scheme" translatable="false">ampAPPKEY</string>
+    <string name="ll_test_mode_url_scheme" translatable="false">ampb70c948d304fc756d8b6e63-ecd3437a-a073-11e6-c6e3-008d99911bee</string>
 
     <!-- Toggle the Localytics referral receiver which is used to attribute sessions to
     their installation source -->
@@ -27,7 +27,7 @@
     <!-- Toggle the Localytics FirebaseInstanceIdService and FirebaseMessagingService, which handle
     incoming requests from FCM. If this value is set to true, then the app must specify the
     com.google.firebase:firebase-messaging dependency-->
-    <bool name="ll_fcm_push_services_enabled">false</bool>
+    <bool name="ll_fcm_push_services_enabled">true</bool>
 
     <!-- Toggle the Localytics LocationUpdateReceiver and BootReceiver for Places integrations
     If this value is set to true then the app must specify the
