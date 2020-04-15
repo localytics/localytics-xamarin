@@ -21,16 +21,6 @@
                     <Entry Text="OptOut " IsEnabled="false"/>
                     <Switch x:Name="OptOut" Toggled="OptOutToggled" />
                </StackLayout>
-
-                  <StackLayout Orientation="Horizontal" Spacing="3">
-                    <Entry Text="InappAdid " IsEnabled="false"/>
-                    <Switch x:Name="InappAdid" Toggled="InappAdidToggled" />
-               </StackLayout>
-
-                 <StackLayout Orientation="Horizontal" Spacing="3">
-                    <Entry Text="InboxAdid " IsEnabled="false"/>
-                    <Switch x:Name="InboxAdid" Toggled="InboxAdidToggled" />
-               </StackLayout>
                 
            <StackLayout Orientation="Horizontal" Spacing="3">
                     <Entry Text="InappDisplay " IsEnabled="false"/>

@@ -26,10 +26,16 @@
 /** The hidden state of the dismiss button on an In-App message */
 @property (nonatomic, assign) BOOL dismissButtonHidden;
 /**
- Set the aspect ratio for this In-App.  The aspect ratio should be a float value representing a ratio of width to height (example 16:9 display is 1.77).
- Accepted values must be greater than 0. This property is only relevant for Center In-App messages.
+ Set the aspect ratio for this In-App.  The aspect ratio should be a float value representing a ratio of height to width (example 9:16 display is 0.56).
+ Accepted values must be greater than 0. This property is only relevant for Center and Banner In-App messages.
  */
 @property (nonatomic, assign) CGFloat aspectRatio;
+
+/**
+ Set the aspect ratio for this In-App.  The aspect ratio should be a float value representing a ratio of width to height (example 16:9 display is 1.77).
+ Accepted values must be greater than 0. This property is only relevant for Center and Banner In-App messages.
+ */
+@property (nonatomic, assign) CGFloat widthToHeightRatio;
 /** The offset of the In-App msg.  This property is only relevant for top or bottom banner In-App messages */
 @property (nonatomic, assign) CGFloat offset;
 /**

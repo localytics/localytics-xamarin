@@ -174,9 +174,6 @@ namespace LocalyticsSample.Shared
             localytics.RefreshInboxCampaigns(HandleInboxCampaignsDelegate);
             localytics.RefreshAllInboxCampaigns(HandleInboxCampaignsDelegate);
 
-            localytics.InboxAdIdParameterEnabled = true;
-            localytics.InAppAdIdParameterEnabled = true;
-
             IInboxCampaign firstInboxCampaign = null;
             localytics.LoggingEnabled = false;
             Task.Run(() =>

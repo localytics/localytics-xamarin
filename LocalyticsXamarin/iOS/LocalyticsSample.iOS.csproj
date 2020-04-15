@@ -67,7 +67,7 @@
     </MtouchI18n>
     <IpaPackageName>
     </IpaPackageName>
-    <MtouchSdkVersion>11.3</MtouchSdkVersion>
+    <MtouchSdkVersion>13.2</MtouchSdkVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

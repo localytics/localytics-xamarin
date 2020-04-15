@@ -427,14 +427,6 @@ namespace LocalyticsXamarin.Shared
 
         public bool PrivacyOptedOut { get => Localytics.PrivacyOptedOut; set => Localytics.PrivacyOptedOut = value; }
 
-        [Obsolete]
-        public IInboxCampaign[] InboxCampaigns()
-        {
-#pragma warning disable CS0618
-            return Convertor.From(Localytics.InboxCampaigns);
-#pragma warning restore CS0618
-        }
-
         public IInboxCampaign[] AllInboxCampaigns()
         {
             return Convertor.From(Localytics.AllInboxCampaigns);
@@ -445,16 +437,13 @@ namespace LocalyticsXamarin.Shared
             return Convertor.From(Localytics.DisplayableInboxCampaigns);
         }
 
-
         public bool InAppAdIdParameterEnabled
         {
-            get => Localytics.IsAdidAppendedToInAppUrls;
             set => Localytics.AppendAdidToInAppUrls(value);
         }
 
         public bool InboxAdIdParameterEnabled
         {
-            get => Localytics.IsAdidAppendedToInboxUrls;
             set => Localytics.AppendAdidToInboxUrls(value);
         }
 

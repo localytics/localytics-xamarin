@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Localytics")]
 [assembly: AssemblyProduct("Localytics℠ for Xamarin.iOS")]
-[assembly: AssemblyCopyright("© 2008-2016 Localytics℠")]
+[assembly: AssemblyCopyright("© 2008-2020 Localytics℠")]
 [assembly: AssemblyTrademark("Localytics℠")]
 [assembly: AssemblyCulture("")]
 
@@ -17,7 +17,7 @@ using System.Runtime.CompilerServices;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion ("5.9.0.*")]
+[assembly: AssemblyVersion ("6.0.1.*")]
 
 
 // The following attributes are used to specify the signing key for the assembly, 
