@@ -13,7 +13,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Campaign.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)LocalyticsXamarinForms.cs" />
-  </ItemGroup>
 </Project>

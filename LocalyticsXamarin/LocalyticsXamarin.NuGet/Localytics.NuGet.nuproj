@@ -7,7 +7,7 @@
     <ProjectGuid>{3D21B247-4672-466E-9F96-616FC955F033}</ProjectGuid>
     <Description>Localytics Xamarin SDK for Android and iOS</Description>
     <PackageId>LocalyticsXamarin</PackageId>
-    <PackageVersion>6.0.2</PackageVersion>
+    <PackageVersion>6.0.3</PackageVersion>
     <Authors>Localytics</Authors>
     <DevelopmentDependency>false</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -15,7 +15,7 @@
     <RootNamespace>Localytics</RootNamespace>
     <UsePartialTypes>false</UsePartialTypes>
     <AssemblyName>Localytics.NuGet</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Owners>Localytics</Owners>
     <Copyright>Localytics/Open Source</Copyright>
     <PackageTags>Localytics Xamarin iOS Android</PackageTags>
@@ -51,11 +51,6 @@
       <Version>0.2.2</Version>
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
-      <Link>LocalyticsXamarinForms.cs</Link>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageFile Include="..\..\Localytics-iOS-Latest\Localytics.framework\Modules\module.modulemap">

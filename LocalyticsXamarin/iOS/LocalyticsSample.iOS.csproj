@@ -91,10 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LocalyticsSample\LocalyticsSample.csproj">
-      <Project>{E291B500-93AB-423A-874D-29DB2CA50526}</Project>
-      <Name>LocalyticsSample</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
@@ -132,9 +128,13 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
-      <Link>LocalyticsXamarinForms.cs</Link>
+    <Compile Include="LocalyticsXamarinFormsIOS.cs" />
+    <Compile Include="IPlatform.cs" />
+    <Compile Include="LandingPage.xaml.cs">
+      <DependentUpon>LandingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LocalyticsSample.cs" />
+    <Compile Include="LocalyticsXamarinForms.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
@@ -146,6 +146,11 @@
       <ForceLoad>True</ForceLoad>
       <WeakFrameworks>AdSupport</WeakFrameworks>
     </NativeReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LandingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.3.4.0.1008975\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.3.4.0.1008975\build\Xamarin.Forms.targets')" />
