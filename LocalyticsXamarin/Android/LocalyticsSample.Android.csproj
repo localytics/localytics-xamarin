@@ -154,10 +154,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LocalyticsSample\LocalyticsSample.csproj">
-      <Project>{E291B500-93AB-423A-874D-29DB2CA50526}</Project>
-      <Name>LocalyticsSample</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
@@ -175,6 +171,12 @@
     <Compile Include="RegistrationIntentService.cs" />
     <Compile Include="InstanceIdListenerService.cs" />
     <Compile Include="LocalyticsXamarinFormsAndroid.cs" />
+    <Compile Include="IPlatform.cs" />
+    <Compile Include="LandingPage.xaml.cs">
+      <DependentUpon>LandingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LocalyticsSample.cs" />
+    <Compile Include="LocalyticsXamarinForms.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -195,6 +197,11 @@
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LandingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets')" />

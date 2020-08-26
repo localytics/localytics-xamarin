@@ -62,12 +62,6 @@ namespace LocalyticsSample.Shared
                 Console.WriteLine("XamarinEvent ShouldDeepLinkToSettings " + campaign);
                 return true;
             };
-#else
-            Localytics.ShouldPromptForLocationPermission = (Campaign campaign) => {
-                Console.WriteLine("XamarinEvent LocalyticsShouldPromptForLocationPermission " + campaign);
-                return true;
-            };
-#endif
         }
     }
 }
