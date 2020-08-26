@@ -132,9 +132,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="..\LocalyticsXamarin.Shared\LocalyticsXamarinForms.cs">
-      <Link>LocalyticsXamarinForms.cs</Link>
-    </Compile>
+    <Compile Include="LocalyticsXamarinFormsIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
