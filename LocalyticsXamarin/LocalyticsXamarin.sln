@@ -104,12 +104,8 @@ Global
 		{3D21B247-4672-466E-9F96-616FC955F033}.Release|iPhone.Build.0 = Release|Any CPU
 		{3D21B247-4672-466E-9F96-616FC955F033}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{3D21B247-4672-466E-9F96-616FC955F033}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CEA07C2F-1706-403F-975C-40ED5DBC61E7}
+		{3D21B247-4672-466E-9F96-616FC955F033}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3D21B247-4672-466E-9F96-616FC955F033}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
