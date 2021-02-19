@@ -12,7 +12,7 @@ using Foundation;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-// CXMM-1863 - Commented for being a dublicate
+// CXMM-1863 - Commented for being a duplicate
 //[assembly: AssemblyTitle ("LocalyticsXamarin.iOS")]
 //[assembly: AssemblyDescription ("Localytics℠ for Xamarin.iOS")]
 //[assembly: AssemblyConfiguration ("")]
