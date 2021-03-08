@@ -7,7 +7,6 @@ using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
 using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
 using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
 using NativePushCampaign = LocalyticsXamarin.Android.PushCampaign;
-using Android.Support.V4.App;
 using Android.Runtime;
 
 namespace LocalyticsXamarin.Android
