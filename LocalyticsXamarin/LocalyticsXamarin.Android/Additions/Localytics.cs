@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using LocalyticsXamarin.Common;
 using LocalyticsXamarin.Shared;
 using Android.Runtime;
-using Android.Support.V4.App;
+using AndroidX.Core.App;
 
 using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
 using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
@@ -119,14 +119,14 @@ namespace LocalyticsXamarin.Android
                 return p1;
             }
 
-            public global::Android.Support.V4.App.NotificationCompat.Builder LocalyticsWillShowPlacesPushNotification(global::Android.Support.V4.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PlacesCampaign p1)
+            public global::AndroidX.Core.App.NotificationCompat.Builder LocalyticsWillShowPlacesPushNotification(global::AndroidX.Core.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PlacesCampaign p1)
             {
                 var __h = WillShowPlacesPushNotification;
                 if (__h != null)
                     return __h(p0, p1);
                 return p0;
             }
-            public global::Android.Support.V4.App.NotificationCompat.Builder LocalyticsWillShowPushNotification(global::Android.Support.V4.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PushCampaign p1)
+            public global::AndroidX.Core.App.NotificationCompat.Builder LocalyticsWillShowPushNotification(global::AndroidX.Core.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PushCampaign p1)
             {
                 var __h = WillShowPushNotification;
                 if (__h != null)
