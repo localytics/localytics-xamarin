@@ -83,17 +83,6 @@
       <HintPath>..\packages\Xamarin.GooglePlayServices.Location.60.1142.1\lib\MonoAndroid80\Xamarin.GooglePlayServices.Location.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Ads.Lite">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.Lite.60.1142.1\lib\MonoAndroid80\Xamarin.GooglePlayServices.Ads.Lite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Gass">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Gass.60.1142.1\lib\MonoAndroid80\Xamarin.GooglePlayServices.Gass.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Ads">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.60.1142.1\lib\MonoAndroid80\Xamarin.GooglePlayServices.Ads.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Xamarin.AndroidX.Activity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.AndroidX.Activity.1.2.0.1\lib\monoandroid90\Xamarin.AndroidX.Activity.dll</HintPath>
     </Reference>
@@ -253,7 +242,6 @@
   <Import Project="..\packages\Xamarin.Firebase.Messaging.60.1142.1\build\MonoAndroid80\Xamarin.Firebase.Messaging.targets" Condition="Exists('..\packages\Xamarin.Firebase.Messaging.60.1142.1\build\MonoAndroid80\Xamarin.Firebase.Messaging.targets')" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.11\build\Xamarin.Build.Download.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Base.60.1142.1\build\MonoAndroid80\Xamarin.GooglePlayServices.Base.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Base.60.1142.1\build\MonoAndroid80\Xamarin.GooglePlayServices.Base.targets')" />
-  <Import Project="..\packages\Xamarin.GooglePlayServices.Gass.60.1142.1\build\MonoAndroid80\Xamarin.GooglePlayServices.Gass.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Gass.60.1142.1\build\MonoAndroid80\Xamarin.GooglePlayServices.Gass.targets')" />
   <Import Project="..\packages\Xamarin.AndroidX.Activity.1.2.0.1\build\monoandroid9.0\Xamarin.AndroidX.Activity.targets" Condition="Exists('..\packages\Xamarin.AndroidX.Activity.1.2.0.1\build\monoandroid9.0\Xamarin.AndroidX.Activity.targets')" />
   <Import Project="..\packages\Xamarin.AndroidX.Annotation.1.1.0.9\build\monoandroid9.0\Xamarin.AndroidX.Annotation.targets" Condition="Exists('..\packages\Xamarin.AndroidX.Annotation.1.1.0.9\build\monoandroid9.0\Xamarin.AndroidX.Annotation.targets')" />
   <Import Project="..\packages\Xamarin.AndroidX.Annotation.Experimental.1.0.0.9\build\monoandroid9.0\Xamarin.AndroidX.Annotation.Experimental.targets" Condition="Exists('..\packages\Xamarin.AndroidX.Annotation.Experimental.1.0.0.9\build\monoandroid9.0\Xamarin.AndroidX.Annotation.Experimental.targets')" />
