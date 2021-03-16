@@ -1,10 +1,10 @@
 Localytics Xamarin SDK
 ---
-This repository contains the open source Xamarin SDK  to build the Localytics Xamarin Nuget package (*.nuget).  For instruction on how to use the Nuget package, refer to [Getting Started](GettingStarted.md)
+This repository contains the open source Xamarin SDK  to build the Localytics Xamarin Nuget package (*.nuget). The Localytics Xamarin SDK is a Xamarin wrapper on the native [Localytics Android SDK](https://github.com/localytics/Android-Client-Library) and [Localytics iOS SDK](https://github.com/localytics/Localytics-iOS). For instruction on how to use the Nuget package, refer to [Getting Started](GettingStarted.md)
 
 ## Contents
-* **/Localytics-Android-Latest** contains the latest Android Release that has been bound to the Xamarin SDK.
-* **/Localytics-iOS-Latest** contains the latest iOS Release that has been bound to the Xamarin SDK.
+* **/Localytics-Android-Latest** contains the latest Android Release that has been bound to the Xamarin SDK (v6.2.0).
+* **/Localytics-iOS-Latest** contains the latest iOS Release that has been bound to the Xamarin SDK (v6.0.0).
 * **/LocalyticsXamarin** contains the entire solution for the Xamarin SDK and sample applications
 
 
@@ -21,7 +21,7 @@ $ make VER=0.0.0 release
 
 **Install locally**
 ```
-$ copy the built nuget package to an appropriate folder and dd this folder as a nuget source
+$ copy the built nuget package to an appropriate folder and add this folder as a nuget source
 ```
 
 ## Projects in LocalyticsXamarin Solution
@@ -39,7 +39,7 @@ The **/LocalyticsXamarin** folder contain a solution that includes projects for 
 | LocalyticsXamarin.Common  | Common Project that allows access of Xamarin SDK from a Shared project using dependency service.  |
 
    
-  These projects deal with bindings to the respective Localytics native SDK.
+  These projects deal with bindings to the respective Localytics native SDK. To change code in the binding, the native SDK needs to be changed first then updated in the Xamarin   project.
   * **LocalyticsXamarin.Android** (Xamarin.Android Library Binding)
     
     This project mainly derived from going through possible Transform to fix C# vs Java issues that the tools couldn't dealt with automatically.
@@ -54,15 +54,6 @@ The **/LocalyticsXamarin** folder contain a solution that includes projects for 
 |------------------------------|---|
 | Android    | Android Platform project  |
 | iOS        | IOS Platform project      |
-| LocalyticsSample | Shared project used by the Android and IOS sample project |
-| LocalyticsMessagingSample.Android | Test Sample for Inbox and android messaging listeners. |
 
-
-  This is the main sample/test UI application. It uses DependencyService to call the respective Xamarin.Android or Xamarin.iOS Localytics Library. `ILocalyticsXamarinForms.cs` and its implementations (i.e. `LocalyticsXamarinForms_Android.cs` and `LocalyticsXamarinForms_iOS.cs`) can be useful in other Xamarin.Forms applications. The implementations also demonstrate how to call most of the API functions and Object Conversions.
-  * **LocalyticsSample** contains the Xamarin.Forms UI
   * **LocalyticsSample.iOS** deals with native setup, mostly in `AppDelegate.cs` and `Info.plist`
   * **LocalyticsSample.Android** deals with native setup, mostly in `LocalyticsAutoIntegrateApplication.cs`, `MainActivity.cs` and `AndroidManifest.xml`
-
-### Other Sample and Smoke Test Application
- 
-  * **LocalyticsMessagingSample.Android** is an Xamarin.Android application used to test Android Push and InApp Messaging. Currently, InApp messaging most likely won't work in Xamarin.Forms, which does not support Fragments. This project requires the `Xamarin.GooglePlayServices.Gcm` Package.
