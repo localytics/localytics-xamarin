@@ -7,7 +7,7 @@
     <ProjectGuid>{3D21B247-4672-466E-9F96-616FC955F033}</ProjectGuid>
     <Description>Localytics Xamarin SDK for Android and iOS</Description>
     <PackageId>LocalyticsXamarin</PackageId>
-    <PackageVersion>6.0.4</PackageVersion>
+    <PackageVersion>6.0.6</PackageVersion>
     <Authors>Localytics</Authors>
     <DevelopmentDependency>false</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
