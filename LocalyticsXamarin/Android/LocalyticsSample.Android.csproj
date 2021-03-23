@@ -283,15 +283,6 @@
     <Reference Include="Xamarin.Google.Guava.ListenableFuture, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Google.Guava.ListenableFuture.1.0.0.2\lib\monoandroid50\Xamarin.Google.Guava.ListenableFuture.dll</HintPath>
     </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Ads.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.Base.119.7.0\lib\monoandroid90\Xamarin.GooglePlayServices.Ads.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Ads.Identifier, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.Identifier.117.0.0\lib\monoandroid90\Xamarin.GooglePlayServices.Ads.Identifier.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Ads.Lite, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Ads.Lite.119.7.0\lib\monoandroid90\Xamarin.GooglePlayServices.Ads.Lite.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.GooglePlayServices.Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.GooglePlayServices.Base.117.6.0\lib\monoandroid90\Xamarin.GooglePlayServices.Base.dll</HintPath>
     </Reference>
@@ -300,9 +291,6 @@
     </Reference>
     <Reference Include="Xamarin.GooglePlayServices.CloudMessaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.GooglePlayServices.CloudMessaging.116.0.0\lib\monoandroid90\Xamarin.GooglePlayServices.CloudMessaging.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.GooglePlayServices.Gass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.GooglePlayServices.Gass.119.7.0\lib\monoandroid90\Xamarin.GooglePlayServices.Gass.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.GooglePlayServices.Gcm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.GooglePlayServices.Gcm.117.0.0\lib\monoandroid90\Xamarin.GooglePlayServices.Gcm.dll</HintPath>
@@ -446,10 +434,7 @@
     <Error Condition="!Exists('..\packages\Xamarin.Firebase.Encoders.JSON.117.1.0\build\MonoAndroid90\Xamarin.Firebase.Encoders.JSON.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Firebase.Encoders.JSON.117.1.0\build\MonoAndroid90\Xamarin.Firebase.Encoders.JSON.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.props'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Ads.Base.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Base.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Ads.Base.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Base.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Firebase.Measurement.Connector.118.0.2\build\MonoAndroid90\Xamarin.Firebase.Measurement.Connector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Firebase.Measurement.Connector.118.0.2\build\MonoAndroid90\Xamarin.Firebase.Measurement.Connector.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Ads.Identifier.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Identifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Ads.Identifier.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Identifier.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Ads.Lite.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Lite.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Ads.Lite.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Lite.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Places.PlaceReport.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Places.PlaceReport.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Places.PlaceReport.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Places.PlaceReport.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Stats.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Stats.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Stats.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Stats.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Firebase.Common.119.5.0\build\MonoAndroid90\Xamarin.Firebase.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Firebase.Common.119.5.0\build\MonoAndroid90\Xamarin.Firebase.Common.targets'))" />
@@ -461,7 +446,6 @@
     <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.CloudMessaging.116.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.CloudMessaging.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.CloudMessaging.116.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.CloudMessaging.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Firebase.Iid.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Iid.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Firebase.Iid.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Iid.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.Firebase.Messaging.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Messaging.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Firebase.Messaging.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Messaging.targets'))" />
-    <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Gass.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gass.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Gass.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gass.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Iid.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Iid.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Iid.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Iid.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Gcm.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gcm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Gcm.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gcm.targets'))" />
     <Error Condition="!Exists('..\packages\Xamarin.GooglePlayServices.Location.118.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Location.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.GooglePlayServices.Location.118.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Location.targets'))" />
@@ -532,10 +516,7 @@
   <Import Project="..\packages\Xamarin.Firebase.Encoders.116.1.0\build\MonoAndroid90\Xamarin.Firebase.Encoders.targets" Condition="Exists('..\packages\Xamarin.Firebase.Encoders.116.1.0\build\MonoAndroid90\Xamarin.Firebase.Encoders.targets')" />
   <Import Project="..\packages\Xamarin.Firebase.Encoders.JSON.117.1.0\build\MonoAndroid90\Xamarin.Firebase.Encoders.JSON.targets" Condition="Exists('..\packages\Xamarin.Firebase.Encoders.JSON.117.1.0\build\MonoAndroid90\Xamarin.Firebase.Encoders.JSON.targets')" />
   <Import Project="..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.5.0.0.2012\build\Xamarin.Forms.targets')" />
-  <Import Project="..\packages\Xamarin.GooglePlayServices.Ads.Base.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Base.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Ads.Base.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Base.targets')" />
   <Import Project="..\packages\Xamarin.Firebase.Measurement.Connector.118.0.2\build\MonoAndroid90\Xamarin.Firebase.Measurement.Connector.targets" Condition="Exists('..\packages\Xamarin.Firebase.Measurement.Connector.118.0.2\build\MonoAndroid90\Xamarin.Firebase.Measurement.Connector.targets')" />
-  <Import Project="..\packages\Xamarin.GooglePlayServices.Ads.Identifier.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Identifier.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Ads.Identifier.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Identifier.targets')" />
-  <Import Project="..\packages\Xamarin.GooglePlayServices.Ads.Lite.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Lite.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Ads.Lite.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Ads.Lite.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Places.PlaceReport.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Places.PlaceReport.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Places.PlaceReport.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Places.PlaceReport.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Stats.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Stats.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Stats.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Stats.targets')" />
   <Import Project="..\packages\Xamarin.Firebase.Common.119.5.0\build\MonoAndroid90\Xamarin.Firebase.Common.targets" Condition="Exists('..\packages\Xamarin.Firebase.Common.119.5.0\build\MonoAndroid90\Xamarin.Firebase.Common.targets')" />
@@ -547,7 +528,6 @@
   <Import Project="..\packages\Xamarin.GooglePlayServices.CloudMessaging.116.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.CloudMessaging.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.CloudMessaging.116.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.CloudMessaging.targets')" />
   <Import Project="..\packages\Xamarin.Firebase.Iid.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Iid.targets" Condition="Exists('..\packages\Xamarin.Firebase.Iid.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Iid.targets')" />
   <Import Project="..\packages\Xamarin.Firebase.Messaging.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Messaging.targets" Condition="Exists('..\packages\Xamarin.Firebase.Messaging.121.0.1\build\MonoAndroid90\Xamarin.Firebase.Messaging.targets')" />
-  <Import Project="..\packages\Xamarin.GooglePlayServices.Gass.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gass.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Gass.119.7.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gass.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Iid.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Iid.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Iid.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Iid.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Gcm.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gcm.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Gcm.117.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Gcm.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Location.118.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Location.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Location.118.0.0\build\MonoAndroid90\Xamarin.GooglePlayServices.Location.targets')" />
