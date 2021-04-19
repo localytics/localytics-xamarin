@@ -9,23 +9,6 @@
 	<uses-permission android:name="com.localytics.sample.permission.C2D_MESSAGE" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<application android:label="LocalyticsSample" android:icon="@drawable/icon">
-		<meta-data android:name="LOCALYTICS_APP_KEY" android:value="b70c948d304fc756d8b6e63-ecd3437a-a073-11e6-c6e3-008d99911bee" />
 		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-		<activity android:name="com.localytics.androidx.PushTrackingActivity" android:enabled="true" />
-		<service android:name="com.localytics.androidx.InstanceIDListenerService" android:exported="false">
-			<intent-filter>
-				<action android:name="com.google.android.gms.iid.InstanceID" />
-			</intent-filter>
-		</service>
-		<service android:name="com.localytics.androidx.FirebaseTokenService" android:exported="true" android:enabled="true">
-			<intent-filter>
-				<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-			</intent-filter>
-		</service>
-		<service android:name="com.localytics.androidx.FirebaseService" android:exported="true" android:enabled="true">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT" />
-			</intent-filter>
-		</service>
 	</application>
 </manifest>
