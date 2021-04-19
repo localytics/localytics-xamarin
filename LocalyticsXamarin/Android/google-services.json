@@ -6,36 +6,7 @@
     "storage_bucket": "xamarintest-7cab6.appspot.com"
   },
   "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:412607791700:android:f35a97f835cadf654c23c1",
-        "android_client_info": {
-          "package_name": "com.localytics.xamarin.androidx"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "412607791700-ih3qvhou1r61icmnub39cvno2agsmuh6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAPB3tWgLRHR_DlS5w6ZQ62c1jQQ7gJkvE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "412607791700-ih3qvhou1r61icmnub39cvno2agsmuh6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
+      {
       "client_info": {
         "mobilesdk_app_id": "1:412607791700:android:2087d74a12063a534c23c1",
         "android_client_info": {
