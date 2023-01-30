@@ -40,7 +40,7 @@ namespace LocalyticsXamarin.Android
 
 		public static Customer toCustomer(IDictionary<string, object> customerProps)
         {
-			Customer.Builder builder = new Customer.Builder();
+			Customer.Builder builder = new Customer.Builder(); 
 			if (customerProps.ContainsKey("_nativeHandle"))
             {
                 toBuilder((Customer)customerProps[@"_nativeHandle"], builder);
