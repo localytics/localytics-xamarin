@@ -46,15 +46,15 @@ namespace LocalyticsXamarin.Android
         public static Func<NotificationCompat.Builder, NativePlacesCampaign, NotificationCompat.Builder> WillShowPlacesPushNotification;
         public static Func<NotificationCompat.Builder, NativePushCampaign, NotificationCompat.Builder> WillShowPushNotification;
 
-        [global::Android.Runtime.Register("mono/com/localytics/android/MessagingListenerV2Implementor")]
+        [Register("mono/com/localytics/android/MessagingListenerV2Implementor")]
         internal sealed partial class IMessagingListenerV2Implementor : global::Java.Lang.Object, IMessagingListenerV2
         {
             public IMessagingListenerV2Implementor()
                 : base(
-                    global::Android.Runtime.JNIEnv.StartCreateInstance("mono/com/localytics/android/MessagingListenerV2Implementor", "()V"),
+                    JNIEnv.StartCreateInstance("mono/com/localytics/android/MessagingListenerV2Implementor", "()V"),
                     JniHandleOwnership.TransferLocalRef)
             {
-                global::Android.Runtime.JNIEnv.FinishCreateInstance(((global::Java.Lang.Object)this).Handle, "()V");
+                JNIEnv.FinishCreateInstance(this.Handle, "()V");
                 //this.sender = sender;
             }
 
@@ -87,7 +87,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public bool LocalyticsShouldShowInAppMessage(global::LocalyticsXamarin.Android.InAppCampaign p0)
+            public bool LocalyticsShouldShowInAppMessage(NativeInAppCampaign p0)
             {
                 var __h = LocalyticsSDK.InAppShouldShowDelegate;
                 if (__h != null)
@@ -95,7 +95,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public bool LocalyticsShouldShowPlacesPushNotification(global::LocalyticsXamarin.Android.PlacesCampaign p0)
+            public bool LocalyticsShouldShowPlacesPushNotification(NativePlacesCampaign p0)
             {
                 var __h = LocalyticsSDK.PlacesShouldDisplayCampaignDelegate;
                 if (__h != null)
@@ -103,7 +103,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public bool LocalyticsShouldShowPushNotification(global::LocalyticsXamarin.Android.PushCampaign p0)
+            public bool LocalyticsShouldShowPushNotification(NativePushCampaign p0)
             {
                 var __h = ShouldShowPushNotification;
                 if (__h != null)
@@ -111,7 +111,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public global::LocalyticsXamarin.Android.InAppConfiguration LocalyticsWillDisplayInAppMessage(global::LocalyticsXamarin.Android.InAppCampaign p0, global::LocalyticsXamarin.Android.InAppConfiguration p1)
+            public InAppConfiguration LocalyticsWillDisplayInAppMessage(NativeInAppCampaign p0, InAppConfiguration p1)
             {
                 var __h = LocalyticsSDK.InAppWillDisplayDelegate;
                 if (__h != null)
@@ -119,14 +119,14 @@ namespace LocalyticsXamarin.Android
                 return p1;
             }
 
-            public global::AndroidX.Core.App.NotificationCompat.Builder LocalyticsWillShowPlacesPushNotification(global::AndroidX.Core.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PlacesCampaign p1)
+            public NotificationCompat.Builder LocalyticsWillShowPlacesPushNotification(NotificationCompat.Builder p0, NativePlacesCampaign p1)
             {
                 var __h = WillShowPlacesPushNotification;
                 if (__h != null)
                     return __h(p0, p1);
                 return p0;
             }
-            public global::AndroidX.Core.App.NotificationCompat.Builder LocalyticsWillShowPushNotification(global::AndroidX.Core.App.NotificationCompat.Builder p0, global::LocalyticsXamarin.Android.PushCampaign p1)
+            public NotificationCompat.Builder LocalyticsWillShowPushNotification(NotificationCompat.Builder p0, NativePushCampaign p1)
             {
                 var __h = WillShowPushNotification;
                 if (__h != null)
@@ -145,33 +145,33 @@ namespace LocalyticsXamarin.Android
             }
         }
 
-        public static Func<LocalyticsXamarin.Android.Campaign, bool> ShouldPromptForLocationPermission;
-        public static Func<global::Android.Content.Intent, LocalyticsXamarin.Android.Campaign, bool> DeeplinkToSettings;
+        public static Func<Campaign, bool> ShouldPromptForLocationPermission;
+        public static Func<global::Android.Content.Intent, Campaign, bool> DeeplinkToSettings;
 
-        public class CTAListenerImplementation : LocalyticsXamarin.Android.CallToActionListenerAdapterV2
+        public class CTAListenerImplementation : CallToActionListenerAdapterV2
         {
-            public override bool LocalyticsShouldDeeplink(string p0, LocalyticsXamarin.Android.Campaign p1)
+            public override bool LocalyticsShouldDeeplink(string p0, Campaign p1)
             {
                 if (LocalyticsSDK.CallToActionShouldDeepLinkDelegate != null) {
                     return LocalyticsSDK.CallToActionShouldDeepLinkDelegate(p0, Convertor.CampaignFrom(p1));
                 }
                 return true;
             }
-            public override void LocalyticsDidOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
+            public override void LocalyticsDidOptOut(bool p0, Campaign p1)
             {
                 if (LocalyticsSDK.DidOptOut != null) {
                     LocalyticsSDK.DidOptOut(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
                 }
             }
 
-            public override void LocalyticsDidPrivacyOptOut(bool p0, LocalyticsXamarin.Android.Campaign p1)
+            public override void LocalyticsDidPrivacyOptOut(bool p0, Campaign p1)
             {
                 if (LocalyticsSDK.DidPrivacyOptOut != null) {
                     LocalyticsSDK.DidPrivacyOptOut(null, new DidOptOutEventArgs(p0, Convertor.CampaignFrom(p1)));
                 }
             }
 
-            public override bool LocalyticsShouldPromptForLocationPermissions(LocalyticsXamarin.Android.Campaign p0)
+            public override bool LocalyticsShouldPromptForLocationPermissions(Campaign p0)
             {
                 if (ShouldPromptForLocationPermission!=null) {
                     ShouldPromptForLocationPermission(p0);
@@ -179,7 +179,7 @@ namespace LocalyticsXamarin.Android
                 return true;
             }
 
-            public override bool LocalyticsShouldDeeplinkToSettings(global::Android.Content.Intent p0, LocalyticsXamarin.Android.Campaign p1)
+            public override bool LocalyticsShouldDeeplinkToSettings(global::Android.Content.Intent p0, Campaign p1)
             {
                 if (DeeplinkToSettings != null)
                 {
