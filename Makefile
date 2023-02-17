@@ -13,7 +13,6 @@ clean :
 	-cd LocalyticsXamarin/LocalyticsXamarin.iOS && make clean
 	-cd LocalyticsXamarin/LocalyticsXamarin.Android && make clean
 	-rm -rf LocalyticsXamarin/*/bin LocalyticsXamarin/*/obj build 
-	-rm -rf LocalyticsXamarin/LocalyticsMessagingSample.Android/bin LocalyticsXamarin/LocalyticsMessagingSample.Android/obj
 
 
 release :
@@ -31,8 +30,7 @@ ifneq ($(VER),)
 	@cd LocalyticsXamarin/LocalyticsXamarin.NuGet && sed 's/\(\<PackageVersion\>\)[^\<]*\(\<\/PackageVersion\>\)/\1'$(VER)'\2/' Localytics.NuGet.nuproj.org >  Localytics.NuGet.nuproj
 	@rm LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.NuGet/Localytics.NuGet.nuproj.org
 #Build all projects and validate
-#	@cd LocalyticsXamarin/LocalyticsMessagingSample.Android && msbuild /t:Rebuild /p:Configuration=Release 
-	@cd LocalyticsXamarin/Android && msbuild /t:Rebuild /p:Configuration=Release 
+	@cd LocalyticsXamarin/LocalyticsXamarin.Android && msbuild /t:Rebuild /p:Configuration=Release 
 	@cd LocalyticsXamarin/iOS && msbuild /t:Rebuild /p:Configuration=Release 
 #Build NUget Package
 	@cd LocalyticsXamarin/LocalyticsXamarin.NuGet && dotnet restore && msbuild /t:Rebuild /p:Configuration=Release 

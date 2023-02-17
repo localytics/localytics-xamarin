@@ -42,7 +42,7 @@
       <Name>LocalyticsXamarin.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\LocalyticsXamarin.Android\LocalyticsXamarin.Android.csproj">
-      <Project>{8D4D1584-55B7-4E32-9373-9D1DA7D9A209}</Project>
+      <Project>{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}</Project>
       <Name>LocalyticsXamarin.Android</Name>
     </ProjectReference>
   </ItemGroup>
