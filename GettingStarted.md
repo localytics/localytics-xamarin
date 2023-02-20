@@ -229,32 +229,6 @@ Event Args for events common to both android and ios share an interface and can 
 * LoggingEnabled may not return the current status of the Logger.
 
 ### Change Log
- <p>
-    <b>6.3.1</b>: February 17, 2023
-  </p>
-  <ul>
-    <li>
-      Updates bindings to iOS SDK 6.2.9 <b>(without bitcode)</b> (<a href="#developers-sdk-changelog-ios">iOS</a>)
-    </li>
-  </ul>
-  <p>
-    <b>6.3.0</b>: February 17, 2023
-  </p>
-  <ul>
-    <li>
-      Updates bindings to Android SDK 6.3.7 (<a href="#developers-sdk-changelog-android">Android</a>) & iOS SDK 6.2.8 <b>(with bitcode)</b> (<a href="#developers-sdk-changelog-ios">iOS</a>)
-    </li>
-    <li>
-      Updating all of the SDK outdated packages
-    </li>
-    <li>
-      Targeting Andorid 13 Framework
-    </li>
-    <li>
-      Migrating from packages.config to packagereference
-    </li>
-  </ul>
-
 * 6.3.1
 	* Based on Native SDK 6.3.7 for Android and Native SDK 6.2.9 for iOS (without bitcode). 
 * 6.3.0
