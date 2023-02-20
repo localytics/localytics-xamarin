@@ -3,14 +3,14 @@ Localytics Xamarin SDK
 This repository contains the open source Xamarin SDK  to build the Localytics Xamarin Nuget package (*.nuget). The Localytics Xamarin SDK is a Xamarin wrapper on the native [Localytics Android SDK](https://github.com/localytics/Android-Client-Library) and [Localytics iOS SDK](https://github.com/localytics/Localytics-iOS). For instruction on how to use the Nuget package, refer to [Getting Started](GettingStarted.md)
 
 ## Contents
-* **/Localytics-Android-Latest** contains the latest Android Release that has been bound to the Xamarin SDK (v6.2.0).
-* **/Localytics-iOS-Latest** contains the latest iOS Release that has been bound to the Xamarin SDK (v6.0.0).
+* **/Localytics-Android-Latest** contains the latest Android Release that has been bound to the Xamarin SDK (v6.3.7).
+* **/Localytics-iOS-Latest** contains the latest iOS Release that has been bound to the Xamarin SDK (v6.2.9).
 * **/LocalyticsXamarin** contains the entire solution for the Xamarin SDK and sample applications
 
 
 ## Building the Nuget Package
 This and the following sections are for Developers wishing to contribute to the XamarinSDK.
-You will need Xcode, and Xamarin Studio (with Android API 19) and java 8.Simply call make VER=0.0.0 release to build.
+You will need Xcode, and Visual Studio (with Android API 33) and java 8.Simply call make VER=0.0.0 release to build.
 Localytics recommends using the prebuilt nuget package for integrating Localytics in a production app. Instructions can be found at LocalyticsXamarin/LocalyticsXamarin.NuGet/GettingStarted.md
 
 **Build**
