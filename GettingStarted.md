@@ -216,9 +216,9 @@ Event Args for events common to both android and ios share an interface and can 
 
 | Type  |  Version    |
 |-------|-------------|
-| Minimum Android Version | API Level 17 |
-| Target Android Version  | API Level 28 |
-| Target Framework        | Android 9.0 |
+| Minimum Android Version | API Level 21 |
+| Target Android Version  | API Level 33 |
+| Target Framework        | Android 13.0 |
 
 ### IOS Versions
 * Minimum Deployment Target is IOS 8.0
@@ -229,7 +229,14 @@ Event Args for events common to both android and ios share an interface and can 
 * LoggingEnabled may not return the current status of the Logger.
 
 ### Change Log
-* 5.4.0 - Xamarin Service Release [Requires Xamarin.iOS 12.2.1.11 or later]
+* 6.3.1
+	* Based on Native SDK 6.3.7 for Android and Native SDK 6.2.9 for iOS (without bitcode). 
+* 6.3.0
+	* Based on Native SDK 6.3.7 for Android and Native SDK 6.2.8 for iOS (with bitcode). 
+	* Updating all of the SDK outdated packages.
+	* Targeting Andorid 13 Framework.
+	* Migrating from packages.config to packagereference.
+* 5.4.0
 	* Based on Native SDK 5.4.0 for Android and iOS. 
 	* Location Services (including Foreground Places support) requires App to request permissions.
 	* AddProfileAttribute supports Arrays or params list.
