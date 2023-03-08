@@ -1,10 +1,10 @@
 ﻿using System;
-using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
-using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
-using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
-using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
+using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
+using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
+using NativeImpressionType = LocalyticsMaui.Android.Localytics.ImpressionType;
+using NativePlacesCampaign = LocalyticsMaui.Android.PlacesCampaign;
 
-namespace LocalyticsXamarin.Android
+namespace LocalyticsMaui.Android
 {
     public interface ILocalyticsAndroid
     {

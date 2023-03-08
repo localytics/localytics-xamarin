@@ -1,5 +1,5 @@
 ﻿using System;
-namespace LocalyticsXamarin.Android.Additions
+namespace LocalyticsMaui.Android.Additions
 {
     public interface IMessagingListenerV2
     {

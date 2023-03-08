@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Java.Util;
-using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
-using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
-using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
-using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
-using NativeBaseCampaign = LocalyticsXamarin.Android.Campaign;
+using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
+using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
+using NativePlacesCampaign = LocalyticsMaui.Android.PlacesCampaign;
+using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.Android.Localytics.InAppMessageDismissButtonLocation;
+using NativeBaseCampaign = LocalyticsMaui.Android.Campaign;
 
 using LocalyticsXamarin.Common;
 using LocalyticsXamarin.Shared;
 
-namespace LocalyticsXamarin.Android
+namespace LocalyticsMaui.Android
 {
 	public static class Convertor
     {
@@ -150,21 +150,21 @@ namespace LocalyticsXamarin.Android
         }
         public static ICampaignBase CampaignFrom(NativeBaseCampaign campaign)
         {
-            if (campaign is LocalyticsXamarin.Android.InboxCampaign)
+            if (campaign is LocalyticsMaui.Android.InboxCampaign)
             {
-                return new XFInboxCampaign((LocalyticsXamarin.Android.InboxCampaign)campaign);
+                return new XFInboxCampaign((LocalyticsMaui.Android.InboxCampaign)campaign);
             }
-            else if (campaign is LocalyticsXamarin.Android.InAppCampaign)
+            else if (campaign is LocalyticsMaui.Android.InAppCampaign)
             {
-                return new XFInAppCampaign((LocalyticsXamarin.Android.InAppCampaign)campaign);
+                return new XFInAppCampaign((LocalyticsMaui.Android.InAppCampaign)campaign);
             }
-            else if (campaign is LocalyticsXamarin.Android.PlacesCampaign)
+            else if (campaign is LocalyticsMaui.Android.PlacesCampaign)
             {
-                return new XFPlacesCampaign((LocalyticsXamarin.Android.PlacesCampaign)campaign);
+                return new XFPlacesCampaign((LocalyticsMaui.Android.PlacesCampaign)campaign);
             }
-            else if (campaign is LocalyticsXamarin.Android.PushCampaign)
+            else if (campaign is LocalyticsMaui.Android.PushCampaign)
             {
-                return new XFPushCampaign((LocalyticsXamarin.Android.PushCampaign)campaign);
+                return new XFPushCampaign((LocalyticsMaui.Android.PushCampaign)campaign);
             }
             else
             {

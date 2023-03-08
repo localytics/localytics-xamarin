@@ -4,11 +4,11 @@ using Android.App;
 
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
-[assembly: AssemblyTitle("LocalyticsXamarin.Android")]
-[assembly: AssemblyDescription("Localytics℠ for Xamarin.Android")]
+[assembly: AssemblyTitle("LocalyticsMaui.Android")]
+[assembly: AssemblyDescription("Localytics℠ for Maui.Android")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Localytics")]
-[assembly: AssemblyProduct("Localytics℠ for Xamarin.Android")]
+[assembly: AssemblyProduct("Localytics℠ for Maui.Android")]
 [assembly: AssemblyCopyright("© 2008-2020 Localytics℠")]
 [assembly: AssemblyTrademark("Localytics℠")]
 [assembly: AssemblyCulture("")]

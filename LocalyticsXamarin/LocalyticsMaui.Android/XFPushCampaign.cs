@@ -1,13 +1,13 @@
 ﻿using System;
 using LocalyticsXamarin.Common;
 
-namespace LocalyticsXamarin.Android
+namespace LocalyticsMaui.Android
 {
     internal class XFPushCampaign : ICampaignBase
     {
-        LocalyticsXamarin.Android.PushCampaign campaign;
+        LocalyticsMaui.Android.PushCampaign campaign;
 
-        public XFPushCampaign(LocalyticsXamarin.Android.PushCampaign campaign)
+        public XFPushCampaign(LocalyticsMaui.Android.PushCampaign campaign)
         {
             this.campaign = campaign;
         }

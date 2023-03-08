@@ -5,13 +5,13 @@ using LocalyticsXamarin.Shared;
 using Android.Runtime;
 using AndroidX.Core.App;
 
-using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
-using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
-using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
-using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
-using NativePushCampaign = LocalyticsXamarin.Android.PushCampaign;
+using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
+using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
+using NativeImpressionType = LocalyticsMaui.Android.Localytics.ImpressionType;
+using NativePlacesCampaign = LocalyticsMaui.Android.PlacesCampaign;
+using NativePushCampaign = LocalyticsMaui.Android.PushCampaign;
 
-namespace LocalyticsXamarin.Android
+namespace LocalyticsMaui.Android
 {
     public partial class DidTagEventEventArgs
     { 

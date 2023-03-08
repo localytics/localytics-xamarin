@@ -11,8 +11,8 @@
     <TemplateGuid>{77efb91c-a7e9-4b0e-a7c5-31eeec3c6d46}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LocalyticsXamarin.Android</RootNamespace>
-    <AssemblyName>LocalyticsXamarin.Android</AssemblyName>
+    <RootNamespace>LocalyticsMaui.Android</RootNamespace>
+    <AssemblyName>LocalyticsMaui.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>False</Deterministic>
     <TargetFrameworkVersion>v13.0</TargetFrameworkVersion>
@@ -419,7 +419,7 @@
       <Version>1.0.0.7</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Kotlin.StdLib">
-      <Version>1.8.0.1</Version>
+      <Version>1.8.10</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Startup.StartupRuntime">
       <Version>1.1.1.4</Version>

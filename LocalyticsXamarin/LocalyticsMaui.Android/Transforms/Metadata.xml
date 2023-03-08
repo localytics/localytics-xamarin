@@ -1,6 +1,6 @@
 ﻿<metadata>
 	<!-- fix namespace -->
-	<attr path="/api/package[@name='com.localytics.androidx']" name="managedName">LocalyticsXamarin.Android</attr>
+	<attr path="/api/package[@name='com.localytics.androidx']" name="managedName">LocalyticsMaui.Android</attr>
 
 	<!--     <attr path="/api/package[@name='com.localytics.androidx']/class[@name='Constants']" name="visibility">public</attr>-->
 	<!--     <attr path="/api/package[@name='com.localytics.androidx']/class[@name='Constants']/field[@name='LOCALYTICS_CLIENT_LIBRARY_VERSION']" name="visibility">public</attr>
