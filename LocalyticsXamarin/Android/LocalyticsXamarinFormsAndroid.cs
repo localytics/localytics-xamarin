@@ -1,5 +1,5 @@
 ﻿using System;
-using LocalyticsXamarin.Android;
+using LocalyticsMaui.Android;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsSample.Shared.LocalyticsXamarinForms))]
 namespace LocalyticsSample.Shared

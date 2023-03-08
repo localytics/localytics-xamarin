@@ -45,7 +45,7 @@ namespace LocalyticsSample.Android
         void SendRegistrationToAppServer(string token)
         {
 			// Add custom implementation here as needed.
-			LocalyticsXamarin.Android.Localytics.PushRegistrationId = token;
+			LocalyticsMaui.Android.Localytics.PushRegistrationId = token;
         }
 
         void Subscribe(string token)

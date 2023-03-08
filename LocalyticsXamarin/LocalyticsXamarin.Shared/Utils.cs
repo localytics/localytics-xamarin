@@ -6,11 +6,11 @@ using NativeProfileScope = LocalyticsXamarin.IOS.LLProfileScope;
 using NativeImpressionType = LocalyticsXamarin.IOS.LLImpressionType;
 using NativeBaseCampaign = LocalyticsXamarin.IOS.LLCampaignBase;
 #else
-using LocalyticsXamarin.Android;
-using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
-using NativeProfileScope = LocalyticsXamarin.Android.Localytics.ProfileScope;
-using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
-using NativeBaseCampaign = LocalyticsXamarin.Android.Campaign;
+using LocalyticsMaui.Android;
+using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.Android.Localytics.InAppMessageDismissButtonLocation;
+using NativeProfileScope = LocalyticsMaui.Android.Localytics.ProfileScope;
+using NativeImpressionType = LocalyticsMaui.Android.Localytics.ImpressionType;
+using NativeBaseCampaign = LocalyticsMaui.Android.Campaign;
 #endif
 namespace LocalyticsXamarin.Shared
 {

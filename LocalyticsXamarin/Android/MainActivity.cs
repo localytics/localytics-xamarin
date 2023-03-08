@@ -8,7 +8,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
-using LocalyticsXamarin.Android;
+using LocalyticsMaui.Android;
 using LocalyticsSample.Shared;
 using Firebase.Messaging;
 using Firebase.Iid;

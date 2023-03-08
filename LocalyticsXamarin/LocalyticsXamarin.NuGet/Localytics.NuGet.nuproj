@@ -41,9 +41,9 @@
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
       <Name>LocalyticsXamarin.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.Android\LocalyticsXamarin.Android.csproj">
+    <ProjectReference Include="..\LocalyticsMaui.Android\LocalyticsMaui.Android.csproj">
       <Project>{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}</Project>
-      <Name>LocalyticsXamarin.Android</Name>
+      <Name>LocalyticsMaui.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 using Android.App;
 using Android.Runtime;
 
-using LocalyticsXamarin.Android;
+using LocalyticsMaui.Android;
 
 namespace LocalyticsSample.Android
 {

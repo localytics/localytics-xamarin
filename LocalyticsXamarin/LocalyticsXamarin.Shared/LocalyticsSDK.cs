@@ -12,7 +12,7 @@ using LocalyticsXamarin.IOS;
 using Java.Util;
 using Android.Runtime;
 
-using LocalyticsXamarin.Android;
+using LocalyticsMaui.Android;
 #endif
 using LocalyticsXamarin.Common;
 
@@ -27,13 +27,13 @@ using NativeInAppConfiguration = LocalyticsXamarin.IOS.LLInAppConfiguration;
 using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsXamarin.IOS.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
 #else
 using NativeNumber = Java.Lang.Long;
-using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
-using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
-using NativeImpressionType = LocalyticsXamarin.Android.Localytics.ImpressionType;
-using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
-using NativeInAppConfiguration = LocalyticsXamarin.Android.InAppConfiguration;
-using NativeLocalyticsDidUpdateLocationEventArgs = LocalyticsXamarin.Android.LocalyticsDidUpdateLocationEventArgs;
-using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsXamarin.Android.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
+using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
+using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
+using NativeImpressionType = LocalyticsMaui.Android.Localytics.ImpressionType;
+using NativePlacesCampaign = LocalyticsMaui.Android.PlacesCampaign;
+using NativeInAppConfiguration = LocalyticsMaui.Android.InAppConfiguration;
+using NativeLocalyticsDidUpdateLocationEventArgs = LocalyticsMaui.Android.LocalyticsDidUpdateLocationEventArgs;
+using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsMaui.Android.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
 #endif
 
 
@@ -771,7 +771,7 @@ namespace LocalyticsXamarin.Shared
         private sealed class InboxRefreshImplementation
         {
             Action<IInboxCampaign[]> callback = null;
-            LocalyticsXamarin.Android.InboxRefreshImplementationPlatform listener = new LocalyticsXamarin.Android.InboxRefreshImplementationPlatform();
+            LocalyticsMaui.Android.InboxRefreshImplementationPlatform listener = new LocalyticsMaui.Android.InboxRefreshImplementationPlatform();
             public void SetCallback(Action<IInboxCampaign[]> inboxCampaignsDelegate)
             {
                 callback = inboxCampaignsDelegate;

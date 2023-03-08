@@ -8,10 +8,10 @@ using NativeInAppCampaign = LocalyticsXamarin.IOS.LLInAppCampaign;
 using NativePlacesCampaign = LocalyticsXamarin.IOS.LLPlacesCampaign;
 using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.IOS.LLInAppMessageDismissButtonLocation;
 #else
-using NativeInboxCampaign = LocalyticsXamarin.Android.InboxCampaign;
-using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
-using NativePlacesCampaign = LocalyticsXamarin.Android.PlacesCampaign;
-using NativeInAppMessageDismissButtonLocation = LocalyticsXamarin.Android.Localytics.InAppMessageDismissButtonLocation;
+using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
+using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
+using NativePlacesCampaign = LocalyticsMaui.Android.PlacesCampaign;
+using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.Android.Localytics.InAppMessageDismissButtonLocation;
 #endif
 namespace LocalyticsXamarin.Shared
 {
