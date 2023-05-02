@@ -102,13 +102,13 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
+    <ProjectReference Include="..\LocalyticsMaui.Common\LocalyticsMaui.Common.csproj">
       <Project>{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}</Project>
-      <Name>LocalyticsXamarin.Common</Name>
+      <Name>LocalyticsMaui.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
+    <ProjectReference Include="..\LocalyticsMaui.iOS\LocalyticsMaui.iOS.csproj">
       <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
-      <Name>LocalyticsXamarin.IOS</Name>
+      <Name>LocalyticsMaui.IOS</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

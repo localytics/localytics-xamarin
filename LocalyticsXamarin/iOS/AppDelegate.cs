@@ -4,7 +4,7 @@ using Foundation;
 using UIKit;
 
 using LocalyticsSample.Shared;
-using LocalyticsXamarin.IOS;
+using LocalyticsMaui.IOS;
 using System.Diagnostics;
 
 namespace LocalyticsSample.IOS

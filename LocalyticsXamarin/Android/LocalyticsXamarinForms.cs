@@ -1,7 +1,7 @@
 ﻿using System;
 using LocalyticsSample.Shared;
-using LocalyticsXamarin.Common;
-using LocalyticsXamarin.Shared;
+using LocalyticsMaui.Common;
+using LocalyticsMaui.Shared;
 
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsSample.Shared.LocalyticsXamarinForms))]

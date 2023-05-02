@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1704.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.Android", "LocalyticsMaui.Android\LocalyticsMaui.Android.csproj", "{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.Common", "LocalyticsMaui.Common\LocalyticsMaui.Common.csproj", "{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsXamarin.Common", "LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj", "{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalyticsXamarin.Shared", "LocalyticsXamarin.Shared\LocalyticsXamarin.Shared.shproj", "{29C2975E-C5C9-4F1E-84EE-C36A81B940BA}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalyticsMaui.Shared", "LocalyticsMaui.Shared\LocalyticsMaui.Shared.shproj", "{29C2975E-C5C9-4F1E-84EE-C36A81B940BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsSample.iOS", "iOS\LocalyticsSample.iOS.csproj", "{E7C583A9-10C1-4776-AD86-7E0821F86989}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsXamarin.IOS", "LocalyticsXamarin.iOS\LocalyticsXamarin.IOS.csproj", "{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.IOS", "LocalyticsMaui.iOS\LocalyticsMaui.IOS.csproj", "{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsSample.Android", "Android\LocalyticsSample.Android.csproj", "{9C9948B0-EC28-4454-98BB-471C6BA02ABF}"
 EndProject
-Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "Localytics.NuGet", "LocalyticsXamarin.NuGet\Localytics.NuGet.nuproj", "{3D21B247-4672-466E-9F96-616FC955F033}"
+Project("{5DD5E4FA-CB73-4610-85AB-557B54E96AA9}") = "Localytics.NuGet", "LocalyticsMaui.NuGet\Localytics.NuGet.nuproj", "{3D21B247-4672-466E-9F96-616FC955F033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.Android", "LocalyticsMaui.Android\LocalyticsMaui.Android.csproj", "{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,18 +27,6 @@ Global
 		Debug|iPhone = Debug|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhone.Build.0 = Release|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF2D2C42-B115-4B4B-A27E-B20DD0D7E207}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,6 +75,18 @@ Global
 		{9C9948B0-EC28-4454-98BB-471C6BA02ABF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{9C9948B0-EC28-4454-98BB-471C6BA02ABF}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{9C9948B0-EC28-4454-98BB-471C6BA02ABF}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhone.Build.0 = Release|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{FB5176CE-F098-490A-ABAF-316FA0FCF6C9}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

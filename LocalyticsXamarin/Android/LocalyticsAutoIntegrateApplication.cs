@@ -18,7 +18,7 @@ namespace LocalyticsSample.Android
             base.OnCreate();
 
 #if DEBUG
-            var localytics = LocalyticsXamarin.Shared.LocalyticsSDK.SharedInstance;
+            var localytics = LocalyticsMaui.Shared.LocalyticsSDK.SharedInstance;
 			localytics.LoggingEnabled = true;
 #endif
 

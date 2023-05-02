@@ -14,7 +14,7 @@ using Firebase.Messaging;
 using Firebase.Iid;
 using Android.Util;
 using Android.Gms.Common;
-using LocalyticsXamarin.Shared;
+using LocalyticsMaui.Shared;
 
 namespace LocalyticsSample.Android
 {
@@ -38,8 +38,8 @@ namespace LocalyticsSample.Android
             
             localytics.SetOption("ll_session_timeout_seconds", 10);
             localytics.CustomerId = "Sample Customer";
-            localytics.SetProfileAttribute("Sample Attribute", LocalyticsXamarin.Common.XFLLProfileScope.Application,  83);
-            localytics.AddProfileAttribute("Sample Set", LocalyticsXamarin.Common.XFLLProfileScope.Organization,  321, 654 );
+            localytics.SetProfileAttribute("Sample Attribute", LocalyticsMaui.Common.XFLLProfileScope.Application,  83);
+            localytics.AddProfileAttribute("Sample Set", LocalyticsMaui.Common.XFLLProfileScope.Organization,  321, 654 );
             localytics.TagEvent("Test Event");
             localytics.TagScreen("Test Screen");
             localytics.Upload();

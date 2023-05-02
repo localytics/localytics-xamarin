@@ -1,5 +1,5 @@
 ﻿using System;
-using LocalyticsXamarin.Common;
+using LocalyticsMaui.Common;
 
 namespace LocalyticsMaui.Android
 {

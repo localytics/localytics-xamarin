@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using LocalyticsXamarin.Shared;
-using LocalyticsXamarin.Common;
+using LocalyticsMaui.Shared;
+using LocalyticsMaui.Common;
 using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
 using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
 using NativeImpressionType = LocalyticsMaui.Android.Localytics.ImpressionType;

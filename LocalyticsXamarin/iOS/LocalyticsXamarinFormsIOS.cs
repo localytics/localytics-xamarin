@@ -1,7 +1,7 @@
 ﻿using System;
 
 using UIKit;
-using LocalyticsXamarin.IOS;
+using LocalyticsMaui.IOS;
 
 [assembly: Xamarin.Forms.Dependency(typeof(LocalyticsSample.Shared.LocalyticsXamarinForms))]
 namespace LocalyticsSample.Shared

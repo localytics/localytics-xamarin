@@ -142,7 +142,7 @@
 	<attr path="/api/package[@name='com.localytics.androidx']/interface[@name='AnalyticsListener']/method[@name='localyticsDidTagEvent']" name="managedName">DidTagEvent</attr>
 	<attr path="/api/package[@name='com.localytics.androidx']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillOpen']" name="managedName">SessionWillOpen</attr>
 
-	<!--     <attr path="/api/package[@name='com.localytics.androidx']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsXamarin.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
+	<!--     <attr path="/api/package[@name='com.localytics.androidx']/interface[@name='AnalyticsListener']/method[@name='localyticsSessionWillClose']" name="argsType">LocalyticsMaui.Shared.LocalyticsSessionWillCloseEventArgs</attr>-->
 
 
 	<!--  need to make public but dont access them -->

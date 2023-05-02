@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using LocalyticsXamarin.Common;
-using LocalyticsXamarin.Shared;
+using LocalyticsMaui.Common;
+using LocalyticsMaui.Shared;
 using Android.Runtime;
 using AndroidX.Core.App;
 

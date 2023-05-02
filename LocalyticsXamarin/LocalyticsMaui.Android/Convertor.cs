@@ -8,8 +8,8 @@ using NativePlacesCampaign = LocalyticsMaui.Android.PlacesCampaign;
 using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.Android.Localytics.InAppMessageDismissButtonLocation;
 using NativeBaseCampaign = LocalyticsMaui.Android.Campaign;
 
-using LocalyticsXamarin.Common;
-using LocalyticsXamarin.Shared;
+using LocalyticsMaui.Common;
+using LocalyticsMaui.Shared;
 
 namespace LocalyticsMaui.Android
 {

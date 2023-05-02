@@ -1,7 +1,7 @@
 ﻿using Xamarin.Forms;
 using System.Collections.Generic;
 using System.Diagnostics;
-using LocalyticsXamarin.Common;
+using LocalyticsMaui.Common;
 using System.Threading.Tasks;
 
 namespace LocalyticsSample.Shared

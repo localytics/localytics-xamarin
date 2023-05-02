@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Threading;
 
 using Xamarin.Forms;
-using LocalyticsXamarin.Common;
+using LocalyticsMaui.Common;
 
 namespace LocalyticsSample.Shared
 {
