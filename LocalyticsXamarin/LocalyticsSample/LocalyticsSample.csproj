@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>LocalyticsSample</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!-- Display name -->
+		<ApplicationTitle>LocalyticsSample</ApplicationTitle>
+		<!-- App Identifier -->
+		<ApplicationId>com.localytics.xamarin.sample</ApplicationId>
+		<ApplicationIdGuid>9d5729c8-95a7-483b-9645-a1b8205b6715</ApplicationIdGuid>
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<PackageReference Include="Xamarin.AndroidX.Core" Version="1.9.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Arch.Core.Common" Version="2.1.0.16" />
+		<PackageReference Include="Xamarin.AndroidX.Arch.Core.Runtime" Version="2.1.0.16" />
+		<PackageReference Include="Xamarin.AndroidX.Activity" Version="1.6.1" />
+		<PackageReference Include="Xamarin.AndroidX.Fragment" Version="1.5.5" />
+		<PackageReference Include="Xamarin.AndroidX.Work.Runtime" Version="2.7.1.5" />
+		<PackageReference Include="Xamarin.Firebase.Messaging" Version="123.0.8" />
+		<PackageReference Include="Xamarin.Firebase.Iid" Version="121.1.0.7" />
+		<PackageReference Include="Xamarin.Firebase.Common" Version="120.1.2" />
+		<PackageReference Include="Xamarin.Firebase.Installations" Version="117.0.3" />
+		<PackageReference Include="Xamarin.Firebase.Annotations" Version="116.1.0" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Basement" Version="118.1.0" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Base" Version="118.1.0" />
+		<PackageReference Include="Xamarin.GooglePlayServices.CloudMessaging" Version="117.0.2.2" />
+		<PackageReference Include="Xamarin.AndroidX.SwipeRefreshLayout" Version="1.1.0.10" />
+		<PackageReference Include="Xamarin.AndroidX.ConstraintLayout" Version="2.1.4.2" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Iid" Version="117.0.0.7" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Gcm" Version="117.0.0.7" />
+		<PackageReference Include="Xamarin.Google.Android.InstallReferrer" Version="1.0.0.3" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Identifier" Version="118.0.1.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\LocalyticsMaui.Common\LocalyticsMaui.Common.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<ProjectReference Include="..\LocalyticsMaui.Android\LocalyticsMaui.Android.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+		<ProjectReference Include="..\LocalyticsMaui.iOS\LocalyticsMaui.iOS.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<None Remove="google-services.json" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<GoogleServicesJson Include="google-services.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="LocalyticsMaui.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	  <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="LocalyticsMauiAndroid.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	</ItemGroup>
+</Project>

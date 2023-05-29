@@ -1,0 +1,45 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1705.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalyticsMaui.Shared", "LocalyticsMaui.Shared\LocalyticsMaui.Shared.shproj", "{29C2975E-C5C9-4F1E-84EE-C36A81B940BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.Common", "LocalyticsMaui.Common\LocalyticsMaui.Common.csproj", "{67C0CFA8-8072-41B6-BD01-DF2EC80C06AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.Android", "LocalyticsMaui.Android\LocalyticsMaui.Android.csproj", "{C7407A72-F46E-48F1-B1D0-1F9BAF6BF620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsSample", "LocalyticsSample\LocalyticsSample.csproj", "{EFBC6015-6A2B-4B14-854C-8B8A01A45E52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalyticsMaui.iOS", "LocalyticsMaui.iOS\LocalyticsMaui.iOS.csproj", "{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67C0CFA8-8072-41B6-BD01-DF2EC80C06AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C0CFA8-8072-41B6-BD01-DF2EC80C06AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C0CFA8-8072-41B6-BD01-DF2EC80C06AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C0CFA8-8072-41B6-BD01-DF2EC80C06AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7407A72-F46E-48F1-B1D0-1F9BAF6BF620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7407A72-F46E-48F1-B1D0-1F9BAF6BF620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7407A72-F46E-48F1-B1D0-1F9BAF6BF620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7407A72-F46E-48F1-B1D0-1F9BAF6BF620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFBC6015-6A2B-4B14-854C-8B8A01A45E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFBC6015-6A2B-4B14-854C-8B8A01A45E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFBC6015-6A2B-4B14-854C-8B8A01A45E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFBC6015-6A2B-4B14-854C-8B8A01A45E52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACB14A35-1AF3-4DC8-84A4-90BB688E0F84}
+	EndGlobalSection
+EndGlobal

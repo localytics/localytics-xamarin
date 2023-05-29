@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0-ios</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>true</ImplicitUsings>
+		<IsBindingProject>true</IsBindingProject>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<NoBindingEmbedding>false</NoBindingEmbedding>
+	</PropertyGroup>
+	<ItemGroup>
+		<ObjcBindingApiDefinition Include="ApiDefinition.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\LocalyticsMaui.Common\LocalyticsMaui.Common.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<NativeReference Include="..\..\Localytics-iOS-Latest\Localytics.framework">
+			<Kind>Framework</Kind>
+			<ForceLoad>True</ForceLoad>
+			<SmartLink>False</SmartLink>
+		</NativeReference>
+	</ItemGroup>
+	<Import Project="..\LocalyticsMaui.Shared\LocalyticsMaui.Shared.projitems" Label="Shared" Condition="Exists('..\LocalyticsMaui.Shared\LocalyticsMaui.Shared.projitems')" />
+	<Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.props')" />
+</Project>
