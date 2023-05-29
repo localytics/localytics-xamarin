@@ -1,7 +1,7 @@
 using System;
 using ObjCRuntime;
 
-namespace LocalyticsMaui.IOS
+namespace LocalyticsMaui.iOS
 {
 	[Native]
 	public enum LLInAppMessageDismissButtonLocation : ulong

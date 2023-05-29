@@ -7,7 +7,7 @@ using System.Diagnostics;
 using Foundation;
 using CoreLocation;
 using UIKit;
-using LocalyticsMaui.IOS;
+using LocalyticsMaui.iOS;
 #else
 using Java.Util;
 using Android.Runtime;
@@ -19,12 +19,12 @@ using LocalyticsMaui.Common;
 
 #if __IOS__
 using NativeNumber = Foundation.NSNumber;
-using NativeInAppCampaign = LocalyticsMaui.IOS.LLInAppCampaign;
-using NativeInboxCampaign = LocalyticsMaui.IOS.LLInboxCampaign;
-using NativeImpressionType = LocalyticsMaui.IOS.LLImpressionType;
-using NativePlacesCampaign = LocalyticsMaui.IOS.LLPlacesCampaign;
-using NativeInAppConfiguration = LocalyticsMaui.IOS.LLInAppConfiguration;
-using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsMaui.IOS.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
+using NativeInAppCampaign = LocalyticsMaui.iOS.LLInAppCampaign;
+using NativeInboxCampaign = LocalyticsMaui.iOS.LLInboxCampaign;
+using NativeImpressionType = LocalyticsMaui.iOS.LLImpressionType;
+using NativePlacesCampaign = LocalyticsMaui.iOS.LLPlacesCampaign;
+using NativeInAppConfiguration = LocalyticsMaui.iOS.LLInAppConfiguration;
+using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsMaui.iOS.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
 #else
 using NativeNumber = Java.Lang.Long;
 using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;
@@ -918,7 +918,7 @@ namespace LocalyticsMaui.Shared
         public void IncrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
 #if __IOS__
-            Localytics.IncrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
+            Localytics.IncrementProfileAttribute((System.Int32)value, attribute, Utils.ToLLProfileScope(scope));
 #else
             Localytics.IncrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
 #endif
@@ -927,7 +927,7 @@ namespace LocalyticsMaui.Shared
         public void DecrementProfileAttribute(Int64 value, string attribute, XFLLProfileScope scope = XFLLProfileScope.Application)
         {
 #if __IOS__
-            Localytics.DecrementProfileAttribute((System.nint)value, attribute, Utils.ToLLProfileScope(scope));
+            Localytics.DecrementProfileAttribute((System.Int32)value, attribute, Utils.ToLLProfileScope(scope));
 #else
             Localytics.DecrementProfileAttribute(attribute, value, Utils.ToLLProfileScope(scope));
 #endif

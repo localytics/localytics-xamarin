@@ -1,7 +1,7 @@
 ﻿using System;
 using CoreLocation;
 
-namespace LocalyticsMaui.IOS
+namespace LocalyticsMaui.iOS
 {
     public class LocalyticsDidTriggerRegionsEventArgs : EventArgs
     {

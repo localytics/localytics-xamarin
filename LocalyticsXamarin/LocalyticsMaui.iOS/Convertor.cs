@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Foundation;
 
-using NativeInboxCampaign = LocalyticsMaui.IOS.LLInboxCampaign;
-using NativeInAppCampaign = LocalyticsMaui.IOS.LLInAppCampaign;
-using NativePlacesCampaign = LocalyticsMaui.IOS.LLPlacesCampaign;
-using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.IOS.LLInAppMessageDismissButtonLocation;
-using NativeBaseCampaign = LocalyticsMaui.IOS.LLCampaignBase;
+using NativeInboxCampaign = LocalyticsMaui.iOS.LLInboxCampaign;
+using NativeInAppCampaign = LocalyticsMaui.iOS.LLInAppCampaign;
+using NativePlacesCampaign = LocalyticsMaui.iOS.LLPlacesCampaign;
+using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.iOS.LLInAppMessageDismissButtonLocation;
+using NativeBaseCampaign = LocalyticsMaui.iOS.LLCampaignBase;
 
 using LocalyticsMaui.Common;
 using LocalyticsMaui.Shared;
 
-namespace LocalyticsMaui.IOS
+namespace LocalyticsMaui.iOS
 {
 	public static class Convertor
 	{
@@ -363,17 +363,17 @@ namespace LocalyticsMaui.IOS
         }
         internal static ICampaignBase CampaignFrom(NativeBaseCampaign campaign)
         {
-            if (campaign is LocalyticsMaui.IOS.LLInboxCampaign)
+            if (campaign is LocalyticsMaui.iOS.LLInboxCampaign)
             {
-                return new XFInboxCampaign((LocalyticsMaui.IOS.LLInboxCampaign)campaign);
+                return new XFInboxCampaign((LocalyticsMaui.iOS.LLInboxCampaign)campaign);
             }
-            else if (campaign is LocalyticsMaui.IOS.LLInAppCampaign)
+            else if (campaign is LocalyticsMaui.iOS.LLInAppCampaign)
             {
-                return new XFInAppCampaign((LocalyticsMaui.IOS.LLInAppCampaign)campaign);
+                return new XFInAppCampaign((LocalyticsMaui.iOS.LLInAppCampaign)campaign);
             }
-            else if (campaign is LocalyticsMaui.IOS.LLPlacesCampaign)
+            else if (campaign is LocalyticsMaui.iOS.LLPlacesCampaign)
             {
-                return new XFPlacesCampaign((LocalyticsMaui.IOS.LLPlacesCampaign)campaign);
+                return new XFPlacesCampaign((LocalyticsMaui.iOS.LLPlacesCampaign)campaign);
             }
             else
             {

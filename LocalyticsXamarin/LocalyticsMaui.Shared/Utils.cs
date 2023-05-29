@@ -1,10 +1,10 @@
 ﻿using System;
 using LocalyticsMaui.Common;
 #if __IOS__
-using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.IOS.LLInAppMessageDismissButtonLocation;
-using NativeProfileScope = LocalyticsMaui.IOS.LLProfileScope;
-using NativeImpressionType = LocalyticsMaui.IOS.LLImpressionType;
-using NativeBaseCampaign = LocalyticsMaui.IOS.LLCampaignBase;
+using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.iOS.LLInAppMessageDismissButtonLocation;
+using NativeProfileScope = LocalyticsMaui.iOS.LLProfileScope;
+using NativeImpressionType = LocalyticsMaui.iOS.LLImpressionType;
+using NativeBaseCampaign = LocalyticsMaui.iOS.LLCampaignBase;
 #else
 using LocalyticsMaui.Android;
 using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.Android.Localytics.InAppMessageDismissButtonLocation;

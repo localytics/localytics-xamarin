@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LocalyticsSample.MainPage"
+             Padding="10,10,10,10"
+             Title="Localytics Maui Sample">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="8">
+                <Label x:Name="info0" Text="Label0"/>
+                <Label x:Name="info1" Text="Label1"/>
+                <Label x:Name="info2" Text="Label2"/>
+                <Label x:Name="info3" Text="Label3"/>
+                <Label x:Name="info4" Text="Label4"/>
+                <Label x:Name="info5" Text="Label5"/>
+                <Label x:Name="info6" Text="Label6"/>
+                <Label x:Name="info7" Text="Label7"/>
+
+
+                <Button Text="Refresh" IsEnabled="true" Clicked="OnRefresh"  BorderWidth="2" BorderColor="Black"/>
+
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="OptOut " IsEnabled="false"/>
+                    <Switch x:Name="OptOut" Toggled="OptOutToggled" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="InappDisplay " IsEnabled="false"/>
+                    <Switch x:Name="InappDisplay" Toggled="InappDisplayToggled" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="PlacesDisplay " IsEnabled="false"/>
+                    <Switch x:Name="PlacesDisplay" Toggled="PlacesDisplayToggled" />
+                </StackLayout>
+
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="Logging " IsEnabled="false"/>
+                    <Switch x:Name="Logging" Toggled="LoggingToggled" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Button x:Name="EnableLoguana" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnEnableLoguana"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="Test Mode " IsEnabled="false"/>
+                    <Switch x:Name="TestMode" Toggled="TestModeToggled" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="3">
+                    <Entry Text="DeepLink " IsEnabled="false"/>
+                    <Switch x:Name="DeepLink" Toggled="DeepLinkToggled" />
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Button Text="Open Session" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnOpenSession" BorderWidth="2" BorderColor="Black"/>
+                    <Button Text="Close Session" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnCloseSession"  BorderWidth="2" BorderColor="Black"/>
+                    <Button Text="Upload" IsEnabled="true" HorizontalOptions="FillAndExpand" Clicked="OnUpload"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="eventText" Text="Test XamarinForm Event" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Tag Event" IsEnabled="true" Clicked="OnTagEvent" BorderWidth="2" BorderColor="Black" />
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="screenText" Text="Test XamarinForm Screen" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Tag Screen" IsEnabled="true" Clicked="OnTagScreen"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="cdValue" Text="Test CustomDimension" HorizontalOptions="FillAndExpand"/>
+                    <Entry x:Name="cdNumber" Text="0" Keyboard="Numeric"/>
+                    <Button Text="Get" IsEnabled="true" Clicked="OnGetCD"  BorderWidth="2" BorderColor="Black"/>
+                    <Button Text="Set CustomDimensions" IsEnabled="true" Clicked="OnSetCD"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="profileAttribute" Text="TestAttribute" Placeholder="Attribute" HorizontalOptions="FillAndExpand"/>
+                    <Entry x:Name="profileValue" Text="TestValue" Placeholder="Value" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Set Profile" IsEnabled="true" Clicked="OnSetProfile"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="identifier" Text="test_xamarin_identifier" Placeholder="Identifier" HorizontalOptions="FillAndExpand"/>
+                    <Entry x:Name="identifierValue" Text="test_value" Placeholder="Value" />
+                    <Button Text="Get" IsEnabled="true" Clicked="OnGetIdentifier"  BorderWidth="2" BorderColor="Black"/>
+                    <Button Text="Set Identifier" IsEnabled="true" Clicked="OnSetIdentifier"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Button Text="PauseDataUpload" IsEnabled="true" Clicked="OnPauseDataUpload"  BorderWidth="2" BorderColor="Black"/>
+                    <Button Text="ResumeDataUpload" IsEnabled="true" Clicked="OnResumeDataUpload"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="privacyoptout" Text="OptOut" HorizontalOptions="FillAndExpand" IsEnabled="false"/>
+                    <Button Text="PrivacyOptOut" IsEnabled="true" Clicked="OnPrivacyOptOut"  BorderWidth="2" BorderColor="Black"/>
+                    <Button Text="PrivacyOptIn" IsEnabled="true" Clicked="OnPrivacyOptIn"  BorderWidth="2" BorderColor="Black"/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="triggerName" Text="javascript" HorizontalOptions="FillAndExpand" Keyboard="Text"/>
+                    <Button Text="Trigger InApp" Clicked="OnTriggerInApp" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                    <Button Text="TriggerInapp lang" Clicked="TriggerInAppLang"  IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                    <Button Text="TriggerSessionStartInApp" Clicked="TriggerInAppSessionStart" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Entry x:Name="dismissBtnLocation" Text="InApp Dissmiss Button Location" HorizontalOptions="FillAndExpand" Keyboard="Default"/>
+                    <Button Text="Dismiss Button Left" Clicked="OnDismissButtonLeft"  IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                    <Button Text="Dismiss Button Right" Clicked="OnDismissButtonRight" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                    <Button Text="Delete First Inbox Campaign" Clicked="OnDelete" IsEnabled="true" BorderWidth="2" BorderColor="Black" />
+                </StackLayout>
+                <!--                     
+                 <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="3">
+                     <Button Text="TestMode On" IsEnabled="true" Clicked="OnTestMode" BorderWidth="2" BorderColor="Black"/>
+                     <Button Text="TestMode Off" IsEnabled="true" Clicked="OffTestMode"  BorderWidth="2" BorderColor="Black"/>
+                    <Switch x:Name="Places_Display" PropertyChanged="PlacesDisplayChanged" />
+                     <Switch x:Name="InApp_Display" PropertyChanged="InappDisplayChanged" />
+                </StackLayout>
+                -->
+
+
+
+            </StackLayout>
+
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

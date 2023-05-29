@@ -2,9 +2,9 @@
 using CoreLocation;
 using Foundation;
 using UIKit;
-using LocalyticsMaui.IOS;
+using LocalyticsMaui.iOS;
 
-namespace LocalyticsMaui.IOS
+namespace LocalyticsMaui.iOS
 {
 	public interface ILocalyticsIOS
 	{

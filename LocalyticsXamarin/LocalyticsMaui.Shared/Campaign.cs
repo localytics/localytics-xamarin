@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using LocalyticsMaui.Common;
 #if __IOS__
-using NativeInboxCampaign = LocalyticsMaui.IOS.LLInboxCampaign;
-using NativeInAppCampaign = LocalyticsMaui.IOS.LLInAppCampaign;
-using NativePlacesCampaign = LocalyticsMaui.IOS.LLPlacesCampaign;
-using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.IOS.LLInAppMessageDismissButtonLocation;
+using NativeInboxCampaign = LocalyticsMaui.iOS.LLInboxCampaign;
+using NativeInAppCampaign = LocalyticsMaui.iOS.LLInAppCampaign;
+using NativePlacesCampaign = LocalyticsMaui.iOS.LLPlacesCampaign;
+using NativeInAppMessageDismissButtonLocation = LocalyticsMaui.iOS.LLInAppMessageDismissButtonLocation;
 #else
 using NativeInboxCampaign = LocalyticsMaui.Android.InboxCampaign;
 using NativeInAppCampaign = LocalyticsMaui.Android.InAppCampaign;

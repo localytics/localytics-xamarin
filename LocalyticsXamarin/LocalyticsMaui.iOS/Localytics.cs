@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.ComponentModel;
 
-namespace LocalyticsMaui.IOS
+namespace LocalyticsMaui.iOS
 {
     public partial class Localytics
     {

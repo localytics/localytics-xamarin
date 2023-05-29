@@ -6,7 +6,7 @@ using ObjCRuntime;
 using UIKit;
 using UserNotifications;
 
-namespace LocalyticsMaui.IOS
+namespace LocalyticsMaui.iOS
 {
 	// @interface LLCustomerBuilder : NSObject
 	[BaseType (typeof(NSObject))]
