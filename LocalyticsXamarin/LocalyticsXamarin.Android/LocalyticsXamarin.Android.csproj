@@ -442,7 +442,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\library-6.3.7.aar" />
+    <LibraryProjectZip Include="Jars\library-6.4.0.aar" />
   </ItemGroup>
   <Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.targets')" />
   <Import Project="..\LocalyticsXamarin.Shared\LocalyticsXamarin.Shared.projitems" Label="Shared" Condition="Exists('..\LocalyticsXamarin.Shared\LocalyticsXamarin.Shared.projitems')" />

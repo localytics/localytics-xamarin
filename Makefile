@@ -31,7 +31,7 @@ ifneq ($(VER),)
 	@rm LocalyticsXamarin/LocalyticsXamarin.iOS/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.Android/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.Common/Properties/AssemblyInfo.cs.org LocalyticsXamarin/LocalyticsXamarin.NuGet/Localytics.NuGet.nuproj.org
 #Build all projects and validate
 	@cd LocalyticsXamarin/LocalyticsXamarin.Android && msbuild /t:Rebuild /p:Configuration=Release 
-	@cd LocalyticsXamarin/iOS && msbuild /t:Rebuild /p:Configuration=Release 
+	@cd LocalyticsXamarin/iOS && msbuild /t:Rebuild /p:Configuration=Release /p:MtouchArch=x86_64
 #Build NUget Package
 	@cd LocalyticsXamarin/LocalyticsXamarin.NuGet && dotnet restore && msbuild /t:Rebuild /p:Configuration=Release 
 	@echo Publish LocalyticsXamarin/LocalyticsXamarin.NuGet/bin/Release/LocalyticsXamarin.$(VER).nupkg 
