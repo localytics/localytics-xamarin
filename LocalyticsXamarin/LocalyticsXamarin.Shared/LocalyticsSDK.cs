@@ -25,6 +25,7 @@ using NativeImpressionType = LocalyticsXamarin.IOS.LLImpressionType;
 using NativePlacesCampaign = LocalyticsXamarin.IOS.LLPlacesCampaign;
 using NativeInAppConfiguration = LocalyticsXamarin.IOS.LLInAppConfiguration;
 using NativeLocalyticsDidUpdateMonitoredGeofencesEventArgs = LocalyticsXamarin.IOS.LocalyticsDidUpdateMonitoredGeofencesEventArgs;
+using static CoreFoundation.DispatchQueue;
 #else
 using NativeNumber = Java.Lang.Long;
 using NativeInAppCampaign = LocalyticsXamarin.Android.InAppCampaign;
@@ -251,7 +252,7 @@ namespace LocalyticsXamarin.Shared
             else if (customerValueIncrease == null && attributes != null)
             {
 #if __IOS__
-                Localytics.TagEvent(eventName, attributes.ToNSDictionary());
+                Localytics.TagEvent(eventName, Convertor.ToNSDictionary(attributes));
 #else
                 Localytics.TagEvent(eventName, attributes);
 #endif
@@ -259,7 +260,7 @@ namespace LocalyticsXamarin.Shared
             else
             {
 #if __IOS__
-                Localytics.TagEvent(eventName, attributes.ToNSDictionary(), customerValueIncrease);
+                Localytics.TagEvent(eventName, Convertor.ToNSDictionary(attributes), customerValueIncrease);
 #else
                 Localytics.TagEvent(eventName, attributes, customerValueIncrease.Value);
 #endif
@@ -355,7 +356,7 @@ namespace LocalyticsXamarin.Shared
                 return;
             }
 #if __IOS__
-            Localytics.TriggerInAppMessage(triggerName, attributes.ToNSDictionary());
+            Localytics.TriggerInAppMessage(triggerName, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TriggerInAppMessage(triggerName, attributes);
 #endif
@@ -455,7 +456,7 @@ namespace LocalyticsXamarin.Shared
                 price = new NativeNumber(itemPrice.Value);
             }
 #if __IOS__
-            Localytics.TagPurchased(itemName, itemId, itemType, price, attributes.ToNSDictionary());
+            Localytics.TagPurchased(itemName, itemId, itemType, price, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagPurchased(itemName, itemId, itemType, price, attributes);
 #endif
@@ -464,7 +465,7 @@ namespace LocalyticsXamarin.Shared
         public void TagAddedToCart(string itemName, string itemId, string itemType, long? itemPrice, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, attributes.ToNSDictionary());
+            Localytics.TagAddedToCart(itemName, itemId, itemType, itemPrice, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagAddedToCart(itemName, itemId, itemType, new NativeNumber(itemPrice.Value), attributes);
 #endif
@@ -473,7 +474,7 @@ namespace LocalyticsXamarin.Shared
         public void TagStartedCheckout(long? totalPrice, long? itemCount, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagStartedCheckout(totalPrice, itemCount, attributes.ToNSDictionary());
+            Localytics.TagStartedCheckout(totalPrice, itemCount, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagStartedCheckout(new Java.Lang.Long(totalPrice.Value), new Java.Lang.Long(itemCount.Value), attributes);
 #endif
@@ -492,7 +493,7 @@ namespace LocalyticsXamarin.Shared
                 count = new NativeNumber(itemCount.Value);
             }
 #if __IOS__
-            Localytics.TagCompletedCheckout(price, count, attributes.ToNSDictionary());
+            Localytics.TagCompletedCheckout(price, count, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagCompletedCheckout(price, count, attributes);
 #endif
@@ -501,7 +502,7 @@ namespace LocalyticsXamarin.Shared
         public void TagContentViewed(string contentName, string contentId, string contentType, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagContentViewed(contentName, contentId, contentType, attributes.ToNSDictionary());
+            Localytics.TagContentViewed(contentName, contentId, contentType, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagContentViewed(contentName, contentId, contentType, attributes);
 #endif
@@ -515,7 +516,7 @@ namespace LocalyticsXamarin.Shared
                 count = new NativeNumber(resultCount.Value);
             }
 #if __IOS__
-            Localytics.TagSearched(queryText, contentType, count, attributes.ToNSDictionary());
+            Localytics.TagSearched(queryText, contentType, count, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagSearched(queryText, contentType, count, attributes);
 #endif
@@ -524,7 +525,7 @@ namespace LocalyticsXamarin.Shared
         public void TagShared(string contentName, string contentId, string contentType, string methodName, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagShared(contentName, contentId, contentType, methodName, attributes.ToNSDictionary());
+            Localytics.TagShared(contentName, contentId, contentType, methodName, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagShared(contentName, contentId, contentType, methodName, attributes);
 #endif
@@ -538,7 +539,7 @@ namespace LocalyticsXamarin.Shared
                 ratingValue = new NativeNumber(rating.Value);
             }
 #if __IOS__
-            Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes.ToNSDictionary());
+            Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagContentRated(contentName, contentId, contentType, ratingValue, attributes);
 #endif
@@ -547,7 +548,7 @@ namespace LocalyticsXamarin.Shared
         public void TagCustomerRegistered(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagCustomerRegistered(customerProps, methodName, attributes.ToNSDictionary());
+            Localytics.TagCustomerRegistered(customerProps, methodName, Convertor.ToNSDictionary(attributes));
 #else
             var cust = Convertor.toCustomer(customerProps);
             Localytics.TagCustomerRegistered(cust, methodName, attributes);
@@ -558,7 +559,7 @@ namespace LocalyticsXamarin.Shared
         {
             var cust = Convertor.toCustomer(customer);
 #if __IOS__
-            Localytics.TagCustomerRegistered(cust, methodName, attributes.ToNSDictionary());
+            Localytics.TagCustomerRegistered(cust, methodName, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagCustomerRegistered(cust, methodName, attributes);
 #endif
@@ -567,7 +568,7 @@ namespace LocalyticsXamarin.Shared
         public void TagCustomerLoggedIn(IDictionary<string, object> customerProps, string methodName, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagCustomerLoggedIn(customerProps, methodName, attributes.ToNSDictionary());
+            Localytics.TagCustomerLoggedIn(customerProps, methodName, Convertor.ToNSDictionary(attributes));
 #else
             var cust = Convertor.toCustomer(customerProps);
             Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
@@ -578,7 +579,7 @@ namespace LocalyticsXamarin.Shared
         {
             var cust = Convertor.toCustomer(customer);
 #if __IOS__
-            Localytics.TagCustomerLoggedIn(cust, methodName, attributes.ToNSDictionary());
+            Localytics.TagCustomerLoggedIn(cust, methodName, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagCustomerLoggedIn(cust, methodName, attributes);
 #endif
@@ -587,7 +588,7 @@ namespace LocalyticsXamarin.Shared
         public void TagCustomerLoggedOut(IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagCustomerLoggedOut(attributes.ToNSDictionary());
+            Localytics.TagCustomerLoggedOut(Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagCustomerLoggedOut(attributes);
 #endif
@@ -596,7 +597,7 @@ namespace LocalyticsXamarin.Shared
         public void TagInvited(string methodName, IDictionary<string, string> attributes)
         {
 #if __IOS__
-            Localytics.TagInvited(methodName, attributes.ToNSDictionary());
+            Localytics.TagInvited(methodName, Convertor.ToNSDictionary(attributes));
 #else
             Localytics.TagInvited(methodName, attributes);
 #endif
@@ -648,7 +649,7 @@ namespace LocalyticsXamarin.Shared
         {
             Localytics.SetOptions(
 #if __IOS__
-            options.ToNSDictionary()
+            Convertor.ToNSDictionary(options)
 #else
             Convertor.ToGenericDictionary(options)
 #endif

@@ -434,6 +434,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="LocalyticsXamarin">
+      <Version>6.3.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">

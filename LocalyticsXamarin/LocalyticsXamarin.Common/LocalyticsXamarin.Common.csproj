@@ -39,6 +39,11 @@
     <Compile Include="Customer.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Reference Include="LocalyticsXamarin.Shared">
+      <HintPath>..\packages\LocalyticsXamarin.6.3.2\lib\portable40-net40+sl5+win8+wpa81\LocalyticsXamarin.Shared.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.2\build\NuGet.Build.Packaging.targets')" />
 </Project>

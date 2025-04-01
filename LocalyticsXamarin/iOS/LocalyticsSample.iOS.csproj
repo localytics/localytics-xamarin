@@ -100,6 +100,10 @@
       <HintPath>..\packages\Xamarin.Forms.5.0.0.2012\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="LocalyticsXamarin.Shared">
+      <HintPath>..\packages\LocalyticsXamarin.6.3.2\lib\xamarinios10\LocalyticsXamarin.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Common.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LocalyticsXamarin.Common\LocalyticsXamarin.Common.csproj">
@@ -109,6 +113,7 @@
     <ProjectReference Include="..\LocalyticsXamarin.iOS\LocalyticsXamarin.iOS.csproj">
       <Project>{5087AEA1-F7C9-4EBB-96EA-A9CA3BB6EFEE}</Project>
       <Name>LocalyticsXamarin.IOS</Name>
+      <HintPath>..\packages\LocalyticsXamarin.6.3.2\lib\xamarinios10\LocalyticsXamarin.iOS.dll</HintPath>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
